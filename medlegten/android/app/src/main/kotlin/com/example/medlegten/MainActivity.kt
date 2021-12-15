@@ -1,4 +1,4 @@
-package com.example.medlegten
+package com.medlegten.mapp
 
 import io.flutter.embedding.android.FlutterActivity
 
