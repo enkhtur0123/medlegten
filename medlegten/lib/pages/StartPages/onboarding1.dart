@@ -90,7 +90,7 @@ class OnboardingPage extends StatelessWidget {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: ColorTable.color120_100_254,
-                              fontFamily: 'Roboto-Regular',
+                              fontFamily: 'Roboto-Bold',
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                               height: 1),

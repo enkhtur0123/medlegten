@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/pages/LandingPages/landing_page.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 
@@ -14,7 +16,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _authState = ref.watch(authProvider);
 
-    return Material(child: getChild(_authState));
+    return Material(child: getChild(context, _authState));
   }
   //      AnimatedSwitcher(
   //       duration: const Duration(milliseconds: 200),
@@ -32,11 +34,16 @@ class HomePage extends ConsumerWidget {
   //   );
   // }
 
-  Widget getChild(AuthState _authState) {
+  Widget getChild(BuildContext context, AuthState _authState) {
     Widget home;
     switch (_authState) {
       case AuthState.Authorized:
+        home = const LandingPage();
+        AutoRouter.of(context).pop();
+        break;
+      case AuthState.AuthorizedAge:
         home = const AgePage();
+        AutoRouter.of(context).pop();
         break;
       case AuthState.Authorizing:
         home = const LoginPage();
@@ -50,27 +57,3 @@ class HomePage extends ConsumerWidget {
     return home;
   }
 }
-
-// class HomePageInner extends ConsumerWidget {
-//   const HomePageInner({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final _authState = ref.watch(authProvider);
-//     Widget home;
-//     switch (_authState) {
-//       case AuthState.Authorized:
-//         home = const AgePage();
-//         break;
-//       case AuthState.Authorizing:
-//         home = const LoginPage();
-//         break;
-//       case AuthState.Unauthorized:
-//         home = const StartPage();
-//         break;
-//       default:
-//         home = const NotFoundWidget();
-//     }
-//     return home;
-//   }
-// }

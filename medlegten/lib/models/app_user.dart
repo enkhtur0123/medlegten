@@ -10,6 +10,7 @@ class AppUser with _$AppUser {
       String? email,
       DateTime? birthday,
       String? gender,
+      @Default(-1) int age,
       @Default(true) bool isGoogle,
       String? role}) = _AppUser;
 

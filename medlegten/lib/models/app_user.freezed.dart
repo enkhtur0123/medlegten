@@ -26,6 +26,7 @@ class _$AppUserTearOff {
       String? email,
       DateTime? birthday,
       String? gender,
+      int age = -1,
       bool isGoogle = true,
       String? role}) {
     return _AppUser(
@@ -34,6 +35,7 @@ class _$AppUserTearOff {
       email: email,
       birthday: birthday,
       gender: gender,
+      age: age,
       isGoogle: isGoogle,
       role: role,
     );
@@ -54,6 +56,7 @@ mixin _$AppUser {
   String? get email => throw _privateConstructorUsedError;
   DateTime? get birthday => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
+  int get age => throw _privateConstructorUsedError;
   bool get isGoogle => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
 
@@ -72,6 +75,7 @@ abstract class $AppUserCopyWith<$Res> {
       String? email,
       DateTime? birthday,
       String? gender,
+      int age,
       bool isGoogle,
       String? role});
 }
@@ -91,6 +95,7 @@ class _$AppUserCopyWithImpl<$Res> implements $AppUserCopyWith<$Res> {
     Object? email = freezed,
     Object? birthday = freezed,
     Object? gender = freezed,
+    Object? age = freezed,
     Object? isGoogle = freezed,
     Object? role = freezed,
   }) {
@@ -115,6 +120,10 @@ class _$AppUserCopyWithImpl<$Res> implements $AppUserCopyWith<$Res> {
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: age == freezed
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int,
       isGoogle: isGoogle == freezed
           ? _value.isGoogle
           : isGoogle // ignore: cast_nullable_to_non_nullable
@@ -138,6 +147,7 @@ abstract class _$AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
       String? email,
       DateTime? birthday,
       String? gender,
+      int age,
       bool isGoogle,
       String? role});
 }
@@ -158,6 +168,7 @@ class __$AppUserCopyWithImpl<$Res> extends _$AppUserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? birthday = freezed,
     Object? gender = freezed,
+    Object? age = freezed,
     Object? isGoogle = freezed,
     Object? role = freezed,
   }) {
@@ -182,6 +193,10 @@ class __$AppUserCopyWithImpl<$Res> extends _$AppUserCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: age == freezed
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int,
       isGoogle: isGoogle == freezed
           ? _value.isGoogle
           : isGoogle // ignore: cast_nullable_to_non_nullable
@@ -202,6 +217,7 @@ class _$_AppUser implements _AppUser {
       this.email,
       this.birthday,
       this.gender,
+      this.age = -1,
       this.isGoogle = true,
       this.role});
 
@@ -218,6 +234,9 @@ class _$_AppUser implements _AppUser {
   final DateTime? birthday;
   @override
   final String? gender;
+  @JsonKey(defaultValue: -1)
+  @override
+  final int age;
   @JsonKey(defaultValue: true)
   @override
   final bool isGoogle;
@@ -226,7 +245,7 @@ class _$_AppUser implements _AppUser {
 
   @override
   String toString() {
-    return 'AppUser(id: $id, name: $name, email: $email, birthday: $birthday, gender: $gender, isGoogle: $isGoogle, role: $role)';
+    return 'AppUser(id: $id, name: $name, email: $email, birthday: $birthday, gender: $gender, age: $age, isGoogle: $isGoogle, role: $role)';
   }
 
   @override
@@ -239,6 +258,7 @@ class _$_AppUser implements _AppUser {
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.birthday, birthday) &&
             const DeepCollectionEquality().equals(other.gender, gender) &&
+            const DeepCollectionEquality().equals(other.age, age) &&
             const DeepCollectionEquality().equals(other.isGoogle, isGoogle) &&
             const DeepCollectionEquality().equals(other.role, role));
   }
@@ -251,6 +271,7 @@ class _$_AppUser implements _AppUser {
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(birthday),
       const DeepCollectionEquality().hash(gender),
+      const DeepCollectionEquality().hash(age),
       const DeepCollectionEquality().hash(isGoogle),
       const DeepCollectionEquality().hash(role));
 
@@ -271,6 +292,7 @@ abstract class _AppUser implements AppUser {
       String? email,
       DateTime? birthday,
       String? gender,
+      int age,
       bool isGoogle,
       String? role}) = _$_AppUser;
 
@@ -286,6 +308,8 @@ abstract class _AppUser implements AppUser {
   DateTime? get birthday;
   @override
   String? get gender;
+  @override
+  int get age;
   @override
   bool get isGoogle;
   @override

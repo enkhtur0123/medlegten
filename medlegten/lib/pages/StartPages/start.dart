@@ -1,8 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/helper.dart';
-import 'package:medlegten/components/wideButton.dart';
-import 'package:medlegten/providers/app_provider.dart';
+import 'package:medlegten/components/wide_button.dart';
+import 'package:medlegten/utils/app_router.dart';
 
 import 'medlegten_vertical.dart';
 
@@ -81,7 +82,7 @@ class StartPage extends StatelessWidget {
                             "Login if you are newbie",
                             ColorTable.color120_100_254,
                             ColorTable.color255_255_255, () {
-                          appProvider.navi?.pushNamed('/Login');
+                          AutoRouter.of(context).push(const LoginRoute());
                         }),
                         const Spacer(
                           flex: 1,
@@ -90,7 +91,7 @@ class StartPage extends StatelessWidget {
                             "Let's know about Medlegten",
                             ColorTable.color255_255_255,
                             ColorTable.color120_100_254, () {
-                          appProvider.navi?.pushNamed('/Onboarding');
+                          AutoRouter.of(context).push(const OnboardingRoute());
                         }),
                         const Spacer(
                           flex: 2,

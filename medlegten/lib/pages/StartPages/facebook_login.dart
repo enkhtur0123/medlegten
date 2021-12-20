@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/components/wideButton.dart';
+import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 
 class FacebookLogin extends ConsumerWidget {

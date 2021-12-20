@@ -14,6 +14,7 @@ _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
           ? null
           : DateTime.parse(json['birthday'] as String),
       gender: json['gender'] as String?,
+      age: json['age'] as int? ?? -1,
       isGoogle: json['isGoogle'] as bool? ?? true,
       role: json['role'] as String?,
     );
@@ -25,6 +26,7 @@ Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
       'email': instance.email,
       'birthday': instance.birthday?.toIso8601String(),
       'gender': instance.gender,
+      'age': instance.age,
       'isGoogle': instance.isGoogle,
       'role': instance.role,
     };
