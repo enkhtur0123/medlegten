@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/login.dart';
-import 'package:medlegten/pages/StartPages/onboarding1.dart';
+import 'package:medlegten/pages/StartPages/onboarding_page.dart';
 import 'package:medlegten/pages/StartPages/start.dart';
 import 'package:medlegten/pages/home.dart';
 

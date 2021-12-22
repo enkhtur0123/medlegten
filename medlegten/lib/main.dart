@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,7 +7,6 @@ import 'package:medlegten/utils/app_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  await Firebase.initializeApp();
   runApp(ProviderScope(child: MyApp()));
 }
 
@@ -20,12 +18,15 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+    //    overlays: [SystemUiOverlay.bottom]);
     return FutureBuilder(
       future: Init.instance.initialize(ref),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MaterialApp(home: InitializationPage());
+          return const MaterialApp(
+              debugShowCheckedModeBanner: false, home: InitializationPage());
         } else {
           return MaterialApp.router(
             routerDelegate: _appRouter.delegate(),

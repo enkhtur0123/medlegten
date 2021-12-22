@@ -3,6 +3,7 @@ import 'package:medlegten/common/colors.dart';
 
 class AgePage extends StatelessWidget {
   const AgePage({Key? key}) : super(key: key);
+  //      await LoginRepository().fetchLoginInfo(fbuser);
 
   @override
   Widget build(BuildContext context) {

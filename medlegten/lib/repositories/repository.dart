@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 final dioRepository = Repository();
@@ -17,7 +18,10 @@ class Repository {
   }
 
   //T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV
-  setToken(token) => _dio.options.headers['authorization'] = '$token';
+  setToken({String? token}) async {
+    token ??= GetStorage().read('token') ?? '';
+    _dio.options.headers['authorization'] = token;
+  }
 
   snackBar(msg) => Fluttertoast.showToast(
       msg: msg, gravity: ToastGravity.SNACKBAR, toastLength: Toast.LENGTH_LONG);

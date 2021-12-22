@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/models/version.dart';
+import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/repositories/repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,9 +13,16 @@ class InitializationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginState = ref.watch(loginNotifierProvider);
+    //final loginState = ref.watch(loginNotifierProvider);
 
-    const str = 'Medlegten app v1.0';
+    var str = 'Medlegten app v1.0';
+    //loginState.whenOrNull(
+    //   data: (data) {
+    //     if (data is Version) {
+    //       str = 'Medlegten app ${data.appVersion}';
+    //     }
+    //   },
+    // );
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -38,12 +44,7 @@ class InitializationPage extends ConsumerWidget {
                   width: 103.76),
             ),
             Text(
-              loginState.when(
-                initial: () => str,
-                loading: () => str,
-                data: (data) => 'Medlegten app ${(data as Version).appVersion}',
-                error: (error) => str,
-              ),
+              str,
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Color.fromRGBO(130, 130, 130, 1),
@@ -74,16 +75,11 @@ class Init {
     // delaying the user experience is a bad design practice!
     dioRepository.setDioOptions();
     dioRepository.setToken(
-        'T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV');
+        token:
+            'T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV');
 
     ref.read(loginNotifierProvider.notifier).getAppVersion();
 
-    var token = await GetStorage().read('token') ?? '';
-
-    //if (token == '') {
-    //  await ref.read(authProvider.notifier).loginFacebook();
-    //}
-
-    await Future.delayed(const Duration(seconds: 1));
+    ref.read(authProvider.notifier).login();
   }
 }

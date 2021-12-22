@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/LandingPages/landing_page.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
+import 'package:medlegten/pages/StartPages/initialization.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 
 import 'StartPages/login.dart';
@@ -48,8 +49,11 @@ class HomePage extends ConsumerWidget {
       case AuthState.Authorizing:
         home = const LoginPage();
         break;
-      case AuthState.Unauthorized:
+      case AuthState.UnAuthorized:
         home = const StartPage();
+        break;
+      case AuthState.Initial:
+        home = const InitializationPage();
         break;
       default:
         home = const Scaffold(body: Text('FFFFF'));

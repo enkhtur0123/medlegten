@@ -20,8 +20,11 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const HomePage());
     },
     OnboardingRoute.name: (routeData) {
+      final args = routeData.argsAs<OnboardingRouteArgs>();
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const OnboardingPage());
+          routeData: routeData,
+          child: OnboardingPage(
+              onboardingList: args.onboardingList, key: args.key));
     },
     LoginRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -59,10 +62,27 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [OnboardingPage]
-class OnboardingRoute extends PageRouteInfo<void> {
-  const OnboardingRoute() : super(OnboardingRoute.name, path: '/onboarding');
+class OnboardingRoute extends PageRouteInfo<OnboardingRouteArgs> {
+  OnboardingRoute({required List<Onboarding> onboardingList, Key? key})
+      : super(OnboardingRoute.name,
+            path: '/onboarding',
+            args:
+                OnboardingRouteArgs(onboardingList: onboardingList, key: key));
 
   static const String name = 'OnboardingRoute';
+}
+
+class OnboardingRouteArgs {
+  const OnboardingRouteArgs({required this.onboardingList, this.key});
+
+  final List<Onboarding> onboardingList;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'OnboardingRouteArgs{onboardingList: $onboardingList, key: $key}';
+  }
 }
 
 /// generated route for

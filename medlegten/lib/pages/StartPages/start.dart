@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/helper.dart';
 import 'package:medlegten/components/wide_button.dart';
+import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 
 import 'medlegten_vertical.dart';
@@ -90,8 +91,13 @@ class StartPage extends StatelessWidget {
                         WideButton(
                             "Let's know about Medlegten",
                             ColorTable.color255_255_255,
-                            ColorTable.color120_100_254, () {
-                          AutoRouter.of(context).push(const OnboardingRoute());
+                            ColorTable.color120_100_254, () async {
+                          final onboardingList =
+                              await LoginRepository().getOnboardingInfo();
+                          if (onboardingList != null) {
+                            AutoRouter.of(context).push(OnboardingRoute(
+                                onboardingList: onboardingList));
+                          }
                         }),
                         const Spacer(
                           flex: 2,

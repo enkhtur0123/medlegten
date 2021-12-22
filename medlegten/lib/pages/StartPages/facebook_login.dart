@@ -15,7 +15,7 @@ class FacebookLogin extends ConsumerWidget {
       const Color.fromRGBO(0, 130, 205, 1),
       ColorTable.color255_255_255,
       () async {
-        if (_authState == AuthState.Unauthorized) {
+        if (_authState != AuthState.Authorized) {
           WidgetsBinding.instance?.addPostFrameCallback(
               (_) => ref.read(authProvider.notifier).loginFacebook());
         }

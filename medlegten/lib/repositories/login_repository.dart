@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:medlegten/models/app_user.dart';
-import 'package:medlegten/models/version.dart';
+import 'package:medlegten/models/Starting/muser_info.dart';
+import 'package:medlegten/models/Starting/onboarding.dart';
+import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/repositories/rep_state.dart';
 import 'package:medlegten/repositories/repository.dart';
 
-final loginNotifierProvider =
-    StateNotifierProvider<LoginNotifier, RepState<Version>>(
+final loginNotifierProvider = StateNotifierProvider<LoginNotifier, RepState>(
   (ref) => LoginNotifier(
     loginRepository: ref.watch(_loginRepositoryProvider),
   ),
@@ -20,7 +20,7 @@ final _loginRepositoryProvider = Provider<ILoginRepository>(
   (ref) => LoginRepository(),
 );
 
-class LoginNotifier extends StateNotifier<RepState<Version>> {
+class LoginNotifier extends StateNotifier<RepState> {
   LoginNotifier({
     required ILoginRepository loginRepository,
   })  : _loginRepository = loginRepository,
@@ -33,79 +33,134 @@ class LoginNotifier extends StateNotifier<RepState<Version>> {
 
     try {
       final version = await _loginRepository.getAppVersion();
-      if (version.isSuccess) state = RepState<Version>.data(data: version);
+      if (version != null) {
+        state = RepState.data(data: version);
+      } else {
+        state = const RepState.error('Error');
+      }
     } catch (_) {
-      state = const RepState<Version>.error('Error');
+      state = const RepState.error('Error');
+    }
+  }
+
+  Future<void> getOnboardingInfo() async {
+    state = const RepState.loading();
+
+    try {
+      final dataInfo = await _loginRepository.getOnboardingInfo();
+      if (dataInfo != null) {
+        state = RepState.data(data: dataInfo);
+      } else {
+        state = const RepState.error('Error');
+      }
+    } catch (_) {
+      state = const RepState.error('Error');
     }
   }
 }
 
 abstract class ILoginRepository {
-  Future<Version> getAppVersion();
+  Future<Version?> getAppVersion();
+  Future<List<Onboarding>?> getOnboardingInfo();
 }
 
 class LoginRepository implements ILoginRepository {
   @override
-  Future<Version> getAppVersion() async {
+  Future<Version?> getAppVersion() async {
     try {
       final response = await dioRepository.instance.get('Login/Version');
       final res = json.decode('$response');
-
-      return Version.fromJson(res);
+      if (res['isSuccess']) {
+        return Version.fromJson(res);
+      } else {
+        return null;
+      }
     } catch (e) {
-      return Version(false, e.hashCode.toString(), e.toString());
+      return null;
     }
   }
 
-  Future fetchLoginInfo(User fbuser) async {
+  Future fetchLoginInfo(User fbuser, String birthDate) async {
     try {
       final response = await dioRepository.instance.post(
         'Login',
         data: json.encode({
           'userId': fbuser.uid,
-          'token': 'this is intentionally missed',
           'firstName': fbuser.displayName,
-          'lastName': fbuser.email,
+          'lastName': fbuser.displayName,
           'profileUrl': fbuser.photoURL,
           'socialType': 'facebook', //DO IT
           'deviceInfo': 'Android', //DO IT
-          'channel': 'app'
+          'channel': 'app',
+          'email': fbuser.email,
+          'birthDate': birthDate
         }),
       );
 
       final res = json.decode('$response');
       if (res['isSuccess']) {
         GetStorage().write('token', res['token']);
+        dioRepository.setToken();
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
     }
   }
 
-  Future getSliderInfo() async {
+  @override
+  Future<List<Onboarding>?> getOnboardingInfo() async {
     try {
       final response = await dioRepository.instance.get('Login/Slider');
       final res = json.decode('$response');
       if (res['isSuccess']) {
-        return;
+        var list = res['onBoarding'] as List;
+        return list.map((i) => Onboarding.fromJson(i)).toList();
       } else {
         return null;
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-    }
-  }
-
-  Future<AppUser?> getUserInfo() async {
-    try {
-      return AppUser(1,
-          name: 'Enkhtur',
-          email: 'enkhtur0123@gmail.com',
-          birthday: DateTime(1980, 01, 23),
-          gender: 'Эр',
-          age: -1);
-    } catch (e) {
       return null;
     }
   }
+
+  Future<MUserInfo?> getUserInfo() async {
+    try {
+      final response = await dioRepository.instance.get('UserInfo');
+      final res = json.decode('$response');
+      if (res['isSuccess']) {
+        return MUserInfo.fromJson(res['userInfo']);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return null;
+    }
+  }
+
+  // Future<String> getUserInfoBirthDate() async {
+  //   try {
+  //     final response = await dioRepository.instance.post('UserInfo/BDATE',data: json.encode({
+  //         'userId': fbuser.uid,
+  //         'firstName': fbuser.displayName,
+  //         'lastName': fbuser.displayName,
+  //         'profileUrl': fbuser.photoURL,
+  //         'socialType': 'facebook', //DO IT
+  //         'deviceInfo': 'Android', //DO IT
+  //         'channel': 'app',
+  //         'email': fbuser.email,
+  //         'birthDate': birthDate
+  //       }),);
+  //     final res = json.decode('$response');
+  //     if (res['isSuccess']) {
+  //       return MUserInfo.fromJson(res['userInfo']);
+  //     } else {
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     dioRepository.snackBar(e.toString().toUpperCase());
+  //     return null;
+  //   }
+  // }
 }

@@ -15,7 +15,7 @@ class GoogleLogin extends ConsumerWidget {
       ColorTable.color255_255_255,
       const Color.fromRGBO(48, 48, 48, 1),
       () async {
-        if (_authState == AuthState.Unauthorized) {
+        if (_authState != AuthState.Authorized) {
           WidgetsBinding.instance?.addPostFrameCallback(
               (_) => ref.read(authProvider.notifier).loginGoogle());
         }
