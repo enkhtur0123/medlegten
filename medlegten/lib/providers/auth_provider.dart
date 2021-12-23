@@ -1,8 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -16,32 +14,44 @@ final authProvider = StateNotifierProvider<AuthViewModel, AuthState>((ref) {
 });
 
 class AuthViewModel extends StateNotifier<AuthState> {
-  late FirebaseAuth _auth;
-  bool isGoogle = false;
+  final FirebaseAuth _auth;
+  bool? isGoogle;
+  User? fUser;
 
-  AuthViewModel() : super(AuthState.Initial);
+  AuthViewModel()
+      : _auth = FirebaseAuth.instance,
+        super(AuthState.Initial) {
+    _auth.authStateChanges().listen((user) async {
+      if (user == null) {
+        changeStatus(AuthState.UnAuthorized);
+      } else {
+        fUser = user;
+        if (isGoogle!) {
+          await LoginRepository().fetchLoginInfo(user, isGoogle!);
+          _login();
+        }
+      }
+    });
+  }
 
   AuthState get authState => state;
 
   login() async {
-    var token = await GetStorage().read('token') ?? '';
+    var token = await dioRepository.setToken();
+    if (!await checkToken()) {
+      token = '';
+    }
 
     if (token == '') {
-      await Firebase.initializeApp();
-      _auth = FirebaseAuth.instance;
-      _auth.authStateChanges().listen((user) async {
-        if (user == null) {
-          changeStatus(AuthState.UnAuthorized);
-        } else {
-          await LoginRepository().fetchLoginInfo(user, '');
-          _login();
-        }
-      });
-      await loginFacebook();
+      _auth.signOut();
     } else {
       dioRepository.setToken(token: token);
       _login();
     }
+  }
+
+  checkToken() async {
+    return await LoginRepository().checkValid();
   }
 
   _login() async {
@@ -49,7 +59,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
     if (user == null) {
       changeStatus(AuthState.UnAuthorized);
     } else {
-      if (user.skipBirthDate == '0') {
+      //1 bval birthday asuuna, 2 bval skipped, 0 bval nasaa oruultsan
+      if (user.skipBirthDate == '1') {
         changeStatus(AuthState.AuthorizedAge);
       } else {
         changeStatus(AuthState.Authorized);
@@ -77,8 +88,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
           accessToken: googleSignInAuthentication.accessToken,
           idToken: googleSignInAuthentication.idToken);
       _auth.signInWithCredential(credential);
-
-      _login();
+      if (isGoogle!) {
+        await LoginRepository().fetchLoginInfo(fUser, isGoogle!);
+        _login();
+      }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       changeStatus(AuthState.UnAuthorized);
@@ -94,11 +107,13 @@ class AuthViewModel extends StateNotifier<AuthState> {
         AuthCredential credential =
             FacebookAuthProvider.credential(result.accessToken!.token);
         await _auth.signInWithCredential(credential);
-
-        _login();
       } else {
         dioRepository.snackBar(result.message!);
         changeStatus(AuthState.UnAuthorized);
+      }
+      if (isGoogle!) {
+        await LoginRepository().fetchLoginInfo(fUser, isGoogle!);
+        _login();
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());

@@ -80,27 +80,32 @@ class LoginRepository implements ILoginRepository {
     }
   }
 
-  Future fetchLoginInfo(User fbuser, String birthDate) async {
+  Future fetchLoginInfo(User? fbuser, bool isGoogle) async {
     try {
-      final response = await dioRepository.instance.post(
-        'Login',
-        data: json.encode({
-          'userId': fbuser.uid,
-          'firstName': fbuser.displayName,
-          'lastName': fbuser.displayName,
-          'profileUrl': fbuser.photoURL,
-          'socialType': 'facebook', //DO IT
-          'deviceInfo': 'Android', //DO IT
-          'channel': 'app',
-          'email': fbuser.email,
-          'birthDate': birthDate
-        }),
-      );
+      if (fbuser != null) {
+        dioRepository.setToken(
+            token:
+                'T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV');
+        final response = await dioRepository.instance.post(
+          'Login',
+          data: json.encode({
+            'userId': fbuser.providerData.first.uid,
+            'firstName': fbuser.displayName,
+            'lastName': fbuser.displayName,
+            'profileUrl': fbuser.photoURL,
+            'socialType': isGoogle ? 'google' : 'facebook',
+            'deviceInfo': 'Android', //DO IT
+            'channel': 'app',
+            'email': fbuser.email,
+            'birthDate': ''
+          }),
+        );
 
-      final res = json.decode('$response');
-      if (res['isSuccess']) {
-        GetStorage().write('token', res['token']);
-        dioRepository.setToken();
+        final res = json.decode('$response');
+        if (res['isSuccess']) {
+          GetStorage().write('token', res['token']);
+          dioRepository.setToken();
+        }
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
@@ -136,6 +141,17 @@ class LoginRepository implements ILoginRepository {
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       return null;
+    }
+  }
+
+  Future<bool> checkValid() async {
+    try {
+      final response = await dioRepository.instance.get('UserInfo');
+      final res = json.decode('$response');
+      return res['errorCode'] == '200';
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return false;
     }
   }
 

@@ -18,9 +18,10 @@ class Repository {
   }
 
   //T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV
-  setToken({String? token}) async {
+  Future<String> setToken({String? token}) async {
     token ??= GetStorage().read('token') ?? '';
     _dio.options.headers['authorization'] = token;
+    return token;
   }
 
   snackBar(msg) => Fluttertoast.showToast(
