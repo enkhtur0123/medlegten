@@ -47,8 +47,6 @@ class HomePage extends ConsumerWidget {
         AutoRouter.of(context).pop();
         break;
       case AuthState.Authorizing:
-        home = const LoginPage();
-        break;
       case AuthState.UnAuthorized:
         home = const StartPage();
         break;

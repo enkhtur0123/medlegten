@@ -24,6 +24,12 @@ class Repository {
     return token;
   }
 
+  setTokenToDefault() async {
+    dioRepository.setToken(
+        token:
+            'T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV');
+  }
+
   snackBar(msg) => Fluttertoast.showToast(
       msg: msg, gravity: ToastGravity.SNACKBAR, toastLength: Toast.LENGTH_LONG);
 

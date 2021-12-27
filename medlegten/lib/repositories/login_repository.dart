@@ -83,9 +83,7 @@ class LoginRepository implements ILoginRepository {
   Future fetchLoginInfo(User? fbuser, bool isGoogle) async {
     try {
       if (fbuser != null) {
-        dioRepository.setToken(
-            token:
-                'T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV');
+        dioRepository.setTokenToDefault();
         final response = await dioRepository.instance.post(
           'Login',
           data: json.encode({
@@ -115,6 +113,7 @@ class LoginRepository implements ILoginRepository {
   @override
   Future<List<Onboarding>?> getOnboardingInfo() async {
     try {
+      dioRepository.setTokenToDefault();
       final response = await dioRepository.instance.get('Login/Slider');
       final res = json.decode('$response');
       if (res['isSuccess']) {
@@ -154,7 +153,6 @@ class LoginRepository implements ILoginRepository {
       return false;
     }
   }
-
   // Future<String> getUserInfoBirthDate() async {
   //   try {
   //     final response = await dioRepository.instance.post('UserInfo/BDATE',data: json.encode({

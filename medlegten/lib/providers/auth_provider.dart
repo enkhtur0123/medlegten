@@ -111,7 +111,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
         dioRepository.snackBar(result.message!);
         changeStatus(AuthState.UnAuthorized);
       }
-      if (isGoogle!) {
+      if (isGoogle! == false) {
         await LoginRepository().fetchLoginInfo(fUser, isGoogle!);
         _login();
       }

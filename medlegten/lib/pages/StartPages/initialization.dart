@@ -74,9 +74,7 @@ class Init {
     // the splash screen is displayed.  Remove the following example because
     // delaying the user experience is a bad design practice!
     dioRepository.setDioOptions();
-    dioRepository.setToken(
-        token:
-            'T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV');
+    dioRepository.setTokenToDefault();
 
     ref.read(loginNotifierProvider.notifier).getAppVersion();
 
