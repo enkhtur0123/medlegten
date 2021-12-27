@@ -16,7 +16,7 @@ class AgePage extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              'Та төрсөн он сар өдрөө оруулна уу! --',
+              'Та төрсөн он сар өдрөө оруулна уу! ---.',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: ColorTable.color48_53_159,
