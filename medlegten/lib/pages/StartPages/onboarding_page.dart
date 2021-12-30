@@ -103,10 +103,12 @@ class OnboardingPage extends HookWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: onboardingList.map((entry) {
-                    return circle(
-                        Colors.black, inner.ordering == entry.ordering);
-                  }).toList(),
+                  children: onboardingList.map(
+                    (entry) {
+                      return circle(
+                          Colors.black, inner.ordering == entry.ordering);
+                    },
+                  ).toList(),
                 ),
               ],
             ),

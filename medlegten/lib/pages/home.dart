@@ -6,7 +6,6 @@ import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/initialization.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 
-import 'StartPages/login.dart';
 import 'StartPages/start.dart';
 
 class HomePage extends ConsumerWidget {
@@ -39,7 +38,7 @@ class HomePage extends ConsumerWidget {
     Widget home;
     switch (_authState) {
       case AuthState.Authorized:
-        home = const LandingPage();
+        home = LandingPage();
         AutoRouter.of(context).pop();
         break;
       case AuthState.AuthorizedAge:
@@ -54,7 +53,7 @@ class HomePage extends ConsumerWidget {
         home = const InitializationPage();
         break;
       default:
-        home = const Scaffold(body: Text('FFFFF'));
+        home = const Scaffold(body: Text('Empty page'));
     }
     return home;
   }
