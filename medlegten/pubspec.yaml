@@ -79,9 +79,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Poppins-Light.ttf
         - asset: assets/fonts/Poppins-SemiBold.ttf
+    - family: Roboto
+      fonts:
         - asset: assets/fonts/Roboto-Light.ttf
-        - asset: assets/fonts/Roboto-Bold.ttf  
-        - asset: assets/fonts/Roboto-Regular.ttf  
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
