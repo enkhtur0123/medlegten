@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -26,7 +27,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
         changeStatus(AuthState.UnAuthorized);
       } else {
         fUser = user;
-        if (isGoogle!) {
+        if (isGoogle != null) {
           await LoginRepository().fetchLoginInfo(user, isGoogle!);
           _login();
         }
@@ -41,13 +42,17 @@ class AuthViewModel extends StateNotifier<AuthState> {
     if (!await checkToken()) {
       token = '';
     }
-
     if (token == '') {
       _auth.signOut();
     } else {
       dioRepository.setToken(token: token);
       _login();
     }
+  }
+
+  logoff() {
+    dioRepository.setTokenToDefault();
+    _auth.signOut();
   }
 
   checkToken() async {
@@ -68,10 +73,6 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
-  //_logOut() async {
-  //  await _auth.signOut();
-  //}
-
   changeStatus(AuthState status) async {
     state = status;
   }
@@ -80,15 +81,16 @@ class AuthViewModel extends StateNotifier<AuthState> {
     isGoogle = true;
     changeStatus(AuthState.Authorizing);
     try {
-      GoogleSignIn googleSignIn = GoogleSignIn();
-      GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-      GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
-      AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken);
-      _auth.signInWithCredential(credential);
-      if (isGoogle!) {
+      if (fUser == null) {
+        GoogleSignIn googleSignIn = GoogleSignIn();
+        GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+        GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount!.authentication;
+        AuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken);
+        _auth.signInWithCredential(credential);
+      } else {
         await LoginRepository().fetchLoginInfo(fUser, isGoogle!);
         _login();
       }
@@ -102,16 +104,17 @@ class AuthViewModel extends StateNotifier<AuthState> {
     isGoogle = false;
     changeStatus(AuthState.Authorizing);
     try {
-      LoginResult result = await FacebookAuth.instance.login();
-      if (result.status == LoginStatus.success) {
-        AuthCredential credential =
-            FacebookAuthProvider.credential(result.accessToken!.token);
-        await _auth.signInWithCredential(credential);
+      if (fUser == null) {
+        LoginResult result = await FacebookAuth.instance.login();
+        if (result.status == LoginStatus.success) {
+          AuthCredential credential =
+              FacebookAuthProvider.credential(result.accessToken!.token);
+          await _auth.signInWithCredential(credential);
+        } else {
+          dioRepository.snackBar(result.message!);
+          changeStatus(AuthState.UnAuthorized);
+        }
       } else {
-        dioRepository.snackBar(result.message!);
-        changeStatus(AuthState.UnAuthorized);
-      }
-      if (isGoogle! == false) {
         await LoginRepository().fetchLoginInfo(fUser, isGoogle!);
         _login();
       }

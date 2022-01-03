@@ -17,10 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$RepStateTearOff {
   const _$RepStateTearOff();
 
-  _ReptateInitial<T> initial<T>() {
-    return _ReptateInitial<T>();
-  }
-
   _RepStateLoading<T> loading<T>() {
     return _RepStateLoading<T>();
   }
@@ -45,7 +41,6 @@ const $RepState = _$RepStateTearOff();
 mixin _$RepState<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(T data) data,
     required TResult Function(String? error) error,
@@ -53,7 +48,6 @@ mixin _$RepState<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -61,7 +55,6 @@ mixin _$RepState<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -70,7 +63,6 @@ mixin _$RepState<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ReptateInitial<T> value) initial,
     required TResult Function(_RepStateLoading<T> value) loading,
     required TResult Function(_RepStateData<T> value) data,
     required TResult Function(_RepStateError<T> value) error,
@@ -78,7 +70,6 @@ mixin _$RepState<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,
@@ -86,7 +77,6 @@ mixin _$RepState<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,
@@ -109,123 +99,6 @@ class _$RepStateCopyWithImpl<T, $Res> implements $RepStateCopyWith<T, $Res> {
   final RepState<T> _value;
   // ignore: unused_field
   final $Res Function(RepState<T>) _then;
-}
-
-/// @nodoc
-abstract class _$ReptateInitialCopyWith<T, $Res> {
-  factory _$ReptateInitialCopyWith(
-          _ReptateInitial<T> value, $Res Function(_ReptateInitial<T>) then) =
-      __$ReptateInitialCopyWithImpl<T, $Res>;
-}
-
-/// @nodoc
-class __$ReptateInitialCopyWithImpl<T, $Res>
-    extends _$RepStateCopyWithImpl<T, $Res>
-    implements _$ReptateInitialCopyWith<T, $Res> {
-  __$ReptateInitialCopyWithImpl(
-      _ReptateInitial<T> _value, $Res Function(_ReptateInitial<T>) _then)
-      : super(_value, (v) => _then(v as _ReptateInitial<T>));
-
-  @override
-  _ReptateInitial<T> get _value => super._value as _ReptateInitial<T>;
-}
-
-/// @nodoc
-
-class _$_ReptateInitial<T> implements _ReptateInitial<T> {
-  const _$_ReptateInitial();
-
-  @override
-  String toString() {
-    return 'RepState<$T>.initial()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ReptateInitial<T>);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(T data) data,
-    required TResult Function(String? error) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(T data)? data,
-    TResult Function(String? error)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(T data)? data,
-    TResult Function(String? error)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ReptateInitial<T> value) initial,
-    required TResult Function(_RepStateLoading<T> value) loading,
-    required TResult Function(_RepStateData<T> value) data,
-    required TResult Function(_RepStateError<T> value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
-    TResult Function(_RepStateLoading<T> value)? loading,
-    TResult Function(_RepStateData<T> value)? data,
-    TResult Function(_RepStateError<T> value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
-    TResult Function(_RepStateLoading<T> value)? loading,
-    TResult Function(_RepStateData<T> value)? data,
-    TResult Function(_RepStateError<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReptateInitial<T> implements RepState<T> {
-  const factory _ReptateInitial() = _$_ReptateInitial<T>;
 }
 
 /// @nodoc
@@ -269,7 +142,6 @@ class _$_RepStateLoading<T> implements _RepStateLoading<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(T data) data,
     required TResult Function(String? error) error,
@@ -280,7 +152,6 @@ class _$_RepStateLoading<T> implements _RepStateLoading<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -291,7 +162,6 @@ class _$_RepStateLoading<T> implements _RepStateLoading<T> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -306,7 +176,6 @@ class _$_RepStateLoading<T> implements _RepStateLoading<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ReptateInitial<T> value) initial,
     required TResult Function(_RepStateLoading<T> value) loading,
     required TResult Function(_RepStateData<T> value) data,
     required TResult Function(_RepStateError<T> value) error,
@@ -317,7 +186,6 @@ class _$_RepStateLoading<T> implements _RepStateLoading<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,
@@ -328,7 +196,6 @@ class _$_RepStateLoading<T> implements _RepStateLoading<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,
@@ -410,7 +277,6 @@ class _$_RepStateData<T> implements _RepStateData<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(T data) data,
     required TResult Function(String? error) error,
@@ -421,7 +287,6 @@ class _$_RepStateData<T> implements _RepStateData<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -432,7 +297,6 @@ class _$_RepStateData<T> implements _RepStateData<T> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -447,7 +311,6 @@ class _$_RepStateData<T> implements _RepStateData<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ReptateInitial<T> value) initial,
     required TResult Function(_RepStateLoading<T> value) loading,
     required TResult Function(_RepStateData<T> value) data,
     required TResult Function(_RepStateError<T> value) error,
@@ -458,7 +321,6 @@ class _$_RepStateData<T> implements _RepStateData<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,
@@ -469,7 +331,6 @@ class _$_RepStateData<T> implements _RepStateData<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,
@@ -556,7 +417,6 @@ class _$_RepStateError<T> implements _RepStateError<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(T data) data,
     required TResult Function(String? error) error,
@@ -567,7 +427,6 @@ class _$_RepStateError<T> implements _RepStateError<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -578,7 +437,6 @@ class _$_RepStateError<T> implements _RepStateError<T> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(T data)? data,
     TResult Function(String? error)? error,
@@ -593,7 +451,6 @@ class _$_RepStateError<T> implements _RepStateError<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ReptateInitial<T> value) initial,
     required TResult Function(_RepStateLoading<T> value) loading,
     required TResult Function(_RepStateData<T> value) data,
     required TResult Function(_RepStateError<T> value) error,
@@ -604,7 +461,6 @@ class _$_RepStateError<T> implements _RepStateError<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,
@@ -615,7 +471,6 @@ class _$_RepStateError<T> implements _RepStateError<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReptateInitial<T> value)? initial,
     TResult Function(_RepStateLoading<T> value)? loading,
     TResult Function(_RepStateData<T> value)? data,
     TResult Function(_RepStateError<T> value)? error,

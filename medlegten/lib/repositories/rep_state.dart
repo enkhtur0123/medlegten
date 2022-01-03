@@ -9,9 +9,6 @@ extension RepGetters on RepState {
 
 @freezed
 abstract class RepState<T> with _$RepState {
-  ///Initial
-  const factory RepState.initial() = _ReptateInitial;
-
   ///Loading
   const factory RepState.loading() = _RepStateLoading;
 

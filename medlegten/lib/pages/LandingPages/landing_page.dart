@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/components/landing_header.dart';
+import 'package:medlegten/pages/CoursePages/landing_course.dart';
+import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
+
+import 'landing_home.dart';
 
 class LandingPage extends HookWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -68,6 +72,8 @@ class LandingPage extends HookWidget {
               key: _key,
               controller: _controller,
               children: [
+                const LandingHome(),
+                const LandingCourse(),
                 Center(
                   child: Text("Index ${_controller.index}",
                       style: const TextStyle(color: Colors.black)),
@@ -76,18 +82,7 @@ class LandingPage extends HookWidget {
                   child: Text("Index ${_controller.index}",
                       style: const TextStyle(color: Colors.black)),
                 ),
-                Center(
-                  child: Text("Index ${_controller.index}",
-                      style: const TextStyle(color: Colors.black)),
-                ),
-                Center(
-                  child: Text("Index ${_controller.index}",
-                      style: const TextStyle(color: Colors.black)),
-                ),
-                Center(
-                  child: Text("Index ${_controller.index}",
-                      style: const TextStyle(color: Colors.black)),
-                ),
+                const LandingProfile(),
               ],
             ),
           ),

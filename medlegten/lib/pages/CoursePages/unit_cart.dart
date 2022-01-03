@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/models/Landing/course_unit.dart';
 
-class CourseCart extends StatelessWidget {
-  const CourseCart(this.courseInfo, {Key? key}) : super(key: key);
+class UnitCart extends StatelessWidget {
+  const UnitCart(this.courseInfo, {Key? key}) : super(key: key);
 
-  final CourseInfo courseInfo;
+  final CourseUnit courseInfo;
 
   final TextStyle textStyle = const TextStyle(color: Colors.black);
 

@@ -37,6 +37,10 @@ class _$AppRouter extends RootStackRouter {
     StartRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const StartPage());
+    },
+    LandingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const LandingPage());
     }
   };
 
@@ -48,7 +52,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(OnboardingRoute.name, path: '/onboarding'),
         RouteConfig(LoginRoute.name, path: '/login'),
         RouteConfig(AgeRoute.name, path: '/age'),
-        RouteConfig(StartRoute.name, path: '/start')
+        RouteConfig(StartRoute.name, path: '/start'),
+        RouteConfig(LandingRoute.name, path: '/landing')
       ];
 }
 
@@ -107,4 +112,12 @@ class StartRoute extends PageRouteInfo<void> {
   const StartRoute() : super(StartRoute.name, path: '/start');
 
   static const String name = 'StartRoute';
+}
+
+/// generated route for
+/// [LandingPage]
+class LandingRoute extends PageRouteInfo<void> {
+  const LandingRoute() : super(LandingRoute.name, path: '/landing');
+
+  static const String name = 'LandingRoute';
 }
