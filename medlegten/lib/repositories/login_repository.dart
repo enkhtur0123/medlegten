@@ -24,7 +24,7 @@ class LoginNotifier extends StateNotifier<RepState> {
   LoginNotifier({
     required ILoginRepository loginRepository,
   })  : _loginRepository = loginRepository,
-        super(const RepState.initial());
+        super(const RepState.loading());
 
   final ILoginRepository _loginRepository;
 
