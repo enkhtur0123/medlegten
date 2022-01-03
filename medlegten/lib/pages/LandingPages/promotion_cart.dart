@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/models/Landing/promotion_info.dart';
 
-class CourseCart extends StatelessWidget {
-  const CourseCart(this.courseInfo, {Key? key}) : super(key: key);
+class PromotionCart extends StatelessWidget {
+  const PromotionCart(this.promotionInfo, {Key? key}) : super(key: key);
 
-  final CourseInfo courseInfo;
+  final PromotionInfo promotionInfo;
 
   final TextStyle textStyle = const TextStyle(color: Colors.black);
 
@@ -13,7 +12,9 @@ class CourseCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ColorTable.color255_255_255,
+        image: DecorationImage(
+            image: NetworkImage(promotionInfo.backroundImgUrl),
+            fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -34,20 +35,16 @@ class CourseCart extends StatelessWidget {
                 flex: 2,
                 child: Column(
                   children: [
-                    Text('Анхан шат', style: textStyle),
-                    Text('Тухайн хичээлийн товч тайлбар', style: textStyle),
-                    Row(children: [
-                      Text('Beginner', style: textStyle),
-                      Text('42 hours', style: textStyle),
-                      Text('31 lessons', style: textStyle),
-                    ]),
-                    Text('250000', style: textStyle),
+                    Text(promotionInfo.title, style: textStyle),
+                    Text(promotionInfo.description, style: textStyle),
                   ],
                 ),
               ),
               Flexible(
-                child: Column(
-                  children: [],
+                child: Image(
+                  image: NetworkImage(promotionInfo.imgUrl),
+                  height: 200,
+                  width: 200,
                 ),
               ),
             ],
