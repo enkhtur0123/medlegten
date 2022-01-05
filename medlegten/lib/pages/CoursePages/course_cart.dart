@@ -11,18 +11,12 @@ class CourseCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: ColorTable.color255_255_255,
+    return Card(
+      color: ColorTable.color255_255_255,
+      shadowColor: Colors.grey.withOpacity(0.5),
+      elevation: 10.0,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -30,24 +24,23 @@ class CourseCart extends StatelessWidget {
         children: [
           Row(
             children: [
-              Flexible(
-                flex: 2,
-                child: Column(
-                  children: [
-                    Text('Анхан шат', style: textStyle),
-                    Text('Тухайн хичээлийн товч тайлбар', style: textStyle),
-                    Row(children: [
-                      Text('Beginner', style: textStyle),
-                      Text('42 hours', style: textStyle),
-                      Text('31 lessons', style: textStyle),
-                    ]),
-                    Text('250000', style: textStyle),
-                  ],
-                ),
+              Column(
+                children: [
+                  Text('Анхан шат', style: textStyle),
+                  Text('Тухайн хичээлийн товч тайлбар', style: textStyle),
+                  Row(children: [
+                    Text('Beginner', style: textStyle),
+                    Text('42 hours', style: textStyle),
+                    Text('31 lessons', style: textStyle),
+                  ]),
+                  Text('250000', style: textStyle),
+                ],
               ),
-              Flexible(
+              Container(
+                width: 100,
+                color: ColorTable.color120_100_254,
                 child: Column(
-                  children: [],
+                  children: [Text('250000', style: textStyle)],
                 ),
               ),
             ],

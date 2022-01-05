@@ -1,46 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/components/wide_button.dart';
 
 class PreliminaryTest extends StatelessWidget {
-  const PreliminaryTest({Key? key}) : super(key: key);
+  PreliminaryTest({Key? key}) : super(key: key);
 
-  final TextStyle textStyle = const TextStyle(color: Colors.black);
+  final TextStyle textStyle = TextStyle(
+      color: ColorTable.color120_100_254,
+      fontWeight: FontWeight.w700,
+      fontSize: 18,
+      fontFamily: 'Roboto',
+      height: 1.2);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: ColorTable.color255_255_255,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
+    return SizedBox(
+      height: 130,
       child: Column(
         children: [
           Row(
             children: [
-              RichText(
-                text: TextSpan(
-                  text: 'Do you want to',
-                  style: DefaultTextStyle.of(context).style,
-                  children: const [
-                    WidgetSpan(
-                      child: Text(
-                        'take preliminary test ?',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Do you want to',
+                      style: textStyle,
+                    ),
+                    Text(
+                      'take preliminary test ?',
+                      style: textStyle,
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
+          WideButton('Start Quiz', ColorTable.color120_100_254,
+              ColorTable.color255_255_255, () {}),
         ],
       ),
     );

@@ -1,36 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/models/Landing/customer_review.dart';
 
 class CustomerReviewCart extends StatelessWidget {
-  final String profileImg;
-  final String fullName;
-  final String position;
-  final String description;
-  final int star;
+  const CustomerReviewCart(this.customerReview, {Key? key}) : super(key: key);
 
-  const CustomerReviewCart({Key? key, required this.profileImg, required this.fullName, required this.position, required this.description, required this.star}) : super(key: key);
-
+  final CustomerReview customerReview;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      // height: 140,
-      decoration: BoxDecoration(
-        color: ColorTable.color255_255_255,
+    return Card(
+      color: ColorTable.color255_255_255,
+      shadowColor: Colors.grey.withOpacity(0.5),
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
       ),
+      // height: 140,
+
       child: Padding(
-        padding: const EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 15),
+        padding:
+            const EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 15),
         child: Column(
           children: [
             Row(
@@ -41,8 +32,8 @@ class CustomerReviewCart extends StatelessWidget {
                     children: [
                       CircleAvatar(
                           radius: 25,
-                          backgroundImage: NetworkImage(profileImg)
-                      ),
+                          backgroundImage:
+                              NetworkImage(customerReview.profileImg)),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: SizedBox(
@@ -50,11 +41,25 @@ class CustomerReviewCart extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                child: Text(fullName, style: TextStyle(color: colorBlack, fontWeight: FontWeight.w700, fontSize: 18, fontFamily: 'Roboto'),),
+                                child: Text(
+                                  customerReview.fullName,
+                                  style: const TextStyle(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18,
+                                      fontFamily: 'Roboto'),
+                                ),
                               ),
                               addVerticalSpace(5),
                               SizedBox(
-                                child: Text(position, style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: 'Roboto'),),
+                                child: Text(
+                                  customerReview.position,
+                                  style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 18,
+                                      fontFamily: 'Roboto'),
+                                ),
                               )
                             ],
                           ),
@@ -65,18 +70,21 @@ class CustomerReviewCart extends StatelessWidget {
                 ),
                 SizedBox(
                     child: Row(
-                      children: [
-                        for (var i = 1; i <= 5; i++ )
-                          starPrint(star, i)
-                      ],
-                    )
-                ),
+                  children: [
+                    for (var i = 1; i <= 5; i++)
+                      starPrint(customerReview.star, i)
+                  ],
+                )),
               ],
             ),
             addVerticalSpace(10),
-            Text(
-                description,
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: 'Roboto', height: 1.5)),
+            Text(customerReview.description,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: 'Roboto',
+                    height: 1.5)),
           ],
         ),
       ),
@@ -84,21 +92,18 @@ class CustomerReviewCart extends StatelessWidget {
   }
 }
 
-starPrint(star, num) {
-  if(star >= num)
-    {
-      return Icon(
-        Icons.star,
-        color: Colors.orange,
-        size: 20.0,
-      );
-    }
-  else
-    {
-      return Icon(
-        Icons.star_border,
-        color: Colors.orange,
-        size: 20.0,
-      );
-    }
+starPrint(star, _num) {
+  if (star >= _num) {
+    return const Icon(
+      Icons.star,
+      color: Colors.orange,
+      size: 20.0,
+    );
+  } else {
+    return const Icon(
+      Icons.star_border,
+      color: Colors.orange,
+      size: 20.0,
+    );
+  }
 }
