@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/pages/CoursePages/course_cart.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
@@ -15,28 +16,32 @@ class CourseList extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        addVerticalSpace(10),
+        addVerticalSpace(20),
         Align(
           alignment: Alignment.topLeft,
           child: Text('Courses', style: textStyle),
         ),
+        addVerticalSpace(5),
         FutureBuilder<List<CourseInfo>?>(
-            future: LandingRepository().getCourseList(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<CourseInfo>?> snapshot) {
-              if (snapshot.hasData) {
-                var list = <Widget>[];
-                snapshot.data!
-                    .take(3)
-                    .map((courseInfo) => {list.add(CourseCart(courseInfo))});
-                //return Listlist;
-              } else if (snapshot.hasError) {
-                return const CircularProgressIndicator();
-              } else {
-                return const CircularProgressIndicator();
-              }
-            }),
+          future: LandingRepository().getCourseList(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CourseInfo>?> snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                children: snapshot.data!
+                    .map((courseInfo) => CourseCart(courseInfo))
+                    .toList(),
+              );
+              //return Listlist;
+            } else if (snapshot.hasError) {
+              return const Loading();
+            } else {
+              return const Loading();
+            }
+          },
+        ),
       ],
     );
   }

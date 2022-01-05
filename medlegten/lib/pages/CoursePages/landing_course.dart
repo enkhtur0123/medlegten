@@ -13,8 +13,19 @@ class LandingCourse extends StatelessWidget {
       child: Column(
         children: [
           PreliminaryTest(),
-          CourseList(),
-          const CustomerReviewList(),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CourseList(),
+                  const CustomerReviewList(),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

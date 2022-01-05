@@ -69,6 +69,7 @@ class LandingPage extends HookWidget {
           LandingHeader(100),
           Expanded(
             child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               key: _key,
               controller: _controller,
               children: [
