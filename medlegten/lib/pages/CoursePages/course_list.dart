@@ -29,8 +29,11 @@ class CourseList extends HookWidget {
           builder: (BuildContext context,
               AsyncSnapshot<List<CourseInfo>?> snapshot) {
             if (snapshot.hasData) {
+              var orderedCourses = snapshot.data!
+                ..sort((a, b) =>
+                    int.parse(a.ordering).compareTo(int.parse(b.ordering)));
               return Column(
-                children: snapshot.data!
+                children: orderedCourses
                     .map((courseInfo) => CourseCart(courseInfo))
                     .toList(),
               );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/customer_review.dart';
 import 'package:medlegten/pages/CoursePages/customer_review_cart.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
@@ -41,15 +42,19 @@ class CustomerReviewList extends HookWidget {
         ),
         addVerticalSpace(10),
         FutureBuilder<List<CustomerReview>?>(
-          future: LandingRepository().getCustomerReviewList('0'),
+          future: LandingRepository().getCustomerReviewList(0),
           builder: (BuildContext context,
               AsyncSnapshot<List<CustomerReview>?> snapshot) {
             if (snapshot.hasData) {
-              return CustomerReviewCart(snapshot.data!.first);
+              return Column(
+                children: snapshot.data!
+                    .map((reviewInfo) => CustomerReviewCart(reviewInfo))
+                    .toList(),
+              );
             } else if (snapshot.hasError) {
-              return const CircularProgressIndicator();
+              return const Loading();
             } else {
-              return const CircularProgressIndicator();
+              return const Loading();
             }
           },
         ),

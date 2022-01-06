@@ -43,6 +43,10 @@ class _$AppRouter extends RootStackRouter {
     LandingRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LandingPage());
+    },
+    CourseSelfTestRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const CourseSelfTestPage());
     }
   };
 
@@ -55,7 +59,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(LoginRoute.name, path: '/login'),
         RouteConfig(AgeRoute.name, path: '/age'),
         RouteConfig(StartRoute.name, path: '/start'),
-        RouteConfig(LandingRoute.name, path: '/landing')
+        RouteConfig(LandingRoute.name, path: '/landing'),
+        RouteConfig(CourseSelfTestRoute.name, path: '/course_self_test')
       ];
 }
 
@@ -122,4 +127,13 @@ class LandingRoute extends PageRouteInfo<void> {
   const LandingRoute() : super(LandingRoute.name, path: '/landing');
 
   static const String name = 'LandingRoute';
+}
+
+/// generated route for
+/// [CourseSelfTestPage]
+class CourseSelfTestRoute extends PageRouteInfo<void> {
+  const CourseSelfTestRoute()
+      : super(CourseSelfTestRoute.name, path: '/course_self_test');
+
+  static const String name = 'CourseSelfTestRoute';
 }

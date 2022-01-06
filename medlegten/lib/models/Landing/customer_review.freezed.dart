@@ -22,15 +22,16 @@ CustomerReview _$CustomerReviewFromJson(Map<String, dynamic> json) {
 class _$CustomerReviewTearOff {
   const _$CustomerReviewTearOff();
 
-  _CustomerReview call(String reviewId, String profileImg, String fullName,
-      String position, String description, int star) {
+  _CustomerReview call(String reviewId, String fullName, String bioTitle,
+      String startRating, String profileImg, String desc, String ordering) {
     return _CustomerReview(
       reviewId,
-      profileImg,
       fullName,
-      position,
-      description,
-      star,
+      bioTitle,
+      startRating,
+      profileImg,
+      desc,
+      ordering,
     );
   }
 
@@ -45,11 +46,12 @@ const $CustomerReview = _$CustomerReviewTearOff();
 /// @nodoc
 mixin _$CustomerReview {
   String get reviewId => throw _privateConstructorUsedError;
-  String get profileImg => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
-  String get position => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  int get star => throw _privateConstructorUsedError;
+  String get bioTitle => throw _privateConstructorUsedError;
+  String get startRating => throw _privateConstructorUsedError;
+  String get profileImg => throw _privateConstructorUsedError;
+  String get desc => throw _privateConstructorUsedError;
+  String get ordering => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,11 +66,12 @@ abstract class $CustomerReviewCopyWith<$Res> {
       _$CustomerReviewCopyWithImpl<$Res>;
   $Res call(
       {String reviewId,
-      String profileImg,
       String fullName,
-      String position,
-      String description,
-      int star});
+      String bioTitle,
+      String startRating,
+      String profileImg,
+      String desc,
+      String ordering});
 }
 
 /// @nodoc
@@ -83,37 +86,42 @@ class _$CustomerReviewCopyWithImpl<$Res>
   @override
   $Res call({
     Object? reviewId = freezed,
-    Object? profileImg = freezed,
     Object? fullName = freezed,
-    Object? position = freezed,
-    Object? description = freezed,
-    Object? star = freezed,
+    Object? bioTitle = freezed,
+    Object? startRating = freezed,
+    Object? profileImg = freezed,
+    Object? desc = freezed,
+    Object? ordering = freezed,
   }) {
     return _then(_value.copyWith(
       reviewId: reviewId == freezed
           ? _value.reviewId
           : reviewId // ignore: cast_nullable_to_non_nullable
               as String,
-      profileImg: profileImg == freezed
-          ? _value.profileImg
-          : profileImg // ignore: cast_nullable_to_non_nullable
-              as String,
       fullName: fullName == freezed
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      position: position == freezed
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
+      bioTitle: bioTitle == freezed
+          ? _value.bioTitle
+          : bioTitle // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      startRating: startRating == freezed
+          ? _value.startRating
+          : startRating // ignore: cast_nullable_to_non_nullable
               as String,
-      star: star == freezed
-          ? _value.star
-          : star // ignore: cast_nullable_to_non_nullable
-              as int,
+      profileImg: profileImg == freezed
+          ? _value.profileImg
+          : profileImg // ignore: cast_nullable_to_non_nullable
+              as String,
+      desc: desc == freezed
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String,
+      ordering: ordering == freezed
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -127,11 +135,12 @@ abstract class _$CustomerReviewCopyWith<$Res>
   @override
   $Res call(
       {String reviewId,
-      String profileImg,
       String fullName,
-      String position,
-      String description,
-      int star});
+      String bioTitle,
+      String startRating,
+      String profileImg,
+      String desc,
+      String ordering});
 }
 
 /// @nodoc
@@ -148,37 +157,42 @@ class __$CustomerReviewCopyWithImpl<$Res>
   @override
   $Res call({
     Object? reviewId = freezed,
-    Object? profileImg = freezed,
     Object? fullName = freezed,
-    Object? position = freezed,
-    Object? description = freezed,
-    Object? star = freezed,
+    Object? bioTitle = freezed,
+    Object? startRating = freezed,
+    Object? profileImg = freezed,
+    Object? desc = freezed,
+    Object? ordering = freezed,
   }) {
     return _then(_CustomerReview(
       reviewId == freezed
           ? _value.reviewId
           : reviewId // ignore: cast_nullable_to_non_nullable
               as String,
-      profileImg == freezed
-          ? _value.profileImg
-          : profileImg // ignore: cast_nullable_to_non_nullable
-              as String,
       fullName == freezed
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      position == freezed
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
+      bioTitle == freezed
+          ? _value.bioTitle
+          : bioTitle // ignore: cast_nullable_to_non_nullable
               as String,
-      description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      startRating == freezed
+          ? _value.startRating
+          : startRating // ignore: cast_nullable_to_non_nullable
               as String,
-      star == freezed
-          ? _value.star
-          : star // ignore: cast_nullable_to_non_nullable
-              as int,
+      profileImg == freezed
+          ? _value.profileImg
+          : profileImg // ignore: cast_nullable_to_non_nullable
+              as String,
+      desc == freezed
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String,
+      ordering == freezed
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -186,8 +200,8 @@ class __$CustomerReviewCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CustomerReview implements _CustomerReview {
-  _$_CustomerReview(this.reviewId, this.profileImg, this.fullName,
-      this.position, this.description, this.star);
+  _$_CustomerReview(this.reviewId, this.fullName, this.bioTitle,
+      this.startRating, this.profileImg, this.desc, this.ordering);
 
   factory _$_CustomerReview.fromJson(Map<String, dynamic> json) =>
       _$$_CustomerReviewFromJson(json);
@@ -195,19 +209,21 @@ class _$_CustomerReview implements _CustomerReview {
   @override
   final String reviewId;
   @override
-  final String profileImg;
-  @override
   final String fullName;
   @override
-  final String position;
+  final String bioTitle;
   @override
-  final String description;
+  final String startRating;
   @override
-  final int star;
+  final String profileImg;
+  @override
+  final String desc;
+  @override
+  final String ordering;
 
   @override
   String toString() {
-    return 'CustomerReview(reviewId: $reviewId, profileImg: $profileImg, fullName: $fullName, position: $position, description: $description, star: $star)';
+    return 'CustomerReview(reviewId: $reviewId, fullName: $fullName, bioTitle: $bioTitle, startRating: $startRating, profileImg: $profileImg, desc: $desc, ordering: $ordering)';
   }
 
   @override
@@ -216,24 +232,26 @@ class _$_CustomerReview implements _CustomerReview {
         (other.runtimeType == runtimeType &&
             other is _CustomerReview &&
             const DeepCollectionEquality().equals(other.reviewId, reviewId) &&
+            const DeepCollectionEquality().equals(other.fullName, fullName) &&
+            const DeepCollectionEquality().equals(other.bioTitle, bioTitle) &&
+            const DeepCollectionEquality()
+                .equals(other.startRating, startRating) &&
             const DeepCollectionEquality()
                 .equals(other.profileImg, profileImg) &&
-            const DeepCollectionEquality().equals(other.fullName, fullName) &&
-            const DeepCollectionEquality().equals(other.position, position) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.star, star));
+            const DeepCollectionEquality().equals(other.desc, desc) &&
+            const DeepCollectionEquality().equals(other.ordering, ordering));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(reviewId),
-      const DeepCollectionEquality().hash(profileImg),
       const DeepCollectionEquality().hash(fullName),
-      const DeepCollectionEquality().hash(position),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(star));
+      const DeepCollectionEquality().hash(bioTitle),
+      const DeepCollectionEquality().hash(startRating),
+      const DeepCollectionEquality().hash(profileImg),
+      const DeepCollectionEquality().hash(desc),
+      const DeepCollectionEquality().hash(ordering));
 
   @JsonKey(ignore: true)
   @override
@@ -247,8 +265,14 @@ class _$_CustomerReview implements _CustomerReview {
 }
 
 abstract class _CustomerReview implements CustomerReview {
-  factory _CustomerReview(String reviewId, String profileImg, String fullName,
-      String position, String description, int star) = _$_CustomerReview;
+  factory _CustomerReview(
+      String reviewId,
+      String fullName,
+      String bioTitle,
+      String startRating,
+      String profileImg,
+      String desc,
+      String ordering) = _$_CustomerReview;
 
   factory _CustomerReview.fromJson(Map<String, dynamic> json) =
       _$_CustomerReview.fromJson;
@@ -256,15 +280,17 @@ abstract class _CustomerReview implements CustomerReview {
   @override
   String get reviewId;
   @override
-  String get profileImg;
-  @override
   String get fullName;
   @override
-  String get position;
+  String get bioTitle;
   @override
-  String get description;
+  String get startRating;
   @override
-  int get star;
+  String get profileImg;
+  @override
+  String get desc;
+  @override
+  String get ordering;
   @override
   @JsonKey(ignore: true)
   _$CustomerReviewCopyWith<_CustomerReview> get copyWith =>

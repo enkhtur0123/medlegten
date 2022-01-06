@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/wide_button.dart';
+import 'package:medlegten/utils/app_router.dart';
 
 class PreliminaryTest extends StatelessWidget {
   PreliminaryTest({Key? key}) : super(key: key);
@@ -39,7 +41,9 @@ class PreliminaryTest extends StatelessWidget {
             ],
           ),
           WideButton('Start Quiz', ColorTable.color120_100_254,
-              ColorTable.color255_255_255, () {}),
+              ColorTable.color255_255_255, () {
+            AutoRouter.of(context).push(const CourseSelfTestRoute());
+          }, horizontalEdge: 0),
         ],
       ),
     );

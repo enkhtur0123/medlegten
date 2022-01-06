@@ -53,7 +53,7 @@ class CustomerReviewCart extends StatelessWidget {
                               addVerticalSpace(5),
                               SizedBox(
                                 child: Text(
-                                  customerReview.position,
+                                  customerReview.bioTitle,
                                   style: const TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.w400,
@@ -72,13 +72,13 @@ class CustomerReviewCart extends StatelessWidget {
                     child: Row(
                   children: [
                     for (var i = 1; i <= 5; i++)
-                      starPrint(customerReview.star, i)
+                      starPrint(int.parse(customerReview.startRating), i)
                   ],
                 )),
               ],
             ),
             addVerticalSpace(10),
-            Text(customerReview.description,
+            Text(customerReview.desc,
                 style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w400,

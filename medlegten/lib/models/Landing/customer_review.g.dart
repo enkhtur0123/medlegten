@@ -9,19 +9,21 @@ part of 'customer_review.dart';
 _$_CustomerReview _$$_CustomerReviewFromJson(Map<String, dynamic> json) =>
     _$_CustomerReview(
       json['reviewId'] as String,
-      json['profileImg'] as String,
       json['fullName'] as String,
-      json['position'] as String,
-      json['description'] as String,
-      json['star'] as int,
+      json['bioTitle'] as String,
+      json['startRating'] as String,
+      json['profileImg'] as String,
+      json['desc'] as String,
+      json['ordering'] as String,
     );
 
 Map<String, dynamic> _$$_CustomerReviewToJson(_$_CustomerReview instance) =>
     <String, dynamic>{
       'reviewId': instance.reviewId,
-      'profileImg': instance.profileImg,
       'fullName': instance.fullName,
-      'position': instance.position,
-      'description': instance.description,
-      'star': instance.star,
+      'bioTitle': instance.bioTitle,
+      'startRating': instance.startRating,
+      'profileImg': instance.profileImg,
+      'desc': instance.desc,
+      'ordering': instance.ordering,
     };
