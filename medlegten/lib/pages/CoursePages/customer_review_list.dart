@@ -41,7 +41,7 @@ class CustomerReviewList extends HookWidget {
         ),
         addVerticalSpace(10),
         FutureBuilder<List<CustomerReview>?>(
-          future: LandingRepository().getCustomerReviewList(1),
+          future: LandingRepository().getCustomerReviewList('0'),
           builder: (BuildContext context,
               AsyncSnapshot<List<CustomerReview>?> snapshot) {
             if (snapshot.hasData) {

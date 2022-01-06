@@ -110,9 +110,11 @@ courseBgImg(courseId, courseLevel) {
   var imgUrl;
 
   switch(courseId) {
-    case "1": {  imgUrl = 'assets/img/Course/course_bg_a1.png'; }
+    case "1": {  imgUrl = 'assets/img/Course/course_cart_a1.png'; }
     break;
-    case "2": {  imgUrl = 'assets/img/Course/course_bg_a2.png'; }
+    case "2": {  imgUrl = 'assets/img/Course/course_cart_a2.png'; }
+    break;
+    case "3": {  imgUrl = 'assets/img/Course/course_cart_a3.png'; }
     break;
   }
 

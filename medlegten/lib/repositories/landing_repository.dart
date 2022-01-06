@@ -41,18 +41,19 @@ class LandingRepository {
     }
   }
 
-  Future<List<CustomerReview>?> getCustomerReviewList(int count) async {
+  Future<List<CustomerReview>?> getCustomerReviewList(String count) async {
     try {
       // final response =
-      //     await dioRepository.instance.get('Course/Unit/$courseId');
+      //     await dioRepository.instance.get('Course/Review/0');
       // final res = json.decode('$response');
       // if (res['isSuccess']) {
-      //   var list = res['courseUnitList'] as List;
-      //   return list.map((i) => CourseUnit.fromJson(i)).toList();
+      //   var list = res['reviews'] as List;
+      //   return list.map((i) => CustomerReview.fromJson(i)).toList();
       // } else {
       //   dioRepository.snackBar(res['resultMessage']);
       //   return null;
       // }
+
       return [
         CustomerReview(
             '1',
