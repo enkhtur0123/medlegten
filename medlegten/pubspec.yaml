@@ -37,8 +37,11 @@ dependencies:
   logger: ^1.1.0
   auto_route: ^3.2.0
   equatable: ^2.0.0
+#  equatable: ^1.2.0
   carousel_slider: ^4.0.0
   easy_rich_text: ^1.0.1
+  video_player: ^2.2.10
+#  video_player_controls: ^2.0.2
 
 dev_dependencies:
   flutter_test:
