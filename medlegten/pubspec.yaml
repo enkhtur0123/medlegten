@@ -42,6 +42,7 @@ dependencies:
   easy_rich_text: ^1.0.1
   video_player: ^2.2.10
 #  video_player_controls: ^2.0.2
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:
