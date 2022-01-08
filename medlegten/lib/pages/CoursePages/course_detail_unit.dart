@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/models/Landing/course_unit.dart';
 
 class CourseDetailUnit extends HookWidget {
-  const CourseDetailUnit({Key? key}) : super(key: key);
+  const CourseDetailUnit(this.unitInfo, {Key? key}) : super(key: key);
+  final CourseUnit unitInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class CourseDetailUnit extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Unit 1: Pronoun, to be', style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 20),),
+                    Text('Unit '+unitInfo.unitNumber+': '+unitInfo.unitName, style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 20),),
                     addVerticalSpace(5),
                     Container(
                       child: Row(
@@ -53,7 +55,7 @@ class CourseDetailUnit extends HookWidget {
                                 size: 12.0,
                               )),
                           addHorizontalSpace(3),
-                          Text('30 minutes',
+                          Text(unitInfo.minToWatch+' minutes',
                               style: const TextStyle(
                                   color: Color.fromRGBO(130, 130, 130, 1),
                                   fontWeight: FontWeight.w400,

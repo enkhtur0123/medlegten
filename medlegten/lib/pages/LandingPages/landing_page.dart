@@ -63,6 +63,13 @@ class LandingPage extends HookWidget {
     });
 
     return Scaffold(
+      // extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   shadowColor: Colors.transparent,
+      //   elevation: 0.0,
+      //   bottomOpacity: 0.0,
+      // ),
       backgroundColor: Colors.white,
       body: Column(
         children: [
