@@ -49,6 +49,7 @@ class _CourseDetailState extends State<CourseDetail> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            addVerticalSpace(1),
             VideoPlayerWidget(controller: _controller),
             addVerticalSpace(20),
             Padding(
