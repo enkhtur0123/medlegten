@@ -44,6 +44,7 @@ class _CourseDetailState extends State<CourseDetail> {
   @override
   Widget build(BuildContext context) {
     return Padding(
+<<<<<<< HEAD
       padding: EdgeInsets.only(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -76,6 +77,28 @@ class _CourseDetailState extends State<CourseDetail> {
                         addHorizontalSpace(3),
                         Text('1233 views',
                             style: const TextStyle(
+=======
+        padding: EdgeInsets.only(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            addVerticalSpace(1),
+            VideoPlayerWidget(controller: _controller),
+            addVerticalSpace(20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: ExpandablePanel(
+                header: Text('A1 Course - Анхан шатны хичээлийн агуулга', style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w500),),
+                collapsed: Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(
+                              child: Icon(
+                                Icons.remove_red_eye_outlined,
+>>>>>>> c1108ca69fa0a169c4ba4ad9d6aff7fbf4489fb5
                                 color: Color.fromRGBO(130, 130, 130, 1),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12)),
