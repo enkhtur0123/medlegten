@@ -2,9 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_widget.dart';
+import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:video_player/video_player.dart';
 import 'package:expandable/expandable.dart';
+<<<<<<< HEAD
+=======
+import 'package:cupertino_icons/cupertino_icons.dart';
+import 'package:medlegten/repositories/landing_repository.dart';
+
+>>>>>>> 8efeb82f0bc302d7c55a8cb41852ef7a16840792
 import 'course_detail_unit.dart';
 
 class CourseDetail extends StatefulWidget {
@@ -185,9 +193,41 @@ class _CourseDetailState extends State<CourseDetail> {
                 CourseDetailUnit(),
               ],
             ),
+<<<<<<< HEAD
           )
         ],
       ),
+=======
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                children: [
+                  FutureBuilder<List<CourseUnit>?>(
+                      future: LandingRepository().getCourseUnitList('1'),
+                      builder: (BuildContext context,
+                      AsyncSnapshot<List<CourseUnit>?> snapshot){
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: snapshot.data!
+                                .map((unitInfo) => CourseDetailUnit(unitInfo))
+                                .toList(),
+                            );
+                        } else if (snapshot.hasError) {
+                          return const Loading();
+                        } else {
+                          return const Loading();
+                        }
+                      },
+                  ),
+                  // CourseDetailUnit(),
+                  // CourseDetailUnit(),
+                  // CourseDetailUnit(),
+                ],
+              ),
+            )
+          ],
+        ),
+>>>>>>> 8efeb82f0bc302d7c55a8cb41852ef7a16840792
     );
   }
 }

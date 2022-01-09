@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/models/Landing/course_unit.dart';
 
 class CourseDetailUnit extends HookWidget {
-  const CourseDetailUnit({Key? key}) : super(key: key);
+  const CourseDetailUnit(this.unitInfo, {Key? key}) : super(key: key);
+  final CourseUnit unitInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class CourseDetailUnit extends HookWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+<<<<<<< HEAD
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,6 +69,48 @@ class CourseDetailUnit extends HookWidget {
                     ],
                   )
                 ],
+=======
+              Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Unit '+unitInfo.unitNumber+': '+unitInfo.unitName, style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 20),),
+                    addVerticalSpace(5),
+                    Container(
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                              child: Icon(
+                                Icons.person_outline_outlined,
+                                color: Color.fromRGBO(130, 130, 130, 1),
+                                size: 16.0,
+                              )),
+                          addHorizontalSpace(3),
+                          Text('Beginner',
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(130, 130, 130, 1),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12)),
+                          addHorizontalSpace(20),
+                          const SizedBox(
+                              child: Icon(
+                                Icons.timer,
+                                color: Color.fromRGBO(130, 130, 130, 1),
+                                size: 12.0,
+                              )),
+                          addHorizontalSpace(3),
+                          Text(unitInfo.minToWatch+' minutes',
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(130, 130, 130, 1),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12)),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+>>>>>>> 8efeb82f0bc302d7c55a8cb41852ef7a16840792
               ),
               Container(
                 child: iconLocked(),

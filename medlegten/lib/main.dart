@@ -39,7 +39,7 @@ class MyApp extends ConsumerWidget {
               ),
             ),
             debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
+            title: 'Medlegten',
             theme: ThemeData(
               appBarTheme: AppBarTheme(
                   backgroundColor: ThemeData.dark().scaffoldBackgroundColor,
