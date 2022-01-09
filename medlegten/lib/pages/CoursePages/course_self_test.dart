@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
@@ -6,15 +7,32 @@ import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Landing/quiz_question.dart';
-import 'package:medlegten/models/Landing/self_quiz.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test_question.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 
 class CourseSelfTestPage extends HookWidget {
   const CourseSelfTestPage({Key? key}) : super(key: key);
 
+  Future<List<QuizQuestionEx>> fetchData() async {
+    List<QuizQuestionEx> sortedList = [];
+    var result = await LandingRepository().getSelfQuiz();
+
+    var _sortedList = result!.questions
+      ..sort((a, b) => int.parse(b.ordering).compareTo(int.parse(a.ordering)));
+
+    for (var e in _sortedList) {
+      sortedList.add(QuizQuestionEx(e));
+    }
+    return sortedList;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var mode = useState(0);
+
+    final future = useMemoized(fetchData);
+    final snapshot = useFuture(future);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -46,30 +64,36 @@ class CourseSelfTestPage extends HookWidget {
           addVerticalSpace(20),
           Expanded(
             child: SingleChildScrollView(
-              child: FutureBuilder<SelfQuiz?>(
-                future: LandingRepository().getSelfQuiz(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<SelfQuiz?> snapshot) {
-                  if (snapshot.hasData) {
-                    var list = snapshot.data!.questions
-                      ..sort((a, b) => int.parse(b.ordering)
-                          .compareTo(int.parse(a.ordering)));
-                    return Column(
-                      children:
-                          list.map((s) => CourseSelfTestQuestion(s)).toList(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return const Loading();
-                  } else {
-                    return const Loading();
-                  }
-                },
-              ),
-            ),
+                child: snapshot.hasData
+                    ? Column(
+                        children: snapshot.data!
+                            .map((question) => CourseSelfTestQuestion(
+                                  question,
+                                  mode: mode.value,
+                                ))
+                            .toList(),
+                      )
+                    : const Loading()),
           ),
-          WideButton('Дуусгах', colorSecondary, colorWhite, () {}),
+          WideButton(
+              mode.value == 0 ? 'Дуусгах' : 'Буцах', colorSecondary, colorWhite,
+              () {
+            if (mode.value == 0) {
+              mode.value = 1;
+            } else {
+              AutoRouter.of(context).pop();
+            }
+          }),
+          addVerticalSpace(20)
         ],
       ),
     );
   }
+}
+
+class QuizQuestionEx {
+  QuizQuestionEx(this.quizQuestion);
+
+  QuizQuestion quizQuestion;
+  String? selectedAnswerId;
 }
