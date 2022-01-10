@@ -47,6 +47,12 @@ class _$AppRouter extends RootStackRouter {
     CourseSelfTestRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const CourseSelfTestPage());
+    },
+    CourseUnitIntroVideoRoute.name: (routeData) {
+      final args = routeData.argsAs<CourseUnitIntroVideoRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: CourseUnitIntroVideoPage(args.unitIntroVideo, key: args.key));
     }
   };
 
@@ -60,7 +66,9 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(AgeRoute.name, path: '/age'),
         RouteConfig(StartRoute.name, path: '/start'),
         RouteConfig(LandingRoute.name, path: '/landing'),
-        RouteConfig(CourseSelfTestRoute.name, path: '/course_self_test')
+        RouteConfig(CourseSelfTestRoute.name, path: '/course_self_test'),
+        RouteConfig(CourseUnitIntroVideoRoute.name,
+            path: '/Unit_introVideo/main_page')
       ];
 }
 
@@ -136,4 +144,30 @@ class CourseSelfTestRoute extends PageRouteInfo<void> {
       : super(CourseSelfTestRoute.name, path: '/course_self_test');
 
   static const String name = 'CourseSelfTestRoute';
+}
+
+/// generated route for
+/// [CourseUnitIntroVideoPage]
+class CourseUnitIntroVideoRoute
+    extends PageRouteInfo<CourseUnitIntroVideoRouteArgs> {
+  CourseUnitIntroVideoRoute({required UnitIntroVideo unitIntroVideo, Key? key})
+      : super(CourseUnitIntroVideoRoute.name,
+            path: '/Unit_introVideo/main_page',
+            args: CourseUnitIntroVideoRouteArgs(
+                unitIntroVideo: unitIntroVideo, key: key));
+
+  static const String name = 'CourseUnitIntroVideoRoute';
+}
+
+class CourseUnitIntroVideoRouteArgs {
+  const CourseUnitIntroVideoRouteArgs({required this.unitIntroVideo, this.key});
+
+  final UnitIntroVideo unitIntroVideo;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CourseUnitIntroVideoRouteArgs{unitIntroVideo: $unitIntroVideo, key: $key}';
+  }
 }

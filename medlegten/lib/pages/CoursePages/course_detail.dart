@@ -2,20 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_widget.dart';
-import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:video_player/video_player.dart';
 import 'package:expandable/expandable.dart';
-<<<<<<< HEAD
-=======
-import 'package:cupertino_icons/cupertino_icons.dart';
-import 'package:medlegten/repositories/landing_repository.dart';
-
->>>>>>> 8efeb82f0bc302d7c55a8cb41852ef7a16840792
-import 'course_detail_unit.dart';
 
 class CourseDetail extends StatefulWidget {
+  const CourseDetail({Key? key}) : super(key: key);
+
   @override
   _CourseDetailState createState() => _CourseDetailState();
 }
@@ -44,18 +37,18 @@ class _CourseDetailState extends State<CourseDetail> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-<<<<<<< HEAD
-      padding: EdgeInsets.only(),
+      padding: const EdgeInsets.only(top: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          addVerticalSpace(1),
           VideoPlayerWidget(controller: _controller),
           addVerticalSpace(20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: ExpandablePanel(
-              header: Text(
+              header: const Text(
                 'A1 Course - Анхан шатны хичээлийн агуулга',
                 style: TextStyle(
                     color: colorPrimary,
@@ -63,79 +56,48 @@ class _CourseDetailState extends State<CourseDetail> {
                     fontSize: 16,
                     fontWeight: FontWeight.w500),
               ),
-              collapsed: Container(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(
-                            child: Icon(
+              collapsed: Column(
+                children: [
+                  Row(
+                    children: [
+                      const SizedBox(
+                        child: Icon(
                           Icons.remove_red_eye_outlined,
                           color: Color.fromRGBO(130, 130, 130, 1),
-                          size: 12.0,
-                        )),
-                        addHorizontalSpace(3),
-                        Text('1233 views',
-                            style: const TextStyle(
-=======
-        padding: EdgeInsets.only(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            addVerticalSpace(1),
-            VideoPlayerWidget(controller: _controller),
-            addVerticalSpace(20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ExpandablePanel(
-                header: Text('A1 Course - Анхан шатны хичээлийн агуулга', style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w500),),
-                collapsed: Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          const SizedBox(
-                              child: Icon(
-                                Icons.remove_red_eye_outlined,
->>>>>>> c1108ca69fa0a169c4ba4ad9d6aff7fbf4489fb5
-                                color: Color.fromRGBO(130, 130, 130, 1),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12)),
-                        addHorizontalSpace(20),
-                        const SizedBox(
-                          child: Icon(
-                            CupertinoIcons.heart,
-                            color: Color.fromRGBO(130, 130, 130, 1),
-                            size: 12,
-                          ),
                         ),
-                        addHorizontalSpace(3),
-                        Text('456 Likes',
-                            style: const TextStyle(
-                                color: Color.fromRGBO(130, 130, 130, 1),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12)),
-                        addHorizontalSpace(20),
-                        const SizedBox(
-                            child: Icon(
-                          Icons.timer,
+                      ),
+                      addHorizontalSpace(20),
+                      const SizedBox(
+                        child: Icon(
+                          CupertinoIcons.heart,
                           color: Color.fromRGBO(130, 130, 130, 1),
-                          size: 12.0,
-                        )),
-                        addHorizontalSpace(3),
-                        Text('2 minutes',
-                            style: const TextStyle(
-                                color: Color.fromRGBO(130, 130, 130, 1),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12)),
-                      ],
-                    )
-                  ],
-                ),
+                          size: 12,
+                        ),
+                      ),
+                      addHorizontalSpace(3),
+                      const Text('456 Likes',
+                          style: TextStyle(
+                              color: Color.fromRGBO(130, 130, 130, 1),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12)),
+                      addHorizontalSpace(20),
+                      const SizedBox(
+                          child: Icon(
+                        Icons.timer,
+                        color: Color.fromRGBO(130, 130, 130, 1),
+                        size: 12.0,
+                      )),
+                      addHorizontalSpace(3),
+                      const Text('2 minutes',
+                          style: TextStyle(
+                              color: Color.fromRGBO(130, 130, 130, 1),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12)),
+                    ],
+                  )
+                ],
               ),
-              expanded: Container(
-                  child: Column(
+              expanded: Column(
                 children: [
                   Row(
                     children: [
@@ -146,8 +108,8 @@ class _CourseDetailState extends State<CourseDetail> {
                         size: 12.0,
                       )),
                       addHorizontalSpace(3),
-                      Text('1233 views',
-                          style: const TextStyle(
+                      const Text('1233 views',
+                          style: TextStyle(
                               color: Color.fromRGBO(130, 130, 130, 1),
                               fontWeight: FontWeight.w400,
                               fontSize: 12)),
@@ -160,8 +122,8 @@ class _CourseDetailState extends State<CourseDetail> {
                         ),
                       ),
                       addHorizontalSpace(3),
-                      Text('456 Likes',
-                          style: const TextStyle(
+                      const Text('456 Likes',
+                          style: TextStyle(
                               color: Color.fromRGBO(130, 130, 130, 1),
                               fontWeight: FontWeight.w400,
                               fontSize: 12)),
@@ -173,31 +135,31 @@ class _CourseDetailState extends State<CourseDetail> {
                         size: 12.0,
                       )),
                       addHorizontalSpace(3),
-                      Text('2 minutes',
-                          style: const TextStyle(
+                      const Text('2 minutes',
+                          style: TextStyle(
                               color: Color.fromRGBO(130, 130, 130, 1),
                               fontWeight: FontWeight.w400,
                               fontSize: 12)),
                     ],
                   ),
                   addVerticalSpace(20),
-                  Text(
+                  const Text(
                     'Та энэхүү курс хичээлийг бүрэн үзсэнээр Англи хэлний 26 цаг болон яриа, сонсгол гэх мэт олон ур чадваруудыг суралцана.',
                     style: TextStyle(color: colorBlack, height: 1.5),
                     softWrap: true,
                   )
                 ],
-              )),
+              ),
             ),
           ),
-          Divider(
+          const Divider(
             height: 40,
             thickness: 1,
             endIndent: 0,
             color: Color.fromRGBO(199, 201, 217, .5),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
             child: Text(
               'Units',
               style: TextStyle(
@@ -211,46 +173,40 @@ class _CourseDetailState extends State<CourseDetail> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
-                CourseDetailUnit(),
-                CourseDetailUnit(),
-                CourseDetailUnit(),
+                //CourseDetailUnit(),
+                //CourseDetailUnit(),
+                //CourseDetailUnit(),
               ],
             ),
-<<<<<<< HEAD
-          )
+            // Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: 10),
+            //     child: Column(
+            //     children: [
+            //       FutureBuilder<List<CourseUnit>?>(
+            //           future: LandingRepository().getCourseUnitList('1'),
+            //           builder: (BuildContext context,
+            //           AsyncSnapshot<List<CourseUnit>?> snapshot){
+            //             if (snapshot.hasData) {
+            //               return Column(
+            //                 children: snapshot.data!
+            //                     .map((unitInfo) => CourseDetailUnit(unitInfo))
+            //                     .toList(),
+            //                 );
+            //             } else if (snapshot.hasError) {
+            //               return const Loading();
+            //             } else {
+            //               return const Loading();
+            //             }
+            //           },
+            //       ),
+            //       // CourseDetailUnit(),
+            //       // CourseDetailUnit(),
+            //       // CourseDetailUnit(),
+            //     ],
+            //   ),
+          ),
         ],
       ),
-=======
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                children: [
-                  FutureBuilder<List<CourseUnit>?>(
-                      future: LandingRepository().getCourseUnitList('1'),
-                      builder: (BuildContext context,
-                      AsyncSnapshot<List<CourseUnit>?> snapshot){
-                        if (snapshot.hasData) {
-                          return Column(
-                            children: snapshot.data!
-                                .map((unitInfo) => CourseDetailUnit(unitInfo))
-                                .toList(),
-                            );
-                        } else if (snapshot.hasError) {
-                          return const Loading();
-                        } else {
-                          return const Loading();
-                        }
-                      },
-                  ),
-                  // CourseDetailUnit(),
-                  // CourseDetailUnit(),
-                  // CourseDetailUnit(),
-                ],
-              ),
-            )
-          ],
-        ),
->>>>>>> 8efeb82f0bc302d7c55a8cb41852ef7a16840792
     );
   }
 }

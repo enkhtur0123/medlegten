@@ -1,8 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import "package:intl/intl.dart";
+import 'package:medlegten/pages/CoursePages/Unit_introVideo/main_page.dart';
+import 'package:medlegten/repositories/unit_repository.dart';
+import 'package:medlegten/utils/app_router.dart';
 
 class CourseCart extends StatelessWidget {
   const CourseCart(this.courseInfo, {Key? key}) : super(key: key);
@@ -111,7 +115,8 @@ class CourseCart extends StatelessWidget {
                       ],
                     ),
                   ),
-                  courseBgImg(courseInfo.courseId, courseInfo.levelName),
+                  courseBgImg(
+                      context, courseInfo.courseId, courseInfo.levelName),
                 ],
               )
             ],
@@ -128,7 +133,7 @@ toMoney(stringMoney) {
   return currencyFormatter.format(d) + '\u20AE';
 }
 
-courseBgImg(courseId, courseLevel) {
+courseBgImg(context, courseId, courseLevel) {
   String imgUrl = '';
 
   switch (courseId) {
@@ -171,12 +176,17 @@ courseBgImg(courseId, courseLevel) {
         ),
         addVerticalSpace(10),
         OutlinedButton(
-          onPressed: null,
+          onPressed: () async {
+            var unitIntro = await UnitRepository().getUnitIntroVideo('1');
+
+            AutoRouter.of(context)
+                .push(CourseUnitIntroVideoRoute(unitIntroVideo: unitIntro!));
+          },
           style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 1.0, color: colorWhite),
           ),
           child: const Text(
-            'Buy now',
+            'See units',
             style: TextStyle(
                 color: colorWhite,
                 fontWeight: FontWeight.w500,
