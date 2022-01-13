@@ -66,13 +66,14 @@ class _VCaptionState extends State<VCaption> {
             addHorizontalSpace(10),
             OutlinedButton(
               onPressed: () {
-                isMon = true;
+                isMon = false;
               },
               style: OutlinedButton.styleFrom(
-                backgroundColor: ColorTable.color48_53_159,
+                backgroundColor:
+                    isMon ? Colors.grey[400] : ColorTable.color48_53_159,
               ),
               child: const Text(
-                'Mon',
+                'Eng',
                 style: TextStyle(
                     color: colorWhite,
                     fontWeight: FontWeight.w500,
@@ -83,13 +84,14 @@ class _VCaptionState extends State<VCaption> {
             addHorizontalSpace(10),
             OutlinedButton(
               onPressed: () {
-                isMon = false;
+                isMon = true;
               },
               style: OutlinedButton.styleFrom(
-                backgroundColor: ColorTable.color48_53_159,
+                backgroundColor:
+                    isMon ? ColorTable.color48_53_159 : Colors.grey[400],
               ),
               child: const Text(
-                'Eng',
+                'Mon',
                 style: TextStyle(
                     color: colorWhite,
                     fontWeight: FontWeight.w500,
@@ -116,6 +118,9 @@ class _VCaptionState extends State<VCaption> {
                   isUser = 0;
                   widget.videoPlayerController.seekTo(getDuration(
                       widget.unitIntroVideo.cue[currentIndex].startTime));
+                  if (widget.videoPlayerController.value.isPlaying == false) {
+                    widget.videoPlayerController.play();
+                  }
                 }
                 return false;
               },
@@ -134,8 +139,9 @@ class _VCaptionState extends State<VCaption> {
                 },
                 children: <Widget>[
                   ...widget.unitIntroVideo.cue.map((cue) {
-                    return Text(
-                      isMon ? cue.fromLangTranslation : cue.toLangTranslation,
+                    return Center(
+                        child: Text(
+                      isMon ? cue.toLangTranslation : cue.fromLangTranslation,
                       style: TextStyle(
                           color: currentIndex == int.parse(cue.ordering) - 1
                               ? colorBlack
@@ -143,7 +149,7 @@ class _VCaptionState extends State<VCaption> {
                           fontSize: 18,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
-                    );
+                    ));
                   })
                 ],
               ),
