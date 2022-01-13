@@ -22,14 +22,14 @@ UnitIntroCueWord _$UnitIntroCueWordFromJson(Map<String, dynamic> json) {
 class _$UnitIntroCueWordTearOff {
   const _$UnitIntroCueWordTearOff();
 
-  _UnitIntroCueWord call(String id, String cueId, String mainText,
-      String valueText, String spaceNext) {
+  _UnitIntroCueWord call(String wordId, String mainText, String wordValue,
+      String spaceNext, String ordering) {
     return _UnitIntroCueWord(
-      id,
-      cueId,
+      wordId,
       mainText,
-      valueText,
+      wordValue,
       spaceNext,
+      ordering,
     );
   }
 
@@ -43,11 +43,11 @@ const $UnitIntroCueWord = _$UnitIntroCueWordTearOff();
 
 /// @nodoc
 mixin _$UnitIntroCueWord {
-  String get id => throw _privateConstructorUsedError;
-  String get cueId => throw _privateConstructorUsedError;
+  String get wordId => throw _privateConstructorUsedError;
   String get mainText => throw _privateConstructorUsedError;
-  String get valueText => throw _privateConstructorUsedError;
+  String get wordValue => throw _privateConstructorUsedError;
   String get spaceNext => throw _privateConstructorUsedError;
+  String get ordering => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -61,11 +61,11 @@ abstract class $UnitIntroCueWordCopyWith<$Res> {
           UnitIntroCueWord value, $Res Function(UnitIntroCueWord) then) =
       _$UnitIntroCueWordCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String cueId,
+      {String wordId,
       String mainText,
-      String valueText,
-      String spaceNext});
+      String wordValue,
+      String spaceNext,
+      String ordering});
 }
 
 /// @nodoc
@@ -79,32 +79,32 @@ class _$UnitIntroCueWordCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
-    Object? cueId = freezed,
+    Object? wordId = freezed,
     Object? mainText = freezed,
-    Object? valueText = freezed,
+    Object? wordValue = freezed,
     Object? spaceNext = freezed,
+    Object? ordering = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      cueId: cueId == freezed
-          ? _value.cueId
-          : cueId // ignore: cast_nullable_to_non_nullable
+      wordId: wordId == freezed
+          ? _value.wordId
+          : wordId // ignore: cast_nullable_to_non_nullable
               as String,
       mainText: mainText == freezed
           ? _value.mainText
           : mainText // ignore: cast_nullable_to_non_nullable
               as String,
-      valueText: valueText == freezed
-          ? _value.valueText
-          : valueText // ignore: cast_nullable_to_non_nullable
+      wordValue: wordValue == freezed
+          ? _value.wordValue
+          : wordValue // ignore: cast_nullable_to_non_nullable
               as String,
       spaceNext: spaceNext == freezed
           ? _value.spaceNext
           : spaceNext // ignore: cast_nullable_to_non_nullable
+              as String,
+      ordering: ordering == freezed
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -118,11 +118,11 @@ abstract class _$UnitIntroCueWordCopyWith<$Res>
       __$UnitIntroCueWordCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String cueId,
+      {String wordId,
       String mainText,
-      String valueText,
-      String spaceNext});
+      String wordValue,
+      String spaceNext,
+      String ordering});
 }
 
 /// @nodoc
@@ -138,32 +138,32 @@ class __$UnitIntroCueWordCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
-    Object? cueId = freezed,
+    Object? wordId = freezed,
     Object? mainText = freezed,
-    Object? valueText = freezed,
+    Object? wordValue = freezed,
     Object? spaceNext = freezed,
+    Object? ordering = freezed,
   }) {
     return _then(_UnitIntroCueWord(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      cueId == freezed
-          ? _value.cueId
-          : cueId // ignore: cast_nullable_to_non_nullable
+      wordId == freezed
+          ? _value.wordId
+          : wordId // ignore: cast_nullable_to_non_nullable
               as String,
       mainText == freezed
           ? _value.mainText
           : mainText // ignore: cast_nullable_to_non_nullable
               as String,
-      valueText == freezed
-          ? _value.valueText
-          : valueText // ignore: cast_nullable_to_non_nullable
+      wordValue == freezed
+          ? _value.wordValue
+          : wordValue // ignore: cast_nullable_to_non_nullable
               as String,
       spaceNext == freezed
           ? _value.spaceNext
           : spaceNext // ignore: cast_nullable_to_non_nullable
+              as String,
+      ordering == freezed
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -172,26 +172,26 @@ class __$UnitIntroCueWordCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UnitIntroCueWord implements _UnitIntroCueWord {
-  _$_UnitIntroCueWord(
-      this.id, this.cueId, this.mainText, this.valueText, this.spaceNext);
+  _$_UnitIntroCueWord(this.wordId, this.mainText, this.wordValue,
+      this.spaceNext, this.ordering);
 
   factory _$_UnitIntroCueWord.fromJson(Map<String, dynamic> json) =>
       _$$_UnitIntroCueWordFromJson(json);
 
   @override
-  final String id;
-  @override
-  final String cueId;
+  final String wordId;
   @override
   final String mainText;
   @override
-  final String valueText;
+  final String wordValue;
   @override
   final String spaceNext;
+  @override
+  final String ordering;
 
   @override
   String toString() {
-    return 'UnitIntroCueWord(id: $id, cueId: $cueId, mainText: $mainText, valueText: $valueText, spaceNext: $spaceNext)';
+    return 'UnitIntroCueWord(wordId: $wordId, mainText: $mainText, wordValue: $wordValue, spaceNext: $spaceNext, ordering: $ordering)';
   }
 
   @override
@@ -199,21 +199,21 @@ class _$_UnitIntroCueWord implements _UnitIntroCueWord {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UnitIntroCueWord &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.cueId, cueId) &&
+            const DeepCollectionEquality().equals(other.wordId, wordId) &&
             const DeepCollectionEquality().equals(other.mainText, mainText) &&
-            const DeepCollectionEquality().equals(other.valueText, valueText) &&
-            const DeepCollectionEquality().equals(other.spaceNext, spaceNext));
+            const DeepCollectionEquality().equals(other.wordValue, wordValue) &&
+            const DeepCollectionEquality().equals(other.spaceNext, spaceNext) &&
+            const DeepCollectionEquality().equals(other.ordering, ordering));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(cueId),
+      const DeepCollectionEquality().hash(wordId),
       const DeepCollectionEquality().hash(mainText),
-      const DeepCollectionEquality().hash(valueText),
-      const DeepCollectionEquality().hash(spaceNext));
+      const DeepCollectionEquality().hash(wordValue),
+      const DeepCollectionEquality().hash(spaceNext),
+      const DeepCollectionEquality().hash(ordering));
 
   @JsonKey(ignore: true)
   @override
@@ -227,22 +227,22 @@ class _$_UnitIntroCueWord implements _UnitIntroCueWord {
 }
 
 abstract class _UnitIntroCueWord implements UnitIntroCueWord {
-  factory _UnitIntroCueWord(String id, String cueId, String mainText,
-      String valueText, String spaceNext) = _$_UnitIntroCueWord;
+  factory _UnitIntroCueWord(String wordId, String mainText, String wordValue,
+      String spaceNext, String ordering) = _$_UnitIntroCueWord;
 
   factory _UnitIntroCueWord.fromJson(Map<String, dynamic> json) =
       _$_UnitIntroCueWord.fromJson;
 
   @override
-  String get id;
-  @override
-  String get cueId;
+  String get wordId;
   @override
   String get mainText;
   @override
-  String get valueText;
+  String get wordValue;
   @override
   String get spaceNext;
+  @override
+  String get ordering;
   @override
   @JsonKey(ignore: true)
   _$UnitIntroCueWordCopyWith<_UnitIntroCueWord> get copyWith =>

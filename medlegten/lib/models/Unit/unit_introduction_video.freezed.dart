@@ -22,13 +22,13 @@ UnitIntroVideo _$UnitIntroVideoFromJson(Map<String, dynamic> json) {
 class _$UnitIntroVideoTearOff {
   const _$UnitIntroVideoTearOff();
 
-  _UnitIntroVideo call(
-      String id, String name, String url, List<UnitIntroCueParagraph> cues) {
+  _UnitIntroVideo call(String name, String url, String hostSource,
+      List<UnitIntroCueParagraph> cue) {
     return _UnitIntroVideo(
-      id,
       name,
       url,
-      cues,
+      hostSource,
+      cue,
     );
   }
 
@@ -42,10 +42,10 @@ const $UnitIntroVideo = _$UnitIntroVideoTearOff();
 
 /// @nodoc
 mixin _$UnitIntroVideo {
-  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  List<UnitIntroCueParagraph> get cues => throw _privateConstructorUsedError;
+  String get hostSource => throw _privateConstructorUsedError;
+  List<UnitIntroCueParagraph> get cue => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,7 +59,10 @@ abstract class $UnitIntroVideoCopyWith<$Res> {
           UnitIntroVideo value, $Res Function(UnitIntroVideo) then) =
       _$UnitIntroVideoCopyWithImpl<$Res>;
   $Res call(
-      {String id, String name, String url, List<UnitIntroCueParagraph> cues});
+      {String name,
+      String url,
+      String hostSource,
+      List<UnitIntroCueParagraph> cue});
 }
 
 /// @nodoc
@@ -73,16 +76,12 @@ class _$UnitIntroVideoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? url = freezed,
-    Object? cues = freezed,
+    Object? hostSource = freezed,
+    Object? cue = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -91,9 +90,13 @@ class _$UnitIntroVideoCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      cues: cues == freezed
-          ? _value.cues
-          : cues // ignore: cast_nullable_to_non_nullable
+      hostSource: hostSource == freezed
+          ? _value.hostSource
+          : hostSource // ignore: cast_nullable_to_non_nullable
+              as String,
+      cue: cue == freezed
+          ? _value.cue
+          : cue // ignore: cast_nullable_to_non_nullable
               as List<UnitIntroCueParagraph>,
     ));
   }
@@ -107,7 +110,10 @@ abstract class _$UnitIntroVideoCopyWith<$Res>
       __$UnitIntroVideoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id, String name, String url, List<UnitIntroCueParagraph> cues});
+      {String name,
+      String url,
+      String hostSource,
+      List<UnitIntroCueParagraph> cue});
 }
 
 /// @nodoc
@@ -123,16 +129,12 @@ class __$UnitIntroVideoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? url = freezed,
-    Object? cues = freezed,
+    Object? hostSource = freezed,
+    Object? cue = freezed,
   }) {
     return _then(_UnitIntroVideo(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -141,9 +143,13 @@ class __$UnitIntroVideoCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      cues == freezed
-          ? _value.cues
-          : cues // ignore: cast_nullable_to_non_nullable
+      hostSource == freezed
+          ? _value.hostSource
+          : hostSource // ignore: cast_nullable_to_non_nullable
+              as String,
+      cue == freezed
+          ? _value.cue
+          : cue // ignore: cast_nullable_to_non_nullable
               as List<UnitIntroCueParagraph>,
     ));
   }
@@ -152,23 +158,23 @@ class __$UnitIntroVideoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UnitIntroVideo implements _UnitIntroVideo {
-  _$_UnitIntroVideo(this.id, this.name, this.url, this.cues);
+  _$_UnitIntroVideo(this.name, this.url, this.hostSource, this.cue);
 
   factory _$_UnitIntroVideo.fromJson(Map<String, dynamic> json) =>
       _$$_UnitIntroVideoFromJson(json);
 
   @override
-  final String id;
-  @override
   final String name;
   @override
   final String url;
   @override
-  final List<UnitIntroCueParagraph> cues;
+  final String hostSource;
+  @override
+  final List<UnitIntroCueParagraph> cue;
 
   @override
   String toString() {
-    return 'UnitIntroVideo(id: $id, name: $name, url: $url, cues: $cues)';
+    return 'UnitIntroVideo(name: $name, url: $url, hostSource: $hostSource, cue: $cue)';
   }
 
   @override
@@ -176,19 +182,20 @@ class _$_UnitIntroVideo implements _UnitIntroVideo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UnitIntroVideo &&
-            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.url, url) &&
-            const DeepCollectionEquality().equals(other.cues, cues));
+            const DeepCollectionEquality()
+                .equals(other.hostSource, hostSource) &&
+            const DeepCollectionEquality().equals(other.cue, cue));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(cues));
+      const DeepCollectionEquality().hash(hostSource),
+      const DeepCollectionEquality().hash(cue));
 
   @JsonKey(ignore: true)
   @override
@@ -202,20 +209,20 @@ class _$_UnitIntroVideo implements _UnitIntroVideo {
 }
 
 abstract class _UnitIntroVideo implements UnitIntroVideo {
-  factory _UnitIntroVideo(String id, String name, String url,
-      List<UnitIntroCueParagraph> cues) = _$_UnitIntroVideo;
+  factory _UnitIntroVideo(String name, String url, String hostSource,
+      List<UnitIntroCueParagraph> cue) = _$_UnitIntroVideo;
 
   factory _UnitIntroVideo.fromJson(Map<String, dynamic> json) =
       _$_UnitIntroVideo.fromJson;
 
   @override
-  String get id;
-  @override
   String get name;
   @override
   String get url;
   @override
-  List<UnitIntroCueParagraph> get cues;
+  String get hostSource;
+  @override
+  List<UnitIntroCueParagraph> get cue;
   @override
   @JsonKey(ignore: true)
   _$UnitIntroVideoCopyWith<_UnitIntroVideo> get copyWith =>

@@ -25,23 +25,27 @@ class _$UnitIntroCueParagraphTearOff {
 
   _UnitIntroCueParagraph call(
       String cueId,
+      String ordering,
       String startTime,
       String endTime,
       String fromLangId,
-      String fromText,
+      String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
-      String toText,
+      String toLangTranslation,
+      String toLangIsDefault,
       List<UnitIntroCueWord> words) {
     return _UnitIntroCueParagraph(
       cueId,
+      ordering,
       startTime,
       endTime,
       fromLangId,
-      fromText,
+      fromLangTranslation,
       fromLangIsDefault,
       toLangId,
-      toText,
+      toLangTranslation,
+      toLangIsDefault,
       words,
     );
   }
@@ -57,13 +61,15 @@ const $UnitIntroCueParagraph = _$UnitIntroCueParagraphTearOff();
 /// @nodoc
 mixin _$UnitIntroCueParagraph {
   String get cueId => throw _privateConstructorUsedError;
+  String get ordering => throw _privateConstructorUsedError;
   String get startTime => throw _privateConstructorUsedError;
   String get endTime => throw _privateConstructorUsedError;
   String get fromLangId => throw _privateConstructorUsedError;
-  String get fromText => throw _privateConstructorUsedError;
+  String get fromLangTranslation => throw _privateConstructorUsedError;
   String get fromLangIsDefault => throw _privateConstructorUsedError;
   String get toLangId => throw _privateConstructorUsedError;
-  String get toText => throw _privateConstructorUsedError;
+  String get toLangTranslation => throw _privateConstructorUsedError;
+  String get toLangIsDefault => throw _privateConstructorUsedError;
   List<UnitIntroCueWord> get words => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -79,13 +85,15 @@ abstract class $UnitIntroCueParagraphCopyWith<$Res> {
       _$UnitIntroCueParagraphCopyWithImpl<$Res>;
   $Res call(
       {String cueId,
+      String ordering,
       String startTime,
       String endTime,
       String fromLangId,
-      String fromText,
+      String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
-      String toText,
+      String toLangTranslation,
+      String toLangIsDefault,
       List<UnitIntroCueWord> words});
 }
 
@@ -101,19 +109,25 @@ class _$UnitIntroCueParagraphCopyWithImpl<$Res>
   @override
   $Res call({
     Object? cueId = freezed,
+    Object? ordering = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
     Object? fromLangId = freezed,
-    Object? fromText = freezed,
+    Object? fromLangTranslation = freezed,
     Object? fromLangIsDefault = freezed,
     Object? toLangId = freezed,
-    Object? toText = freezed,
+    Object? toLangTranslation = freezed,
+    Object? toLangIsDefault = freezed,
     Object? words = freezed,
   }) {
     return _then(_value.copyWith(
       cueId: cueId == freezed
           ? _value.cueId
           : cueId // ignore: cast_nullable_to_non_nullable
+              as String,
+      ordering: ordering == freezed
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
               as String,
       startTime: startTime == freezed
           ? _value.startTime
@@ -127,9 +141,9 @@ class _$UnitIntroCueParagraphCopyWithImpl<$Res>
           ? _value.fromLangId
           : fromLangId // ignore: cast_nullable_to_non_nullable
               as String,
-      fromText: fromText == freezed
-          ? _value.fromText
-          : fromText // ignore: cast_nullable_to_non_nullable
+      fromLangTranslation: fromLangTranslation == freezed
+          ? _value.fromLangTranslation
+          : fromLangTranslation // ignore: cast_nullable_to_non_nullable
               as String,
       fromLangIsDefault: fromLangIsDefault == freezed
           ? _value.fromLangIsDefault
@@ -139,9 +153,13 @@ class _$UnitIntroCueParagraphCopyWithImpl<$Res>
           ? _value.toLangId
           : toLangId // ignore: cast_nullable_to_non_nullable
               as String,
-      toText: toText == freezed
-          ? _value.toText
-          : toText // ignore: cast_nullable_to_non_nullable
+      toLangTranslation: toLangTranslation == freezed
+          ? _value.toLangTranslation
+          : toLangTranslation // ignore: cast_nullable_to_non_nullable
+              as String,
+      toLangIsDefault: toLangIsDefault == freezed
+          ? _value.toLangIsDefault
+          : toLangIsDefault // ignore: cast_nullable_to_non_nullable
               as String,
       words: words == freezed
           ? _value.words
@@ -160,13 +178,15 @@ abstract class _$UnitIntroCueParagraphCopyWith<$Res>
   @override
   $Res call(
       {String cueId,
+      String ordering,
       String startTime,
       String endTime,
       String fromLangId,
-      String fromText,
+      String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
-      String toText,
+      String toLangTranslation,
+      String toLangIsDefault,
       List<UnitIntroCueWord> words});
 }
 
@@ -184,19 +204,25 @@ class __$UnitIntroCueParagraphCopyWithImpl<$Res>
   @override
   $Res call({
     Object? cueId = freezed,
+    Object? ordering = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
     Object? fromLangId = freezed,
-    Object? fromText = freezed,
+    Object? fromLangTranslation = freezed,
     Object? fromLangIsDefault = freezed,
     Object? toLangId = freezed,
-    Object? toText = freezed,
+    Object? toLangTranslation = freezed,
+    Object? toLangIsDefault = freezed,
     Object? words = freezed,
   }) {
     return _then(_UnitIntroCueParagraph(
       cueId == freezed
           ? _value.cueId
           : cueId // ignore: cast_nullable_to_non_nullable
+              as String,
+      ordering == freezed
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
               as String,
       startTime == freezed
           ? _value.startTime
@@ -210,9 +236,9 @@ class __$UnitIntroCueParagraphCopyWithImpl<$Res>
           ? _value.fromLangId
           : fromLangId // ignore: cast_nullable_to_non_nullable
               as String,
-      fromText == freezed
-          ? _value.fromText
-          : fromText // ignore: cast_nullable_to_non_nullable
+      fromLangTranslation == freezed
+          ? _value.fromLangTranslation
+          : fromLangTranslation // ignore: cast_nullable_to_non_nullable
               as String,
       fromLangIsDefault == freezed
           ? _value.fromLangIsDefault
@@ -222,9 +248,13 @@ class __$UnitIntroCueParagraphCopyWithImpl<$Res>
           ? _value.toLangId
           : toLangId // ignore: cast_nullable_to_non_nullable
               as String,
-      toText == freezed
-          ? _value.toText
-          : toText // ignore: cast_nullable_to_non_nullable
+      toLangTranslation == freezed
+          ? _value.toLangTranslation
+          : toLangTranslation // ignore: cast_nullable_to_non_nullable
+              as String,
+      toLangIsDefault == freezed
+          ? _value.toLangIsDefault
+          : toLangIsDefault // ignore: cast_nullable_to_non_nullable
               as String,
       words == freezed
           ? _value.words
@@ -239,13 +269,15 @@ class __$UnitIntroCueParagraphCopyWithImpl<$Res>
 class _$_UnitIntroCueParagraph implements _UnitIntroCueParagraph {
   _$_UnitIntroCueParagraph(
       this.cueId,
+      this.ordering,
       this.startTime,
       this.endTime,
       this.fromLangId,
-      this.fromText,
+      this.fromLangTranslation,
       this.fromLangIsDefault,
       this.toLangId,
-      this.toText,
+      this.toLangTranslation,
+      this.toLangIsDefault,
       this.words);
 
   factory _$_UnitIntroCueParagraph.fromJson(Map<String, dynamic> json) =>
@@ -254,25 +286,29 @@ class _$_UnitIntroCueParagraph implements _UnitIntroCueParagraph {
   @override
   final String cueId;
   @override
+  final String ordering;
+  @override
   final String startTime;
   @override
   final String endTime;
   @override
   final String fromLangId;
   @override
-  final String fromText;
+  final String fromLangTranslation;
   @override
   final String fromLangIsDefault;
   @override
   final String toLangId;
   @override
-  final String toText;
+  final String toLangTranslation;
+  @override
+  final String toLangIsDefault;
   @override
   final List<UnitIntroCueWord> words;
 
   @override
   String toString() {
-    return 'UnitIntroCueParagraph(cueId: $cueId, startTime: $startTime, endTime: $endTime, fromLangId: $fromLangId, fromText: $fromText, fromLangIsDefault: $fromLangIsDefault, toLangId: $toLangId, toText: $toText, words: $words)';
+    return 'UnitIntroCueParagraph(cueId: $cueId, ordering: $ordering, startTime: $startTime, endTime: $endTime, fromLangId: $fromLangId, fromLangTranslation: $fromLangTranslation, fromLangIsDefault: $fromLangIsDefault, toLangId: $toLangId, toLangTranslation: $toLangTranslation, toLangIsDefault: $toLangIsDefault, words: $words)';
   }
 
   @override
@@ -281,15 +317,20 @@ class _$_UnitIntroCueParagraph implements _UnitIntroCueParagraph {
         (other.runtimeType == runtimeType &&
             other is _UnitIntroCueParagraph &&
             const DeepCollectionEquality().equals(other.cueId, cueId) &&
+            const DeepCollectionEquality().equals(other.ordering, ordering) &&
             const DeepCollectionEquality().equals(other.startTime, startTime) &&
             const DeepCollectionEquality().equals(other.endTime, endTime) &&
             const DeepCollectionEquality()
                 .equals(other.fromLangId, fromLangId) &&
-            const DeepCollectionEquality().equals(other.fromText, fromText) &&
+            const DeepCollectionEquality()
+                .equals(other.fromLangTranslation, fromLangTranslation) &&
             const DeepCollectionEquality()
                 .equals(other.fromLangIsDefault, fromLangIsDefault) &&
             const DeepCollectionEquality().equals(other.toLangId, toLangId) &&
-            const DeepCollectionEquality().equals(other.toText, toText) &&
+            const DeepCollectionEquality()
+                .equals(other.toLangTranslation, toLangTranslation) &&
+            const DeepCollectionEquality()
+                .equals(other.toLangIsDefault, toLangIsDefault) &&
             const DeepCollectionEquality().equals(other.words, words));
   }
 
@@ -297,13 +338,15 @@ class _$_UnitIntroCueParagraph implements _UnitIntroCueParagraph {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(cueId),
+      const DeepCollectionEquality().hash(ordering),
       const DeepCollectionEquality().hash(startTime),
       const DeepCollectionEquality().hash(endTime),
       const DeepCollectionEquality().hash(fromLangId),
-      const DeepCollectionEquality().hash(fromText),
+      const DeepCollectionEquality().hash(fromLangTranslation),
       const DeepCollectionEquality().hash(fromLangIsDefault),
       const DeepCollectionEquality().hash(toLangId),
-      const DeepCollectionEquality().hash(toText),
+      const DeepCollectionEquality().hash(toLangTranslation),
+      const DeepCollectionEquality().hash(toLangIsDefault),
       const DeepCollectionEquality().hash(words));
 
   @JsonKey(ignore: true)
@@ -321,13 +364,15 @@ class _$_UnitIntroCueParagraph implements _UnitIntroCueParagraph {
 abstract class _UnitIntroCueParagraph implements UnitIntroCueParagraph {
   factory _UnitIntroCueParagraph(
       String cueId,
+      String ordering,
       String startTime,
       String endTime,
       String fromLangId,
-      String fromText,
+      String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
-      String toText,
+      String toLangTranslation,
+      String toLangIsDefault,
       List<UnitIntroCueWord> words) = _$_UnitIntroCueParagraph;
 
   factory _UnitIntroCueParagraph.fromJson(Map<String, dynamic> json) =
@@ -336,19 +381,23 @@ abstract class _UnitIntroCueParagraph implements UnitIntroCueParagraph {
   @override
   String get cueId;
   @override
+  String get ordering;
+  @override
   String get startTime;
   @override
   String get endTime;
   @override
   String get fromLangId;
   @override
-  String get fromText;
+  String get fromLangTranslation;
   @override
   String get fromLangIsDefault;
   @override
   String get toLangId;
   @override
-  String get toText;
+  String get toLangTranslation;
+  @override
+  String get toLangIsDefault;
   @override
   List<UnitIntroCueWord> get words;
   @override

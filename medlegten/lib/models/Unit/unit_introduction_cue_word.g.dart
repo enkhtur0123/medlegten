@@ -8,18 +8,18 @@ part of 'unit_introduction_cue_word.dart';
 
 _$_UnitIntroCueWord _$$_UnitIntroCueWordFromJson(Map<String, dynamic> json) =>
     _$_UnitIntroCueWord(
-      json['id'] as String,
-      json['cueId'] as String,
+      json['wordId'] as String,
       json['mainText'] as String,
-      json['valueText'] as String,
+      json['wordValue'] as String,
       json['spaceNext'] as String,
+      json['ordering'] as String,
     );
 
 Map<String, dynamic> _$$_UnitIntroCueWordToJson(_$_UnitIntroCueWord instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'cueId': instance.cueId,
+      'wordId': instance.wordId,
       'mainText': instance.mainText,
-      'valueText': instance.valueText,
+      'wordValue': instance.wordValue,
       'spaceNext': instance.spaceNext,
+      'ordering': instance.ordering,
     };

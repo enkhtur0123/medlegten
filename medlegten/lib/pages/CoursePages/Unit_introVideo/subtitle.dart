@@ -39,14 +39,15 @@ class _VCaptionState extends State<VCaption> {
         if (isUser == -1) {
           setState(() {
             var _duration = widget.videoPlayerController.value.position;
-            var idx = widget.unitIntroVideo.cues.firstWhereOrNull((element) =>
+            var idx = widget.unitIntroVideo.cue.firstWhereOrNull((element) =>
                 getDuration(element.startTime) <= _duration &&
                 getDuration(element.endTime) > _duration);
-            if (idx != null && prevCueId != idx.cueId) {
-              _fixedExtentScrollController.animateToItem(int.parse(idx.cueId),
-                  duration: const Duration(milliseconds: 1000),
+            if (idx != null && prevCueId != idx.ordering) {
+              _fixedExtentScrollController.animateToItem(
+                  int.parse(idx.ordering) - 1,
+                  duration: const Duration(milliseconds: 500),
                   curve: Curves.linear);
-              prevCueId = idx.cueId;
+              prevCueId = idx.ordering;
             }
           });
         }
@@ -114,7 +115,7 @@ class _VCaptionState extends State<VCaption> {
                     isUser == 1) {
                   isUser = 0;
                   widget.videoPlayerController.seekTo(getDuration(
-                      widget.unitIntroVideo.cues[currentIndex].startTime));
+                      widget.unitIntroVideo.cue[currentIndex].startTime));
                 }
                 return false;
               },
@@ -132,11 +133,11 @@ class _VCaptionState extends State<VCaption> {
                   currentIndex = index;
                 },
                 children: <Widget>[
-                  ...widget.unitIntroVideo.cues.map((cue) {
+                  ...widget.unitIntroVideo.cue.map((cue) {
                     return Text(
-                      isMon ? cue.fromText : cue.toText,
+                      isMon ? cue.fromLangTranslation : cue.toLangTranslation,
                       style: TextStyle(
-                          color: currentIndex == int.parse(cue.cueId)
+                          color: currentIndex == int.parse(cue.ordering) - 1
                               ? colorBlack
                               : Colors.black54,
                           fontSize: 18,

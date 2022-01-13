@@ -8,13 +8,15 @@ part 'unit_introduction_cue.g.dart';
 class UnitIntroCueParagraph with _$UnitIntroCueParagraph {
   factory UnitIntroCueParagraph(
       String cueId,
+      String ordering,
       String startTime,
       String endTime,
       String fromLangId,
-      String fromText,
+      String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
-      String toText,
+      String toLangTranslation,
+      String toLangIsDefault,
       List<UnitIntroCueWord> words) = _UnitIntroCueParagraph;
 
   factory UnitIntroCueParagraph.fromJson(Map<String, dynamic> json) =>
