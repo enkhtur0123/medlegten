@@ -8,6 +8,8 @@ import 'package:medlegten/pages/CoursePages/Unit_introVideo/main_page.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 
+import 'course_detail.dart';
+
 class CourseCart extends StatelessWidget {
   const CourseCart(this.courseInfo, {Key? key}) : super(key: key);
 
@@ -115,8 +117,7 @@ class CourseCart extends StatelessWidget {
                       ],
                     ),
                   ),
-                  courseBgImg(
-                      context, courseInfo.courseId, courseInfo.levelName),
+                  courseBgImg(context, courseInfo),
                 ],
               )
             ],
@@ -133,10 +134,10 @@ toMoney(stringMoney) {
   return currencyFormatter.format(d) + '\u20AE';
 }
 
-courseBgImg(context, courseId, courseLevel) {
+courseBgImg(context, CourseInfo courseInfo) {
   String imgUrl = '';
 
-  switch (courseId) {
+  switch (courseInfo.courseId) {
     case "1":
       {
         imgUrl = 'assets/img/Course/course_cart_a1.png';
@@ -167,7 +168,7 @@ courseBgImg(context, courseId, courseLevel) {
       children: [
         addVerticalSpace(30),
         Text(
-          courseLevel + ' level'.toUpperCase(),
+          courseInfo.levelName + ' level'.toUpperCase(),
           style: const TextStyle(
               color: colorWhite,
               fontWeight: FontWeight.w700,
@@ -177,10 +178,8 @@ courseBgImg(context, courseId, courseLevel) {
         addVerticalSpace(10),
         OutlinedButton(
           onPressed: () async {
-            var unitIntro = await UnitRepository().getUnitIntroVideo('1');
-
             AutoRouter.of(context)
-                .push(CourseUnitIntroVideoRoute(unitIntroVideo: unitIntro!));
+                .push(CourseDetailRoute(courseInfo: courseInfo));
           },
           style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 1.0, color: colorWhite),

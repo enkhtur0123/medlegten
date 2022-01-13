@@ -48,11 +48,51 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const CourseSelfTestPage());
     },
+    CourseDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<CourseDetailRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: CourseDetailPage(args.courseInfo, key: args.key));
+    },
+    CourseUnitModuleListRoute.name: (routeData) {
+      final args = routeData.argsAs<CourseUnitModuleListRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: CourseUnitModuleListPage(args.unitInfo, key: args.key));
+    },
+    ModuleGrammarTableRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ModuleGrammarTablePage());
+    },
     CourseUnitIntroVideoRoute.name: (routeData) {
       final args = routeData.argsAs<CourseUnitIntroVideoRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: CourseUnitIntroVideoPage(args.unitIntroVideo, key: args.key));
+    },
+    ModuleMixedVideoRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ModuleMixedVideoPage());
+    },
+    ModuleReadingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ModuleReadingPage());
+    },
+    ModuleListenRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ModuleListenPage());
+    },
+    ModuleWritingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ModuleWritingPage());
+    },
+    ModuleConversationVideoRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ModuleConversationVideoPage());
+    },
+    ModuleProgressExamRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ModuleProgressExamPage());
     }
   };
 
@@ -67,8 +107,22 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(StartRoute.name, path: '/start'),
         RouteConfig(LandingRoute.name, path: '/landing'),
         RouteConfig(CourseSelfTestRoute.name, path: '/course_self_test'),
+        RouteConfig(CourseDetailRoute.name, path: '/course_detail'),
+        RouteConfig(CourseUnitModuleListRoute.name,
+            path: '/course_unit_module_list'),
+        RouteConfig(ModuleGrammarTableRoute.name,
+            path: '/unit_module_grammartable'),
         RouteConfig(CourseUnitIntroVideoRoute.name,
-            path: '/Unit_introVideo/main_page')
+            path: '/Unit_introVideo/main_page'),
+        RouteConfig(ModuleMixedVideoRoute.name,
+            path: '/unit_module_mixedvideo'),
+        RouteConfig(ModuleReadingRoute.name, path: '/unit_module_reading'),
+        RouteConfig(ModuleListenRoute.name, path: '/unit_module_listening'),
+        RouteConfig(ModuleWritingRoute.name, path: '/unit_module_writing'),
+        RouteConfig(ModuleConversationVideoRoute.name,
+            path: '/unit_module_conversationvideo'),
+        RouteConfig(ModuleProgressExamRoute.name,
+            path: '/unit_module_progressexam')
       ];
 }
 
@@ -147,6 +201,64 @@ class CourseSelfTestRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CourseDetailPage]
+class CourseDetailRoute extends PageRouteInfo<CourseDetailRouteArgs> {
+  CourseDetailRoute({required CourseInfo courseInfo, Key? key})
+      : super(CourseDetailRoute.name,
+            path: '/course_detail',
+            args: CourseDetailRouteArgs(courseInfo: courseInfo, key: key));
+
+  static const String name = 'CourseDetailRoute';
+}
+
+class CourseDetailRouteArgs {
+  const CourseDetailRouteArgs({required this.courseInfo, this.key});
+
+  final CourseInfo courseInfo;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CourseDetailRouteArgs{courseInfo: $courseInfo, key: $key}';
+  }
+}
+
+/// generated route for
+/// [CourseUnitModuleListPage]
+class CourseUnitModuleListRoute
+    extends PageRouteInfo<CourseUnitModuleListRouteArgs> {
+  CourseUnitModuleListRoute({required CourseUnit unitInfo, Key? key})
+      : super(CourseUnitModuleListRoute.name,
+            path: '/course_unit_module_list',
+            args: CourseUnitModuleListRouteArgs(unitInfo: unitInfo, key: key));
+
+  static const String name = 'CourseUnitModuleListRoute';
+}
+
+class CourseUnitModuleListRouteArgs {
+  const CourseUnitModuleListRouteArgs({required this.unitInfo, this.key});
+
+  final CourseUnit unitInfo;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CourseUnitModuleListRouteArgs{unitInfo: $unitInfo, key: $key}';
+  }
+}
+
+/// generated route for
+/// [ModuleGrammarTablePage]
+class ModuleGrammarTableRoute extends PageRouteInfo<void> {
+  const ModuleGrammarTableRoute()
+      : super(ModuleGrammarTableRoute.name, path: '/unit_module_grammartable');
+
+  static const String name = 'ModuleGrammarTableRoute';
+}
+
+/// generated route for
 /// [CourseUnitIntroVideoPage]
 class CourseUnitIntroVideoRoute
     extends PageRouteInfo<CourseUnitIntroVideoRouteArgs> {
@@ -170,4 +282,59 @@ class CourseUnitIntroVideoRouteArgs {
   String toString() {
     return 'CourseUnitIntroVideoRouteArgs{unitIntroVideo: $unitIntroVideo, key: $key}';
   }
+}
+
+/// generated route for
+/// [ModuleMixedVideoPage]
+class ModuleMixedVideoRoute extends PageRouteInfo<void> {
+  const ModuleMixedVideoRoute()
+      : super(ModuleMixedVideoRoute.name, path: '/unit_module_mixedvideo');
+
+  static const String name = 'ModuleMixedVideoRoute';
+}
+
+/// generated route for
+/// [ModuleReadingPage]
+class ModuleReadingRoute extends PageRouteInfo<void> {
+  const ModuleReadingRoute()
+      : super(ModuleReadingRoute.name, path: '/unit_module_reading');
+
+  static const String name = 'ModuleReadingRoute';
+}
+
+/// generated route for
+/// [ModuleListenPage]
+class ModuleListenRoute extends PageRouteInfo<void> {
+  const ModuleListenRoute()
+      : super(ModuleListenRoute.name, path: '/unit_module_listening');
+
+  static const String name = 'ModuleListenRoute';
+}
+
+/// generated route for
+/// [ModuleWritingPage]
+class ModuleWritingRoute extends PageRouteInfo<void> {
+  const ModuleWritingRoute()
+      : super(ModuleWritingRoute.name, path: '/unit_module_writing');
+
+  static const String name = 'ModuleWritingRoute';
+}
+
+/// generated route for
+/// [ModuleConversationVideoPage]
+class ModuleConversationVideoRoute extends PageRouteInfo<void> {
+  const ModuleConversationVideoRoute()
+      : super(ModuleConversationVideoRoute.name,
+            path: '/unit_module_conversationvideo');
+
+  static const String name = 'ModuleConversationVideoRoute';
+}
+
+/// generated route for
+/// [ModuleProgressExamPage]
+class ModuleProgressExamRoute extends PageRouteInfo<void> {
+  const ModuleProgressExamRoute()
+      : super(ModuleProgressExamRoute.name, path: '/unit_module_progressexam');
+
+  static const String name = 'ModuleProgressExamRoute';
 }

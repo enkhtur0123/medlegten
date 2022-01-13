@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
+import 'package:medlegten/utils/app_router.dart';
 
 class CourseDetailUnit extends HookWidget {
   const CourseDetailUnit(this.unitInfo, {Key? key}) : super(key: key);
@@ -11,70 +13,71 @@ class CourseDetailUnit extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Card(
-        color: ColorTable.color255_255_255,
-        shadowColor: Colors.grey.withOpacity(0.5),
-        elevation: 10.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Unit ' + unitInfo.unitNumber + ': ' + unitInfo.unitName,
-                    style: const TextStyle(
-                        color: colorPrimary,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20),
-                  ),
-                  addVerticalSpace(5),
-                  Row(
+    return InkWell(
+      onTap: () => {
+      AutoRouter.of(context)
+          .push(CourseUnitModuleListRoute(unitInfo: unitInfo))
+      },
+      child: SizedBox(
+        width: double.infinity,
+        child: Card(
+          color: ColorTable.color255_255_255,
+          shadowColor: Colors.grey.withOpacity(0.5),
+          elevation: 10.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                          child: Icon(
-                        Icons.person_outline_outlined,
-                        color: Color.fromRGBO(130, 130, 130, 1),
-                        size: 16.0,
-                      )),
-                      addHorizontalSpace(3),
-                      const Text(
-                        'Beginner',
-                        style: TextStyle(
-                            color: Color.fromRGBO(130, 130, 130, 1),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12),
-                      ),
-                      addHorizontalSpace(20),
-                      const SizedBox(
-                          child: Icon(
-                        Icons.timer,
-                        color: Color.fromRGBO(130, 130, 130, 1),
-                        size: 12.0,
-                      )),
-                      addHorizontalSpace(3),
-                      Text(unitInfo.minToWatch + ' minutes',
-                          style: const TextStyle(
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12)),
+                      Text('Unit '+unitInfo.unitNumber+': '+unitInfo.unitName, style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 20),),
+                      addVerticalSpace(5),
+                      Container(
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                                child: Icon(
+                                  Icons.person_outline_outlined,
+                                  color: Color.fromRGBO(130, 130, 130, 1),
+                                  size: 16.0,
+                                )),
+                            addHorizontalSpace(3),
+                            Text('Beginner',
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(130, 130, 130, 1),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12)),
+                            addHorizontalSpace(20),
+                            const SizedBox(
+                                child: Icon(
+                                  Icons.timer,
+                                  color: Color.fromRGBO(130, 130, 130, 1),
+                                  size: 12.0,
+                                )),
+                            addHorizontalSpace(3),
+                            Text(unitInfo.minToWatch+' minutes',
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(130, 130, 130, 1),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12)),
+                          ],
+                        ),
+                      )
                     ],
-                  )
-                ],
-              ),
-              Container(
-                child: iconLocked(),
-              ),
-            ],
+                  ),
+                ),
+                Container(
+                  child: iconLocked(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
