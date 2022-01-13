@@ -4,7 +4,8 @@ import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/repositories/repository.dart';
 
 class UnitRepository {
-  Future<UnitIntroVideo?> getUnitIntroVideo(String unitId) async {
+  //moduleTypeId = 1
+  Future<UnitIntroVideo?> getUnitIntroVideo(String moduleId) async {
     try {
       // final response =
       //     await dioRepository.instance.get('Course/SelfQuiz/History');
@@ -30,7 +31,7 @@ class UnitRepository {
                 '00:00:08.633',
                 '00:00:12.499',
                 'MON',
-                'Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                '1. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
                 'ENG',
                 '0',
                 'I saw you dancing in a crowded room.', [
@@ -49,7 +50,7 @@ class UnitRepository {
                 '00:00:12.500',
                 '00:00:16.632',
                 'MON',
-                'Намайг байхгүйд чи үнэхээр жаргалтай харагдаж байна',
+                '2. Намайг байхгүйд чи үнэхээр жаргалтай харагдаж байна',
                 'ENG',
                 '0',
                 'I saw you dancing in a crowded room', []),
@@ -58,7 +59,79 @@ class UnitRepository {
                 '00:00:16.633',
                 '00:00:18.499',
                 'MON',
-                'Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                '3. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '3',
+                '00:00:18.500',
+                '00:00:20.499',
+                'MON',
+                '4. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '4',
+                '00:00:20.500',
+                '00:00:22.499',
+                'MON',
+                '5. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '5',
+                '00:00:22.500',
+                '00:00:24.499',
+                'MON',
+                '6. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '6',
+                '00:00:24.500',
+                '00:00:26.499',
+                'MON',
+                '7. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '7',
+                '00:00:26.500',
+                '00:00:28.499',
+                'MON',
+                '8. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '8',
+                '00:00:28.500',
+                '00:00:30.499',
+                'MON',
+                '9. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '9',
+                '00:00:30.500',
+                '00:00:32.499',
+                'MON',
+                '10. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
+                'ENG',
+                '0',
+                'I saw you dancing in a crowded room', []),
+            UnitIntroCueParagraph(
+                '10',
+                '00:00:32.500',
+                '00:00:34.499',
+                'MON',
+                '11. Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
                 'ENG',
                 '0',
                 'I saw you dancing in a crowded room', []),
