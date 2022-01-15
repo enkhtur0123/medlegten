@@ -139,17 +139,30 @@ class _VCaptionState extends State<VCaption> {
                 },
                 children: <Widget>[
                   ...widget.unitIntroVideo.cue.map((cue) {
-                    return Center(
+                    return GestureDetector(
+                      onTap: () {
+                        const AlertDialog(
+                          content: Text(
+                            'Test',
+                            style: TextStyle(color: Colors.teal),
+                          ),
+                        );
+                      },
+                      child: Center(
                         child: Text(
-                      isMon ? cue.toLangTranslation : cue.fromLangTranslation,
-                      style: TextStyle(
-                          color: currentIndex == int.parse(cue.ordering) - 1
-                              ? colorBlack
-                              : Colors.black54,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400),
-                      textAlign: TextAlign.center,
-                    ));
+                          isMon
+                              ? cue.toLangTranslation
+                              : cue.fromLangTranslation,
+                          style: TextStyle(
+                              color: currentIndex == int.parse(cue.ordering) - 1
+                                  ? colorBlack
+                                  : Colors.black54,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
                   })
                 ],
               ),
