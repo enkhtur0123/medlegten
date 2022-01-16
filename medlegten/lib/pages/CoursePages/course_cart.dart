@@ -4,11 +4,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import "package:intl/intl.dart";
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/main_page.dart';
-import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
-
-import 'course_detail.dart';
 
 class CourseCart extends StatelessWidget {
   const CourseCart(this.courseInfo, {Key? key}) : super(key: key);

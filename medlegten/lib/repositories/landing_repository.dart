@@ -10,7 +10,8 @@ import 'package:medlegten/repositories/repository.dart';
 class LandingRepository {
   Future<List<CourseUnitModuleList>?> getCourseUnitModuleList(String id) async {
     try {
-      final response = await dioRepository.instance.get('Course/UnitModule/$id');
+      final response =
+          await dioRepository.instance.get('Course/UnitModule/$id');
       final res = json.decode('$response');
       if (res['isSuccess']) {
         var list = res['unitModules'] as List;

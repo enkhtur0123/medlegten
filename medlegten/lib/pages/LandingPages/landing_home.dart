@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/main_page.dart';
-import 'package:medlegten/repositories/unit_repository.dart';
 
 class LandingHome extends StatelessWidget {
   const LandingHome({Key? key}) : super(key: key);

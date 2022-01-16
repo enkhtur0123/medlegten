@@ -11,23 +11,22 @@ class VideoPlayerWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      controller != null && controller.value.isInitialized
-          ? Container(
-              alignment: Alignment.topCenter,
-              child: buildVideo(),
-            )
-          : Container(
-              height: 200,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+  Widget build(BuildContext context) => controller.value.isInitialized
+      ? Container(
+          alignment: Alignment.topCenter,
+          child: buildVideo(),
+        )
+      : const SizedBox(
+          height: 200,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
 
   Widget buildVideo() => Stack(
         children: [
           buildVideoPlayer(),
-          Positioned.fill(child: BasicOverlayWidget()),
+          Positioned.fill(child: basicOverlayWidget()),
         ],
       );
 
@@ -36,7 +35,7 @@ class VideoPlayerWidget extends StatelessWidget {
         child: VideoPlayer(controller),
       );
 
-  Widget BasicOverlayWidget() => GestureDetector(
+  Widget basicOverlayWidget() => GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () =>
             controller.value.isPlaying ? controller.pause() : controller.play(),
@@ -63,7 +62,7 @@ class VideoPlayerWidget extends StatelessWidget {
       : Container(
           alignment: Alignment.center,
           color: Colors.black26,
-          child: Icon(
+          child: const Icon(
             Icons.play_arrow,
             color: colorWhite,
             size: 80,

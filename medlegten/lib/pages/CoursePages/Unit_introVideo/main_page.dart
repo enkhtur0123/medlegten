@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/video_items.dart';
 import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_introVideo/subtitle.dart';
@@ -89,9 +88,8 @@ class _CourseUnitIntroVideoPageState extends State<CourseUnitIntroVideoPage> {
           addVerticalSpace(20),
           _videoPlayerController.value.isInitialized
               ? VCaption(_videoPlayerController, widget.unitIntroVideo)
-              : Container(
-                  child: Text('not initialized',
-                      style: TextStyle(color: Colors.black))),
+              : const Text('not initialized',
+                  style: TextStyle(color: Colors.black)),
           // Padding(
           //   padding: const EdgeInsets.all(8.0),
           //   child: SizedBox(

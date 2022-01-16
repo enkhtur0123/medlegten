@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/repositories/repository.dart';
@@ -8,11 +10,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'medlegten_vertical.dart';
 
-class InitializationPage extends ConsumerWidget {
+class InitializationPage extends HookWidget {
   const InitializationPage({Key? key}) : super(key: key);
 
+  Future<Version?> fetchData() async {
+    return await LoginRepository().getAppVersion();
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     //final loginState = ref.watch(loginNotifierProvider);
 
     var str = 'Medlegten app v1.0';
@@ -23,6 +29,8 @@ class InitializationPage extends ConsumerWidget {
     //     }
     //   },
     // );
+    final future = useMemoized(fetchData);
+    final snapshot = useFuture(future);
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -44,7 +52,9 @@ class InitializationPage extends ConsumerWidget {
                   width: 103.76),
             ),
             Text(
-              str,
+              snapshot.hasData
+                  ? 'Medlegten app ${snapshot.data!.appVersion}'
+                  : str,
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Color.fromRGBO(130, 130, 130, 1),

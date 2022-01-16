@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/pages/StartPages/facebook_login.dart';
 import 'package:medlegten/pages/StartPages/google_login.dart';
 import 'package:medlegten/pages/StartPages/medlegten_vertical.dart';
@@ -75,7 +76,7 @@ class LoginPage extends ConsumerWidget {
           ),
           Center(
             child: _authState == AuthState.Authorizing
-                ? const CircularProgressIndicator()
+                ? const Loading()
                 : Container(),
           ),
         ],

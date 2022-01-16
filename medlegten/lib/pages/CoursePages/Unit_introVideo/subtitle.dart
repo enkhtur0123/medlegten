@@ -1,6 +1,4 @@
-import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
@@ -39,10 +37,10 @@ class _VCaptionState extends State<VCaption> {
         if (isUser == -1) {
           setState(() {
             var _duration = widget.videoPlayerController.value.position;
-            var idx = widget.unitIntroVideo.cue.firstWhereOrNull((element) =>
+            var idx = widget.unitIntroVideo.cue.firstWhere((element) =>
                 getDuration(element.startTime) <= _duration &&
                 getDuration(element.endTime) > _duration);
-            if (idx != null && prevCueId != idx.ordering) {
+            if (prevCueId != idx.ordering) {
               _fixedExtentScrollController.animateToItem(
                   int.parse(idx.ordering) - 1,
                   duration: const Duration(milliseconds: 500),
