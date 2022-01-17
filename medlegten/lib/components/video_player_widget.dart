@@ -66,5 +66,6 @@ class VideoPlayerWidget extends StatelessWidget {
             Icons.play_arrow,
             color: colorWhite,
             size: 80,
-          ));
+          ),
+        );
 }

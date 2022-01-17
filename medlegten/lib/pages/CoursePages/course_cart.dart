@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import "package:intl/intl.dart";
 import 'package:medlegten/utils/app_router.dart';
@@ -63,44 +64,13 @@ class CourseCart extends StatelessWidget {
                         addVerticalSpace(5),
                         Row(
                           children: [
-                            const SizedBox(
-                                child: Icon(
-                              Icons.person_outline_outlined,
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              size: 12.0,
-                            )),
-                            addHorizontalSpace(3),
-                            Text(courseInfo.levelName,
-                                style: const TextStyle(
-                                    color: Color.fromRGBO(130, 130, 130, 1),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12)),
+                            IconText(Icons.person_outline_outlined,
+                                courseInfo.levelName),
                             addHorizontalSpace(20),
-                            const SizedBox(
-                                child: Icon(
-                              Icons.timer,
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              size: 12.0,
-                            )),
-                            addHorizontalSpace(3),
-                            Text(courseInfo.hours + ' цаг',
-                                style: const TextStyle(
-                                    color: Color.fromRGBO(130, 130, 130, 1),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12)),
+                            IconText(Icons.timer, courseInfo.hours + ' цаг'),
                             addHorizontalSpace(20),
-                            const SizedBox(
-                                child: Icon(
-                              Icons.feed_outlined,
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              size: 12.0,
-                            )),
-                            addHorizontalSpace(3),
-                            Text(courseInfo.units + ' хичээл',
-                                style: const TextStyle(
-                                    color: Color.fromRGBO(130, 130, 130, 1),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12)),
+                            IconText(Icons.feed_outlined,
+                                courseInfo.units + ' хичээл'),
                           ],
                         ),
                         addVerticalSpace(5),

@@ -31,7 +31,7 @@ class UnitCart extends HookWidget {
         color: ColorTable.color255_255_255,
         borderOnForeground: true,
         shadowColor: Colors.grey,
-        elevation: 10.0,
+        elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

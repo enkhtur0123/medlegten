@@ -6,7 +6,7 @@ import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/module_conversation_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/module_grammar_table.dart';
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/main_page.dart';
+import 'package:medlegten/pages/CoursePages/Unit_introVideo/video_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/module_listening.dart';
 import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/module_mixed_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_progressExam/module_progress_exam.dart';

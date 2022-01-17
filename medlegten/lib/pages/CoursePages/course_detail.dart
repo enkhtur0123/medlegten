@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_widget.dart';
@@ -68,45 +69,12 @@ class _CourseDetailState extends State<CourseDetailPage> {
                 children: [
                   Row(
                     children: [
-                      const SizedBox(
-                          child: Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: Color.fromRGBO(130, 130, 130, 1),
-                        size: 12.0,
-                      )),
-                      addHorizontalSpace(3),
-                      const Text('1233 views',
-                          style: TextStyle(
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12)),
+                      const IconText(
+                          Icons.remove_red_eye_outlined, '1233 views'),
                       addHorizontalSpace(20),
-                      const SizedBox(
-                        child: Icon(
-                          CupertinoIcons.heart,
-                          color: Color.fromRGBO(130, 130, 130, 1),
-                          size: 12,
-                        ),
-                      ),
-                      addHorizontalSpace(3),
-                      const Text('456 Likes',
-                          style: TextStyle(
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12)),
+                      const IconText(CupertinoIcons.heart, '456 Likes'),
                       addHorizontalSpace(20),
-                      const SizedBox(
-                          child: Icon(
-                        Icons.timer,
-                        color: Color.fromRGBO(130, 130, 130, 1),
-                        size: 12.0,
-                      )),
-                      addHorizontalSpace(3),
-                      const Text('2 minutes',
-                          style: TextStyle(
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12)),
+                      const IconText(Icons.timer, '2 minutes'),
                     ],
                   )
                 ],
@@ -115,45 +83,12 @@ class _CourseDetailState extends State<CourseDetailPage> {
                 children: [
                   Row(
                     children: [
-                      const SizedBox(
-                          child: Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: Color.fromRGBO(130, 130, 130, 1),
-                        size: 12.0,
-                      )),
-                      addHorizontalSpace(3),
-                      const Text('1233 views',
-                          style: TextStyle(
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12)),
+                      const IconText(
+                          Icons.remove_red_eye_outlined, '1233 views'),
                       addHorizontalSpace(20),
-                      const SizedBox(
-                        child: Icon(
-                          CupertinoIcons.heart,
-                          color: Color.fromRGBO(130, 130, 130, 1),
-                          size: 12,
-                        ),
-                      ),
-                      addHorizontalSpace(3),
-                      const Text('456 Likes',
-                          style: TextStyle(
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12)),
+                      const IconText(CupertinoIcons.heart, '456 Likes'),
                       addHorizontalSpace(20),
-                      const SizedBox(
-                          child: Icon(
-                        Icons.timer,
-                        color: Color.fromRGBO(130, 130, 130, 1),
-                        size: 12.0,
-                      )),
-                      addHorizontalSpace(3),
-                      const Text('2 minutes',
-                          style: TextStyle(
-                              color: Color.fromRGBO(130, 130, 130, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12)),
+                      const IconText(Icons.timer, '2 minutes'),
                     ],
                   ),
                   addVerticalSpace(20),
