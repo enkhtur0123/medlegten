@@ -37,8 +37,7 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/course_detail', page: CourseDetailPage),
     AutoRoute(path: '/course_unit_module_list', page: CourseUnitModuleListPage),
     AutoRoute(path: '/unit_module_grammartable', page: ModuleGrammarTablePage),
-    AutoRoute(
-        path: '/Unit_introVideo/main_page', page: CourseUnitIntroVideoPage),
+    AutoRoute(path: '/video_page', page: CourseUnitIntroVideoPage),
     AutoRoute(path: '/unit_module_mixedvideo', page: ModuleMixedVideoPage),
     AutoRoute(path: '/unit_module_reading', page: ModuleReadingPage),
     AutoRoute(path: '/unit_module_listening', page: ModuleListenPage),

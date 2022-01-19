@@ -175,15 +175,13 @@ Widget buildTimeline(
         endChild: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: GestureDetector(
-            onTap: () async {
+            onTap: () {
               switch (data.moduleTypeId) {
                 case "1":
                   {
-                    var unitIntro =
-                        await UnitRepository().getUnitIntroVideo(data.moduleId);
-
-                    AutoRouter.of(context).push(
-                        CourseUnitIntroVideoRoute(unitIntroVideo: unitIntro!));
+                    UnitRepository().getUnitIntroVideo(data.moduleId).then(
+                        (value) => AutoRouter.of(context).push(
+                            CourseUnitIntroVideoRoute(unitIntroVideo: value!)));
                   }
                   break;
                 case "2":

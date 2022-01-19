@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 
 class Utils {
   Color hexToColor(String code) {
@@ -15,9 +14,12 @@ extension GlobalKeyExtension on GlobalKey {
     final translation = renderObject?.getTransformTo(null).getTranslation();
     if (translation != null && renderObject?.paintBounds != null) {
       final offset = Offset(translation.x, translation.y);
-      return renderObject!.paintBounds.shift(offset);
+      Rect rect = renderObject!.paintBounds.shift(offset);
+      return rect;
     } else {
       return null;
     }
   }
 }
+
+typedef UnitIntroCueWordCallback = void Function(UnitIntroCueWord val);

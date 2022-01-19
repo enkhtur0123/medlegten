@@ -5,34 +5,35 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue.dart';
+import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_introVideo/cue_text.dart';
-import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:video_player/video_player.dart';
 
 // ignore: must_be_immutable
 class VideoSubtitle extends HookWidget {
-  VideoSubtitle(this.videoPlayerController, this.unitIntroVideo, {Key? key})
+  VideoSubtitle(this.videoPlayerController, this.unitIntroVideo, this.callback,
+      {Key? key})
       : super(key: key);
 
   final UnitIntroVideo unitIntroVideo;
   final VideoPlayerController videoPlayerController;
+  final UnitIntroCueWordCallback callback;
 
-  late FixedExtentScrollController _fixedExtentScrollController;
   int currentIndex = -1;
   int isUser = -1;
-  int selectedIndex = -1;
-  Map<UnitIntroCueParagraph, Map<String, GlobalKey>> cueWidgets = {};
+  Map<UnitIntroCueParagraph, Map<UnitIntroCueWord, GlobalKey>> cueWidgets = {};
 
   @override
   Widget build(BuildContext context) {
+    final _fixedExtentScrollController =
+        useMemoized(() => FixedExtentScrollController());
+
     final isMon = useState(true);
     final prevCueId = useState('-1');
     final doubleTapped = useState(false);
     useEffect(() {
-      _fixedExtentScrollController = FixedExtentScrollController();
-
       videoPlayerController.addListener(() {
         if (videoPlayerController.value.isPlaying) {
           if (isUser == -1) {
@@ -101,20 +102,24 @@ class VideoSubtitle extends HookWidget {
               if (videoPlayerController.value.isPlaying) {
                 videoPlayerController.pause();
                 doubleTapped.value = true;
-                selectedIndex = currentIndex;
               } else {
                 videoPlayerController.play();
               }
             },
             onTapDown: (TapDownDetails details) {
               if (!videoPlayerController.value.isPlaying) {
+                //if (doubleTapped.value) {
                 var position = details.globalPosition;
-                var cue = unitIntroVideo.cue[selectedIndex];
-                cueWidgets[cue]!.forEach((key, value) {
-                  if (value.globalPaintBounds!.contains(position)) {
-                    dioRepository.snackBar(key);
-                  }
-                });
+                if (currentIndex > -1 &&
+                    currentIndex < unitIntroVideo.cue.length) {
+                  var cue = unitIntroVideo.cue[currentIndex];
+                  cueWidgets[cue]!.forEach((key, value) {
+                    var rect = value.globalPaintBounds!;
+                    if (rect.contains(position)) {
+                      callback(key);
+                    }
+                  });
+                }
               }
             },
             child: SizedBox(
@@ -159,25 +164,12 @@ class VideoSubtitle extends HookWidget {
                       currentIndex = index;
                     },
                     childDelegate: ListWheelChildBuilderDelegate(
-                      builder: (context, index) => child(isMon.value,
-                          unitIntroVideo.cue[index], selectedIndex == index),
+                      builder: (context, index) => child(
+                          isMon.value,
+                          unitIntroVideo.cue[index],
+                          true), //selectedIndex == index
                       childCount: unitIntroVideo.cue.length,
                     ),
-                    // children: <Widget>[
-                    //   ...unitIntroVideo.cue.map((cue) {
-                    //     return GestureDetector(
-                    //       onTap: () {
-                    //         const AlertDialog(
-                    //           content: Text(
-                    //             'Test',
-                    //             style: TextStyle(color: Colors.teal),
-                    //           ),
-                    //         );
-                    //       },
-                    //       child:
-                    //     );
-                    //  })
-                    //],
                   ),
                 ),
               ),
@@ -186,15 +178,11 @@ class VideoSubtitle extends HookWidget {
         )
       ],
     );
-    //return ClosedCaption(
-    //  text: selectedCaption,
-    //  textStyle: const TextStyle(fontSize: 15, color: Colors.black),
-    //);
   }
 
   Widget child(bool isMon, UnitIntroCueParagraph cue, bool isSelected) {
     var widget = isSelected
-        ? CueText(cue)
+        ? CueText(cue, currentIndex)
         : Center(
             child: Text(
               isMon ? cue.toLangTranslation : cue.fromLangTranslation,

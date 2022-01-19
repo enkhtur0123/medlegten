@@ -62,7 +62,7 @@ class _$AppRouter extends RootStackRouter {
     },
     ModuleGrammarTableRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ModuleGrammarTablePage());
+          routeData: routeData, child: const ModuleGrammarTablePage());
     },
     CourseUnitIntroVideoRoute.name: (routeData) {
       final args = routeData.argsAs<CourseUnitIntroVideoRouteArgs>();
@@ -72,27 +72,27 @@ class _$AppRouter extends RootStackRouter {
     },
     ModuleMixedVideoRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ModuleMixedVideoPage());
+          routeData: routeData, child: const ModuleMixedVideoPage());
     },
     ModuleReadingRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ModuleReadingPage());
+          routeData: routeData, child: const ModuleReadingPage());
     },
     ModuleListenRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ModuleListenPage());
+          routeData: routeData, child: const ModuleListenPage());
     },
     ModuleWritingRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ModuleWritingPage());
+          routeData: routeData, child: const ModuleWritingPage());
     },
     ModuleConversationVideoRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ModuleConversationVideoPage());
+          routeData: routeData, child: const ModuleConversationVideoPage());
     },
     ModuleProgressExamRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ModuleProgressExamPage());
+          routeData: routeData, child: const ModuleProgressExamPage());
     }
   };
 
@@ -112,8 +112,7 @@ class _$AppRouter extends RootStackRouter {
             path: '/course_unit_module_list'),
         RouteConfig(ModuleGrammarTableRoute.name,
             path: '/unit_module_grammartable'),
-        RouteConfig(CourseUnitIntroVideoRoute.name,
-            path: '/Unit_introVideo/main_page'),
+        RouteConfig(CourseUnitIntroVideoRoute.name, path: '/video_page'),
         RouteConfig(ModuleMixedVideoRoute.name,
             path: '/unit_module_mixedvideo'),
         RouteConfig(ModuleReadingRoute.name, path: '/unit_module_reading'),
@@ -264,7 +263,7 @@ class CourseUnitIntroVideoRoute
     extends PageRouteInfo<CourseUnitIntroVideoRouteArgs> {
   CourseUnitIntroVideoRoute({required UnitIntroVideo unitIntroVideo, Key? key})
       : super(CourseUnitIntroVideoRoute.name,
-            path: '/Unit_introVideo/main_page',
+            path: '/video_page',
             args: CourseUnitIntroVideoRouteArgs(
                 unitIntroVideo: unitIntroVideo, key: key));
 
