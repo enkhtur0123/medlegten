@@ -57,9 +57,11 @@ class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
         //   _showModal = false;
         //   setState(() {});
         // } else {
+
         word = val;
         modelNotifier.value = true;
         setState(() {});
+
         //}
       }));
     } else {
@@ -115,7 +117,7 @@ class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
       //),
       bottomSheet: ValueListenableBuilder<bool>(
           builder: (BuildContext context, bool value, Widget? child) {
-            if (value) {
+            if (value && word != null) {
               return child!;
             } else {
               return const Text(' ');
@@ -229,84 +231,94 @@ Widget innerBottonSheetWidget(CueWord? cueWord) {
       ),
     );
   }
-  cueWord.translation.map((translation) => {
-        list.add(
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  translation.trTypeShortName,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(48, 53, 159, 1),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  translation.trText,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(48, 53, 159, .3),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
+
+  for (var translation in cueWord.translation) {
+    {
+      list.add(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                translation.trTypeShortName,
+                style: const TextStyle(
+                    color: Color.fromRGBO(48, 53, 159, 1),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+              Text(
+                translation.trText,
+                style: const TextStyle(
+                    color: Color.fromRGBO(48, 53, 159, .3),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
           ),
-        )
-      });
-  list.add(Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      SizedBox(
-        child: Row(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(120, 100, 254, 1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                    color: const Color.fromRGBO(174, 177, 239, .3), width: 1),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 12, top: 8, right: 12, bottom: 8),
-                child: Text(
-                  cueWord.word,
-                  style: const TextStyle(
-                      color: colorWhite,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16),
-                ),
-              ),
-            ),
-            IconButton(
-                onPressed: () => {},
-                icon: const Icon(
-                  Icons.volume_up_outlined,
-                  color: Color.fromRGBO(48, 53, 159, 1),
-                  size: 28.0,
-                ))
-          ],
         ),
-      ),
-      SizedBox(
-        child: IconButton(
-            onPressed: () => {},
-            icon: const Icon(
-              Icons.bookmark_outline_sharp,
-              color: Color.fromRGBO(48, 53, 159, 1),
-              size: 28.0,
-            )),
-      )
-    ],
-  ));
+      );
+    }
+  }
+
   return Padding(
     padding: const EdgeInsets.all(8.0),
-    child: Column(
+    child: SingleChildScrollView(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: list),
+        children: List.unmodifiable(() sync* {
+          yield Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(120, 100, 254, 1),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: const Color.fromRGBO(174, 177, 239, .3),
+                            width: 1),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12, top: 8, right: 12, bottom: 8),
+                        child: Text(
+                          cueWord.word,
+                          style: const TextStyle(
+                              color: colorWhite,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () => {},
+                        icon: const Icon(
+                          Icons.volume_up_outlined,
+                          color: Color.fromRGBO(48, 53, 159, 1),
+                          size: 28.0,
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                child: IconButton(
+                    onPressed: () => {},
+                    icon: const Icon(
+                      Icons.bookmark_outline_sharp,
+                      color: Color.fromRGBO(48, 53, 159, 1),
+                      size: 28.0,
+                    )),
+              )
+            ],
+          );
+          yield* list;
+        }()),
+      ),
+    ),
   );
 }

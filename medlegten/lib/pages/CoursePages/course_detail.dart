@@ -8,7 +8,6 @@ import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
-import 'package:video_player/video_player.dart';
 import 'package:expandable/expandable.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 

@@ -14,7 +14,6 @@ class CueWord with _$CueWord {
       String resultMessage,
       String wordId,
       String word,
-      String tts,
       RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation) = _CueWord;
