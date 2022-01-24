@@ -1,266 +1,199 @@
+import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/landing_header.dart';
+import 'package:medlegten/models/Unit/grammar.dart';
+import 'package:medlegten/models/Unit/unit_grammar.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
 
+typedef UnitGrammarCallback = void Function(String val);
 
+String partName = '';
 
-class ModuleGrammarTablePage extends StatefulWidget {
-  const ModuleGrammarTablePage({Key? key}) : super(key: key);
+class ModuleGrammarTablePage extends HookWidget {
+  const ModuleGrammarTablePage(this.unitGrammar, {Key? key}) : super(key: key);
 
-  @override
-  _ModuleGrammarTablePageState createState() => _ModuleGrammarTablePageState();
-}
-
-class _ModuleGrammarTablePageState extends State<ModuleGrammarTablePage> {
-
-  Map<String,dynamic> grammar_data = {"grammar": [
-    {"label":"Positive", "structure": ["Subject","To be","Object"]},
-    {"label":"Question", "structure": ["To be","Subject","Object"]},
-    {"label":"Negative", "structure": ["Subject","To be","adverb", "Object"]}
-    ]
-  };
-
-  Map<String,dynamic> sentence_example = {"sentences": [
-    {
-      "sentence": [
-        {"label":"positive", "eng":"He is a teacher","mon":"Тэр эрэгтэй бол багш", "structure":[{"Subject":"He","To be":"is","Object":"teacher"}]},
-        {"label":"question", "eng":"Is he a teacher?","mon":"Тэр эрэгтэй багш мөн үү?", "structure":[{"To be":"Is","Subject":"he","Object":"teacher"}]},
-        {"label":"negative", "eng":"He is not a teacher","mon":"Тэр эрэгтэй бол багш биш", "structure":[{"Subject":"He","To be":"is","adverb":"not", "Object":"teacher"}]},
-      ]
-    },
-    {
-      "sentence": [
-        {"label":"positive", "eng":"He is a student","mon":"Тэр эрэгтэй бол оюутан", "structure":[{"Subject":"He","To be":"is","Object":"student"}]},
-        {"label":"question", "eng":"Is he a student?","mon":"Тэр эрэгтэй оюутан мөн үү?", "structure":[{"To be":"Is","Subject":"he","Object":"student"}]},
-        {"label":"negative", "eng":"He is not a student","mon":"Тэр эрэгтэй бол оюутан биш", "structure":[{"Subject":"He","To be":"is","adverb":"not", "Object":"student"}]},
-      ]
-    },
-    {
-      "sentence": [
-        {"label":"positive", "eng":"It is a dog","mon":"Энэ бол нохой", "structure":[{"Subject":"It","To be":"is","Object":"dog"}]},
-        {"label":"question", "eng":"Is it a dog?","mon":"Энэ нохой мөн үү?", "structure":[{"To be":"Is","Subject":"it","Object":"dog"}]},
-        {"label":"negative", "eng":"It is not a dog","mon":"Энэ нохой биш", "structure":[{"Subject":"It","To be":"is","adverb":"not", "Object":"dog"}]},
-      ]
-    },
-  ]};
-
-
-  @override
-    void initState() {
-    super.initState();
-  }
+  final UnitGrammar unitGrammar;
 
   @override
   Widget build(BuildContext context) {
+    final modelNotifier = useState(false);
+    List<Tab> tabs = [];
+    Grammarhelper helper = Grammarhelper(unitGrammar);
+
+    for (var element in unitGrammar.grammar) {
+      tabs.add(Tab(text: element.label));
+    }
+    //final state = useState(false);
+    final _controller = useTabController(initialLength: tabs.length);
+    final valueKeyList = useMemoized(() => <Grammar, int>{});
+
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Padding(
-        padding: const EdgeInsets.only(top: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             LandingHeader(100),
             addVerticalSpace(20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Grammar - Tobe and pronoun'.toUpperCase(),
-                      style: const TextStyle(
-                          color: colorPrimary,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14),
-                    ),
-                  ),
-                  addVerticalSpace(20),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Жишээ:',
-                      style: TextStyle(
-                          color: colorPrimary,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16),
-                    ),
-                  ),
-                  addVerticalSpace(20),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      color: const Color.fromRGBO(26, 229, 239, .2),
-                      child: const Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Text(
-                          'I saw you dancing in a crowded room',
-                          style: TextStyle(
-                              color: colorBlack,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 17),
-                        ),
-                      ),
-                    ),
-                  ),
-                  addVerticalSpace(20),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Чамайг бөөн хүнтэй өрөөнд бүжиглэж байгааг харлаа',
-                      style: TextStyle(
-                          color: Color.fromRGBO(168, 175, 229, 1),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                ],
+            Text(
+              unitGrammar.label.toUpperCase(),
+              style: const TextStyle(
+                  color: colorPrimary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14),
+            ),
+            addVerticalSpace(20),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Жишээ:',
+                style: TextStyle(
+                    color: colorPrimary,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16),
               ),
             ),
-
+            addVerticalSpace(20),
+            Text(
+              unitGrammar.tosentence,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: colorBlack, fontWeight: FontWeight.w400, fontSize: 17),
+            ),
+            addVerticalSpace(20),
+            Text(
+              unitGrammar.fromsentence,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Color.fromRGBO(168, 175, 229, 1),
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic),
+            ),
             addVerticalSpace(25),
             const Divider(
               color: Color.fromRGBO(199, 201, 217, 0.2),
               thickness: 1,
             ),
             addVerticalSpace(10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Өгүүлбэрийн төрөл сонгох',
-                  style: TextStyle(
-                    color: colorPrimary,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                  ),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Өгүүлбэрийн төрөл сонгох',
+                style: TextStyle(
+                  color: colorPrimary,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Container(
-                child: Column(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                        DefaultTabController(
-                          length: 3, // length of tabs
-                          initialIndex: 0,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                Container(
-                                  child: TabBar(
-                                    indicatorColor: colorPrimary,
-                                    labelColor: colorPrimary,
-                                    unselectedLabelColor: Colors.black,
-                                    labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, fontFamily: 'Roboto'),
-                                    tabs: [
-                                      Tab(text: grammar_data['grammar'][0]['label']),
-                                      Tab(text: grammar_data['grammar'][1]['label']),
-                                      Tab(text: grammar_data['grammar'][2]['label']),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                    height: 400, //height of TabBarView
-                                    child: TabBarView(children: <Widget>[
-                                      Container(
-                                        child: ListView.builder(
-                                          itemCount: 3,
-                                            itemBuilder: (BuildContext context, int index) {
-                                              return Container(
-                                                // child: Text('${grammar_data['grammar'][0]['structure'][index]}', style: TextStyle(color: colorBlack),),
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      padding: const EdgeInsets.only(top:5, bottom: 5, left: 10, right: 10),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                                                        border: Border.all(color: Color.fromRGBO(199, 201, 217, 0.5))
-                                                      ),
-                                                      child: Text('${grammar_data['grammar'][0]['structure'][index]}', style: TextStyle(color: colorBlack, fontWeight: FontWeight.w500,fontSize: 16),)
-                                                    ),
-                                                    Container(
-                                                      width: double.infinity,
-                                                      height: 63,
-                                                      padding: const EdgeInsets.only(top:5, bottom: 5, left: 10, right: 10),
-                                                      margin: new EdgeInsets.only(left: 10.0),
-                                                      decoration: BoxDecoration(
-                                                          border: Border(
-                                                            left: BorderSide(width: 1, color: Color.fromRGBO(199, 201, 217, 0.5))
-                                                          )
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                padding: const EdgeInsets.only(top:5, bottom: 5, left: 20 , right: 20),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                                                                    border: Border.all(color: Color.fromRGBO(199, 201, 217, 0.2))
-                                                                ),
-                                                                child: Text('+ He', style: TextStyle(color: colorBlack, fontWeight: FontWeight.w400, fontSize: 15),),
-                                                              ),
-                                                              addHorizontalSpace(20),
-                                                              Container(
-                                                                padding: const EdgeInsets.only(top:5, bottom: 5, left: 20, right: 20),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                                                                    border: Border.all(color: Color.fromRGBO(199, 201, 217, 0.2))
-                                                                ),
-                                                                child: Text('+ He', style: TextStyle(color: colorBlack, fontWeight: FontWeight.w400, fontSize: 15),),
-                                                              ),
-                                                              addHorizontalSpace(20),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              );
-                                            }
-                                        )
-                                      ),
-                                      Container(
-                                          child: ListView.builder(
-                                              itemCount: 3,
-                                              itemBuilder: (BuildContext context, int index) {
-                                                return Container(
-                                                  child: Text('${grammar_data['grammar'][1]['structure'][index]}', style: TextStyle(color: colorBlack),),
-                                                );
-                                              }
-                                          )
-                                      ),
-                                      Container(
-                                          child: ListView.builder(
-                                              itemCount: 4,
-                                              itemBuilder: (BuildContext context, int index) {
-                                                return Container(
-                                                  child: Text('${grammar_data['grammar'][2]['structure'][index]}', style: TextStyle(color: colorBlack),),
-                                                );
-                                              }
-                                          )
-                                      ),
-                                    ])
-                                )
-                      ])
-                  ),
-                ]),
+            TabBar(
+              isScrollable: false,
+              unselectedLabelColor: Colors.grey,
+              labelColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicator: const BubbleTabIndicator(
+                indicatorHeight: 30.0,
+                indicatorColor: Colors.blueAccent,
+                tabBarIndicatorSize: TabBarIndicatorSize.tab,
+
+                // Other flags
+                // indicatorRadius: 1,
+                // insets: EdgeInsets.all(1),
+                // padding: EdgeInsets.all(10)
+              ),
+              tabs: tabs,
+              controller: _controller,
+            ),
+            Expanded(
+              child: ValueListenableBuilder<bool>(
+                builder: (BuildContext context, bool value, Widget? child) {
+                  return child!;
+                },
+                valueListenable: modelNotifier,
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _controller,
+                  children: unitGrammar.grammar
+                      .map((grammar) => buildTabview(grammar, helper, (val) {
+                            modelNotifier.value != modelNotifier.value;
+                            print(val);
+                            partName = val;
+                          }))
+                      .toList(),
+                ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildTabview(
+      Grammar grammar, Grammarhelper helper, Function(String val) callBack) {
+    List<Widget> list = [];
+    if (grammar.structure.part1 != null) {
+      list.addAll(buildStructure(
+          grammar, helper, grammar.structure.part1!, 1, partName, callBack));
+    }
+    if (grammar.structure.part2 != null) {
+      list.addAll(buildStructure(
+          grammar, helper, grammar.structure.part2!, 2, partName, callBack));
+    }
+    if (grammar.structure.part3 != null) {
+      list.addAll(buildStructure(
+          grammar, helper, grammar.structure.part3!, 3, partName, callBack));
+    }
+    // if (grammar.structure.part4 != null) {
+    //   list.addAll(buildStructure(grammar, helper, grammar.structure.part4!));
+    // }
+    // if (grammar.structure.part5 != null) {
+    //   list.addAll(buildStructure(grammar, helper, grammar.structure.part5!));
+    // }
+    // if (grammar.structure.part6 != null) {
+    //   list.addAll(buildStructure(grammar, helper, grammar.structure.part6!));
+    // }
+    // if (grammar.structure.part7 != null) {
+    //   list.addAll(buildStructure(grammar, helper, grammar.structure.part7!));
+    // }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        children: list,
+      ),
+    );
+
+    //Text(grammar.label, style: const TextStyle(color: Colors.black));
+  }
+
+  List<Widget> buildStructure(
+      Grammar grammar,
+      Grammarhelper helper,
+      String partLabel,
+      int partId,
+      String partNames,
+      Function(String val) callBack) {
+    return [
+      buildStructureLabel(partLabel),
+      StructureBody(grammar, helper, partLabel, partId, (val) {
+        callBack.call(val);
+      }, partname: partNames)
+    ];
+  }
+
+  Widget buildStructureLabel(String partLabel) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        partLabel,
+        style: const TextStyle(color: Colors.black),
       ),
     );
   }

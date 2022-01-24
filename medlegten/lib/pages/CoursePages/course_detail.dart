@@ -5,7 +5,6 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/loading.dart';
-import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:expandable/expandable.dart';

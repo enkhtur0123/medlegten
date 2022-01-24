@@ -61,8 +61,10 @@ class _$AppRouter extends RootStackRouter {
           child: CourseUnitModuleListPage(args.unitInfo, key: args.key));
     },
     ModuleGrammarTableRoute.name: (routeData) {
+      final args = routeData.argsAs<ModuleGrammarTableRouteArgs>();
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const ModuleGrammarTablePage());
+          routeData: routeData,
+          child: ModuleGrammarTablePage(args.unitGrammar, key: args.key));
     },
     CourseUnitIntroVideoRoute.name: (routeData) {
       final args = routeData.argsAs<CourseUnitIntroVideoRouteArgs>();
@@ -250,11 +252,28 @@ class CourseUnitModuleListRouteArgs {
 
 /// generated route for
 /// [ModuleGrammarTablePage]
-class ModuleGrammarTableRoute extends PageRouteInfo<void> {
-  const ModuleGrammarTableRoute()
-      : super(ModuleGrammarTableRoute.name, path: '/unit_module_grammartable');
+class ModuleGrammarTableRoute
+    extends PageRouteInfo<ModuleGrammarTableRouteArgs> {
+  ModuleGrammarTableRoute({required UnitGrammar unitGrammar, Key? key})
+      : super(ModuleGrammarTableRoute.name,
+            path: '/unit_module_grammartable',
+            args: ModuleGrammarTableRouteArgs(
+                unitGrammar: unitGrammar, key: key));
 
   static const String name = 'ModuleGrammarTableRoute';
+}
+
+class ModuleGrammarTableRouteArgs {
+  const ModuleGrammarTableRouteArgs({required this.unitGrammar, this.key});
+
+  final UnitGrammar unitGrammar;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ModuleGrammarTableRouteArgs{unitGrammar: $unitGrammar, key: $key}';
+  }
 }
 
 /// generated route for
