@@ -22,9 +22,10 @@ Sentence _$SentenceFromJson(Map<String, dynamic> json) {
 class _$SentenceTearOff {
   const _$SentenceTearOff();
 
-  _Sentence call(
-      String label, String eng, String mon, SentenceStructure structure) {
+  _Sentence call(String group, String label, String eng, String mon,
+      SentenceStructure structure) {
     return _Sentence(
+      group,
       label,
       eng,
       mon,
@@ -42,6 +43,7 @@ const $Sentence = _$SentenceTearOff();
 
 /// @nodoc
 mixin _$Sentence {
+  String get group => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
   String get eng => throw _privateConstructorUsedError;
   String get mon => throw _privateConstructorUsedError;
@@ -58,7 +60,11 @@ abstract class $SentenceCopyWith<$Res> {
   factory $SentenceCopyWith(Sentence value, $Res Function(Sentence) then) =
       _$SentenceCopyWithImpl<$Res>;
   $Res call(
-      {String label, String eng, String mon, SentenceStructure structure});
+      {String group,
+      String label,
+      String eng,
+      String mon,
+      SentenceStructure structure});
 
   $SentenceStructureCopyWith<$Res> get structure;
 }
@@ -73,12 +79,17 @@ class _$SentenceCopyWithImpl<$Res> implements $SentenceCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? group = freezed,
     Object? label = freezed,
     Object? eng = freezed,
     Object? mon = freezed,
     Object? structure = freezed,
   }) {
     return _then(_value.copyWith(
+      group: group == freezed
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as String,
       label: label == freezed
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -112,7 +123,11 @@ abstract class _$SentenceCopyWith<$Res> implements $SentenceCopyWith<$Res> {
       __$SentenceCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String label, String eng, String mon, SentenceStructure structure});
+      {String group,
+      String label,
+      String eng,
+      String mon,
+      SentenceStructure structure});
 
   @override
   $SentenceStructureCopyWith<$Res> get structure;
@@ -129,12 +144,17 @@ class __$SentenceCopyWithImpl<$Res> extends _$SentenceCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? group = freezed,
     Object? label = freezed,
     Object? eng = freezed,
     Object? mon = freezed,
     Object? structure = freezed,
   }) {
     return _then(_Sentence(
+      group == freezed
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as String,
       label == freezed
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -158,11 +178,13 @@ class __$SentenceCopyWithImpl<$Res> extends _$SentenceCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Sentence implements _Sentence {
-  _$_Sentence(this.label, this.eng, this.mon, this.structure);
+  _$_Sentence(this.group, this.label, this.eng, this.mon, this.structure);
 
   factory _$_Sentence.fromJson(Map<String, dynamic> json) =>
       _$$_SentenceFromJson(json);
 
+  @override
+  final String group;
   @override
   final String label;
   @override
@@ -174,7 +196,7 @@ class _$_Sentence implements _Sentence {
 
   @override
   String toString() {
-    return 'Sentence(label: $label, eng: $eng, mon: $mon, structure: $structure)';
+    return 'Sentence(group: $group, label: $label, eng: $eng, mon: $mon, structure: $structure)';
   }
 
   @override
@@ -182,6 +204,7 @@ class _$_Sentence implements _Sentence {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Sentence &&
+            const DeepCollectionEquality().equals(other.group, group) &&
             const DeepCollectionEquality().equals(other.label, label) &&
             const DeepCollectionEquality().equals(other.eng, eng) &&
             const DeepCollectionEquality().equals(other.mon, mon) &&
@@ -191,6 +214,7 @@ class _$_Sentence implements _Sentence {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(group),
       const DeepCollectionEquality().hash(label),
       const DeepCollectionEquality().hash(eng),
       const DeepCollectionEquality().hash(mon),
@@ -208,12 +232,13 @@ class _$_Sentence implements _Sentence {
 }
 
 abstract class _Sentence implements Sentence {
-  factory _Sentence(
-          String label, String eng, String mon, SentenceStructure structure) =
-      _$_Sentence;
+  factory _Sentence(String group, String label, String eng, String mon,
+      SentenceStructure structure) = _$_Sentence;
 
   factory _Sentence.fromJson(Map<String, dynamic> json) = _$_Sentence.fromJson;
 
+  @override
+  String get group;
   @override
   String get label;
   @override

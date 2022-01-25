@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 
 class Utils {
   Color hexToColor(String code) {
@@ -21,5 +20,3 @@ extension GlobalKeyExtension on GlobalKey {
     }
   }
 }
-
-typedef UnitIntroCueWordCallback = void Function(UnitIntroCueWord val);

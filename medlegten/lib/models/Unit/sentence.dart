@@ -6,9 +6,8 @@ part 'sentence.g.dart';
 
 @freezed
 class Sentence with _$Sentence {
-  factory Sentence(
-          String label, String eng, String mon, SentenceStructure structure) =
-      _Sentence;
+  factory Sentence(String group, String label, String eng, String mon,
+      SentenceStructure structure) = _Sentence;
 
   factory Sentence.fromJson(Map<String, dynamic> json) =>
       _$SentenceFromJson(json);

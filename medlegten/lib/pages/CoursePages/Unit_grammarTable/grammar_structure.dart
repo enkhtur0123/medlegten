@@ -4,29 +4,33 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/module_grammar_table.dart';
+import 'package:tuple/tuple.dart';
 
 class StructureBody extends HookWidget {
   const StructureBody(
       this.grammar, this.helper, this.partLabel, this.partId, this.callback,
-      {Key? key, this.partname = ''})
+      {Key? key})
       : super(key: key);
-
   final Grammar grammar;
   final Grammarhelper helper;
   final String partLabel;
   final int partId;
   final UnitGrammarCallback callback;
-  final String partname;
+
   @override
   Widget build(BuildContext context) {
-    var selectedId = useState(-1);
-    var names = helper.getPartStructureNames(grammar.label, "part$partId", []);
+    var selectedId = useState(
+        helper.selectedChips[Tuple2<Grammar, int>(grammar, partId)] ?? -1);
+    var names =
+        helper.getPartStructureNames(grammar, partId, helper.selectedAnswers);
     return Wrap(
       alignment: WrapAlignment.center,
+      spacing: 20,
       children: names
           .map((answer) => ChoiceChip(
                 backgroundColor: ColorTable.color255_255_255,
-                elevation: 5.0,
+                selectedColor: ColorTable.color255_255_255,
+                elevation: answer.answerId == selectedId.value ? 5.0 : 0.0,
                 shape: RoundedRectangleBorder(
                     side: getBorderSide(answer, selectedId.value),
                     borderRadius:
@@ -44,7 +48,9 @@ class StructureBody extends HookWidget {
                 ),
                 onSelected: (bool selected) {
                   selectedId.value = selected ? answer.answerId : 0;
-                  callback(answer.answer);
+                  helper.selectedChips[Tuple2<Grammar, int>(grammar, partId)] =
+                      selectedId.value;
+                  callback(answer.answer, partId);
                 },
                 selected: answer.answerId == selectedId.value,
               ))
@@ -53,19 +59,8 @@ class StructureBody extends HookWidget {
   }
 
   BorderSide getBorderSide(GrammarAnswerEx answer, int selectedId) {
-    Color color =
-        answer.answerId == selectedId ? Colors.greenAccent : Colors.transparent;
-    // if (mode == 1) {
-    //   if (answer.isTrue == '0') {
-    //     color = Colors.greenAccent;
-    //     print(answer.isTrue);
-    //   }
+    Color color = answer.answerId == selectedId ? Colors.blue : Colors.white;
 
-    //   if (quizQuestionEx.selectedAnswerId == answer.answerId &&
-    //       answer.isTrue == '1') {
-    //     color = Colors.redAccent;
-    //   }
-    // }
     return BorderSide(color: color);
   }
 }

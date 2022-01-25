@@ -10,6 +10,8 @@ import 'package:medlegten/pages/CoursePages/Unit_introVideo/video_subtitle.dart'
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:video_player/video_player.dart';
 
+typedef UnitIntroCueWordCallback = void Function(UnitIntroCueWord val);
+
 class CourseUnitIntroVideoPage extends StatefulWidget {
   const CourseUnitIntroVideoPage(this.unitIntroVideo, {Key? key})
       : super(key: key);

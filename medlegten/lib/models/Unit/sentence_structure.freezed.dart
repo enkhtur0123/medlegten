@@ -32,17 +32,7 @@ class _$SentenceStructureTearOff {
       String? part7,
       String? part8,
       String? part9,
-      String? part10,
-      String? part11,
-      String? part12,
-      String? part13,
-      String? part14,
-      String? part15,
-      String? part16,
-      String? part17,
-      String? part18,
-      String? part19,
-      String? part20) {
+      String? part10) {
     return _SentenceStructure(
       part1,
       part2,
@@ -54,16 +44,6 @@ class _$SentenceStructureTearOff {
       part8,
       part9,
       part10,
-      part11,
-      part12,
-      part13,
-      part14,
-      part15,
-      part16,
-      part17,
-      part18,
-      part19,
-      part20,
     );
   }
 
@@ -87,16 +67,6 @@ mixin _$SentenceStructure {
   String? get part8 => throw _privateConstructorUsedError;
   String? get part9 => throw _privateConstructorUsedError;
   String? get part10 => throw _privateConstructorUsedError;
-  String? get part11 => throw _privateConstructorUsedError;
-  String? get part12 => throw _privateConstructorUsedError;
-  String? get part13 => throw _privateConstructorUsedError;
-  String? get part14 => throw _privateConstructorUsedError;
-  String? get part15 => throw _privateConstructorUsedError;
-  String? get part16 => throw _privateConstructorUsedError;
-  String? get part17 => throw _privateConstructorUsedError;
-  String? get part18 => throw _privateConstructorUsedError;
-  String? get part19 => throw _privateConstructorUsedError;
-  String? get part20 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -119,17 +89,7 @@ abstract class $SentenceStructureCopyWith<$Res> {
       String? part7,
       String? part8,
       String? part9,
-      String? part10,
-      String? part11,
-      String? part12,
-      String? part13,
-      String? part14,
-      String? part15,
-      String? part16,
-      String? part17,
-      String? part18,
-      String? part19,
-      String? part20});
+      String? part10});
 }
 
 /// @nodoc
@@ -153,16 +113,6 @@ class _$SentenceStructureCopyWithImpl<$Res>
     Object? part8 = freezed,
     Object? part9 = freezed,
     Object? part10 = freezed,
-    Object? part11 = freezed,
-    Object? part12 = freezed,
-    Object? part13 = freezed,
-    Object? part14 = freezed,
-    Object? part15 = freezed,
-    Object? part16 = freezed,
-    Object? part17 = freezed,
-    Object? part18 = freezed,
-    Object? part19 = freezed,
-    Object? part20 = freezed,
   }) {
     return _then(_value.copyWith(
       part1: part1 == freezed
@@ -205,46 +155,6 @@ class _$SentenceStructureCopyWithImpl<$Res>
           ? _value.part10
           : part10 // ignore: cast_nullable_to_non_nullable
               as String?,
-      part11: part11 == freezed
-          ? _value.part11
-          : part11 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part12: part12 == freezed
-          ? _value.part12
-          : part12 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part13: part13 == freezed
-          ? _value.part13
-          : part13 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part14: part14 == freezed
-          ? _value.part14
-          : part14 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part15: part15 == freezed
-          ? _value.part15
-          : part15 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part16: part16 == freezed
-          ? _value.part16
-          : part16 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part17: part17 == freezed
-          ? _value.part17
-          : part17 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part18: part18 == freezed
-          ? _value.part18
-          : part18 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part19: part19 == freezed
-          ? _value.part19
-          : part19 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part20: part20 == freezed
-          ? _value.part20
-          : part20 // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -266,17 +176,7 @@ abstract class _$SentenceStructureCopyWith<$Res>
       String? part7,
       String? part8,
       String? part9,
-      String? part10,
-      String? part11,
-      String? part12,
-      String? part13,
-      String? part14,
-      String? part15,
-      String? part16,
-      String? part17,
-      String? part18,
-      String? part19,
-      String? part20});
+      String? part10});
 }
 
 /// @nodoc
@@ -302,16 +202,6 @@ class __$SentenceStructureCopyWithImpl<$Res>
     Object? part8 = freezed,
     Object? part9 = freezed,
     Object? part10 = freezed,
-    Object? part11 = freezed,
-    Object? part12 = freezed,
-    Object? part13 = freezed,
-    Object? part14 = freezed,
-    Object? part15 = freezed,
-    Object? part16 = freezed,
-    Object? part17 = freezed,
-    Object? part18 = freezed,
-    Object? part19 = freezed,
-    Object? part20 = freezed,
   }) {
     return _then(_SentenceStructure(
       part1 == freezed
@@ -354,74 +244,16 @@ class __$SentenceStructureCopyWithImpl<$Res>
           ? _value.part10
           : part10 // ignore: cast_nullable_to_non_nullable
               as String?,
-      part11 == freezed
-          ? _value.part11
-          : part11 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part12 == freezed
-          ? _value.part12
-          : part12 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part13 == freezed
-          ? _value.part13
-          : part13 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part14 == freezed
-          ? _value.part14
-          : part14 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part15 == freezed
-          ? _value.part15
-          : part15 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part16 == freezed
-          ? _value.part16
-          : part16 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part17 == freezed
-          ? _value.part17
-          : part17 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part18 == freezed
-          ? _value.part18
-          : part18 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part19 == freezed
-          ? _value.part19
-          : part19 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      part20 == freezed
-          ? _value.part20
-          : part20 // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_SentenceStructure implements _SentenceStructure {
-  _$_SentenceStructure(
-      this.part1,
-      this.part2,
-      this.part3,
-      this.part4,
-      this.part5,
-      this.part6,
-      this.part7,
-      this.part8,
-      this.part9,
-      this.part10,
-      this.part11,
-      this.part12,
-      this.part13,
-      this.part14,
-      this.part15,
-      this.part16,
-      this.part17,
-      this.part18,
-      this.part19,
-      this.part20);
+class _$_SentenceStructure extends _SentenceStructure {
+  _$_SentenceStructure(this.part1, this.part2, this.part3, this.part4,
+      this.part5, this.part6, this.part7, this.part8, this.part9, this.part10)
+      : super._();
 
   factory _$_SentenceStructure.fromJson(Map<String, dynamic> json) =>
       _$$_SentenceStructureFromJson(json);
@@ -446,30 +278,10 @@ class _$_SentenceStructure implements _SentenceStructure {
   final String? part9;
   @override
   final String? part10;
-  @override
-  final String? part11;
-  @override
-  final String? part12;
-  @override
-  final String? part13;
-  @override
-  final String? part14;
-  @override
-  final String? part15;
-  @override
-  final String? part16;
-  @override
-  final String? part17;
-  @override
-  final String? part18;
-  @override
-  final String? part19;
-  @override
-  final String? part20;
 
   @override
   String toString() {
-    return 'SentenceStructure(part1: $part1, part2: $part2, part3: $part3, part4: $part4, part5: $part5, part6: $part6, part7: $part7, part8: $part8, part9: $part9, part10: $part10, part11: $part11, part12: $part12, part13: $part13, part14: $part14, part15: $part15, part16: $part16, part17: $part17, part18: $part18, part19: $part19, part20: $part20)';
+    return 'SentenceStructure(part1: $part1, part2: $part2, part3: $part3, part4: $part4, part5: $part5, part6: $part6, part7: $part7, part8: $part8, part9: $part9, part10: $part10)';
   }
 
   @override
@@ -486,43 +298,22 @@ class _$_SentenceStructure implements _SentenceStructure {
             const DeepCollectionEquality().equals(other.part7, part7) &&
             const DeepCollectionEquality().equals(other.part8, part8) &&
             const DeepCollectionEquality().equals(other.part9, part9) &&
-            const DeepCollectionEquality().equals(other.part10, part10) &&
-            const DeepCollectionEquality().equals(other.part11, part11) &&
-            const DeepCollectionEquality().equals(other.part12, part12) &&
-            const DeepCollectionEquality().equals(other.part13, part13) &&
-            const DeepCollectionEquality().equals(other.part14, part14) &&
-            const DeepCollectionEquality().equals(other.part15, part15) &&
-            const DeepCollectionEquality().equals(other.part16, part16) &&
-            const DeepCollectionEquality().equals(other.part17, part17) &&
-            const DeepCollectionEquality().equals(other.part18, part18) &&
-            const DeepCollectionEquality().equals(other.part19, part19) &&
-            const DeepCollectionEquality().equals(other.part20, part20));
+            const DeepCollectionEquality().equals(other.part10, part10));
   }
 
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        const DeepCollectionEquality().hash(part1),
-        const DeepCollectionEquality().hash(part2),
-        const DeepCollectionEquality().hash(part3),
-        const DeepCollectionEquality().hash(part4),
-        const DeepCollectionEquality().hash(part5),
-        const DeepCollectionEquality().hash(part6),
-        const DeepCollectionEquality().hash(part7),
-        const DeepCollectionEquality().hash(part8),
-        const DeepCollectionEquality().hash(part9),
-        const DeepCollectionEquality().hash(part10),
-        const DeepCollectionEquality().hash(part11),
-        const DeepCollectionEquality().hash(part12),
-        const DeepCollectionEquality().hash(part13),
-        const DeepCollectionEquality().hash(part14),
-        const DeepCollectionEquality().hash(part15),
-        const DeepCollectionEquality().hash(part16),
-        const DeepCollectionEquality().hash(part17),
-        const DeepCollectionEquality().hash(part18),
-        const DeepCollectionEquality().hash(part19),
-        const DeepCollectionEquality().hash(part20)
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(part1),
+      const DeepCollectionEquality().hash(part2),
+      const DeepCollectionEquality().hash(part3),
+      const DeepCollectionEquality().hash(part4),
+      const DeepCollectionEquality().hash(part5),
+      const DeepCollectionEquality().hash(part6),
+      const DeepCollectionEquality().hash(part7),
+      const DeepCollectionEquality().hash(part8),
+      const DeepCollectionEquality().hash(part9),
+      const DeepCollectionEquality().hash(part10));
 
   @JsonKey(ignore: true)
   @override
@@ -535,7 +326,7 @@ class _$_SentenceStructure implements _SentenceStructure {
   }
 }
 
-abstract class _SentenceStructure implements SentenceStructure {
+abstract class _SentenceStructure extends SentenceStructure {
   factory _SentenceStructure(
       String? part1,
       String? part2,
@@ -546,17 +337,8 @@ abstract class _SentenceStructure implements SentenceStructure {
       String? part7,
       String? part8,
       String? part9,
-      String? part10,
-      String? part11,
-      String? part12,
-      String? part13,
-      String? part14,
-      String? part15,
-      String? part16,
-      String? part17,
-      String? part18,
-      String? part19,
-      String? part20) = _$_SentenceStructure;
+      String? part10) = _$_SentenceStructure;
+  _SentenceStructure._() : super._();
 
   factory _SentenceStructure.fromJson(Map<String, dynamic> json) =
       _$_SentenceStructure.fromJson;
@@ -581,26 +363,6 @@ abstract class _SentenceStructure implements SentenceStructure {
   String? get part9;
   @override
   String? get part10;
-  @override
-  String? get part11;
-  @override
-  String? get part12;
-  @override
-  String? get part13;
-  @override
-  String? get part14;
-  @override
-  String? get part15;
-  @override
-  String? get part16;
-  @override
-  String? get part17;
-  @override
-  String? get part18;
-  @override
-  String? get part19;
-  @override
-  String? get part20;
   @override
   @JsonKey(ignore: true)
   _$SentenceStructureCopyWith<_SentenceStructure> get copyWith =>

@@ -7,8 +7,9 @@ part 'unit_grammar.g.dart';
 
 @freezed
 class UnitGrammar with _$UnitGrammar {
-  factory UnitGrammar(String label, String tosentence, String fromsentence,
-      List<Grammar> grammar, List<Sentence> sentences) = _UnitGrammar;
+  factory UnitGrammar(
+          String label, List<Grammar> grammar, List<Sentence> sentences) =
+      _UnitGrammar;
 
   factory UnitGrammar.fromJson(Map<String, dynamic> json) =>
       _$UnitGrammarFromJson(json);

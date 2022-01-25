@@ -8,6 +8,7 @@ import 'package:medlegten/models/Unit/unit_introduction_cue.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_introVideo/cue_text.dart';
+import 'package:medlegten/pages/CoursePages/Unit_introVideo/video_page.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';

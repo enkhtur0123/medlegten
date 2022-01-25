@@ -68,18 +68,21 @@ class UnitRepository {
       ],
       "sentences": [
         {
+          "group": "1",
           "label": "positive",
           "eng": "He is a teacher",
           "mon": "Тэр эрэгтэй бол багш",
           "structure": {"part1": "He", "part2": "is", "part3": "teacher"}
         },
         {
+          "group": "1",
           "label": "question",
           "eng": "Is he a teacher?",
           "mon": "Тэр эрэгтэй багш мөн үү?",
           "structure": {"part1": "Is", "part2": "he", "part3": "teacher"}
         },
         {
+          "group": "1",
           "label": "negative",
           "eng": "He is not a teacher",
           "mon": "Тэр эрэгтэй бол багш биш",
@@ -91,41 +94,47 @@ class UnitRepository {
           }
         },
         {
+          "group": "2",
           "label": "positive",
-          "eng": "He is a student",
+          "eng": "They are students",
           "mon": "Тэр эрэгтэй бол оюутан",
-          "structure": {"part1": "She", "part2": "are", "part3": "student"}
+          "structure": {"part1": "They", "part2": "are", "part3": "students"}
         },
         {
+          "group": "2",
           "label": "question",
-          "eng": "Is he a student?",
+          "eng": "Are they students?",
           "mon": "Тэр эрэгтэй оюутан мөн үү?",
-          "structure": {"part1": "Is", "part2": "he", "part3": "student"}
+          "structure": {"part1": "Are", "part2": "they", "part3": "students"}
         },
         {
+          "group": "2",
           "label": "negative",
-          "eng": "He is not a student",
+          "eng": "They are not students",
           "mon": "Тэр эрэгтэй бол оюутан биш",
           "structure": {
-            "part1": "He",
-            "part2": "is",
+            "part1": "They",
+            "part2": "are",
             "part3": "not",
-            "part4": "student"
+            "part4": "students"
           }
         },
         {
+          "group": "3",
           "label": "positive",
           "eng": "It is a dog",
           "mon": "Энэ бол нохой",
           "structure": {"part1": "It", "part2": "is", "part3": "dog"},
         },
         {
+          "group": "3",
           "label": "question",
           "eng": "Is it a dog?",
           "mon": "Энэ нохой мөн үү?",
           "structure": {"part1": "Is", "part2": "it", "part3": "dog"},
         },
         {
+          "group": "3",
           "label": "negative",
           "eng": "It is not a dog",
           "mon": "Энэ нохой биш",

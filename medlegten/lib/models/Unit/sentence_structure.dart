@@ -15,18 +15,47 @@ class SentenceStructure with _$SentenceStructure {
       String? part7,
       String? part8,
       String? part9,
-      String? part10,
-      String? part11,
-      String? part12,
-      String? part13,
-      String? part14,
-      String? part15,
-      String? part16,
-      String? part17,
-      String? part18,
-      String? part19,
-      String? part20) = _SentenceStructure;
+      String? part10) = _SentenceStructure;
 
   factory SentenceStructure.fromJson(Map<String, dynamic> json) =>
       _$SentenceStructureFromJson(json);
+
+  const SentenceStructure._();
+
+  String? getPart(int id) {
+    String? retVal = '';
+    switch (id) {
+      case 1:
+        retVal = part1;
+        break;
+      case 2:
+        retVal = part2;
+        break;
+      case 3:
+        retVal = part3;
+        break;
+      case 4:
+        retVal = part4;
+        break;
+      case 5:
+        retVal = part5;
+        break;
+      case 6:
+        retVal = part6;
+        break;
+      case 7:
+        retVal = part7;
+        break;
+      case 8:
+        retVal = part8;
+        break;
+      case 9:
+        retVal = part9;
+        break;
+      case 10:
+        retVal = part10;
+        break;
+    }
+    return retVal;
+  }
 }

@@ -18,16 +18,6 @@ _$_SentenceStructure _$$_SentenceStructureFromJson(Map<String, dynamic> json) =>
       json['part8'] as String?,
       json['part9'] as String?,
       json['part10'] as String?,
-      json['part11'] as String?,
-      json['part12'] as String?,
-      json['part13'] as String?,
-      json['part14'] as String?,
-      json['part15'] as String?,
-      json['part16'] as String?,
-      json['part17'] as String?,
-      json['part18'] as String?,
-      json['part19'] as String?,
-      json['part20'] as String?,
     );
 
 Map<String, dynamic> _$$_SentenceStructureToJson(
@@ -43,14 +33,4 @@ Map<String, dynamic> _$$_SentenceStructureToJson(
       'part8': instance.part8,
       'part9': instance.part9,
       'part10': instance.part10,
-      'part11': instance.part11,
-      'part12': instance.part12,
-      'part13': instance.part13,
-      'part14': instance.part14,
-      'part15': instance.part15,
-      'part16': instance.part16,
-      'part17': instance.part17,
-      'part18': instance.part18,
-      'part19': instance.part19,
-      'part20': instance.part20,
     };

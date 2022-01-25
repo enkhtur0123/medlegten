@@ -48,7 +48,6 @@ dependencies:
   timeline_tile: ^2.0.0
   tuple: ^2.0.0
   clickable_list_wheel_view: ^0.0.4
-  bubble_tab_indicator: ^0.1.5
 
 dev_dependencies:
   flutter_test:
