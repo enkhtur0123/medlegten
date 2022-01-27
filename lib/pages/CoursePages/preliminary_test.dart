@@ -42,10 +42,11 @@ class PreliminaryTest extends StatelessWidget {
           ),
           WideButton('Start Quiz', ColorTable.color120_100_254,
               ColorTable.color255_255_255, () {
-            AutoRouter.of(context).push(const CourseSelfTestRoute());
+            AutoRouter.of(context).push(CourseSelfTestRoute());
           }, horizontalEdge: 0),
         ],
       ),
     );
   }
 }
+  

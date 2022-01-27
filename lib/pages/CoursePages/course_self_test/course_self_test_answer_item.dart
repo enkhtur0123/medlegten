@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/Landing/quiz_answer.dart';
-import 'package:medlegten/pages/CoursePages/course_self_test.dart';
+import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
+
 
 class CourseSelfAnswerItem extends HookWidget {
   CourseSelfAnswerItem({Key? key, this.answer, this.quizQuestionEx, this.mode, this.correctCnt}) : super(key: key);

@@ -1,6 +1,14 @@
 # medlegten
 
 A new Flutter project.
+## Зайлшгүй шаардлагатай хийх үйлдлүүд
+### Android 
+```
+
+```
+### IOS
+```
+``` 
 
 ## Getting Started
 

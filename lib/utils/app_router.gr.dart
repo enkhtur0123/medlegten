@@ -45,8 +45,10 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const LandingPage());
     },
     CourseSelfTestRoute.name: (routeData) {
+      final args = routeData.argsAs<CourseSelfTestRouteArgs>(
+          orElse: () => const CourseSelfTestRouteArgs());
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: CourseSelfTestPage());
+          routeData: routeData, child: CourseSelfTestPage(key: args.key));
     },
     CourseDetailRoute.name: (routeData) {
       final args = routeData.argsAs<CourseDetailRouteArgs>();
@@ -93,6 +95,10 @@ class _$AppRouter extends RootStackRouter {
     ModuleProgressExamRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const ModuleProgressExamPage());
+    },
+    CoursePaymentRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: CoursePayment());
     }
   };
 
@@ -121,7 +127,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(ModuleConversationVideoRoute.name,
             path: '/unit_module_conversationvideo'),
         RouteConfig(ModuleProgressExamRoute.name,
-            path: '/unit_module_progressexam')
+            path: '/unit_module_progressexam'),
+        RouteConfig(CoursePaymentRoute.name, path: '/payment')
       ];
 }
 
@@ -192,11 +199,23 @@ class LandingRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CourseSelfTestPage]
-class CourseSelfTestRoute extends PageRouteInfo<void> {
-  const CourseSelfTestRoute()
-      : super(CourseSelfTestRoute.name, path: '/course_self_test');
+class CourseSelfTestRoute extends PageRouteInfo<CourseSelfTestRouteArgs> {
+  CourseSelfTestRoute({Key? key})
+      : super(CourseSelfTestRoute.name,
+            path: '/course_self_test', args: CourseSelfTestRouteArgs(key: key));
 
   static const String name = 'CourseSelfTestRoute';
+}
+
+class CourseSelfTestRouteArgs {
+  const CourseSelfTestRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CourseSelfTestRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -336,4 +355,12 @@ class ModuleProgressExamRoute extends PageRouteInfo<void> {
       : super(ModuleProgressExamRoute.name, path: '/unit_module_progressexam');
 
   static const String name = 'ModuleProgressExamRoute';
+}
+
+/// generated route for
+/// [CoursePayment]
+class CoursePaymentRoute extends PageRouteInfo<void> {
+  const CoursePaymentRoute() : super(CoursePaymentRoute.name, path: '/payment');
+
+  static const String name = 'CoursePayment';
 }

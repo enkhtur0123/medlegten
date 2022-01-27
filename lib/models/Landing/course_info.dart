@@ -18,7 +18,10 @@ class CourseInfo with _$CourseInfo {
       String vocCount,
       String introVideoHostType,
       String introVideoUrl,
-      String minToWatch) = _CourseInfo;
+      String minToWatch,
+      bool isPurchased,
+      String purchaseExpireDate
+      ) = _CourseInfo;
 
   factory CourseInfo.fromJson(Map<String, dynamic> json) =>
       _$CourseInfoFromJson(json);

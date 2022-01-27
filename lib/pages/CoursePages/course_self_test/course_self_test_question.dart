@@ -3,7 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/quiz_answer.dart';
-import 'package:medlegten/pages/CoursePages/course_self_test.dart';
+import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
+
 
 import 'course_self_test_answer_item.dart';
 

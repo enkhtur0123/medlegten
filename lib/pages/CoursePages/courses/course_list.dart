@@ -4,8 +4,9 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
-import 'package:medlegten/pages/CoursePages/course_cart.dart';
+import 'package:medlegten/pages/CoursePages/courses/course_cart.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
+import 'package:medlegten/widgets/TextButton.dart';
 
 class CourseList extends HookWidget {
   CourseList({Key? key}) : super(key: key);
@@ -18,11 +19,13 @@ class CourseList extends HookWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         addVerticalSpace(20),
-        
-        
-    Align(
+        Align(
           alignment: Alignment.topLeft,
-          child: Text('Courses', style: textStyle),
+          child: TextButtonWidget(
+            text:'Courses' ,
+            onTap:(){
+
+          })
         ),
         addVerticalSpace(5),
         FutureBuilder<List<CourseInfo>?>(

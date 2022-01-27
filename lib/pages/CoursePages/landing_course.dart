@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medlegten/pages/CoursePages/course_list.dart';
+import 'package:medlegten/pages/CoursePages/courses/course_list.dart';
+
 import 'package:medlegten/pages/CoursePages/preliminary_test.dart';
 import 'package:medlegten/pages/CoursePages/customer_review_list.dart';
 

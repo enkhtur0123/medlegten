@@ -6,7 +6,7 @@ import 'package:medlegten/models/Landing/customer_review.dart';
 import 'package:medlegten/pages/CoursePages/customer_review_cart.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/widgets/TextButton.dart';
-
+/// Жагсаалт авах хэсэгт заавал listview ашиглах
 // ignore: must_be_immutable
 class CustomerReviewList extends HookWidget {
   CustomerReviewList({Key? key}) : super(key: key);

@@ -21,6 +21,8 @@ _$_CourseInfo _$$_CourseInfoFromJson(Map<String, dynamic> json) =>
       json['introVideoHostType'] as String,
       json['introVideoUrl'] as String,
       json['minToWatch'] as String,
+      json['isPurchased'] as bool,
+      json['purchaseExpireDate'] as String,
     );
 
 Map<String, dynamic> _$$_CourseInfoToJson(_$_CourseInfo instance) =>
@@ -38,4 +40,6 @@ Map<String, dynamic> _$$_CourseInfoToJson(_$_CourseInfo instance) =>
       'introVideoHostType': instance.introVideoHostType,
       'introVideoUrl': instance.introVideoUrl,
       'minToWatch': instance.minToWatch,
+      'isPurchased': instance.isPurchased,
+      'purchaseExpireDate': instance.purchaseExpireDate,
     };

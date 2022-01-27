@@ -35,7 +35,9 @@ class _$CourseInfoTearOff {
       String vocCount,
       String introVideoHostType,
       String introVideoUrl,
-      String minToWatch) {
+      String minToWatch,
+      bool isPurchased,
+      String purchaseExpireDate) {
     return _CourseInfo(
       courseId,
       courseName,
@@ -50,6 +52,8 @@ class _$CourseInfoTearOff {
       introVideoHostType,
       introVideoUrl,
       minToWatch,
+      isPurchased,
+      purchaseExpireDate,
     );
   }
 
@@ -76,6 +80,8 @@ mixin _$CourseInfo {
   String get introVideoHostType => throw _privateConstructorUsedError;
   String get introVideoUrl => throw _privateConstructorUsedError;
   String get minToWatch => throw _privateConstructorUsedError;
+  bool get isPurchased => throw _privateConstructorUsedError;
+  String get purchaseExpireDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -101,7 +107,9 @@ abstract class $CourseInfoCopyWith<$Res> {
       String vocCount,
       String introVideoHostType,
       String introVideoUrl,
-      String minToWatch});
+      String minToWatch,
+      bool isPurchased,
+      String purchaseExpireDate});
 }
 
 /// @nodoc
@@ -127,6 +135,8 @@ class _$CourseInfoCopyWithImpl<$Res> implements $CourseInfoCopyWith<$Res> {
     Object? introVideoHostType = freezed,
     Object? introVideoUrl = freezed,
     Object? minToWatch = freezed,
+    Object? isPurchased = freezed,
+    Object? purchaseExpireDate = freezed,
   }) {
     return _then(_value.copyWith(
       courseId: courseId == freezed
@@ -181,6 +191,14 @@ class _$CourseInfoCopyWithImpl<$Res> implements $CourseInfoCopyWith<$Res> {
           ? _value.minToWatch
           : minToWatch // ignore: cast_nullable_to_non_nullable
               as String,
+      isPurchased: isPurchased == freezed
+          ? _value.isPurchased
+          : isPurchased // ignore: cast_nullable_to_non_nullable
+              as bool,
+      purchaseExpireDate: purchaseExpireDate == freezed
+          ? _value.purchaseExpireDate
+          : purchaseExpireDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -204,7 +222,9 @@ abstract class _$CourseInfoCopyWith<$Res> implements $CourseInfoCopyWith<$Res> {
       String vocCount,
       String introVideoHostType,
       String introVideoUrl,
-      String minToWatch});
+      String minToWatch,
+      bool isPurchased,
+      String purchaseExpireDate});
 }
 
 /// @nodoc
@@ -232,6 +252,8 @@ class __$CourseInfoCopyWithImpl<$Res> extends _$CourseInfoCopyWithImpl<$Res>
     Object? introVideoHostType = freezed,
     Object? introVideoUrl = freezed,
     Object? minToWatch = freezed,
+    Object? isPurchased = freezed,
+    Object? purchaseExpireDate = freezed,
   }) {
     return _then(_CourseInfo(
       courseId == freezed
@@ -286,6 +308,14 @@ class __$CourseInfoCopyWithImpl<$Res> extends _$CourseInfoCopyWithImpl<$Res>
           ? _value.minToWatch
           : minToWatch // ignore: cast_nullable_to_non_nullable
               as String,
+      isPurchased == freezed
+          ? _value.isPurchased
+          : isPurchased // ignore: cast_nullable_to_non_nullable
+              as bool,
+      purchaseExpireDate == freezed
+          ? _value.purchaseExpireDate
+          : purchaseExpireDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -306,7 +336,9 @@ class _$_CourseInfo implements _CourseInfo {
       this.vocCount,
       this.introVideoHostType,
       this.introVideoUrl,
-      this.minToWatch);
+      this.minToWatch,
+      this.isPurchased,
+      this.purchaseExpireDate);
 
   factory _$_CourseInfo.fromJson(Map<String, dynamic> json) =>
       _$$_CourseInfoFromJson(json);
@@ -337,10 +369,14 @@ class _$_CourseInfo implements _CourseInfo {
   final String introVideoUrl;
   @override
   final String minToWatch;
+  @override
+  final bool isPurchased;
+  @override
+  final String purchaseExpireDate;
 
   @override
   String toString() {
-    return 'CourseInfo(courseId: $courseId, courseName: $courseName, price: $price, introVideo: $introVideo, ordering: $ordering, shortDesc: $shortDesc, levelName: $levelName, hours: $hours, units: $units, vocCount: $vocCount, introVideoHostType: $introVideoHostType, introVideoUrl: $introVideoUrl, minToWatch: $minToWatch)';
+    return 'CourseInfo(courseId: $courseId, courseName: $courseName, price: $price, introVideo: $introVideo, ordering: $ordering, shortDesc: $shortDesc, levelName: $levelName, hours: $hours, units: $units, vocCount: $vocCount, introVideoHostType: $introVideoHostType, introVideoUrl: $introVideoUrl, minToWatch: $minToWatch, isPurchased: $isPurchased, purchaseExpireDate: $purchaseExpireDate)';
   }
 
   @override
@@ -365,7 +401,11 @@ class _$_CourseInfo implements _CourseInfo {
             const DeepCollectionEquality()
                 .equals(other.introVideoUrl, introVideoUrl) &&
             const DeepCollectionEquality()
-                .equals(other.minToWatch, minToWatch));
+                .equals(other.minToWatch, minToWatch) &&
+            const DeepCollectionEquality()
+                .equals(other.isPurchased, isPurchased) &&
+            const DeepCollectionEquality()
+                .equals(other.purchaseExpireDate, purchaseExpireDate));
   }
 
   @override
@@ -383,7 +423,9 @@ class _$_CourseInfo implements _CourseInfo {
       const DeepCollectionEquality().hash(vocCount),
       const DeepCollectionEquality().hash(introVideoHostType),
       const DeepCollectionEquality().hash(introVideoUrl),
-      const DeepCollectionEquality().hash(minToWatch));
+      const DeepCollectionEquality().hash(minToWatch),
+      const DeepCollectionEquality().hash(isPurchased),
+      const DeepCollectionEquality().hash(purchaseExpireDate));
 
   @JsonKey(ignore: true)
   @override
@@ -410,7 +452,9 @@ abstract class _CourseInfo implements CourseInfo {
       String vocCount,
       String introVideoHostType,
       String introVideoUrl,
-      String minToWatch) = _$_CourseInfo;
+      String minToWatch,
+      bool isPurchased,
+      String purchaseExpireDate) = _$_CourseInfo;
 
   factory _CourseInfo.fromJson(Map<String, dynamic> json) =
       _$_CourseInfo.fromJson;
@@ -441,6 +485,10 @@ abstract class _CourseInfo implements CourseInfo {
   String get introVideoUrl;
   @override
   String get minToWatch;
+  @override
+  bool get isPurchased;
+  @override
+  String get purchaseExpireDate;
   @override
   @JsonKey(ignore: true)
   _$CourseInfoCopyWith<_CourseInfo> get copyWith =>

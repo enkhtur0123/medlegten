@@ -12,9 +12,10 @@ import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/module_mixed_video.d
 import 'package:medlegten/pages/CoursePages/Unit_progressExam/module_progress_exam.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/module_reading.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/module_writing.dart';
-import 'package:medlegten/pages/CoursePages/course_detail.dart';
-import 'package:medlegten/pages/CoursePages/course_self_test.dart';
+import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
 import 'package:medlegten/pages/CoursePages/course_unit_module_list.dart';
+import 'package:medlegten/pages/CoursePages/courses/course_detail.dart';
+import 'package:medlegten/pages/CoursePages/payment/buy_course.dart';
 import 'package:medlegten/pages/LandingPages/landing_page.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/login.dart';
@@ -46,6 +47,8 @@ part 'app_router.gr.dart';
         path: '/unit_module_conversationvideo',
         page: ModuleConversationVideoPage),
     AutoRoute(path: '/unit_module_progressexam', page: ModuleProgressExamPage),
+    AutoRoute(path: '/payment', page: CoursePayment),
+
   ],
 )
 

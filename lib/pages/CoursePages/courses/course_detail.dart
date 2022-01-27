@@ -9,10 +9,11 @@ import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:expandable/expandable.dart';
+import 'package:medlegten/pages/CoursePages/unit_card.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:video_player/video_player.dart';
 
-import 'unit_card.dart';
+import 'course_introduction_widget.dart';
 
 class CourseDetailPage extends StatefulWidget {
   const CourseDetailPage(this.courseInfo, {Key? key}) : super(key: key);
@@ -52,54 +53,8 @@ class _CourseDetailState extends State<CourseDetailPage> {
           LandingHeader(100),
           VideoPlayerWidget(controller: _controller),
           addVerticalSpace(20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: ExpandablePanel(
-              header: const Text(
-                'A1 Course - Анхан шатны хичээлийн агуулга',
-                style: TextStyle(
-                    color: colorPrimary,
-                    fontFamily: 'Roboto',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500),
-              ),
-              collapsed: Column(
-                children: [
-                  Row(
-                    children: [
-                      const IconText(
-                          Icons.remove_red_eye_outlined, '1233 views'),
-                      addHorizontalSpace(20),
-                      const IconText(CupertinoIcons.heart, '456 Likes'),
-                      addHorizontalSpace(20),
-                      const IconText(Icons.timer, '2 minutes'),
-                    ],
-                  )
-                ],
-              ),
-              expanded: Column(
-                children: [
-                  Row(
-                    children: [
-                      const IconText(
-                          Icons.remove_red_eye_outlined, '1233 views'),
-                      addHorizontalSpace(20),
-                      const IconText(CupertinoIcons.heart, '456 Likes'),
-                      addHorizontalSpace(20),
-                      const IconText(Icons.timer, '2 minutes'),
-                    ],
-                  ),
-                  addVerticalSpace(20),
-                  const Text(
-                    'Та энэхүү курс хичээлийг бүрэн үзсэнээр Англи хэлний 26 цаг болон яриа, сонсгол гэх мэт олон ур чадваруудыг суралцана.',
-                    style: TextStyle(color: colorBlack, height: 1.5),
-                    softWrap: true,
-                  )
-                ],
-              ),
-            ),
-          ),
-          const Divider(
+          CourseIntroWidget(courseInfo: widget.courseInfo,),
+           Divider(
             height: 40,
             thickness: 1,
             endIndent: 0,

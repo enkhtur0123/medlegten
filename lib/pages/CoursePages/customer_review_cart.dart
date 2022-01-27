@@ -17,39 +17,67 @@ class CustomerReviewCart extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      // height: 140,
-
       child: Padding(
         padding:
             const EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 15),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircleAvatar(
+                      Flexible(
+                        flex: 2,
+                        child:CircleAvatar(
                           radius: 25,
                           backgroundImage:
-                              NetworkImage(customerReview.profileImg)),
-                      Padding(
+                              NetworkImage(customerReview.profileImg),
+                       ),
+                      ),
+                      Flexible(
+                        flex: 5,
+                        child: Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: SizedBox(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                child: Text(
-                                  customerReview.fullName,
-                                  style: const TextStyle(
-                                      color: colorBlack,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 18,
-                                      fontFamily: 'Roboto'),
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flexible(
+                                    flex: 2,
+                                    child: SizedBox(
+                                      child: Text(
+                                      customerReview.fullName,
+                                      style: const TextStyle(
+                                          color: colorBlack,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18,
+                                          fontFamily: 'Roboto'),
+                                    ),
+                                )
                               ),
+                              Flexible(
+                                flex: 4,
+                                child:Align(
+                                  alignment: Alignment.centerRight,
+                                  child: SizedBox(
+                                  child: Row(
+                                children: [
+                                  for (var i = 1; i <= 5; i++)
+                                    starPrint(int.parse(customerReview.startRating), i)
+                                ],
+                              )
+                            )), ),
+                          ],
+                        ),
                               addVerticalSpace(5),
                               SizedBox(
                                 child: Text(
@@ -64,17 +92,10 @@ class CustomerReviewCart extends StatelessWidget {
                             ],
                           ),
                         ),
-                      )
+                      ))
                     ],
                   ),
                 ),
-                SizedBox(
-                    child: Row(
-                  children: [
-                    for (var i = 1; i <= 5; i++)
-                      starPrint(int.parse(customerReview.startRating), i)
-                  ],
-                )),
               ],
             ),
             addVerticalSpace(10),
