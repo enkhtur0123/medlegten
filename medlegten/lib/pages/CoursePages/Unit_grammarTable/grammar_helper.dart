@@ -1,5 +1,4 @@
 import 'package:medlegten/models/Unit/grammar.dart';
-import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/sentence.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:tuple/tuple.dart';
@@ -7,7 +6,7 @@ import 'package:tuple/tuple.dart';
 class Grammarhelper {
   Grammarhelper(this.unitGrammar);
   UnitGrammar unitGrammar;
-  Map<int, int> valueKeyList = {};
+  //Map<int, int> valueKeyList = {};
   Map<int, String> selectedAnswers = {};
   Map<Tuple2<Grammar, int>, int> selectedChips = {};
   Grammar? selectedGrammar;
@@ -32,7 +31,7 @@ class Grammarhelper {
     Sentence? firstSentence;
     List<Sentence> sentences = [];
     for (var sentence in unitGrammar.sentences.where((sentence) =>
-        sentence.label.toLowerCase() == grammar.label.toLowerCase())) {
+        sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase())) {
       firstSentence ??= sentence;
       if (selectedGrammar != null &&
           selectedSentence != null &&
@@ -90,7 +89,7 @@ class Grammarhelper {
     List<String> retVal = [];
 
     for (var sentence in unitGrammar.sentences.where((sentence) =>
-        sentence.label.toLowerCase() == grammar.label.toLowerCase())) {
+        sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase())) {
       if (selectedAnswers.isNotEmpty &&
           selectedGrammar != null &&
           selectedGrammar != grammar) {
@@ -103,7 +102,7 @@ class Grammarhelper {
       }
 
       bool add = true;
-      for (int i = 1; i < 11; i++) {
+      for (int i = 1; i < 7; i++) {
         if (_partNames.length > i - 1 &&
             sentence.getPart(i) != null &&
             _partNames[i - 1] != '' &&

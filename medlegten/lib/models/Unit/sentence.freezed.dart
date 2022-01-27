@@ -22,11 +22,11 @@ Sentence _$SentenceFromJson(Map<String, dynamic> json) {
 class _$SentenceTearOff {
   const _$SentenceTearOff();
 
-  _Sentence call(String group, String label, String textEng, String textMon,
-      List<SentenceStructure> structure) {
+  _Sentence call(String group, String grammarLabel, String textEng,
+      String textMon, List<SentenceStructure> structure) {
     return _Sentence(
       group,
-      label,
+      grammarLabel,
       textEng,
       textMon,
       structure,
@@ -44,7 +44,7 @@ const $Sentence = _$SentenceTearOff();
 /// @nodoc
 mixin _$Sentence {
   String get group => throw _privateConstructorUsedError;
-  String get label => throw _privateConstructorUsedError;
+  String get grammarLabel => throw _privateConstructorUsedError;
   String get textEng => throw _privateConstructorUsedError;
   String get textMon => throw _privateConstructorUsedError;
   List<SentenceStructure> get structure => throw _privateConstructorUsedError;
@@ -61,7 +61,7 @@ abstract class $SentenceCopyWith<$Res> {
       _$SentenceCopyWithImpl<$Res>;
   $Res call(
       {String group,
-      String label,
+      String grammarLabel,
       String textEng,
       String textMon,
       List<SentenceStructure> structure});
@@ -78,7 +78,7 @@ class _$SentenceCopyWithImpl<$Res> implements $SentenceCopyWith<$Res> {
   @override
   $Res call({
     Object? group = freezed,
-    Object? label = freezed,
+    Object? grammarLabel = freezed,
     Object? textEng = freezed,
     Object? textMon = freezed,
     Object? structure = freezed,
@@ -88,9 +88,9 @@ class _$SentenceCopyWithImpl<$Res> implements $SentenceCopyWith<$Res> {
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as String,
-      label: label == freezed
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
+      grammarLabel: grammarLabel == freezed
+          ? _value.grammarLabel
+          : grammarLabel // ignore: cast_nullable_to_non_nullable
               as String,
       textEng: textEng == freezed
           ? _value.textEng
@@ -115,7 +115,7 @@ abstract class _$SentenceCopyWith<$Res> implements $SentenceCopyWith<$Res> {
   @override
   $Res call(
       {String group,
-      String label,
+      String grammarLabel,
       String textEng,
       String textMon,
       List<SentenceStructure> structure});
@@ -133,7 +133,7 @@ class __$SentenceCopyWithImpl<$Res> extends _$SentenceCopyWithImpl<$Res>
   @override
   $Res call({
     Object? group = freezed,
-    Object? label = freezed,
+    Object? grammarLabel = freezed,
     Object? textEng = freezed,
     Object? textMon = freezed,
     Object? structure = freezed,
@@ -143,9 +143,9 @@ class __$SentenceCopyWithImpl<$Res> extends _$SentenceCopyWithImpl<$Res>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as String,
-      label == freezed
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
+      grammarLabel == freezed
+          ? _value.grammarLabel
+          : grammarLabel // ignore: cast_nullable_to_non_nullable
               as String,
       textEng == freezed
           ? _value.textEng
@@ -167,7 +167,7 @@ class __$SentenceCopyWithImpl<$Res> extends _$SentenceCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Sentence extends _Sentence {
   _$_Sentence(
-      this.group, this.label, this.textEng, this.textMon, this.structure)
+      this.group, this.grammarLabel, this.textEng, this.textMon, this.structure)
       : super._();
 
   factory _$_Sentence.fromJson(Map<String, dynamic> json) =>
@@ -176,7 +176,7 @@ class _$_Sentence extends _Sentence {
   @override
   final String group;
   @override
-  final String label;
+  final String grammarLabel;
   @override
   final String textEng;
   @override
@@ -186,7 +186,7 @@ class _$_Sentence extends _Sentence {
 
   @override
   String toString() {
-    return 'Sentence(group: $group, label: $label, textEng: $textEng, textMon: $textMon, structure: $structure)';
+    return 'Sentence(group: $group, grammarLabel: $grammarLabel, textEng: $textEng, textMon: $textMon, structure: $structure)';
   }
 
   @override
@@ -195,7 +195,8 @@ class _$_Sentence extends _Sentence {
         (other.runtimeType == runtimeType &&
             other is _Sentence &&
             const DeepCollectionEquality().equals(other.group, group) &&
-            const DeepCollectionEquality().equals(other.label, label) &&
+            const DeepCollectionEquality()
+                .equals(other.grammarLabel, grammarLabel) &&
             const DeepCollectionEquality().equals(other.textEng, textEng) &&
             const DeepCollectionEquality().equals(other.textMon, textMon) &&
             const DeepCollectionEquality().equals(other.structure, structure));
@@ -205,7 +206,7 @@ class _$_Sentence extends _Sentence {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(group),
-      const DeepCollectionEquality().hash(label),
+      const DeepCollectionEquality().hash(grammarLabel),
       const DeepCollectionEquality().hash(textEng),
       const DeepCollectionEquality().hash(textMon),
       const DeepCollectionEquality().hash(structure));
@@ -222,8 +223,8 @@ class _$_Sentence extends _Sentence {
 }
 
 abstract class _Sentence extends Sentence {
-  factory _Sentence(String group, String label, String textEng, String textMon,
-      List<SentenceStructure> structure) = _$_Sentence;
+  factory _Sentence(String group, String grammarLabel, String textEng,
+      String textMon, List<SentenceStructure> structure) = _$_Sentence;
   _Sentence._() : super._();
 
   factory _Sentence.fromJson(Map<String, dynamic> json) = _$_Sentence.fromJson;
@@ -231,7 +232,7 @@ abstract class _Sentence extends Sentence {
   @override
   String get group;
   @override
-  String get label;
+  String get grammarLabel;
   @override
   String get textEng;
   @override

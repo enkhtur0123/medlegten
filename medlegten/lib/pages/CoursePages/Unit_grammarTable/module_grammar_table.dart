@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/landing_header.dart';
+import 'package:medlegten/components/video_player_chewie.dart';
+import 'package:medlegten/hooks/useVideoController.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
@@ -21,19 +23,37 @@ class ModuleGrammarTablePage extends HookWidget {
     for (var element in unitGrammar.grammar) {
       tabs.add(Tab(text: element.label));
     }
-
+    final _videoPlayerController = useVideoController('assets/avatar.MOV');
     final _controller = useTabController(initialLength: tabs.length);
-
-    final notifier = useState(false);
+    final refreshView = useState(false);
     final helper = useMemoized(() => Grammarhelper(unitGrammar));
+    final selectedIndex = useMemoized(() => [0]);
 
+    _controller.addListener(() {
+      refreshView.value = !refreshView.value;
+    });
+
+    List<Widget> listWidget = [];
+    if (_videoPlayerController.value.isInitialized) {
+      listWidget.add(SizedBox(
+          height: 90,
+          width: 110,
+          child: VideoPlayerChewie(
+            _videoPlayerController,
+            aspectRatio: 1,
+          )));
+    } else {
+      listWidget.add(const SizedBox(
+        height: 90,
+        width: 110,
+      ));
+    }
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             LandingHeader(100),
             addVerticalSpace(20),
@@ -55,44 +75,43 @@ class ModuleGrammarTablePage extends HookWidget {
                     fontSize: 16),
               ),
             ),
-            addVerticalSpace(20),
-            ValueListenableBuilder<bool>(
-              builder: (BuildContext context, bool value, Widget? child) {
-                return child!;
-              },
-              valueListenable: notifier,
-              child: Text(
-                helper
-                    .getSentence(unitGrammar.grammar[_controller.index],
-                        helper.selectedAnswers)
-                    .textEng,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: colorBlack,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 17),
-              ),
-            ),
-            addVerticalSpace(20),
-            ValueListenableBuilder<bool>(
-              builder: (BuildContext context, bool value, Widget? child) {
-                return child!;
-              },
-              valueListenable: notifier,
-              child: Text(
-                helper
-                    .getSentence(unitGrammar.grammar[_controller.index],
-                        helper.selectedAnswers)
-                    .textMon,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Color.fromRGBO(168, 175, 229, 1),
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                    fontStyle: FontStyle.italic),
-              ),
-            ),
-            addVerticalSpace(25),
+            Row(children: List.unmodifiable(() sync* {
+              yield* listWidget;
+              yield Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    addVerticalSpace(20),
+                    Text(
+                      helper
+                          .getSentence(unitGrammar.grammar[_controller.index],
+                              helper.selectedAnswers)
+                          .textEng,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: colorBlack,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17),
+                    ),
+                    addVerticalSpace(20),
+                    Text(
+                      helper
+                          .getSentence(unitGrammar.grammar[_controller.index],
+                              helper.selectedAnswers)
+                          .textMon,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Color.fromRGBO(168, 175, 229, 1),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    addVerticalSpace(25)
+                  ],
+                ),
+              );
+            }())),
             const Divider(
               color: Color.fromRGBO(199, 201, 217, 0.2),
               thickness: 1,
@@ -126,34 +145,39 @@ class ModuleGrammarTablePage extends HookWidget {
                     color: Colors.white),
                 tabs: tabs,
                 controller: _controller,
+                onTap: (index) {
+                  selectedIndex[0] = index;
+                },
               ),
             ),
-            SingleChildScrollView(
-              child: Expanded(
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _controller,
-                  children: unitGrammar.grammar
-                      .map((grammar) =>
-                          buildTabview(grammar, helper, (val, level) {
-                            helper.valueKeyList.forEach((key, value) {
-                              var prefixNum = helper.grammarIndex(grammar);
-                              if (key > level + prefixNum &&
-                                  key - prefixNum < 10000) {
-                                helper.valueKeyList[key] = value + 1;
-                              }
-                            });
-                            if (level == 1) {
-                              helper.selectedAnswers = {};
-                            }
-                            helper.selectedAnswers[level] = val;
-                            helper.selectedGrammar = grammar;
-                            //notifier.value = !notifier.value;
-                          }))
-                      .toList(),
-                ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height - 382,
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _controller,
+                children: unitGrammar.grammar.map((grammar) {
+                  if (grammar == unitGrammar.grammar[selectedIndex[0]]) {
+                    return buildTabview(grammar, helper, (val, level) {
+                      // helper.valueKeyList.forEach((key, value) {
+                      //   var prefixNum = helper.grammarIndex(grammar);
+                      //   if (key > level + prefixNum &&
+                      //       key - prefixNum < 10000) {
+                      //     helper.valueKeyList[key] = value + 1;
+                      //   }
+                      // });
+                      if (level == 1) {
+                        helper.selectedAnswers = {};
+                      }
+                      helper.selectedAnswers[level] = val;
+                      helper.selectedGrammar = grammar;
+                      refreshView.value = !refreshView.value;
+                    });
+                  } else {
+                    return Container();
+                  }
+                }).toList(),
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -179,11 +203,11 @@ class ModuleGrammarTablePage extends HookWidget {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        children: list,
-      ),
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (context, index) {
+        return list[index];
+      },
     );
   }
 
@@ -194,16 +218,22 @@ class ModuleGrammarTablePage extends HookWidget {
     int partId,
     Function(String val, int level) callBack,
   ) {
-    var key = helper.grammarIndex(grammar) + partId;
-    if (!helper.valueKeyList.containsKey(key)) {
-      helper.valueKeyList[key] = key;
-    }
+    // var keyInner = helper.grammarIndex(grammar) + partId;
+    // if (!helper.valueKeyList.containsKey(key)) {
+    //   helper.valueKeyList[keyInner] = keyInner;
+    // }
 
     return [
       buildStructureLabel(partLabel),
-      StructureBody(grammar, helper, partLabel, partId, (val, level) {
-        callBack.call(val, level);
-      }, key: ValueKey<int>(helper.valueKeyList[key]!))
+      StructureBody(
+        grammar,
+        helper,
+        partLabel,
+        partId,
+        (val, level) {
+          callBack.call(val, level);
+        },
+      ) //key: ValueKey<int>(helper.valueKeyList[keyInner]!)
     ];
   }
 

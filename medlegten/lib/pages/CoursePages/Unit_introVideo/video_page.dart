@@ -30,7 +30,8 @@ class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
   void initState() {
     super.initState();
     _videoPlayerController =
-        VideoPlayerController.asset('assets/A1-U1-INTRO-V1.mp4')
+        VideoPlayerController.network(widget.unitIntroVideo.url)
+          //VideoPlayerController.asset('assets/A1-U1-INTRO-V1.mp4')
           ..setLooping(false)
           ..initialize().then((value) {
             WidgetsBinding.instance?.addPostFrameCallback((_) {

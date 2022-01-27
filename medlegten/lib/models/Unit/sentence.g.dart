@@ -8,7 +8,7 @@ part of 'sentence.dart';
 
 _$_Sentence _$$_SentenceFromJson(Map<String, dynamic> json) => _$_Sentence(
       json['group'] as String,
-      json['label'] as String,
+      json['grammarLabel'] as String,
       json['textEng'] as String,
       json['textMon'] as String,
       (json['structure'] as List<dynamic>)
@@ -19,7 +19,7 @@ _$_Sentence _$$_SentenceFromJson(Map<String, dynamic> json) => _$_Sentence(
 Map<String, dynamic> _$$_SentenceToJson(_$_Sentence instance) =>
     <String, dynamic>{
       'group': instance.group,
-      'label': instance.label,
+      'grammarLabel': instance.grammarLabel,
       'textEng': instance.textEng,
       'textMon': instance.textMon,
       'structure': instance.structure,
