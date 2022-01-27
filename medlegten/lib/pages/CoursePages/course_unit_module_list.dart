@@ -186,8 +186,8 @@ Widget buildTimeline(
                   break;
                 case "2":
                   {
-                    UnitRepository().getUnitGrammar().then((value) =>
-                        AutoRouter.of(context).push(
+                    UnitRepository().getUnitGrammar(data.moduleId).then(
+                        (value) => AutoRouter.of(context).push(
                             ModuleGrammarTableRoute(unitGrammar: value!)));
                   }
                   break;

@@ -9,16 +9,18 @@ part of 'sentence.dart';
 _$_Sentence _$$_SentenceFromJson(Map<String, dynamic> json) => _$_Sentence(
       json['group'] as String,
       json['label'] as String,
-      json['eng'] as String,
-      json['mon'] as String,
-      SentenceStructure.fromJson(json['structure'] as Map<String, dynamic>),
+      json['textEng'] as String,
+      json['textMon'] as String,
+      (json['structure'] as List<dynamic>)
+          .map((e) => SentenceStructure.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_SentenceToJson(_$_Sentence instance) =>
     <String, dynamic>{
       'group': instance.group,
       'label': instance.label,
-      'eng': instance.eng,
-      'mon': instance.mon,
+      'textEng': instance.textEng,
+      'textMon': instance.textMon,
       'structure': instance.structure,
     };

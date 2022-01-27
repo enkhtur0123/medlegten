@@ -32,7 +32,7 @@ class StructureBody extends HookWidget {
                 selectedColor: ColorTable.color255_255_255,
                 elevation: answer.answerId == selectedId.value ? 5.0 : 0.0,
                 shape: RoundedRectangleBorder(
-                    side: getBorderSide(answer, selectedId.value),
+                    side: getBorderSide(answer, selectedId.value, names.length),
                     borderRadius:
                         const BorderRadius.all(Radius.circular(20.0))),
                 label: IntrinsicWidth(
@@ -58,8 +58,13 @@ class StructureBody extends HookWidget {
     );
   }
 
-  BorderSide getBorderSide(GrammarAnswerEx answer, int selectedId) {
-    Color color = answer.answerId == selectedId ? Colors.blue : Colors.white;
+  BorderSide getBorderSide(
+      GrammarAnswerEx answer, int selectedId, int widgetcount) {
+    Color color = answer.answerId == selectedId
+        ? Colors.blue
+        : widgetcount == 1
+            ? Colors.blue
+            : Colors.white;
 
     return BorderSide(color: color);
   }

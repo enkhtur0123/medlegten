@@ -23,11 +23,10 @@ class ModuleGrammarTablePage extends HookWidget {
     }
 
     final _controller = useTabController(initialLength: tabs.length);
+
     final notifier = useState(false);
     final helper = useMemoized(() => Grammarhelper(unitGrammar));
-    _controller.addListener(() {
-      notifier.value = !notifier.value;
-    });
+
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Padding(
@@ -39,7 +38,7 @@ class ModuleGrammarTablePage extends HookWidget {
             LandingHeader(100),
             addVerticalSpace(20),
             Text(
-              unitGrammar.label.toUpperCase(),
+              unitGrammar.grammar[0].grammarNameEng.toUpperCase(),
               style: const TextStyle(
                   color: colorPrimary,
                   fontWeight: FontWeight.w700,
@@ -66,7 +65,7 @@ class ModuleGrammarTablePage extends HookWidget {
                 helper
                     .getSentence(unitGrammar.grammar[_controller.index],
                         helper.selectedAnswers)
-                    .eng,
+                    .textEng,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     color: colorBlack,
@@ -84,7 +83,7 @@ class ModuleGrammarTablePage extends HookWidget {
                 helper
                     .getSentence(unitGrammar.grammar[_controller.index],
                         helper.selectedAnswers)
-                    .mon,
+                    .textMon,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     color: Color.fromRGBO(168, 175, 229, 1),
@@ -129,28 +128,30 @@ class ModuleGrammarTablePage extends HookWidget {
                 controller: _controller,
               ),
             ),
-            Expanded(
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _controller,
-                children: unitGrammar.grammar
-                    .map((grammar) =>
-                        buildTabview(grammar, helper, (val, level) {
-                          helper.valueKeyList.forEach((key, value) {
-                            var prefixNum = helper.grammarIndex(grammar);
-                            if (key > level + prefixNum &&
-                                key - prefixNum < 10000) {
-                              helper.valueKeyList[key] = value + 1;
+            SingleChildScrollView(
+              child: Expanded(
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _controller,
+                  children: unitGrammar.grammar
+                      .map((grammar) =>
+                          buildTabview(grammar, helper, (val, level) {
+                            helper.valueKeyList.forEach((key, value) {
+                              var prefixNum = helper.grammarIndex(grammar);
+                              if (key > level + prefixNum &&
+                                  key - prefixNum < 10000) {
+                                helper.valueKeyList[key] = value + 1;
+                              }
+                            });
+                            if (level == 1) {
+                              helper.selectedAnswers = {};
                             }
-                          });
-                          if (level == 1) {
-                            helper.selectedAnswers = {};
-                          }
-                          helper.selectedAnswers[level] = val;
-                          helper.selectedGrammar = grammar;
-                          notifier.value = !notifier.value;
-                        }))
-                    .toList(),
+                            helper.selectedAnswers[level] = val;
+                            helper.selectedGrammar = grammar;
+                            //notifier.value = !notifier.value;
+                          }))
+                      .toList(),
+                ),
               ),
             ),
           ],
@@ -166,12 +167,12 @@ class ModuleGrammarTablePage extends HookWidget {
   ) {
     List<Widget> list = [];
 
-    for (int i = 1; i < 11; i++) {
-      if (grammar.structure.getPart(i) != null) {
+    for (int i = 1; i < 7; i++) {
+      if (grammar.getPart(i) != null) {
         list.addAll(buildStructure(
           grammar,
           helper,
-          grammar.structure.getPart(i)!,
+          grammar.getPart(i)!,
           i,
           callBack,
         ));

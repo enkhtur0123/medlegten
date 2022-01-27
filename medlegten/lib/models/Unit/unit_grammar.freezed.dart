@@ -22,10 +22,8 @@ UnitGrammar _$UnitGrammarFromJson(Map<String, dynamic> json) {
 class _$UnitGrammarTearOff {
   const _$UnitGrammarTearOff();
 
-  _UnitGrammar call(
-      String label, List<Grammar> grammar, List<Sentence> sentences) {
+  _UnitGrammar call(List<Grammar> grammar, List<Sentence> sentences) {
     return _UnitGrammar(
-      label,
       grammar,
       sentences,
     );
@@ -41,7 +39,6 @@ const $UnitGrammar = _$UnitGrammarTearOff();
 
 /// @nodoc
 mixin _$UnitGrammar {
-  String get label => throw _privateConstructorUsedError;
   List<Grammar> get grammar => throw _privateConstructorUsedError;
   List<Sentence> get sentences => throw _privateConstructorUsedError;
 
@@ -56,7 +53,7 @@ abstract class $UnitGrammarCopyWith<$Res> {
   factory $UnitGrammarCopyWith(
           UnitGrammar value, $Res Function(UnitGrammar) then) =
       _$UnitGrammarCopyWithImpl<$Res>;
-  $Res call({String label, List<Grammar> grammar, List<Sentence> sentences});
+  $Res call({List<Grammar> grammar, List<Sentence> sentences});
 }
 
 /// @nodoc
@@ -69,15 +66,10 @@ class _$UnitGrammarCopyWithImpl<$Res> implements $UnitGrammarCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? label = freezed,
     Object? grammar = freezed,
     Object? sentences = freezed,
   }) {
     return _then(_value.copyWith(
-      label: label == freezed
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
       grammar: grammar == freezed
           ? _value.grammar
           : grammar // ignore: cast_nullable_to_non_nullable
@@ -97,7 +89,7 @@ abstract class _$UnitGrammarCopyWith<$Res>
           _UnitGrammar value, $Res Function(_UnitGrammar) then) =
       __$UnitGrammarCopyWithImpl<$Res>;
   @override
-  $Res call({String label, List<Grammar> grammar, List<Sentence> sentences});
+  $Res call({List<Grammar> grammar, List<Sentence> sentences});
 }
 
 /// @nodoc
@@ -112,15 +104,10 @@ class __$UnitGrammarCopyWithImpl<$Res> extends _$UnitGrammarCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? label = freezed,
     Object? grammar = freezed,
     Object? sentences = freezed,
   }) {
     return _then(_UnitGrammar(
-      label == freezed
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
       grammar == freezed
           ? _value.grammar
           : grammar // ignore: cast_nullable_to_non_nullable
@@ -136,13 +123,11 @@ class __$UnitGrammarCopyWithImpl<$Res> extends _$UnitGrammarCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UnitGrammar implements _UnitGrammar {
-  _$_UnitGrammar(this.label, this.grammar, this.sentences);
+  _$_UnitGrammar(this.grammar, this.sentences);
 
   factory _$_UnitGrammar.fromJson(Map<String, dynamic> json) =>
       _$$_UnitGrammarFromJson(json);
 
-  @override
-  final String label;
   @override
   final List<Grammar> grammar;
   @override
@@ -150,7 +135,7 @@ class _$_UnitGrammar implements _UnitGrammar {
 
   @override
   String toString() {
-    return 'UnitGrammar(label: $label, grammar: $grammar, sentences: $sentences)';
+    return 'UnitGrammar(grammar: $grammar, sentences: $sentences)';
   }
 
   @override
@@ -158,7 +143,6 @@ class _$_UnitGrammar implements _UnitGrammar {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UnitGrammar &&
-            const DeepCollectionEquality().equals(other.label, label) &&
             const DeepCollectionEquality().equals(other.grammar, grammar) &&
             const DeepCollectionEquality().equals(other.sentences, sentences));
   }
@@ -166,7 +150,6 @@ class _$_UnitGrammar implements _UnitGrammar {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(label),
       const DeepCollectionEquality().hash(grammar),
       const DeepCollectionEquality().hash(sentences));
 
@@ -182,15 +165,12 @@ class _$_UnitGrammar implements _UnitGrammar {
 }
 
 abstract class _UnitGrammar implements UnitGrammar {
-  factory _UnitGrammar(
-          String label, List<Grammar> grammar, List<Sentence> sentences) =
+  factory _UnitGrammar(List<Grammar> grammar, List<Sentence> sentences) =
       _$_UnitGrammar;
 
   factory _UnitGrammar.fromJson(Map<String, dynamic> json) =
       _$_UnitGrammar.fromJson;
 
-  @override
-  String get label;
   @override
   List<Grammar> get grammar;
   @override

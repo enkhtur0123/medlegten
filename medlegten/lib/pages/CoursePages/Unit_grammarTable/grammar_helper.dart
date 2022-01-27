@@ -42,13 +42,12 @@ class Grammarhelper {
         }
       } else {
         if (_partNames.isNotEmpty) {
-          var structure = sentence.structure;
           bool add = true;
           for (int i = 1; i < 11; i++) {
             if (_partNames.length > i - 1 &&
-                structure.getPart(i) != null &&
+                sentence.getPart(i) != null &&
                 _partNames[i - 1] != '' &&
-                structure.getPart(i) != _partNames[i - 1]) {
+                sentence.getPart(i) != _partNames[i - 1]) {
               add = false;
               break;
             }
@@ -92,8 +91,6 @@ class Grammarhelper {
 
     for (var sentence in unitGrammar.sentences.where((sentence) =>
         sentence.label.toLowerCase() == grammar.label.toLowerCase())) {
-      var structure = sentence.structure;
-
       if (selectedAnswers.isNotEmpty &&
           selectedGrammar != null &&
           selectedGrammar != grammar) {
@@ -101,23 +98,23 @@ class Grammarhelper {
         if (selectedSentence.group != sentence.group) {
           continue;
         } else {
-          retVal.add(structure.getPart(partId)!);
+          retVal.add(sentence.getPart(partId)!);
         }
       }
 
       bool add = true;
       for (int i = 1; i < 11; i++) {
         if (_partNames.length > i - 1 &&
-            structure.getPart(i) != null &&
+            sentence.getPart(i) != null &&
             _partNames[i - 1] != '' &&
-            structure.getPart(i) != _partNames[i - 1]) {
+            sentence.getPart(i) != _partNames[i - 1]) {
           add = false;
           break;
         }
       }
 
       if (add) {
-        retVal.add(structure.getPart(partId)!);
+        retVal.add(sentence.getPart(partId)!);
       }
     }
 
