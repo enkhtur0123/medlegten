@@ -5,13 +5,13 @@ import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
-import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/module_conversation_video.dart';
-import 'package:medlegten/pages/CoursePages/Unit_grammarTable/module_grammar_table.dart';
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/video_page.dart';
+import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_video_page.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_page.dart';
+import 'package:medlegten/pages/CoursePages/Unit_introVideo/intro_video_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/module_listening.dart';
-import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/module_mixed_video.dart';
+import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_progressExam/module_progress_exam.dart';
-import 'package:medlegten/pages/CoursePages/Unit_reading/module_reading.dart';
+import 'package:medlegten/pages/CoursePages/Unit_reading/reading_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/module_writing.dart';
 import 'package:medlegten/pages/CoursePages/course_detail.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test.dart';
@@ -37,15 +37,13 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/course_self_test', page: CourseSelfTestPage),
     AutoRoute(path: '/course_detail', page: CourseDetailPage),
     AutoRoute(path: '/course_unit_module_list', page: CourseUnitModuleListPage),
-    AutoRoute(path: '/unit_module_grammartable', page: ModuleGrammarTablePage),
-    AutoRoute(path: '/video_page', page: CourseUnitIntroVideoPage),
-    AutoRoute(path: '/unit_module_mixedvideo', page: ModuleMixedVideoPage),
-    AutoRoute(path: '/unit_module_reading', page: ModuleReadingPage),
+    AutoRoute(path: '/grammar_page', page: GrammarTablePage),
+    AutoRoute(path: '/intro_video_page', page: CourseUnitIntroVideoPage),
+    AutoRoute(path: '/mixed_video_page', page: MixedVideoPage),
+    AutoRoute(path: '/reading_page', page: ReadingPage),
     AutoRoute(path: '/unit_module_listening', page: ModuleListenPage),
     AutoRoute(path: '/unit_module_writing', page: ModuleWritingPage),
-    AutoRoute(
-        path: '/unit_module_conversationvideo',
-        page: ModuleConversationVideoPage),
+    AutoRoute(path: '/conversation_video_page', page: ConversationVideoPage),
     AutoRoute(path: '/unit_module_progressexam', page: ModuleProgressExamPage),
   ],
 )

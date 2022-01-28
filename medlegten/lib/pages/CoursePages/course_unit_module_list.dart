@@ -187,22 +187,22 @@ Widget buildTimeline(
                 case "2":
                   {
                     UnitRepository().getUnitGrammar(data.moduleId).then(
-                        (value) => AutoRouter.of(context).push(
-                            ModuleGrammarTableRoute(unitGrammar: value!)));
+                        (value) => AutoRouter.of(context)
+                            .push(GrammarTableRoute(unitGrammar: value!)));
                   }
                   break;
 
                 case "3":
                   {
                     // Mixed video
-                    AutoRouter.of(context).push(const ModuleMixedVideoRoute());
+                    AutoRouter.of(context).push(const MixedVideoRoute());
                   }
                   break;
 
                 case "4":
                   {
                     // Reading
-                    AutoRouter.of(context).push(const ModuleReadingRoute());
+                    AutoRouter.of(context).push(const ReadingRoute());
                   }
                   break;
 
@@ -223,8 +223,7 @@ Widget buildTimeline(
                 case "7":
                   {
                     // Conversation video
-                    AutoRouter.of(context)
-                        .push(const ModuleConversationVideoRoute());
+                    AutoRouter.of(context).push(const ConversationVideoRoute());
                   }
                   break;
 

@@ -12,8 +12,8 @@ import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.
 
 typedef UnitGrammarCallback = void Function(String val, int level);
 
-class ModuleGrammarTablePage extends HookWidget {
-  const ModuleGrammarTablePage(this.unitGrammar, {Key? key}) : super(key: key);
+class GrammarTablePage extends HookWidget {
+  const GrammarTablePage(this.unitGrammar, {Key? key}) : super(key: key);
 
   final UnitGrammar unitGrammar;
 

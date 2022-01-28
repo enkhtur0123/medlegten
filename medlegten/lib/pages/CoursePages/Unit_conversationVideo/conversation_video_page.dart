@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/landing_header.dart';
 
-class ModuleMixedVideoPage extends StatefulWidget {
-  const ModuleMixedVideoPage({Key? key}) : super(key: key);
+class ConversationVideoPage extends StatefulWidget {
+  const ConversationVideoPage({Key? key}) : super(key: key);
 
   @override
-  _ModuleMixedVideoPageState createState() => _ModuleMixedVideoPageState();
+  _ModuleConversationVideoPageState createState() =>
+      _ModuleConversationVideoPageState();
 }
 
-class _ModuleMixedVideoPageState extends State<ModuleMixedVideoPage> {
+class _ModuleConversationVideoPageState extends State<ConversationVideoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,7 @@ class _ModuleMixedVideoPageState extends State<ModuleMixedVideoPage> {
           children: [
             LandingHeader(100),
             const Text(
-              'mixedVideo',
+              'conversationVideo',
               style: TextStyle(color: colorPrimary),
             ),
           ],

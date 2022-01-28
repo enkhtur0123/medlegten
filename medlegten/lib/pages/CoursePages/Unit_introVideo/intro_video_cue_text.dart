@@ -5,20 +5,21 @@ import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:tuple/tuple.dart';
 
 // ignore: must_be_immutable
-class CueText extends StatefulWidget {
+class IntroVideoCueText extends StatefulWidget {
   final UnitIntroCueParagraph paragraph;
   final int currentIndex;
   final String? currentWord;
   Map<UnitIntroCueWord, Tuple2<GlobalKey, Widget>> wordWidgets = {};
 
-  CueText(this.paragraph, this.currentIndex, {Key? key, this.currentWord})
+  IntroVideoCueText(this.paragraph, this.currentIndex,
+      {Key? key, this.currentWord})
       : super(key: key);
 
   @override
   _CueTexteState createState() => _CueTexteState();
 }
 
-class _CueTexteState extends State<CueText> {
+class _CueTexteState extends State<IntroVideoCueText> {
   @override
   Widget build(BuildContext context) {
     bool beforeSpace = false;

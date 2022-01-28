@@ -1,71 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
+import 'package:medlegten/hooks/useVideoController.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/video_subtitle.dart';
+import 'package:medlegten/pages/CoursePages/Unit_introVideo/intro_video_subtitle.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
-import 'package:video_player/video_player.dart';
 
 typedef UnitIntroCueWordCallback = void Function(UnitIntroCueWord val);
 
-class CourseUnitIntroVideoPage extends StatefulWidget {
+class CourseUnitIntroVideoPage extends HookWidget {
   const CourseUnitIntroVideoPage(this.unitIntroVideo, {Key? key})
       : super(key: key);
 
   final UnitIntroVideo unitIntroVideo;
-  @override
-  _CourseUnitIntroVideoState createState() => _CourseUnitIntroVideoState();
-}
-
-class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
-  static final ValueNotifier<bool> modelNotifier = ValueNotifier(false);
-  late VideoPlayerController _videoPlayerController;
-  UnitIntroCueWord? word;
-
-  @override
-  void initState() {
-    super.initState();
-    _videoPlayerController =
-        VideoPlayerController.network(widget.unitIntroVideo.url)
-          //VideoPlayerController.asset('assets/A1-U1-INTRO-V1.mp4')
-          ..setLooping(false)
-          ..initialize().then((value) {
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
-              setState(() {
-                _videoPlayerController.play();
-              });
-            });
-          });
-  }
-
-  @override
-  void dispose() {
-    _videoPlayerController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final refreshNotifier = useState(false);
+    final word = useMemoized(() {
+      final val = <UnitIntroCueWord?>[];
+      val.add(null);
+      return val;
+    }, const []);
+    final _videoPlayerController = useVideoController(unitIntroVideo.url);
+
     List<Widget> list = [];
     if (_videoPlayerController.value.isInitialized) {
       list.add(VideoPlayerChewie(_videoPlayerController));
       list.add(addVerticalSpace(20));
       list.add(
-          VideoSubtitle(_videoPlayerController, widget.unitIntroVideo, (val) {
-        // if (_showModal) {
-        //   _showModal = false;
-        //   setState(() {});
-        // } else {
-
-        word = val;
-        modelNotifier.value = true;
-        setState(() {});
-
-        //}
+          IntroVideoSubtitle(_videoPlayerController, unitIntroVideo, (val) {
+        word[0] = val;
+        refreshNotifier.value = !refreshNotifier.value;
       }));
     } else {
       list.add(const Loading());
@@ -78,56 +49,12 @@ class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: list,
       ),
-      // Container(
-      //   color: ColorTable.color255_255_255,
-      //   child: Stack(
-      //     children: [
-      //       Positioned(
-      //         top: 92,
-      //         left: 0,
-      //         right: 0,
-      //         child: Expanded(
-      //           child: Column(
-      //             children: list,
-      //           ),
-      //         ),
-      //       ),
-      //       Positioned(
-      //         top: 0,
-      //         left: 0,
-      //         right: 0,
-      //         child: LandingHeader(100),
-      //       ),
-      // Positioned(
-      //     top: 100,
-      //     left: 100,
-      //     child: ElevatedButton(
-      //       onPressed: () {
-      //         if (_showModal) {
-      //           _showModal = false;
-      //           setState(() {});
-      //         } else {
-      //           _showModal = true;
-      //           setState(() {});
-      //         }
-      //       },
-      //       child: const Text(
-      //         "Show Bottom",
-      //         style: TextStyle(color: colorBlack),
-      //       ),
-      //     )),
-      //],
-      //),
       bottomSheet: ValueListenableBuilder<bool>(
           builder: (BuildContext context, bool value, Widget? child) {
-            if (value && word != null) {
-              return child!;
-            } else {
-              return const Text(' ');
-            }
+            return child!;
           },
-          valueListenable: modelNotifier,
-          child: _showBottomSheet(context)),
+          valueListenable: refreshNotifier,
+          child: _showBottomSheet(context, word[0])),
     );
   }
 
@@ -141,7 +68,9 @@ class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
     );
   }
 
-  Widget _showBottomSheet(context) {
+  Widget _showBottomSheet(BuildContext context, UnitIntroCueWord? word) {
+    if (word == null) return const SizedBox(height: 1);
+
     return BottomSheet(
       backgroundColor: colorWhite,
       enableDrag: false,
@@ -165,7 +94,7 @@ class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
                   ),
                   child: FutureBuilder<CueWord?>(
                     future: UnitRepository()
-                        .getCueWord(word!.wordValue), // async work
+                        .getCueWord(word.wordValue), // async work
                     builder: (BuildContext context,
                         AsyncSnapshot<CueWord?> snapshot) {
                       switch (snapshot.connectionState) {

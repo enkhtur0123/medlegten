@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
-import 'package:medlegten/pages/CoursePages/Unit_grammarTable/module_grammar_table.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_page.dart';
 import 'package:tuple/tuple.dart';
 
 class StructureBody extends HookWidget {

@@ -60,11 +60,11 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData,
           child: CourseUnitModuleListPage(args.unitInfo, key: args.key));
     },
-    ModuleGrammarTableRoute.name: (routeData) {
-      final args = routeData.argsAs<ModuleGrammarTableRouteArgs>();
+    GrammarTableRoute.name: (routeData) {
+      final args = routeData.argsAs<GrammarTableRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: ModuleGrammarTablePage(args.unitGrammar, key: args.key));
+          child: GrammarTablePage(args.unitGrammar, key: args.key));
     },
     CourseUnitIntroVideoRoute.name: (routeData) {
       final args = routeData.argsAs<CourseUnitIntroVideoRouteArgs>();
@@ -72,13 +72,13 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData,
           child: CourseUnitIntroVideoPage(args.unitIntroVideo, key: args.key));
     },
-    ModuleMixedVideoRoute.name: (routeData) {
+    MixedVideoRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const ModuleMixedVideoPage());
+          routeData: routeData, child: const MixedVideoPage());
     },
-    ModuleReadingRoute.name: (routeData) {
+    ReadingRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const ModuleReadingPage());
+          routeData: routeData, child: const ReadingPage());
     },
     ModuleListenRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -88,9 +88,9 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const ModuleWritingPage());
     },
-    ModuleConversationVideoRoute.name: (routeData) {
+    ConversationVideoRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const ModuleConversationVideoPage());
+          routeData: routeData, child: const ConversationVideoPage());
     },
     ModuleProgressExamRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -112,16 +112,14 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(CourseDetailRoute.name, path: '/course_detail'),
         RouteConfig(CourseUnitModuleListRoute.name,
             path: '/course_unit_module_list'),
-        RouteConfig(ModuleGrammarTableRoute.name,
-            path: '/unit_module_grammartable'),
-        RouteConfig(CourseUnitIntroVideoRoute.name, path: '/video_page'),
-        RouteConfig(ModuleMixedVideoRoute.name,
-            path: '/unit_module_mixedvideo'),
-        RouteConfig(ModuleReadingRoute.name, path: '/unit_module_reading'),
+        RouteConfig(GrammarTableRoute.name, path: '/grammar_page'),
+        RouteConfig(CourseUnitIntroVideoRoute.name, path: '/intro_video_page'),
+        RouteConfig(MixedVideoRoute.name, path: '/mixed_video_page'),
+        RouteConfig(ReadingRoute.name, path: '/reading_page'),
         RouteConfig(ModuleListenRoute.name, path: '/unit_module_listening'),
         RouteConfig(ModuleWritingRoute.name, path: '/unit_module_writing'),
-        RouteConfig(ModuleConversationVideoRoute.name,
-            path: '/unit_module_conversationvideo'),
+        RouteConfig(ConversationVideoRoute.name,
+            path: '/conversation_video_page'),
         RouteConfig(ModuleProgressExamRoute.name,
             path: '/unit_module_progressexam')
       ];
@@ -251,20 +249,18 @@ class CourseUnitModuleListRouteArgs {
 }
 
 /// generated route for
-/// [ModuleGrammarTablePage]
-class ModuleGrammarTableRoute
-    extends PageRouteInfo<ModuleGrammarTableRouteArgs> {
-  ModuleGrammarTableRoute({required UnitGrammar unitGrammar, Key? key})
-      : super(ModuleGrammarTableRoute.name,
-            path: '/unit_module_grammartable',
-            args: ModuleGrammarTableRouteArgs(
-                unitGrammar: unitGrammar, key: key));
+/// [GrammarTablePage]
+class GrammarTableRoute extends PageRouteInfo<GrammarTableRouteArgs> {
+  GrammarTableRoute({required UnitGrammar unitGrammar, Key? key})
+      : super(GrammarTableRoute.name,
+            path: '/grammar_page',
+            args: GrammarTableRouteArgs(unitGrammar: unitGrammar, key: key));
 
-  static const String name = 'ModuleGrammarTableRoute';
+  static const String name = 'GrammarTableRoute';
 }
 
-class ModuleGrammarTableRouteArgs {
-  const ModuleGrammarTableRouteArgs({required this.unitGrammar, this.key});
+class GrammarTableRouteArgs {
+  const GrammarTableRouteArgs({required this.unitGrammar, this.key});
 
   final UnitGrammar unitGrammar;
 
@@ -272,7 +268,7 @@ class ModuleGrammarTableRouteArgs {
 
   @override
   String toString() {
-    return 'ModuleGrammarTableRouteArgs{unitGrammar: $unitGrammar, key: $key}';
+    return 'GrammarTableRouteArgs{unitGrammar: $unitGrammar, key: $key}';
   }
 }
 
@@ -282,7 +278,7 @@ class CourseUnitIntroVideoRoute
     extends PageRouteInfo<CourseUnitIntroVideoRouteArgs> {
   CourseUnitIntroVideoRoute({required UnitIntroVideo unitIntroVideo, Key? key})
       : super(CourseUnitIntroVideoRoute.name,
-            path: '/video_page',
+            path: '/intro_video_page',
             args: CourseUnitIntroVideoRouteArgs(
                 unitIntroVideo: unitIntroVideo, key: key));
 
@@ -303,21 +299,20 @@ class CourseUnitIntroVideoRouteArgs {
 }
 
 /// generated route for
-/// [ModuleMixedVideoPage]
-class ModuleMixedVideoRoute extends PageRouteInfo<void> {
-  const ModuleMixedVideoRoute()
-      : super(ModuleMixedVideoRoute.name, path: '/unit_module_mixedvideo');
+/// [MixedVideoPage]
+class MixedVideoRoute extends PageRouteInfo<void> {
+  const MixedVideoRoute()
+      : super(MixedVideoRoute.name, path: '/mixed_video_page');
 
-  static const String name = 'ModuleMixedVideoRoute';
+  static const String name = 'MixedVideoRoute';
 }
 
 /// generated route for
-/// [ModuleReadingPage]
-class ModuleReadingRoute extends PageRouteInfo<void> {
-  const ModuleReadingRoute()
-      : super(ModuleReadingRoute.name, path: '/unit_module_reading');
+/// [ReadingPage]
+class ReadingRoute extends PageRouteInfo<void> {
+  const ReadingRoute() : super(ReadingRoute.name, path: '/reading_page');
 
-  static const String name = 'ModuleReadingRoute';
+  static const String name = 'ReadingRoute';
 }
 
 /// generated route for
@@ -339,13 +334,12 @@ class ModuleWritingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ModuleConversationVideoPage]
-class ModuleConversationVideoRoute extends PageRouteInfo<void> {
-  const ModuleConversationVideoRoute()
-      : super(ModuleConversationVideoRoute.name,
-            path: '/unit_module_conversationvideo');
+/// [ConversationVideoPage]
+class ConversationVideoRoute extends PageRouteInfo<void> {
+  const ConversationVideoRoute()
+      : super(ConversationVideoRoute.name, path: '/conversation_video_page');
 
-  static const String name = 'ModuleConversationVideoRoute';
+  static const String name = 'ConversationVideoRoute';
 }
 
 /// generated route for

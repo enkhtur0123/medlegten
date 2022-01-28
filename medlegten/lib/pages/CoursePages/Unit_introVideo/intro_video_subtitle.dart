@@ -7,15 +7,16 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/cue_text.dart';
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/video_page.dart';
+import 'package:medlegten/pages/CoursePages/Unit_introVideo/intro_video_cue_text.dart';
+import 'package:medlegten/pages/CoursePages/Unit_introVideo/intro_video_page.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
 
 // ignore: must_be_immutable
-class VideoSubtitle extends HookWidget {
-  VideoSubtitle(this.videoPlayerController, this.unitIntroVideo, this.callback,
+class IntroVideoSubtitle extends HookWidget {
+  IntroVideoSubtitle(
+      this.videoPlayerController, this.unitIntroVideo, this.callback,
       {Key? key})
       : super(key: key);
 
@@ -49,7 +50,7 @@ class VideoSubtitle extends HookWidget {
                 getDuration(element.endTime) > _duration);
             if (idx != null && prevCueId.value != idx.ordering) {
               _fixedExtentScrollController.animateToItem(
-                  int.parse(idx.ordering) - 1,
+                  int.parse(idx.ordering) + 1,
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.linear);
               prevCueId.value = idx.ordering;
@@ -160,8 +161,8 @@ class VideoSubtitle extends HookWidget {
                         const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
                     itemExtent: 60,
                     // squeeze: 0.7,
-                    useMagnifier: true,
-                    magnification: 1.2, // голын item нь илүү том харагдах
+                    useMagnifier: false,
+                    magnification: 1, // голын item нь илүү том харагдах
                     diameterRatio: 5, // item-ийг налалттай биш өнцгөөр харуулна
                     perspective: 0.001,
                     controller: _fixedExtentScrollController,
@@ -196,7 +197,7 @@ class VideoSubtitle extends HookWidget {
             child: Text(
               cue.toLangTranslation,
               style: TextStyle(
-                  color: currentIndex == int.parse(cue.ordering) - 1
+                  color: currentIndex == int.parse(cue.ordering) + 1
                       ? colorBlack
                       : Colors.black54,
                   fontSize: 18,
@@ -204,14 +205,14 @@ class VideoSubtitle extends HookWidget {
               textAlign: TextAlign.center,
             ),
           )
-        : CueText(
+        : IntroVideoCueText(
             cue,
             currentIndex,
             key: ValueKey<int>(valueKeyList[cue]!),
             currentWord: selectedWord,
           );
 
-    if (widget is CueText) {
+    if (widget is IntroVideoCueText) {
       cueWidgets[cue] = widget.wordWidgets;
     }
     return widget;
