@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "300736177830",
+    "project_id": "medlegten-60f35",
+    "storage_bucket": "medlegten-60f35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300736177830:android:b89267b7541bf6d820f667",
+        "android_client_info": {
+          "package_name": "com.medlegten.mapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300736177830-901loqkdg9eu6bv2au7f509oj9ua0idn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medlegten.mapp",
+            
+            "certificate_hash": "b0f8582422bbc86a63efb3abcc66a3554272f188"
+          }
+        },
+        {
+          "client_id": "300736177830-a6t7me8oaj5bgr6uvvtrvb5u7814mer1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDowZ_YzQbK_btXXe5k27qOMUtXgZrCWWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300736177830-a6t7me8oaj5bgr6uvvtrvb5u7814mer1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
