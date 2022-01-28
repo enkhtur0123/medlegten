@@ -97,8 +97,18 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const ModuleProgressExamPage());
     },
     CoursePaymentRoute.name: (routeData) {
+      final args = routeData.argsAs<CoursePaymentRouteArgs>(
+          orElse: () => const CoursePaymentRouteArgs());
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: CoursePayment());
+          routeData: routeData,
+          child: CoursePaymentPage(key: args.key, courseInfo: args.courseInfo));
+    },
+    QpayRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<QpayRouteArgs>(orElse: () => const QpayRouteArgs());
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: QpayPage(key: args.key, courseInfo: args.courseInfo));
     }
   };
 
@@ -128,7 +138,8 @@ class _$AppRouter extends RootStackRouter {
             path: '/unit_module_conversationvideo'),
         RouteConfig(ModuleProgressExamRoute.name,
             path: '/unit_module_progressexam'),
-        RouteConfig(CoursePaymentRoute.name, path: '/payment')
+        RouteConfig(CoursePaymentRoute.name, path: '/payment'),
+        RouteConfig(QpayRoute.name, path: '/qpay')
       ];
 }
 
@@ -358,9 +369,49 @@ class ModuleProgressExamRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [CoursePayment]
-class CoursePaymentRoute extends PageRouteInfo<void> {
-  const CoursePaymentRoute() : super(CoursePaymentRoute.name, path: '/payment');
+/// [CoursePaymentPage]
+class CoursePaymentRoute extends PageRouteInfo<CoursePaymentRouteArgs> {
+  CoursePaymentRoute({Key? key, CourseInfo? courseInfo})
+      : super(CoursePaymentRoute.name,
+            path: '/payment',
+            args: CoursePaymentRouteArgs(key: key, courseInfo: courseInfo));
 
-  static const String name = 'CoursePayment';
+  static const String name = 'CoursePaymentRoute';
+}
+
+class CoursePaymentRouteArgs {
+  const CoursePaymentRouteArgs({this.key, this.courseInfo});
+
+  final Key? key;
+
+  final CourseInfo? courseInfo;
+
+  @override
+  String toString() {
+    return 'CoursePaymentRouteArgs{key: $key, courseInfo: $courseInfo}';
+  }
+}
+
+/// generated route for
+/// [QpayPage]
+class QpayRoute extends PageRouteInfo<QpayRouteArgs> {
+  QpayRoute({Key? key, CourseInfo? courseInfo})
+      : super(QpayRoute.name,
+            path: '/qpay',
+            args: QpayRouteArgs(key: key, courseInfo: courseInfo));
+
+  static const String name = 'QpayRoute';
+}
+
+class QpayRouteArgs {
+  const QpayRouteArgs({this.key, this.courseInfo});
+
+  final Key? key;
+
+  final CourseInfo? courseInfo;
+
+  @override
+  String toString() {
+    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo}';
+  }
 }

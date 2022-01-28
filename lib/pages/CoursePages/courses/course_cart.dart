@@ -148,8 +148,11 @@ courseBgImg(context, CourseInfo courseInfo) {
           margin: EdgeInsets.only(left: 10,right: 10),
           child:CustomOutlinedButton(
             onTap: (){
-               AutoRouter.of(context).push(CoursePaymentRoute());
-              //  AutoRouter.of(context).push(CourseDetailRoute(courseInfo: courseInfo));
+              if(courseInfo.isPurchased){
+                AutoRouter.of(context).push(CourseDetailRoute(courseInfo: courseInfo));
+              }else{
+                AutoRouter.of(context).push(CoursePaymentRoute(courseInfo: courseInfo));
+              }
             },
             text: courseInfo.isPurchased?"See units":"Buy Now"
           ),
