@@ -54,6 +54,19 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+		<string>tdbbank</string>
+		<string>khanbank</string>
+		<string>statebank</string>
+		<string>xacbank</string>
+		<string>ubcbank</string>
+		<string>nibank</string>
+		<string>ckbank</string>
+		<string>most</string>
+		<string>weixin</string>
+		<string>weixinULAPI</string>
+		<string>viber</string>
+		<string>cydia</string>
+		<string>golomtbank</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
