@@ -9,7 +9,7 @@ import 'landing_home.dart';
 class LandingPage extends HookWidget {
   const LandingPage({Key? key}) : super(key: key);
 
-  List<Widget> get list => [
+  List<Widget> get tabs => [
         Tab(
           icon: Image.asset(
             'assets/img/Landing/Home.png',
@@ -54,8 +54,8 @@ class LandingPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _controller = useTabController(initialLength: list.length);
-    final _index = useState(1);
+    final _controller = useTabController(initialLength: tabs.length);
+    final _index = useState(0);
     final _key = GlobalKey();
 
     _controller.addListener(() {
@@ -99,7 +99,7 @@ class LandingPage extends HookWidget {
       bottomNavigationBar: TabBar(
         indicatorColor: Colors.blue,
         unselectedLabelColor: Colors.grey,
-        tabs: list,
+        tabs: tabs,
         onTap: (index) {},
         controller: _controller,
       ),

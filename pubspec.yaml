@@ -43,7 +43,7 @@ dependencies:
   video_player: ^2.2.10
 #  video_player_controls: ^2.0.2
   expandable: ^5.0.1
-  chewie: 
+  chewie: ^1.0.0
   percent_indicator: ^3.4.0
   timeline_tile: ^2.0.0
   tuple: ^2.0.0

@@ -51,13 +51,13 @@ class CourseUnitModuleListPage extends HookWidget {
                         fontSize: 16),
                   ),
                   addVerticalSpace(8),
-                 Row(
+                  Row(
                     children: [
                       const IconText(Icons.person_outline_outlined, 'Beginner'),
                       addHorizontalSpace(20),
                       const IconText(Icons.timer, '16 min'),
                     ],
-                  ),
+                  )
                 ],
               ),
               addHorizontalSpace(20),
@@ -181,28 +181,31 @@ Widget buildTimeline(
                   {
                     UnitRepository().getUnitIntroVideo(data.moduleId).then(
                         (value) => AutoRouter.of(context).push(
-                            CourseUnitIntroVideoRoute(unitIntroVideo: value!)));
+                            CourseUnitIntroVideoRoute(
+                                unitIntroVideo: value!, url: value.url)));
                   }
                   break;
                 case "2":
                   {
-                    // Grammar table
-                    AutoRouter.of(context)
-                        .push(const ModuleGrammarTableRoute());
+                    UnitRepository().getUnitGrammar(data.moduleId).then(
+                        (value) => AutoRouter.of(context)
+                            .push(GrammarTableRoute(unitGrammar: value!)));
                   }
                   break;
 
                 case "3":
                   {
-                    // Mixed video
-                    AutoRouter.of(context).push(const ModuleMixedVideoRoute());
+                    UnitRepository().getMixedVideo('1001').then((value) =>
+                        AutoRouter.of(context).push(MixedVideoRoute(
+                            unitIntroVideo: value!, url: value.url)));
                   }
                   break;
 
                 case "4":
                   {
-                    // Reading
-                    AutoRouter.of(context).push(const ModuleReadingRoute());
+                    UnitRepository().getMixedVideo('1001').then((value) =>
+                        AutoRouter.of(context)
+                            .push(ReadingRoute(unitIntroVideo: value!)));
                   }
                   break;
 
@@ -223,8 +226,9 @@ Widget buildTimeline(
                 case "7":
                   {
                     // Conversation video
-                    AutoRouter.of(context)
-                        .push(const ModuleConversationVideoRoute());
+                    UnitRepository().getMixedVideo('1001').then((value) =>
+                        AutoRouter.of(context).push(ConversationVideoRoute(
+                            unitIntroVideo: value!, url: value.url)));
                   }
                   break;
 

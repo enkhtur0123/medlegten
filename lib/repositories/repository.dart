@@ -24,7 +24,7 @@ class Repository {
     return token;
   }
 
-  setTokenToDefault() async { 
+  setTokenToDefault() async {
     dioRepository.setToken(
         token:
             'T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV');

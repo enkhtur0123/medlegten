@@ -5,9 +5,10 @@ import 'package:video_player/video_player.dart';
 
 class VideoPlayerChewie extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
-
+  final double aspectRatio;
   const VideoPlayerChewie(
     this.videoPlayerController, {
+    this.aspectRatio = 16 / 9,
     Key? key,
   }) : super(key: key);
 
@@ -24,10 +25,10 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
 
     _chewieController = ChewieController(
       videoPlayerController: widget.videoPlayerController,
-      aspectRatio: 16 / 9,
+      aspectRatio: widget.aspectRatio,
       allowFullScreen: false,
       allowMuting: false,
-      showOptions: false,
+      // showOptions: false,
       allowPlaybackSpeedChanging: false,
       errorBuilder: (context, errorMessage) {
         return Center(
@@ -37,28 +38,6 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
           ),
         );
       },
-      // subtitle: Subtitles([
-      //   Subtitle(
-      //     index: 0,
-      //     start: Duration.zero,
-      //     end: const Duration(seconds: 10),
-      //     text: 'Hello from subtitles',
-      //   ),
-      //   Subtitle(
-      //     index: 1,
-      //     start: const Duration(seconds: 10),
-      //     end: const Duration(seconds: 20),
-      //     text: 'Whats up? :)',
-      //   ),
-      // ]),
-      // subtitleBuilder: (context, subtitle) => Positioned(
-      //   top: 200,
-      //   left: 100,
-      //   child: Text(
-      //     subtitle,
-      //     style: const TextStyle(color: Colors.white),
-      //   ),
-      // ),
     );
   }
 
@@ -71,7 +50,7 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 16 / 9,
+      aspectRatio: widget.aspectRatio,
       child: _chewieController.videoPlayerController.value.isInitialized
           ? Chewie(
               controller: _chewieController,
