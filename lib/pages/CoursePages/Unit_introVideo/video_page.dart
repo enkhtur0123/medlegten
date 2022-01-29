@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+5import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
@@ -28,7 +28,7 @@ class _CourseUnitIntroVideoState extends State<CourseUnitIntroVideoPage> {
   void initState() {
     super.initState();
     _videoPlayerController =
-        VideoPlayerController.asset('assets/A1-U1-INTRO-V1.mp4')
+        VideoPlayerController.asset('assets/A1-U1-INTRO-V1.mp')
           ..setLooping(false)
           ..initialize().then((value) {
             WidgetsBinding.instance?.addPostFrameCallback((_) {
