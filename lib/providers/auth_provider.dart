@@ -17,6 +17,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
   final FirebaseAuth _auth;
   bool? isGoogle;
   User? fUser;
+  
 
   AuthViewModel()
       : _auth = FirebaseAuth.instance,

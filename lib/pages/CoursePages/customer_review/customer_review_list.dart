@@ -7,10 +7,14 @@ import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/widgets/TextButton.dart';
 
 import 'customer_review_cart.dart';
+
 /// Жагсаалт авах хэсэгт заавал listview ашиглах
 // ignore: must_be_immutable
+
 class CustomerReviewList extends HookWidget {
   CustomerReviewList({Key? key}) : super(key: key);
+
+  ValueNotifier<bool> isAll = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +23,15 @@ class CustomerReviewList extends HookWidget {
     return Column(
       children: [
         addVerticalSpace(30),
-        Row(  
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButtonWidget(text: 'Reviews', onTap: () {
-            }),
+            TextButtonWidget(text: 'Reviews', onTap: () {}),
             TextButtonWidget(
                 text: 'See All',
-                onTap: () {
+                onTap: () async {
                   isAll.value = true;
-                    _controller.jumpTo(_controller.position.maxScrollExtent);
+                  _controller.jumpTo(_controller.position.maxScrollExtent);
                 })
           ],
         ),
@@ -40,9 +43,9 @@ class CustomerReviewList extends HookWidget {
             if (snapshot.hasData) {
               return ListView.builder(
                 controller: _controller,
-                physics: ClampingScrollPhysics(),
+                physics: const ScrollPhysics(),
                 addAutomaticKeepAlives: true,
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 shrinkWrap: true,
                 itemCount: snapshot.data!.length,
                 itemBuilder: (BuildContext context, int index) {

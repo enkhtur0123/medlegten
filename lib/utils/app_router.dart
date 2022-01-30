@@ -13,9 +13,9 @@ import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_page.dar
 import 'package:medlegten/pages/CoursePages/Unit_progressExam/module_progress_exam.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/module_writing.dart';
-import 'package:medlegten/pages/CoursePages/course_detail.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
 import 'package:medlegten/pages/CoursePages/course_unit_module_list.dart';
+import 'package:medlegten/pages/CoursePages/courses/course_detail.dart';
 import 'package:medlegten/pages/CoursePages/payment/buy_course.dart';
 import 'package:medlegten/pages/CoursePages/payment/qpay_page.dart';
 import 'package:medlegten/pages/LandingPages/landing_page.dart';
