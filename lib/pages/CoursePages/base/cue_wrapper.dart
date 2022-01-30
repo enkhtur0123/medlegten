@@ -7,14 +7,17 @@ class CWord {
 }
 
 class CParagraph {
-  CParagraph(this.id, this.ordering, this.startTime, this.endTime, this.monText,
-      this.engText, this.words);
+  CParagraph(this.id, this.ordering, this.monText, this.engText, this.words,
+      {this.startTime, this.endTime});
 
   String id;
   int ordering;
-  String startTime;
-  String endTime;
   String monText;
   String engText;
   List<CWord> words;
+
+  String? startTime;
+  String? endTime;
+  //String? grammarIsHighLighted;
+  //String? grammarDescription;
 }

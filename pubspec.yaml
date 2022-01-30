@@ -35,13 +35,11 @@ dependencies:
   freezed_annotation: any
   device_info_plus: ^3.1.1
   logger: ^1.1.0
-  auto_route: ^3.2.0
+  auto_route: ^3.2.2
   equatable: ^2.0.0
-#  equatable: ^1.2.0
   carousel_slider: ^4.0.0
   easy_rich_text: ^1.0.1
   video_player: ^2.2.10
-#  video_player_controls: ^2.0.2
   expandable: ^5.0.1
   chewie: ^1.0.0
   percent_indicator: ^3.4.0
