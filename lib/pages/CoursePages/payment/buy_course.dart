@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/utils/app_router.dart';
-import 'package:medlegten/widgets/footer/footer_view.dart';
-import 'package:medlegten/widgets/footer/footer_widget.dart';
+import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/my_textfield.dart';
+import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
 class CoursePaymentPage extends StatefulWidget {
   final CourseInfo? courseInfo;
 
+  // ignore: prefer_const_constructors_in_immutables
   CoursePaymentPage({Key? key, this.courseInfo}) : super(key: key);
 
   @override
@@ -17,41 +20,87 @@ class CoursePaymentPage extends StatefulWidget {
 }
 
 class CoursePaymentState extends State<CoursePaymentPage> {
+  TextEditingController controller = TextEditingController(text: "924161ED12DA");
+  FocusNode couponNode = FocusNode();
   String infoText =
       "Гүйлгээний мэдээллийг нэг бүрчлэн оруулах шаардлагагүйгээр дээрх банкны апп-р төлбөр төлөх боломжтой.";
+  String? couponCode = "";
+  String? price = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Payment",
-            textAlign: TextAlign.start,
-          ),
-          centerTitle: false,
+      appBar: AppBar(
+        title:const Text(
+          "Төлбөр",
+          textAlign: TextAlign.start,
         ),
-        backgroundColor: Colors.white,
-        body: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        centerTitle: false,
+      ),
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
                 alignment: Alignment.topCenter,
-                margin: EdgeInsets.all(30),
-                child: Text("Төлбөрийн төрлөө сонгоно уу!",
+                margin:const EdgeInsets.all(30),
+                child: const Text("Төлбөрийн төрлөө сонгоно уу!",
                     style: TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.bold, fontSize: 16),
                     textAlign: TextAlign.center),
               ),
-              GestureDetector(
-                onTap: () {
-                  AutoRouter.of(context).push(QpayRoute(courseInfo:widget.courseInfo));
-                },
-                child:
-                    getPaymentFunction(title: "Qpay", body: "QPay-р төлбөр төлөх", icon: "assets/img/payment/qpay.png"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                      flex: 5,
+                      child: Container(
+                        margin: const EdgeInsets.all(20),
+                        child: MyTextField(
+                            controller: controller,
+                            isBordered: true,
+                            labelText: "Coupon code",
+                            focusNode: couponNode,
+                            keyboardType: TextInputType.text,
+                            enabled: false,
+                            onChanged: (value){
+
+                            },
+                        )
+                      ),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      margin:const EdgeInsets.only(right: 20),
+                      child: CustomOutlinedButton(
+                        color:const Color(0xff7864FE),
+                        height: 50,
+                        text: "шалгах",
+                        onTap: () async {
+                          await checkCouponCode(courseInfo: widget.courseInfo);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
               GestureDetector(
                 onTap: () {
-                  // print("Social pay");
+                  if (couponCode != "" && price != "") {
+                    AutoRouter.of(context)
+                        .push(QpayRoute(courseInfo: widget.courseInfo, couponCode: couponCode, price: price));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Coupon code check!",));
+                  }
                 },
+                child:getPaymentFunction(title: "Qpay", body: "QPay-р төлбөр төлөх", icon: "assets/img/payment/qpay.png"),
+              ),
+              GestureDetector(
+                onTap: () {},
                 child: getPaymentFunction(
                   title: "Social pay",
                   body: "Social pay-р төлбөр төлөх",
@@ -60,18 +109,27 @@ class CoursePaymentState extends State<CoursePaymentPage> {
               )
             ],
           ),
-          Container(
-              padding: EdgeInsets.only(bottom: 100),
+        ],
+      ),
+      bottomSheet: BottomSheet(
+        enableDrag: true,
+        backgroundColor: Colors.white,
+        onClosing: () {},
+        builder: (context) {
+          return Container(
+              padding: const EdgeInsets.only(bottom: 100),
               child: Text(infoText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal))),
-        ]));
+                  style: TextStyle(fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal)));
+        },
+      ),
+    );
   }
 
   Widget getPaymentFunction({String? icon, String? title, String? body}) {
     return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+      padding:const EdgeInsets.all(20),
+      margin:const EdgeInsets.only(left: 20, right: 20, top: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
         color: Colors.white,
@@ -80,7 +138,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 0.5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
@@ -89,7 +147,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(icon!, width: 50),
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           Column(
@@ -97,22 +155,34 @@ class CoursePaymentState extends State<CoursePaymentPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title!.toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   )),
-              SizedBox(
+             const  SizedBox(
                 height: 10,
               ),
               Text(
                 body!,
-                style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w500, fontSize: 11),
+                style: const TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w500, fontSize: 11),
               )
             ],
           ),
         ],
       ),
     );
+  }
+   ///Coupom check code  924161ED12DA   A2-344161ED12DB
+  Future<void> checkCouponCode({CourseInfo? courseInfo}) async {
+    await dioRepository.instance
+        .get('Course/Coupon/${courseInfo!.courseId}/${controller.text.toString()}')
+        .then((value) {
+      couponCode = value.data["coupon"]["couponCode"];
+      price = value.data["coupon"]["price"];
+       ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Амжилттай",));
+    }).catchError((onError){
+       ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Купон кодоо шалгана уу",));
+    });
   }
 }

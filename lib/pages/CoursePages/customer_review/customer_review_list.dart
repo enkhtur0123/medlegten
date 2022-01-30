@@ -3,9 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/customer_review.dart';
-import 'package:medlegten/pages/CoursePages/customer_review_cart.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/widgets/TextButton.dart';
+
+import 'customer_review_cart.dart';
 /// Жагсаалт авах хэсэгт заавал listview ашиглах
 // ignore: must_be_immutable
 class CustomerReviewList extends HookWidget {

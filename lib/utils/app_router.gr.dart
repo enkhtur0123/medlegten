@@ -118,7 +118,11 @@ class _$AppRouter extends RootStackRouter {
           routeData.argsAs<QpayRouteArgs>(orElse: () => const QpayRouteArgs());
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: QpayPage(key: args.key, courseInfo: args.courseInfo));
+          child: QpayPage(
+              key: args.key,
+              courseInfo: args.courseInfo,
+              couponCode: args.couponCode,
+              price: args.price));
     }
   };
 
@@ -476,23 +480,32 @@ class CoursePaymentRouteArgs {
 /// generated route for
 /// [QpayPage]
 class QpayRoute extends PageRouteInfo<QpayRouteArgs> {
-  QpayRoute({Key? key, CourseInfo? courseInfo})
+  QpayRoute(
+      {Key? key, CourseInfo? courseInfo, String? couponCode, String? price})
       : super(QpayRoute.name,
             path: '/qpay',
-            args: QpayRouteArgs(key: key, courseInfo: courseInfo));
+            args: QpayRouteArgs(
+                key: key,
+                courseInfo: courseInfo,
+                couponCode: couponCode,
+                price: price));
 
   static const String name = 'QpayRoute';
 }
 
 class QpayRouteArgs {
-  const QpayRouteArgs({this.key, this.courseInfo});
+  const QpayRouteArgs({this.key, this.courseInfo, this.couponCode, this.price});
 
   final Key? key;
 
   final CourseInfo? courseInfo;
 
+  final String? couponCode;
+
+  final String? price;
+
   @override
   String toString() {
-    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo}';
+    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price}';
   }
 }
