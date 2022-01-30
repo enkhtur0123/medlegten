@@ -9,11 +9,11 @@ class IntroVideohelper {
       retList.add(CParagraph(
           cue.cueId,
           int.parse(cue.ordering),
-          cue.startTime,
-          cue.endTime,
           cue.fromLangTranslation,
           cue.toLangTranslation,
-          convertWords(cue.words)));
+          convertWords(cue.words),
+          startTime: cue.startTime,
+          endTime: cue.endTime));
     }
     return retList;
   }

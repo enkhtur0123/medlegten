@@ -57,8 +57,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
         if (isUser == -1) {
           var _duration = widget.videoPlayerController.value.position;
           var idx = widget.paragraphs.firstWhereOrNull((element) =>
-              getDuration(element.startTime) <= _duration &&
-              getDuration(element.endTime) > _duration);
+              getDuration(element.startTime!) <= _duration &&
+              getDuration(element.endTime!) > _duration);
           if (idx != null && prevCueId != idx.ordering) {
             _fixedExtentScrollController.animateToItem(idx.ordering + 1,
                 duration: const Duration(milliseconds: 500),
@@ -151,17 +151,18 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                 if (currentIndex > -1 &&
                     currentIndex < widget.paragraphs.length) {
                   var cue = widget.paragraphs[currentIndex];
-                  cueWidgets[cue]!.forEach((key, value) {
-                    var rect = value.item1.globalPaintBounds!;
+                  for (var entry in cueWidgets[cue]!.entries) {
+                    var rect = entry.value.item1.globalPaintBounds!;
                     if (rect.contains(position)) {
-                      selectedWord = key.word;
+                      selectedWord = entry.key.word;
                       valueKeyList[cue] = valueKeyList[cue]! + 1;
-                      widget.wordCallback!(key);
+                      widget.wordCallback!(entry.key);
                       refreshCue.value = !refreshCue.value;
+                      break;
                     } else {
                       widget.wordCallback!(null);
                     }
-                  });
+                  }
                 } else {
                   widget.wordCallback!(null);
                 }
@@ -180,8 +181,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                   } else if (scrollNotification is ScrollEndNotification &&
                       isUser == 1) {
                     isUser = 0;
-                    widget.videoPlayerController.seekTo(
-                        getDuration(widget.paragraphs[currentIndex].startTime));
+                    widget.videoPlayerController.seekTo(getDuration(
+                        widget.paragraphs[currentIndex].startTime!));
                     //if (widget.videoPlayerController.value.isPlaying == false) {
                     //  widget.videoPlayerController.play();
                     //}

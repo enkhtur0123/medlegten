@@ -85,7 +85,7 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<ReadingRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: ReadingPage(args.unitIntroVideo, key: args.key));
+          child: ReadingPage(args.reading, key: args.key));
     },
     ModuleListenRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -372,24 +372,24 @@ class MixedVideoRouteArgs {
 /// generated route for
 /// [ReadingPage]
 class ReadingRoute extends PageRouteInfo<ReadingRouteArgs> {
-  ReadingRoute({required UnitIntroVideo unitIntroVideo, Key? key})
+  ReadingRoute({required Reading reading, Key? key})
       : super(ReadingRoute.name,
             path: '/reading_page',
-            args: ReadingRouteArgs(unitIntroVideo: unitIntroVideo, key: key));
+            args: ReadingRouteArgs(reading: reading, key: key));
 
   static const String name = 'ReadingRoute';
 }
 
 class ReadingRouteArgs {
-  const ReadingRouteArgs({required this.unitIntroVideo, this.key});
+  const ReadingRouteArgs({required this.reading, this.key});
 
-  final UnitIntroVideo unitIntroVideo;
+  final Reading reading;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'ReadingRouteArgs{unitIntroVideo: $unitIntroVideo, key: $key}';
+    return 'ReadingRouteArgs{reading: $reading, key: $key}';
   }
 }
 

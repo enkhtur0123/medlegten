@@ -8,7 +8,8 @@ import 'package:medlegten/pages/CoursePages/payment/buy_course.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
-////Cart байгаа хэсэгт заавал Flexible ашигла 
+
+////Cart байгаа хэсэгт заавал Flexible ашигла
 class CourseCart extends StatelessWidget {
   CourseCart(this.courseInfo, {Key? key, this.onTap}) : super(key: key);
 
@@ -28,25 +29,25 @@ class CourseCart extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 5),
         width: double.infinity,
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          child:Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    flex: 8,
-                    child:  Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Flexible(
+                  flex: 8,
+                  child: Container(
                     padding: const EdgeInsets.only(left: 15),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -57,7 +58,10 @@ class CourseCart extends StatelessWidget {
                           child: Text(
                             courseInfo.courseName,
                             style: const TextStyle(
-                                color: colorPrimary, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w400),
+                                color: colorPrimary,
+                                fontFamily: 'Roboto',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
                         addVerticalSpace(5),
@@ -68,8 +72,7 @@ class CourseCart extends StatelessWidget {
                             style: const TextStyle(
                                 color: Color.fromRGBO(189, 189, 189, 1),
                                 fontSize: 10,
-                                fontWeight: FontWeight.w400
-                              ),
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
                         addVerticalSpace(5),
@@ -77,23 +80,32 @@ class CourseCart extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Flexible(flex: 2,child:IconText(Icons.person_outline_outlined, courseInfo.levelName)),
-                            Flexible(flex: 3,child:IconText(Icons.timer, courseInfo.hours + ' цаг')),
-                            Flexible(flex: 4,child:IconText(Icons.feed_outlined, courseInfo.units + ' хичээл') ),
+                            Flexible(
+                                flex: 2,
+                                child: IconText(Icons.person_outline_outlined,
+                                    courseInfo.levelName)),
+                            Flexible(
+                                flex: 3,
+                                child: IconText(
+                                    Icons.timer, courseInfo.hours + ' цаг')),
+                            Flexible(
+                                flex: 4,
+                                child: IconText(Icons.feed_outlined,
+                                    courseInfo.units + ' хичээл')),
                           ],
                         ),
                         addVerticalSpace(5),
                         AmountWidget(
-                          amount: double.parse(courseInfo.price.toString().replaceAll(",", "")),
+                          amount: double.parse(
+                              courseInfo.price.toString().replaceAll(",", "")),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Flexible(flex: 4,child:courseBgImg(context, courseInfo) ),
-                ],
-              )
-        ),
+                Flexible(flex: 4, child: courseBgImg(context, courseInfo)),
+              ],
+            )),
       ),
     );
   }
@@ -122,45 +134,49 @@ courseBgImg(context, CourseInfo courseInfo) {
   return Stack(
     children: [
       ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: Image.asset(
-              imgUrl,
-              fit: BoxFit.fitHeight,
-          ),
+        borderRadius: BorderRadius.circular(8.0),
+        child: Image.asset(
+          imgUrl,
+          fit: BoxFit.fitHeight,
+        ),
       ),
       Positioned.fill(
-        child:Align(
-          alignment: Alignment.center,
-          child: Column(
+          child: Align(
+        alignment: Alignment.center,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [  
-           Container(
+          children: [
+            Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 20,right: 20),
+              padding: EdgeInsets.only(left: 20, right: 20),
               child: Text(
-              courseInfo.levelName + ' level'.toUpperCase(),
-              style: TextStyle(color: colorWhite, fontWeight: FontWeight.w700, fontFamily: 'Roboto', fontSize: 16),
+                courseInfo.levelName + ' level'.toUpperCase(),
+                style: TextStyle(
+                    color: colorWhite,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Roboto',
+                    fontSize: 16),
+              ),
             ),
+            addVerticalSpace(10),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: CustomOutlinedButton(
+                  onTap: () {
+                    if (!courseInfo.isPurchased) {
+                      AutoRouter.of(context)
+                          .push(CourseDetailRoute(courseInfo: courseInfo));
+                    } else {
+                      AutoRouter.of(context)
+                          .push(CoursePaymentRoute(courseInfo: courseInfo));
+                    }
+                  },
+                  text: courseInfo.isPurchased ? "See units" : "Buy Now"),
+            )
+          ],
         ),
-        addVerticalSpace(10), 
-        Container(
-          margin: EdgeInsets.only(left: 10,right: 10),
-          child:CustomOutlinedButton(
-            onTap: (){
-              if(courseInfo.isPurchased){
-                AutoRouter.of(context).push(CourseDetailRoute(courseInfo: courseInfo));
-              }else{
-                AutoRouter.of(context).push(CoursePaymentRoute(courseInfo: courseInfo));
-              }
-            },
-            text: courseInfo.isPurchased?"See units":"Buy Now"
-          ),
-        )
-      ],
-    ),
-  )
-  )
- ],
-);
+      ))
+    ],
+  );
 }

@@ -203,9 +203,9 @@ Widget buildTimeline(
 
                 case "4":
                   {
-                    UnitRepository().getMixedVideo('1001').then((value) =>
+                    UnitRepository().getReading(data.moduleId).then((value) =>
                         AutoRouter.of(context)
-                            .push(ReadingRoute(unitIntroVideo: value!)));
+                            .push(ReadingRoute(reading: value!)));
                   }
                   break;
 

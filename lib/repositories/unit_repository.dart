@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:medlegten/models/Unit/cue_word.dart';
+import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/repositories/repository.dart';
@@ -32,7 +33,7 @@ class UnitRepository {
       if (res['isSuccess']) {
         return CueWord.fromJson(res);
       } else {
-        dioRepository.snackBar(res['resultMessage']);
+        //dioRepository.snackBar(res['resultMessage']);
         return null;
       }
     } catch (e) {
@@ -66,6 +67,23 @@ class UnitRepository {
       final res = json.decode('$response');
       if (res['isSuccess']) {
         return UnitIntroVideo.fromJson(res['introVideo']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return null;
+    }
+  }
+
+  Future<Reading?> getReading(String moduleId) async {
+    try {
+      final response =
+          await dioRepository.instance.get('Course/UnitModule/$moduleId/4');
+      final res = json.decode('$response');
+      if (res['isSuccess']) {
+        return Reading.fromJson(res['reading']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;

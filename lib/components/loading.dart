@@ -5,10 +5,17 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(children: [
-      const CircularProgressIndicator(),
-      const Text('Түр хүлээнэ үү', style: TextStyle(color: Colors.black))
-    ]));
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(),
+          const Text('Түр хүлээнэ үү', style: TextStyle(color: Colors.black))
+        ],
+      ),
+    );
   }
 }
