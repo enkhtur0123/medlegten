@@ -4,7 +4,6 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
-import 'package:medlegten/pages/CoursePages/payment/buy_course.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
@@ -25,19 +24,19 @@ class CourseCart extends StatelessWidget {
         onTap!(courseInfo.courseId);
       },
       child: Container(
-        margin: EdgeInsets.only(left: 10, right: 10),
-        padding: EdgeInsets.symmetric(vertical: 5),
+        margin: const EdgeInsets.only(left: 10, right: 10),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         width: double.infinity,
         child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
             ),
@@ -152,7 +151,7 @@ courseBgImg(context, CourseInfo courseInfo) {
               padding: EdgeInsets.only(left: 20, right: 20),
               child: Text(
                 courseInfo.levelName + ' level'.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                     color: colorWhite,
                     fontWeight: FontWeight.w700,
                     fontFamily: 'Roboto',
@@ -165,6 +164,21 @@ courseBgImg(context, CourseInfo courseInfo) {
               child: CustomOutlinedButton(
                   onTap: () {
                     if (!courseInfo.isPurchased) {
+                      AutoRouter.of(context)
+                          .push(CourseDetailRoute(courseInfo: courseInfo));
+                    } else {
+                      AutoRouter.of(context)
+                          .push(CoursePaymentRoute(courseInfo: courseInfo));
+                    }
+                  },
+                  text: courseInfo.isPurchased ? "See units" : "Buy Now"),
+            ),
+            addVerticalSpace(10),
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: CustomOutlinedButton(
+                  onTap: () {
+                    if (courseInfo.isPurchased) {
                       AutoRouter.of(context)
                           .push(CourseDetailRoute(courseInfo: courseInfo));
                     } else {

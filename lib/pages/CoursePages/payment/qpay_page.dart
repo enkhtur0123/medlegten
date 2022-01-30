@@ -9,22 +9,22 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class QpayPage extends HookWidget {
-  QpayPage({Key? key, this.courseInfo}) : super(key: key);
+  QpayPage({Key? key, this.courseInfo,this.couponCode,this.price}) : super(key: key);
 
   CourseInfo? courseInfo;
   bool _showBottomSheet = false;
-  dynamic? couponCode;
+  String? couponCode;
   String? price;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Qpay Payment"),
+        title: const Text("Qpay Payment"),
         centerTitle: false,
       ),
       body: FutureBuilder(
-        future: checkCouponCode(courseInfo: courseInfo),
+        future:getQpayBanK(),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
             return Container(
@@ -50,7 +50,7 @@ class QpayPage extends HookWidget {
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 1,
                                     blurRadius: 1,
-                                    offset: Offset(0, 3), // changes position of shadow
+                                    offset:const Offset(0, 3), // changes position of shadow
                                   ),
                                 ],
                               ),
@@ -80,22 +80,13 @@ class QpayPage extends HookWidget {
       ),
     );
   }
-
+  /// Банкны аппаа дуудах
   launchApp({BuildContext? context,String? link}) async { 
     if (await canLaunch(link!)) {
       await launch(link);
     } else {
       ScaffoldMessenger.of(context!).showSnackBar(MySnackBar(text: "Апп суулгана уу",));
     }
-  }
-
-  ///Coupom check code  924161ED12DA   A2-344161ED12DB
-  Future<List<dynamic>> checkCouponCode({CourseInfo? courseInfo}) async {
-    await dioRepository.instance.get('Course/Coupon/${courseInfo!.courseId}/924161ED12DA').then((value) {
-      couponCode = value.data["coupon"]["couponCode"];
-      price = value.data["coupon"]["price"];
-    });
-    return await getQpayBanK();
   }
    /// Нэхэмжлэл үүсгэх Банкнуудын жагсаалт авах 
   Future<List<dynamic>> getQpayBanK() async {
@@ -110,15 +101,15 @@ class QpayPage extends HookWidget {
     return data.data["qpay"]["urls"];
   }
   
-  void _modalBottomSheetMenu({BuildContext? context}) {
+  _modalBottomSheetMenu({BuildContext? context}) {
     showModalBottomSheet(
         context: context!,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(26), topRight: Radius.circular(26)),
         ),
         backgroundColor: Colors.white,
         builder: (context) {
           return CustomBottomSheetDialog();
         });
+      }
   }
-}

@@ -39,7 +39,7 @@ class CourseList extends HookWidget {
                     .map((courseInfo) => CourseCart(
                           courseInfo,
                           onTap: (String id) {
-                            // print(id);
+                            print(id);
                           },
                         ))
                     .toList(),
