@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medlegten/pages/CoursePages/courses/course_list.dart';
 import 'package:medlegten/pages/CoursePages/customer_review/customer_review_list.dart';
-
+import 'package:medlegten/pages/CoursePages/level_info.dart';
 import 'package:medlegten/pages/CoursePages/preliminary_test.dart';
-class LandingCourse extends StatelessWidget {
+import 'package:medlegten/services/http_helper.dart';
+import 'package:medlegten/themes/style.dart';
+import 'package:medlegten/utils/date_time_formatter.dart';
+
+class LandingCourse extends StatefulWidget {
   const LandingCourse({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return LandingCourseState();
+  }
+}
+
+class LandingCourseState extends State<LandingCourse> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +29,18 @@ class LandingCourse extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
-          PreliminaryTest(),
+          FutureBuilder(
+              future: HttpHelper().getUrl(url: "Course/SelfQuiz/History"),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  bool isExam = checkExam(data: snapshot.data);
+                  return LevelInfoWidget();
+                  // return PreliminaryTest();
+                } else if (snapshot.hasError)
+                  return Container();
+                else
+                  return Container();
+          }),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -29,5 +57,15 @@ class LandingCourse extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool checkExam({Object? data}) {
+    DateTime currentDateTime = MyDateTimeFormatter(nowDateTime: true).toDateTime();
+    DateTime examDateTime = MyDateTimeFormatter(date: (data as Map)["quizDetial"]["createdAt"]).toDateTime();
+    // print(currentDateTime.hour);
+    //  print(examDateTime.hour);
+    print(currentDateTime.difference(examDateTime).inDays);
+
+    return true;
   }
 }

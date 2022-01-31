@@ -1,13 +1,14 @@
 // ignore_for_file: empty_catches
 
 import 'package:dio/dio.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/services/custom_exception.dart';
 
 class HttpHelper {
   Dio _createDio() {
     var dio = Dio();
     dio.options.baseUrl = 'https://api.ddishtv.mn/v1/';
-    dio.options.headers['content-Type'] = 'application/json; charset=utf-8';
+     dio.options.headers['content-Type'] = 'application/json; charset=utf-8';
     dio.options.connectTimeout = 40000;
     dio.options.receiveTimeout = 40000;
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
@@ -33,7 +34,8 @@ class HttpHelper {
 
   Future<dynamic> getUrl({String? url}) async {
     var dio = _createDio();
-    // dio.options.headers();
+    var access_token = await getToken();
+    dio.options.headers['authorization']=access_token;
     try {
       var response = await dio.get(url!);
       return response.data;
@@ -46,6 +48,8 @@ class HttpHelper {
 
   Future<dynamic> postUrl({String? url, dynamic body}) async {
     var dio = _createDio();
+    var access_token = await getToken();
+    dio.options.headers['authorization']=access_token;
     try {
       var response = await dio.post(url!, data: body);
       return response.data;
@@ -58,6 +62,8 @@ class HttpHelper {
 
   Future<dynamic> putUrl({String? url, dynamic body}) async {
     var dio = _createDio();
+    var access_token = await getToken();
+    dio.options.headers['authorization']=access_token;
     try {
       var response = await dio.put(url!, data: body);
       return response.data;
@@ -70,6 +76,8 @@ class HttpHelper {
 
   Future<dynamic> deleteUrl({String? url, dynamic body}) async {
     var dio = _createDio();
+    var access_token = await getToken();
+    dio.options.headers['authorization']=access_token;
     try {
       var response = await dio.delete(url!, data: body);
       return response.data;
@@ -79,4 +87,9 @@ class HttpHelper {
       throw CustomException(errorMsg: ex.toString());
     }
   }
+}
+
+Future<String> getToken() async {
+  String token = GetStorage().read('token') ?? '';
+  return token;
 }

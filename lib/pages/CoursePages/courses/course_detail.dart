@@ -1,18 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
-import 'package:expandable/expandable.dart';
 import 'package:medlegten/pages/CoursePages/unit_card.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:video_player/video_player.dart';
-
 import 'course_introduction_widget.dart';
 
 class CourseDetailPage extends StatefulWidget {
@@ -28,8 +24,7 @@ class _CourseDetailState extends State<CourseDetailPage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(
-        'assets/A1-U1-INTRO-V1.mp4') //VideoPlayerController.network(videoUrl)
+    _controller = VideoPlayerController.asset("assets/A1-U1-INTRO-V1.mp4") //VideoPlayerController.network(videoUrl)
       ..addListener(() => setState(() {}))
       ..setLooping(false)
       ..initialize();
@@ -53,8 +48,8 @@ class _CourseDetailState extends State<CourseDetailPage> {
           LandingHeader(100),
           VideoPlayerWidget(controller: _controller),
           addVerticalSpace(20),
-          CourseIntroWidget(courseInfo: widget.courseInfo,),
-           Divider(
+          CourseIntroWidget(courseInfo: widget.courseInfo),
+          const Divider(
             height: 40,
             thickness: 1,
             endIndent: 0,

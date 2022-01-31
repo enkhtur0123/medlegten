@@ -21,29 +21,13 @@ class CourseIntroWidget extends StatelessWidget {
         ),
         collapsed: Column(
           children: [
-            Row(
-              children: [
-                const IconText(Icons.remove_red_eye_outlined, '1233 views'),
-                addHorizontalSpace(20),
-                const IconText(CupertinoIcons.heart, '456 Likes'),
-                addHorizontalSpace(20),
-                const IconText(Icons.timer, '2 minutes'),
-              ],
-            )
+            getIntroWidget()
           ],
         ),
         expanded: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
-                const IconText(Icons.remove_red_eye_outlined, '1233 views'),
-                addHorizontalSpace(20),
-                const IconText(CupertinoIcons.heart, '456 Likes'),
-                addHorizontalSpace(20),
-                const IconText(Icons.timer, '2 minutes'),
-              ],
-            ),
+            getIntroWidget(),
             addVerticalSpace(20),
             Text(
               courseInfo!.shortDesc,
@@ -54,6 +38,18 @@ class CourseIntroWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget getIntroWidget() {
+    return Row(
+      children: [
+        const IconText(Icons.remove_red_eye_outlined, '1233 views'),
+        addHorizontalSpace(20),
+        const IconText(CupertinoIcons.heart, '456 Likes'),
+        addHorizontalSpace(20),
+        IconText(Icons.timer, courseInfo!.hours + " цаг"),
+      ],
     );
   }
 }
