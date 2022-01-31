@@ -7,9 +7,11 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 
 class CueWordWidget extends StatefulWidget {
-  const CueWordWidget(this.word, {Key? key}) : super(key: key);
+  const CueWordWidget(this.word, {Key? key, Offset? ppointerPosition})
+      : pointerPosition = ppointerPosition ?? Offset.zero,
+        super(key: key);
   final CWord word;
-
+  final Offset pointerPosition;
   @override
   _CueWordWidgetState createState() => _CueWordWidgetState();
 }
@@ -22,15 +24,15 @@ class _CueWordWidgetState extends State<CueWordWidget> {
 
   Widget body(BuildContext context, CWord word) {
     return SizedBox(
-      height: 250,
+      height: 220,
       width: double.infinity,
       child: Stack(
         children: [
           Positioned(
-            top: 20,
+            top: 10,
             left: MediaQuery.of(context).size.width * 0.06,
             child: Container(
-              height: 220,
+              height: 200,
               width: MediaQuery.of(context).size.width * 0.88,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -57,8 +59,8 @@ class _CueWordWidgetState extends State<CueWordWidget> {
             ),
           ),
           Positioned(
-            top: 9.8,
-            left: 40,
+            top: 0,
+            left: widget.pointerPosition.dx,
             child: Image.network(
               "https://www.medlegten.com/static/uploads/content/image_small/polygon3.jpg",
               fit: BoxFit.cover,
@@ -106,20 +108,22 @@ class _CueWordWidgetState extends State<CueWordWidget> {
           ),
         ),
         IconButton(
+          padding: const EdgeInsets.only(bottom: 8),
           onPressed: () => {},
           icon: const Icon(
             Icons.volume_up_outlined,
-            color: Color.fromRGBO(48, 53, 159, 1),
-            size: 28.0,
+            color: Color.fromRGBO(48, 53, 159, 0.8),
+            size: 32.0,
           ),
         ),
         Expanded(child: Container()),
         IconButton(
+          padding: const EdgeInsets.only(bottom: 8),
           onPressed: () => {},
           icon: const Icon(
             Icons.bookmark_outline_sharp,
-            color: Color.fromRGBO(48, 53, 159, 1),
-            size: 28.0,
+            color: Color.fromRGBO(48, 53, 159, 0.8),
+            size: 32.0,
           ),
         ),
       ],
@@ -128,6 +132,8 @@ class _CueWordWidgetState extends State<CueWordWidget> {
     if (cueWord.rootWordInfo.rootWord != null) {
       list.add(
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const Text(
               'Үгийн үндэс',
@@ -161,12 +167,12 @@ class _CueWordWidgetState extends State<CueWordWidget> {
                 style: const TextStyle(
                     color: Color.fromRGBO(48, 53, 159, 1),
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w700),
               ),
               Text(
                 translation.trText,
                 style: const TextStyle(
-                    color: Color.fromRGBO(48, 53, 159, .3),
+                    color: Color.fromRGBO(48, 53, 159, .6),
                     fontSize: 14,
                     fontWeight: FontWeight.w500),
               ),
@@ -181,7 +187,7 @@ class _CueWordWidgetState extends State<CueWordWidget> {
       child: ListView.separated(
         itemCount: list.length,
         separatorBuilder: (BuildContext context, int index) =>
-            addVerticalSpace(1),
+            addVerticalSpace(10),
         itemBuilder: (context, index) => list[index],
       ),
     );

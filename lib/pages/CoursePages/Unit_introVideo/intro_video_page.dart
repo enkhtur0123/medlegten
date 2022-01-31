@@ -22,7 +22,7 @@ class CourseUnitIntroVideoPage extends BaseVideoPage {
 class _CourseUnitIntroVideoPageState
     extends BaseVideoPageState<CourseUnitIntroVideoPage> with BaseVideoMixin {
   CWord? word;
-
+  Offset position = Offset.zero;
   late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false)
     ..addListener(_listener);
 
@@ -34,9 +34,10 @@ class _CourseUnitIntroVideoPageState
   Widget subtitleWidget() {
     return IntroVideoSubtitle(
         videoPlayerController, IntroVideohelper.convert(widget.unitIntroVideo),
-        (cword) {
+        (cword, pposition) {
       if (cword != null) {
         word = cword;
+        position = pposition;
         refreshNotifier.value = !refreshNotifier.value;
       }
     });
@@ -49,17 +50,17 @@ class _CourseUnitIntroVideoPageState
           return child!;
         },
         valueListenable: refreshNotifier,
-        child: _showBottomSheet(context, word));
+        child: _showBottomSheet(context, word, position));
   }
 
-  Widget _showBottomSheet(context, CWord? word) {
+  Widget _showBottomSheet(context, CWord? word, Offset position) {
     if (word == null) return const SizedBox(height: 1);
 
     return BottomSheet(
       backgroundColor: colorWhite,
       enableDrag: false,
       builder: (BuildContext context) {
-        return CueWordWidget(word);
+        return CueWordWidget(word, ppointerPosition: position);
       },
       onClosing: () {},
     );

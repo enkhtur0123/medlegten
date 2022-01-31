@@ -6,7 +6,6 @@ import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
-import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 
 class ReadingPage extends HookWidget {
   const ReadingPage(this.reading, {Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class ReadingPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final word = useMemoized(() => <CWord?>[null]);
+    final helper = useMemoized(() => ReadingHelper());
     final refreshNotifier = useState(false);
     final paragraphs = useMemoized(() => ReadingHelper.convert(reading));
     return Scaffold(
@@ -35,8 +34,9 @@ class ReadingPage extends HookWidget {
                   height: 40,
                   child: ReadingParagraph(
                     paragraphs[index],
-                    (val) {
-                      word[0] = val;
+                    (word, position) {
+                      helper.word = word;
+                      helper.position = position;
                       refreshNotifier.value = !refreshNotifier.value;
                     },
                   ),

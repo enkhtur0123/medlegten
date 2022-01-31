@@ -46,14 +46,14 @@ mixin BaseSubtitleMixin<Page extends BaseSubtitlePage>
             var rect = value.item1.globalPaintBounds!;
             if (rect.contains(position)) {
               selectedWord = key.word;
-              widget.wordCallback!(key);
+              widget.wordCallback!(key, position);
               refreshCue.value = !refreshCue.value;
             } else {
-              widget.wordCallback!(null);
+              widget.wordCallback!(null, Offset.zero);
             }
           });
         } else {
-          widget.wordCallback!(null);
+          widget.wordCallback!(null, Offset.zero);
         }
       },
       child: buildParagraph(context, widget.paragraph, selectedWord),

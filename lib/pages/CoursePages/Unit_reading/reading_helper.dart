@@ -1,8 +1,13 @@
+import 'dart:ui';
+
 import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 
 class ReadingHelper {
+  CWord? word;
+  Offset position = Offset.zero;
+
   static List<CParagraph> convert(Reading reading) {
     List<CParagraph> retList = [];
     for (int i = 0; i < 20; i++) {

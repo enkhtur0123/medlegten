@@ -12,7 +12,7 @@ import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
 
 // ignore: must_be_immutable
-typedef SubtitleWordCallback = void Function(CWord? word);
+typedef SubtitleWordCallback = void Function(CWord? word, Offset position);
 typedef SubtitleParagraphCallback = void Function(CParagraph? paragraph);
 
 abstract class BaseVideoSubtitlePage extends StatefulWidget {
@@ -94,141 +94,142 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     on BaseVideoSubtitleState<Page> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
           children: [
-            addHorizontalSpace(10),
-            OutlinedButton(
-              onPressed: () {
-                isMon.value = false;
-              },
-              style: OutlinedButton.styleFrom(
-                backgroundColor:
-                    isMon.value ? Colors.grey[400] : ColorTable.color48_53_159,
-              ),
-              child: const Text(
-                'Eng',
-                style: TextStyle(
-                    color: colorWhite,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    fontFamily: 'Roboto'),
-              ),
-            ),
-            addHorizontalSpace(10),
-            OutlinedButton(
-              onPressed: () {
-                isMon.value = true;
-              },
-              style: OutlinedButton.styleFrom(
-                backgroundColor:
-                    isMon.value ? ColorTable.color48_53_159 : Colors.grey[400],
-              ),
-              child: const Text(
-                'Mon',
-                style: TextStyle(
-                    color: colorWhite,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    fontFamily: 'Roboto'),
-              ),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onLongPress: () {
-              if (widget.videoPlayerController.value.isPlaying) {
-                widget.videoPlayerController.pause();
-              }
-            },
-            onTapDown: (TapDownDetails details) {
-              if (widget.wordCallback != null) {
-                var position = details.globalPosition;
-                if (currentIndex > -1 &&
-                    currentIndex < widget.paragraphs.length) {
-                  var cue = widget.paragraphs[currentIndex];
-                  for (var entry in cueWidgets[cue]!.entries) {
-                    var rect = entry.value.item1.globalPaintBounds!;
-                    if (rect.contains(position)) {
-                      selectedWord = entry.key.word;
-                      valueKeyList[cue] = valueKeyList[cue]! + 1;
-                      widget.wordCallback!(entry.key);
-                      refreshCue.value = !refreshCue.value;
-                      break;
-                    } else {
-                      widget.wordCallback!(null);
-                    }
-                  }
-                } else {
-                  widget.wordCallback!(null);
-                }
-              }
-            },
-            child: SizedBox(
-              height: 180,
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  if (scrollNotification is UserScrollNotification) {
-                    if (isUser == -1) {
-                      isUser = 1;
-                    } else if (isUser == 0) {
-                      isUser = -1;
-                    }
-                  } else if (scrollNotification is ScrollEndNotification &&
-                      isUser == 1) {
-                    isUser = 0;
-                    widget.videoPlayerController.seekTo(getDuration(
-                        widget.paragraphs[currentIndex].startTime!));
-                    //if (widget.videoPlayerController.value.isPlaying == false) {
-                    //  widget.videoPlayerController.play();
-                    //}
-                  }
-                  return false;
-                },
-                child: ClickableListWheelScrollView(
-                  scrollController: _fixedExtentScrollController,
-                  itemHeight: 60,
-                  itemCount: widget.paragraphs.length,
-                  onItemTapCallback: (index) {
-                    currentIndex = index;
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                OutlinedButton(
+                  onPressed: () {
+                    isMon.value = false;
                   },
-                  child: ListWheelScrollView.useDelegate(
-                    physics:
-                        const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
-                    itemExtent: 60,
-                    // squeeze: 0.7,
-                    useMagnifier: false,
-                    magnification: 1, // голын item нь илүү том харагдах
-                    diameterRatio: 5, // item-ийг налалттай биш өнцгөөр харуулна
-                    perspective: 0.001,
-                    controller: _fixedExtentScrollController,
-                    onSelectedItemChanged: (index) {
-                      currentIndex = index;
-                      if (!widget.videoPlayerController.value.isPlaying &&
-                          widget.paragraphCallback != null) {
-                        widget.paragraphCallback!(widget.paragraphs[index]);
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: isMon.value
+                        ? Colors.grey[400]
+                        : ColorTable.color48_53_159,
+                  ),
+                  child: const Text(
+                    'Eng',
+                    style: TextStyle(
+                        color: colorWhite,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        fontFamily: 'Roboto'),
+                  ),
+                ),
+                addHorizontalSpace(10),
+                OutlinedButton(
+                  onPressed: () {
+                    isMon.value = true;
+                  },
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: isMon.value
+                        ? ColorTable.color48_53_159
+                        : Colors.grey[400],
+                  ),
+                  child: const Text(
+                    'Mon',
+                    style: TextStyle(
+                        color: colorWhite,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        fontFamily: 'Roboto'),
+                  ),
+                ),
+              ],
+            ),
+            GestureDetector(
+              onLongPress: () {
+                if (widget.videoPlayerController.value.isPlaying) {
+                  widget.videoPlayerController.pause();
+                }
+              },
+              onTapDown: (TapDownDetails details) {
+                if (widget.wordCallback != null) {
+                  var position = details.globalPosition;
+                  if (currentIndex > -1 &&
+                      currentIndex < widget.paragraphs.length) {
+                    var cue = widget.paragraphs[currentIndex];
+                    for (var entry in cueWidgets[cue]!.entries) {
+                      var rect = entry.value.item1.globalPaintBounds!;
+                      if (rect.contains(position)) {
+                        selectedWord = entry.key.word;
+                        valueKeyList[cue] = valueKeyList[cue]! + 1;
+                        widget.wordCallback!(entry.key, position);
+                        refreshCue.value = !refreshCue.value;
+                        break;
+                      } else {
+                        widget.wordCallback!(null, Offset.zero);
                       }
+                    }
+                  } else {
+                    widget.wordCallback!(null, Offset.zero);
+                  }
+                }
+              },
+              child: SizedBox(
+                height: 180,
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (scrollNotification) {
+                    if (scrollNotification is UserScrollNotification) {
+                      if (isUser == -1) {
+                        isUser = 1;
+                      } else if (isUser == 0) {
+                        isUser = -1;
+                      }
+                    } else if (scrollNotification is ScrollEndNotification &&
+                        isUser == 1) {
+                      isUser = 0;
+                      widget.videoPlayerController.seekTo(getDuration(
+                          widget.paragraphs[currentIndex].startTime!));
+                      //if (widget.videoPlayerController.value.isPlaying == false) {
+                      //  widget.videoPlayerController.play();
+                      //}
+                    }
+                    return false;
+                  },
+                  child: ClickableListWheelScrollView(
+                    scrollController: _fixedExtentScrollController,
+                    itemHeight: 60,
+                    itemCount: widget.paragraphs.length,
+                    onItemTapCallback: (index) {
+                      currentIndex = index;
                     },
-                    childDelegate: ListWheelChildBuilderDelegate(
-                      builder: (context, index) => buildParagraph(
-                          isMon.value,
-                          widget.paragraphs[index],
-                          valueKeyList,
-                          selectedWord), //selectedIndex == index
-                      childCount: widget.paragraphs.length,
+                    child: ListWheelScrollView.useDelegate(
+                      physics:
+                          const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
+                      itemExtent: 60,
+                      // squeeze: 0.7,
+                      useMagnifier: false,
+                      magnification: 1, // голын item нь илүү том харагдах
+                      diameterRatio:
+                          5, // item-ийг налалттай биш өнцгөөр харуулна
+                      perspective: 0.001,
+                      controller: _fixedExtentScrollController,
+                      onSelectedItemChanged: (index) {
+                        currentIndex = index;
+                        if (!widget.videoPlayerController.value.isPlaying &&
+                            widget.paragraphCallback != null) {
+                          widget.paragraphCallback!(widget.paragraphs[index]);
+                        }
+                      },
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        builder: (context, index) => buildParagraph(
+                            isMon.value,
+                            widget.paragraphs[index],
+                            valueKeyList,
+                            selectedWord), //selectedIndex == index
+                        childCount: widget.paragraphs.length,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        )
-      ],
-    );
+          ],
+        ));
   }
 
   Widget buildParagraph(bool isMon, CParagraph paragraph,

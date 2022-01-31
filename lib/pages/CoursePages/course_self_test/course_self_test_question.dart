@@ -5,7 +5,6 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/quiz_answer.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
 
-
 import 'course_self_test_answer_item.dart';
 
 class CourseSelfTestQuestion extends HookWidget {
@@ -13,12 +12,20 @@ class CourseSelfTestQuestion extends HookWidget {
   final int mode;
   final ValueNotifier<bool>? check;
   ValueNotifier<int> correctCnt;
-  int selfTestCnt;  
-  CourseSelfTestQuestion(this.quizQuestionEx, {Key? key, this.mode = 0, this.check, required this.correctCnt,required this.selfTestCnt})
+  int selfTestCnt;
+  CourseSelfTestQuestion(this.quizQuestionEx,
+      {Key? key,
+      this.mode = 0,
+      this.check,
+      required this.correctCnt,
+      required this.selfTestCnt})
       : super(key: key);
 
   final style = const TextStyle(
-      color: Color.fromRGBO(51, 51, 51, 1), fontFamily: 'Roboto', fontSize: 15, fontWeight: FontWeight.w400);
+      color: Color.fromRGBO(51, 51, 51, 1),
+      fontFamily: 'Roboto',
+      fontSize: 15,
+      fontWeight: FontWeight.w400);
 
   @override
   Widget build(BuildContext context) {
@@ -65,13 +72,15 @@ class CourseSelfTestQuestion extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.min,
                   children: sortedAnswers
-                      .map((answer) => CourseSelfAnswerItem(
+                      .map(
+                        (answer) => CourseSelfAnswerItem(
                           answer: answer,
                           quizQuestionEx: quizQuestionEx,
                           mode: mode,
                           correctCnt: correctCnt,
                         ),
-                      ).toList()
+                      )
+                      .toList()
                   // children: sortedAnswers
                   //     .map(
                   //       (answer) => ChoiceChip(
