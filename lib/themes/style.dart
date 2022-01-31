@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 final secondaryColor = Color(0xff7864FE);
 final appTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff7864FE),
       foregroundColor: Colors.white,
-      titleTextStyle:
-          TextStyle(fontStyle: FontStyle.normal, fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+      titleTextStyle:TextStyle(fontStyle: FontStyle.normal, fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
       titleSpacing: 0),
   colorScheme: const ColorScheme.dark(
     secondary: Color(0xFF9054E7),
     secondaryVariant: Color(0xFFF88E77),
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     headline1: TextStyle(fontFamily: "Roboto", color: Color(0xff30359F)),
     headline2: TextStyle(fontFamily: "Roboto", color: Color(0xff30359F)),
     headline3: TextStyle(fontFamily: "Roboto", color: Color(0xff30359F)),
