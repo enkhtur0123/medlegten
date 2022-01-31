@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 class CustomBottomSheetDialog extends StatelessWidget {
+  
+  CustomBottomSheetDialog({Key? key,this.isError=false,this.isSuccess=true}) : super(key: key);
+  String text = "";
+  bool? isError;
+  bool? isSuccess;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,13 +42,19 @@ class CustomBottomSheetDialog extends StatelessWidget {
                 Text(
                   "амжилттай".toUpperCase(),
                   style: TextStyle(
-                      color: Color(0xff70C217), fontSize: 30, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
+                      color: Color(0xff70C217),
+                      fontSize: 30,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold),
                 ),
                 Container(
                   margin: EdgeInsets.all(20),
                   child: Text(
                     "Төлбөр амжилттай төлөгдлөө. Танд сурлагын өндөр амжилт хүсье!",
-                    style: TextStyle(fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.normal),
                     textAlign: TextAlign.center,
                   ),
                 )

@@ -1,5 +1,8 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MyTextField extends StatelessWidget {
   MyTextField(
       {Key? key,
@@ -38,10 +41,10 @@ class MyTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(width: 1, color: Color(0xff7864FE)),
               )
-            : UnderlineInputBorder(
+            : const UnderlineInputBorder(
                 borderSide: const BorderSide(
                   width: 1,
-                  color: Color(0xff7864FE),
+                  color:const  Color(0xff7864FE),
                 ),
               ),
         labelStyle: const TextStyle(color: Color(0xFF424242)),
@@ -49,7 +52,7 @@ class MyTextField extends StatelessWidget {
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(width: 1, color: Color(0xff7864FE)))
-            : UnderlineInputBorder(),
+            : const UnderlineInputBorder(),
       ),
       onChanged: (value) {
         onChanged!(value);

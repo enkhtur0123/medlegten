@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 
+// ignore: must_be_immutable
 class CustomOutlinedButton extends StatelessWidget {
   CustomOutlinedButton({Key? key, this.text, this.color, this.onTap,this.height}) : super(key: key);
   String? text;
@@ -12,14 +13,14 @@ class CustomOutlinedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        height: height ?? null,
+        height: height,
         child: TextButton(
           onPressed: () {
             onTap!();
           },
           child: Text(
             text ?? "",
-            style: TextStyle(color: colorWhite, fontWeight: FontWeight.w500, fontSize: 14, fontFamily: 'Roboto'),
+            style: const TextStyle(color: colorWhite, fontWeight: FontWeight.w500, fontSize: 14, fontFamily: 'Roboto'),
           ),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(color ?? Colors.transparent),

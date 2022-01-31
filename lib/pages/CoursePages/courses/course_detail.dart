@@ -13,6 +13,7 @@ import 'course_introduction_widget.dart';
 
 class CourseDetailPage extends StatefulWidget {
   const CourseDetailPage(this.courseInfo, {Key? key}) : super(key: key);
+
   final CourseInfo courseInfo;
 
   @override
@@ -21,20 +22,21 @@ class CourseDetailPage extends StatefulWidget {
 
 class _CourseDetailState extends State<CourseDetailPage> {
   late VideoPlayerController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset("assets/A1-U1-INTRO-V1.mp4") //VideoPlayerController.network(videoUrl)
-      ..addListener(() => setState(() {}))
-      ..setLooping(false)
-      ..initialize();
-    // ..initialize().then((_) => _controller.play());
-  }
 
   @override
   void dispose() {
     //_controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(widget.courseInfo.introVideoUrl)
+      ..addListener(() => setState(() {}))
+      ..setLooping(false)
+      ..initialize();
+    // ..initialize().then((_) => _controller.play());
   }
 
   @override
@@ -80,7 +82,7 @@ class _CourseDetailState extends State<CourseDetailPage> {
                         if (snapshot.hasData) {
                           return Column(
                             children: snapshot.data!
-                                .map((unitInfo) => UnitCart(unitInfo))
+                                .map((unitInfo) => UnitCart(unitInfo: unitInfo,courseInfo: widget.courseInfo,))
                                 .toList(),
                           );
                         } else if (snapshot.hasError) {

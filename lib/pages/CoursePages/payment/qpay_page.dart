@@ -12,7 +12,6 @@ class QpayPage extends HookWidget {
   QpayPage({Key? key, this.courseInfo,this.couponCode,this.price}) : super(key: key);
 
   CourseInfo? courseInfo;
-  bool _showBottomSheet = false;
   String? couponCode;
   String? price;
 
@@ -29,8 +28,8 @@ class QpayPage extends HookWidget {
           if (snapshot.hasData) {
             return Container(
                 color: Colors.white,
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(10),
                 child: GridView.count(
                   crossAxisSpacing: 30,
                   mainAxisSpacing: 10,
@@ -59,7 +58,7 @@ class QpayPage extends HookWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   ClipRRect(
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                                       child: Image.network(
                                         e["logo"],
                                         width: 50,
@@ -101,7 +100,7 @@ class QpayPage extends HookWidget {
     return data.data["qpay"]["urls"];
   }
   
-  _modalBottomSheetMenu({BuildContext? context}) {
+  modalBottomSheetMenu({BuildContext? context}) {
     showModalBottomSheet(
         context: context!,
         shape: const RoundedRectangleBorder(

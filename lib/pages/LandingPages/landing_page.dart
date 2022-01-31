@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/components/landing_header.dart';
-import 'package:medlegten/pages/CoursePages/landing_course.dart';
+import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
 
 import 'landing_home.dart';
