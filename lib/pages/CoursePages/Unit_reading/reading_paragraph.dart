@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
-import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 
 class ReadingParagraph extends BaseSubtitlePage {

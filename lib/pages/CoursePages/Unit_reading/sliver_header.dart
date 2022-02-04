@@ -14,15 +14,15 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
       if (++index > Colors.primaries.length - 1) index = 0;
 
       return Container(
-        decoration: BoxDecoration(
-            boxShadow: [BoxShadow(blurRadius: 4.0, color: Colors.black45)],
-            gradient: LinearGradient(colors: [Colors.blue, color])),
+        decoration: BoxDecoration(boxShadow: [
+          const BoxShadow(blurRadius: 4.0, color: Colors.black45)
+        ], gradient: LinearGradient(colors: [Colors.blue, color])),
         height: constraints.maxHeight,
         child: SafeArea(
             child: Center(
           child: CircularProgressIndicator(
             value: percentage,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
           ),
         )),
       );

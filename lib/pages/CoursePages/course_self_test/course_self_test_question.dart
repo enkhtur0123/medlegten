@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/models/Landing/quiz_answer.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
 
 import 'course_self_test_answer_item.dart';
@@ -31,8 +29,8 @@ class CourseSelfTestQuestion extends HookWidget {
   Widget build(BuildContext context) {
     var sortedAnswers = quizQuestionEx.quizQuestion.answers
       ..sort((a, b) => int.parse(a.ordering).compareTo(int.parse(b.ordering)));
-    var state = useState(-1);
-    var isSelected = useState(false);
+    //var state = useState(-1);
+    //var isSelected = useState(false);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(

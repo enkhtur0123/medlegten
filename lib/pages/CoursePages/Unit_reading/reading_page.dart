@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Unit/reading.dart';
+import 'package:medlegten/pages/CoursePages/Unit_reading/reading_dialog.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
+import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 
 class ReadingPage extends HookWidget {
   const ReadingPage(this.reading, {Key? key}) : super(key: key);
@@ -14,9 +17,11 @@ class ReadingPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final helper = useMemoized(() => ReadingHelper());
-    final refreshNotifier = useState(false);
+    //final helper = useMemoized(() => ReadingHelper());
+    //final refreshNotifier = useState(false);
     final paragraphs = useMemoized(() => ReadingHelper.convert(reading));
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
@@ -35,9 +40,41 @@ class ReadingPage extends HookWidget {
                   child: ReadingParagraph(
                     paragraphs[index],
                     (word, position) {
-                      helper.word = word;
-                      helper.position = position;
-                      refreshNotifier.value = !refreshNotifier.value;
+                      if (word != null) {
+                        var isTop =
+                            screenHeight - position.top > cueWidgetHeight;
+                        SmartDialog.showAttach(
+                          isLoadingTemp: false,
+                          targetContext: null,
+                          target: Offset(
+                              10,
+                              isTop == false
+                                  ? position.top - cueWidgetHeight - 30
+                                  : position.top + 30),
+                          //isPenetrateTemp: true,
+                          //alignmentTemp: Alignment.bottomCenter,
+                          useSystem: false,
+                          isUseAnimationTemp: false,
+                          maskColorTemp: Colors.transparent,
+                          widget: SizedBox(
+                            height: cueWidgetHeight + 20,
+                            width: screenWidth,
+                            //color: Colors.white60,
+                            child: CueWordWidget(word,
+                                ppointerPosition: position,
+                                isshadow: true,
+                                istop: isTop),
+                          ),
+                        );
+                        // showDialog(
+                        //     context: context,
+                        //     barrierColor: Colors.transparent,
+                        //     barrierDismissible: true,
+                        //     builder: (BuildContext context) {
+                        //       return ReadingPopUpDialog(word, position);
+                        //     });
+                      }
+                      //refreshNotifier.value = !refreshNotifier.value;
                     },
                   ),
                 );

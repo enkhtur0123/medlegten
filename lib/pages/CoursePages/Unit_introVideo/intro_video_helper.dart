@@ -9,8 +9,8 @@ class IntroVideohelper {
       retList.add(CParagraph(
           cue.cueId,
           int.parse(cue.ordering),
-          cue.fromLangTranslation,
           cue.toLangTranslation,
+          cue.fromLangTranslation,
           convertWords(cue.words),
           startTime: cue.startTime,
           endTime: cue.endTime));

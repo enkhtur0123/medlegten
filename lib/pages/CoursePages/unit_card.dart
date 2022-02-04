@@ -56,7 +56,7 @@ class UnitCart extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                   const SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Column(
@@ -76,23 +76,30 @@ class UnitCart extends HookWidget {
                           fontStyle: FontStyle.normal,
                           fontSize: 50,
                         ),
-                        Container(
-                          height: 40,
-                          padding: const EdgeInsets.only(
-                              top: 10, bottom: 10, left: 60, right: 60),
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(4)),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              transform: const GradientRotation(0.7853982),
-                              colors: getCourSeColor(),
+                        GestureDetector(
+                          onTap: () {
+                            AutoRouter.of(context).push(
+                                CourseUnitModuleListRoute(unitInfo: unitInfo!));
+                          },
+                          child: Container(
+                            height: 40,
+                            padding: const EdgeInsets.only(
+                                top: 10, bottom: 10, left: 60, right: 60),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(4)),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                transform: const GradientRotation(0.7853982),
+                                colors: getCourSeColor(),
+                              ),
                             ),
-                          ),
-                          child: Text(
-                            courseInfo!.levelName.toUpperCase(),
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            child: Text(
+                              courseInfo!.levelName.toUpperCase(),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 16),
+                            ),
                           ),
                         ),
                         Column(
@@ -122,9 +129,6 @@ class UnitCart extends HookWidget {
               );
             })
       },
-      // AutoRouter.of(context)
-      //     .push(CourseUnitModuleListRoute(unitInfo: unitInfo!))
-
       child: Card(
         color: ColorTable.color255_255_255,
         borderOnForeground: true,

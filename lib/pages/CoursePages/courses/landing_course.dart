@@ -31,12 +31,14 @@ class LandingCourseState extends State<LandingCourse> {
               future: HttpHelper().getUrl(url: "Course/SelfQuiz/History"),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  bool isExam = checkExam(data: snapshot.data);
-                  return isExam ? PreliminaryTest() : const LevelInfoWidget();
-                } else if (snapshot.hasError)
+                  return PreliminaryTest();
+                  //bool isExam = checkExam(data: snapshot.data);
+                  //return isExam ? PreliminaryTest() : const LevelInfoWidget();
+                } else if (snapshot.hasError) {
                   return Container();
-                else
+                } else {
                   return Container();
+                }
               }),
           Expanded(
             child: SingleChildScrollView(
