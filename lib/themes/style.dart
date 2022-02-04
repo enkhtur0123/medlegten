@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final secondaryColor = Color(0xff7864FE);
+const secondaryColor = Color(0xff7864FE);
 final appTheme = ThemeData(
   tabBarTheme: const TabBarTheme(),
   bottomAppBarColor: Colors.white,

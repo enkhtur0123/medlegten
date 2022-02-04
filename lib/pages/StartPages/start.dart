@@ -77,7 +77,7 @@ class StartPage extends StatelessWidget {
                         flex: 2,
                       ),
                       WideButton(
-                          "Login if you are newbie",
+                          "Нэвтрэх",
                           ColorTable.color120_100_254,
                           ColorTable.color255_255_255, () {
                         AutoRouter.of(context).push(const LoginRoute());
@@ -86,7 +86,7 @@ class StartPage extends StatelessWidget {
                         flex: 1,
                       ),
                       WideButton(
-                          "Let's know about Medlegten",
+                          "Мэдлэгтэн гэж юу вэ?",
                           ColorTable.color255_255_255,
                           ColorTable.color120_100_254, () async {
                         final onboardingList =

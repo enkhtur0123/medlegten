@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Landing/course_unit_module_list.dart';
@@ -6,6 +6,7 @@ import 'package:medlegten/models/Landing/customer_review.dart';
 import 'package:medlegten/models/Landing/quiz_history.dart';
 import 'package:medlegten/models/Landing/self_quiz.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class LandingRepository {
@@ -128,6 +129,22 @@ class LandingRepository {
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       return null;
+    }
+  }
+
+  //// Шалгалтын мэдээлэл авах
+  Future<dynamic> getSelfTestDetail() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'Course/SelfQuiz/History');
+      if (res['isSuccess']) {
+        return res;
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+         throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString());
     }
   }
 }

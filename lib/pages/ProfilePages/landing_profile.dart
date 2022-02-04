@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/widgets/TextButton.dart';
-
 import 'report_items.dart';
 
 class LandingProfile extends ConsumerWidget {
@@ -54,6 +53,14 @@ class LandingProfile extends ConsumerWidget {
                   return getReportItemWidget(e: e);
                 }).toList(),
               ),
+              // WideButton(
+              //   "Log off",
+              //   ColorTable.color120_100_254,
+              //   ColorTable.color255_255_255,
+              //   () {
+              //     ref.read(authProvider.notifier).logoff();
+              //   },
+              // ),
               Text(
                 "Сүүлд үзсэн",
                 style: TextStyle(
@@ -112,7 +119,6 @@ class LandingProfile extends ConsumerWidget {
 
   // ignore: non_constant_identifier_names
   Widget UserImageWithName({WidgetRef? ref}) {
-    // ref!.read(authProvider.notifier).logoff();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,7 +133,7 @@ class LandingProfile extends ConsumerWidget {
               imageUrl:
                   'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg',
               placeholder: (context, url) => CircleAvatar(
-                backgroundColor:Colors.grey.withOpacity(0.5),
+                backgroundColor: Colors.grey.withOpacity(0.5),
                 radius: 26,
               ),
               imageBuilder: (context, image) => CircleAvatar(

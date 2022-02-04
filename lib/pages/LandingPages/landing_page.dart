@@ -73,14 +73,31 @@ class LandingPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 25),
-              child:Row(
+        primary: true,
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(Icons.search),
+                const SizedBox(
+                  width: 15,
+                ),
+                const Icon(Icons.notifications_active)
+              ],
+            ),
+          )
+        ],
+        title: Container(
+          margin: const EdgeInsets.only(left: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
                 children: [
                   SvgPicture.asset("assets/svg/logo.svg"),
                   const SizedBox(
@@ -95,8 +112,23 @@ class LandingPage extends HookWidget {
                         fontSize: 16),
                   ),
                 ],
-              ),)
-          ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  const Text(
+                    "Сайн уу,BatToday’s Goal:",
+                    style: TextStyle(
+                        color: Color(0xffC7C9D9),
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.normal),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
         centerTitle: false,
         shape: const RoundedRectangleBorder(

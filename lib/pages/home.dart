@@ -18,22 +18,6 @@ class HomePage extends ConsumerWidget {
 
     return Material(color: Colors.white,child: getChild(context, _authState));
   }
-  //      AnimatedSwitcher(
-  //       duration: const Duration(milliseconds: 200),
-  //       transitionBuilder: (child, animation) => SlideTransition(
-  //         position: Tween<Offset>(
-  //           begin: const Offset(1, 0),
-  //           end: const Offset(0, 0),
-  //         ).animate(animation),
-  //         child: FadeTransition(
-  //           opacity: Tween(begin: 0.0, end: 1.0).animate(animation),
-  //           child: ,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget getChild(BuildContext context, AuthState _authState) {
     Widget home;
     switch (_authState) {

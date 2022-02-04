@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -62,6 +63,7 @@ class LoginNotifier extends StateNotifier<RepState> {
 
 abstract class ILoginRepository {
   Future<Version?> getAppVersion();
+
   Future<List<Onboarding>?> getOnboardingInfo();
 }
 
@@ -80,38 +82,9 @@ class LoginRepository implements ILoginRepository {
     }
   }
 
-  Future fetchLoginInfo(User? fbuser, bool isGoogle) async {
-    try {
-      if (fbuser != null) {
-        dioRepository.setTokenToDefault();
-        final res = await HttpHelper().postUrl(
-          url: 'Login',
-          body: json.encode({
-            'userId': fbuser.providerData.first.uid,
-            'firstName': fbuser.displayName,
-            'lastName': fbuser.displayName,
-            'profileUrl': fbuser.photoURL,
-            'socialType': isGoogle ? 'google' : 'facebook',
-            'deviceInfo': 'Android', //DO IT
-            'channel': 'app',
-            'email': fbuser.email,
-            'birthDate': ''
-          }),
-        );
-        if (res['isSuccess']) {
-          GetStorage().write('token', res['token']);
-          dioRepository.setToken();
-        }
-      }
-    } catch (e) {
-      dioRepository.snackBar(e.toString().toUpperCase());
-    }
-  }
-
   @override
   Future<List<Onboarding>?> getOnboardingInfo() async {
     try {
-      dioRepository.setTokenToDefault();
       final res = await HttpHelper().getUrl(url: 'Login/Slider');
       if (res['isSuccess']) {
         var list = res['onBoarding'] as List;
@@ -122,6 +95,32 @@ class LoginRepository implements ILoginRepository {
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       return null;
+    }
+  }
+
+  Future fetchLoginInfo({User? fbuser, bool? isGoogle}) async {
+    try {
+      if (fbuser != null) {
+        final res = await HttpHelper().postUrl(
+          url: 'Login',
+          body: json.encode({
+            'userId': fbuser.providerData.first.uid,
+            'firstName': fbuser.displayName,
+            'lastName': fbuser.displayName,
+            'profileUrl': fbuser.photoURL,
+            'socialType': isGoogle! ? 'google' : 'facebook',
+            'deviceInfo': Platform.operatingSystem, //DO IT
+            'channel': 'app',
+            'email': fbuser.email,
+            'birthDate': ''
+          }),
+        );
+        if (res['isSuccess']) {
+          GetStorage().write('token', res['token']);
+        }
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
     }
   }
 
@@ -148,6 +147,7 @@ class LoginRepository implements ILoginRepository {
       return false;
     }
   }
+
   // Future<String> getUserInfoBirthDate() async {
   //   try {
   //     final response = await dioRepository.instance.post('UserInfo/BDATE',data: json.encode({

@@ -38,12 +38,13 @@ class HttpHelper {
     dio.options.headers['Authorization'] = access_token;
     try {
       var response = await dio.get(url!);
+      // print(response.data.toString());
       return response.data;
     } on DioError catch (ex) {
-      print(ex.error.toString());
+      // print(ex.error.toString());
       throw CustomException(errorMsg: ex.message.toString());
     } catch (ex) {
-       print(ex.toString());
+      //  print(ex.toString());
       throw CustomException(errorMsg: ex.toString());
     }
   }
@@ -93,5 +94,10 @@ class HttpHelper {
 
 Future<String> getToken() async {
   String token = GetStorage().read('token') ?? '';
+  if (token != '') {
+    return token;
+  } else {
+    token = "T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV";
+  }
   return token;
 }
