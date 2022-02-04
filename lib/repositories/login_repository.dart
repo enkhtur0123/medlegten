@@ -8,6 +8,7 @@ import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/repositories/rep_state.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/http_helper.dart';
 
 final loginNotifierProvider = StateNotifierProvider<LoginNotifier, RepState>(
   (ref) => LoginNotifier(
@@ -68,8 +69,7 @@ class LoginRepository implements ILoginRepository {
   @override
   Future<Version?> getAppVersion() async {
     try {
-      final response = await dioRepository.instance.get('Login/Version');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Login/Version');
       if (res['isSuccess']) {
         return Version.fromJson(res);
       } else {
@@ -84,9 +84,9 @@ class LoginRepository implements ILoginRepository {
     try {
       if (fbuser != null) {
         dioRepository.setTokenToDefault();
-        final response = await dioRepository.instance.post(
-          'Login',
-          data: json.encode({
+        final res = await HttpHelper().postUrl(
+          url: 'Login',
+          body: json.encode({
             'userId': fbuser.providerData.first.uid,
             'firstName': fbuser.displayName,
             'lastName': fbuser.displayName,
@@ -98,8 +98,6 @@ class LoginRepository implements ILoginRepository {
             'birthDate': ''
           }),
         );
-
-        final res = json.decode('$response');
         if (res['isSuccess']) {
           GetStorage().write('token', res['token']);
           dioRepository.setToken();
@@ -114,8 +112,7 @@ class LoginRepository implements ILoginRepository {
   Future<List<Onboarding>?> getOnboardingInfo() async {
     try {
       dioRepository.setTokenToDefault();
-      final response = await dioRepository.instance.get('Login/Slider');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Login/Slider');
       if (res['isSuccess']) {
         var list = res['onBoarding'] as List;
         return list.map((i) => Onboarding.fromJson(i)).toList();
@@ -130,8 +127,7 @@ class LoginRepository implements ILoginRepository {
 
   Future<MUserInfo?> getUserInfo() async {
     try {
-      final response = await dioRepository.instance.get('UserInfo');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'UserInfo');
       if (res['isSuccess']) {
         return MUserInfo.fromJson(res['userInfo']);
       } else {
@@ -145,8 +141,7 @@ class LoginRepository implements ILoginRepository {
 
   Future<bool> checkValid() async {
     try {
-      final response = await dioRepository.instance.get('UserInfo');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'UserInfo');
       return res['errorCode'] == '200';
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());

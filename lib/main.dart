@@ -34,6 +34,7 @@ class MyApp extends ConsumerWidget {
               debugShowCheckedModeBanner: false, home: InitializationPage());
         } else {
           return MaterialApp.router(
+            color: Colors.white,
             key: GlobalKeys.navigatorKey,
             routerDelegate: _appRouter.delegate(),
             routeInformationParser: _appRouter.defaultRouteParser(),
@@ -43,7 +44,7 @@ class MyApp extends ConsumerWidget {
               ),
             ),
             debugShowCheckedModeBanner: false,
-            title: 'Medlegten',
+            title: 'Мэдлэгтэн',
             theme: appTheme,
           );
         }

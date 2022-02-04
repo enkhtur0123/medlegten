@@ -4,14 +4,14 @@ import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/http_helper.dart';
 
 class UnitRepository {
   //moduleTypeId =
   Future<UnitIntroVideo?> getUnitIntroVideo(String moduleId) async {
     try {
-      final response =
-          await dioRepository.instance.get('Course/UnitModule/$moduleId/1');
-      final res = json.decode('$response');
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/1');
       if (res['isSuccess']) {
         return UnitIntroVideo.fromJson(res['introVideo']);
       } else {
@@ -28,8 +28,7 @@ class UnitRepository {
     try {
       Codec<String, String> stringToBase64 = utf8.fuse(base64);
       var encoded = stringToBase64.encode(word);
-      final response = await dioRepository.instance.get('Word/$encoded');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Word/$encoded');
       if (res['isSuccess']) {
         return CueWord.fromJson(res);
       } else {
@@ -45,9 +44,8 @@ class UnitRepository {
 
   Future<UnitIntroVideo?> getConversationVideo(String moduleId) async {
     try {
-      final response =
-          await dioRepository.instance.get('Course/UnitModule/$moduleId/1');
-      final res = json.decode('$response');
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/1');
       if (res['isSuccess']) {
         return UnitIntroVideo.fromJson(res['introVideo']);
       } else {
@@ -62,9 +60,8 @@ class UnitRepository {
 
   Future<UnitIntroVideo?> getMixedVideo(String moduleId) async {
     try {
-      final response =
-          await dioRepository.instance.get('Course/UnitModule/$moduleId/1');
-      final res = json.decode('$response');
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/1');
       if (res['isSuccess']) {
         return UnitIntroVideo.fromJson(res['introVideo']);
       } else {
@@ -79,9 +76,8 @@ class UnitRepository {
 
   Future<Reading?> getReading(String moduleId) async {
     try {
-      final response =
-          await dioRepository.instance.get('Course/UnitModule/$moduleId/4');
-      final res = json.decode('$response');
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/4');
       if (res['isSuccess']) {
         return Reading.fromJson(res['reading']);
       } else {

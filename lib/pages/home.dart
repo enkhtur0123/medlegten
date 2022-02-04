@@ -16,7 +16,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _authState = ref.watch(authProvider);
 
-    return Material(child: getChild(context, _authState));
+    return Material(color: Colors.white,child: getChild(context, _authState));
   }
   //      AnimatedSwitcher(
   //       duration: const Duration(milliseconds: 200),

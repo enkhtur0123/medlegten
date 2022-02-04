@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/repositories/repository.dart';
 
@@ -17,7 +18,9 @@ class AuthViewModel extends StateNotifier<AuthState> {
   final FirebaseAuth _auth;
   bool? isGoogle;
   User? fUser;
-  
+  GoogleSignIn? googleSignIn;
+  FacebookAuth? facebookAuth;
+  MUserInfo? userInfo;
 
   AuthViewModel()
       : _auth = FirebaseAuth.instance,
@@ -50,9 +53,15 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
-  logoff() {
+  logoff() async {
     dioRepository.setTokenToDefault();
-    _auth.signOut();
+    await _auth.signOut();
+    if (facebookAuth != null) {
+      await facebookAuth!.logOut();
+    }
+    if (googleSignIn != null) {
+      await googleSignIn!.signOut();
+    }
   }
 
   checkToken() async {
@@ -61,6 +70,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   _login() async {
     var user = await LoginRepository().getUserInfo();
+    userInfo = user;
     if (user == null) {
       changeStatus(AuthState.UnAuthorized);
     } else {
@@ -68,6 +78,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
       if (user.skipBirthDate != '1') {
         changeStatus(AuthState.AuthorizedAge);
       } else {
+        print(user);
         changeStatus(AuthState.Authorized);
       }
     }
@@ -82,8 +93,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
     changeStatus(AuthState.Authorizing);
     try {
       if (fUser == null) {
-        GoogleSignIn googleSignIn = GoogleSignIn();
-        GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+        googleSignIn = GoogleSignIn();
+        GoogleSignInAccount? googleSignInAccount = await googleSignIn!.signIn();
         GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount!.authentication;
         AuthCredential credential = GoogleAuthProvider.credential(
@@ -105,7 +116,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
     changeStatus(AuthState.Authorizing);
     try {
       if (fUser == null) {
-        LoginResult result = await FacebookAuth.instance.login();
+        facebookAuth = FacebookAuth.instance;
+        LoginResult result = await facebookAuth!.login();
         if (result.status == LoginStatus.success) {
           AuthCredential credential =
               FacebookAuthProvider.credential(result.accessToken!.token);
