@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/icon_text.dart';
-import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
@@ -28,12 +27,12 @@ class CourseUnitModuleListPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LandingHeader(100),
           addVerticalSpace(20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

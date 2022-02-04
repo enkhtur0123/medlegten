@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:medlegten/components/landing_header.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
 
@@ -56,10 +56,10 @@ class LandingPage extends HookWidget {
         const LandingHome(),
         const LandingCourse(),
         const Center(
-          child: Text("Index 2", style: const TextStyle(color: Colors.black)),
+          child: Text("Index 2", style: TextStyle(color: Colors.black)),
         ),
         const Center(
-          child: Text("Index 3", style: const TextStyle(color: Colors.black)),
+          child: Text("Index 3", style: TextStyle(color: Colors.black)),
         ),
         LandingProfile(),
       ];
@@ -71,20 +71,43 @@ class LandingPage extends HookWidget {
     final _index = useState(0);
     final _key = GlobalKey();
 
-    _controller.addListener(() {});
-
     return Scaffold(
-      // extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   shadowColor: Colors.transparent,
-      //   elevation: 0.0,
-      //   bottomOpacity: 0.0,
-      // ),
+      appBar: AppBar(
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 25),
+              child:Row(
+                children: [
+                  SvgPicture.asset("assets/svg/logo.svg"),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  const Text(
+                    "МЭДЛЭГТЭН",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                  ),
+                ],
+              ),)
+          ],
+        ),
+        centerTitle: false,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(8),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          LandingHeader(100),
           Expanded(
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
@@ -42,12 +41,12 @@ class _CourseDetailState extends State<CourseDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LandingHeader(100),
           VideoPlayerWidget(controller: _controller),
           addVerticalSpace(20),
           CourseIntroWidget(courseInfo: widget.courseInfo),

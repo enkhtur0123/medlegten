@@ -10,7 +10,7 @@
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		Q1+BKHVU/BiOYMqjyQfsV2JOb2s=
+		tsDzL4cpNsbaTXcoUAx8Fgza6Pc=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>flutter_assets/assets/img/.DS_Store</key>
 		<data>
-		7wWsVA6ey5WhIhs0YCSK8nYr8YU=
+		26KK8kggmxTQf8opBMZa7XfRQmE=
 		</data>
 		<key>flutter_assets/assets/img/Course/.DS_Store</key>
 		<data>
@@ -144,13 +144,17 @@
 		<data>
 		c2QTWan6zD8YT3Nzi9C2zO8EAZo=
 		</data>
-		<key>flutter_assets/assets/img/payment/qpay.png</key>
+		<key>flutter_assets/assets/img/payment/.DS_Store</key>
 		<data>
-		epTiwjL1PNkGhLLoSEWfMEmebMw=
+		3y++sUAKzaCQmjLBz2v0kvESHgc=
 		</data>
-		<key>flutter_assets/assets/img/payment/socialpay.png</key>
+		<key>flutter_assets/assets/img/payment/qpay.svg</key>
 		<data>
-		kglOxi0CkjwHuKfPz30/OkJEkbo=
+		czAh4sUo2ARF/vVkl3C/gv1JloU=
+		</data>
+		<key>flutter_assets/assets/img/payment/socialpay.svg</key>
+		<data>
+		JA0iJ7or3A/LlZ2+k8poTlQXCZc=
 		</data>
 		<key>flutter_assets/assets/img/profile/report_card_1.png</key>
 		<data>
@@ -194,7 +198,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		5bTa/5RAZBgKHDR+Er8yNRUyMoI=
+		9qrvEUkm2u6Akfc2DHSgFccTJuA=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -223,11 +227,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Q1+BKHVU/BiOYMqjyQfsV2JOb2s=
+			tsDzL4cpNsbaTXcoUAx8Fgza6Pc=
 			</data>
 			<key>hash2</key>
 			<data>
-			xGQMcGC//pGxCJxN3Nj/3vAq84vG34MwXMF2ERzycU8=
+			JsPAJs4JRIAx2Jn2lsJefSuR54LcRii5nWNvv6Zih8Q=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -560,26 +564,26 @@
 			azoIlDxWe7Jz7870r8FzWFz+mmwbWw8WK96GWTAkLvQ=
 			</data>
 		</dict>
-		<key>flutter_assets/assets/img/payment/qpay.png</key>
+		<key>flutter_assets/assets/img/payment/qpay.svg</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			epTiwjL1PNkGhLLoSEWfMEmebMw=
+			czAh4sUo2ARF/vVkl3C/gv1JloU=
 			</data>
 			<key>hash2</key>
 			<data>
-			91FZxHfw4jFmcHoB/dCBfUZZuE0ZKsug4g+M6lbYRn8=
+			z89r6Ooskem+jPQE9mLSwQMeu7AmA4JquUhF/Ug42ro=
 			</data>
 		</dict>
-		<key>flutter_assets/assets/img/payment/socialpay.png</key>
+		<key>flutter_assets/assets/img/payment/socialpay.svg</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kglOxi0CkjwHuKfPz30/OkJEkbo=
+			JA0iJ7or3A/LlZ2+k8poTlQXCZc=
 			</data>
 			<key>hash2</key>
 			<data>
-			bUaGorTSz/6KT9kguzwvs/RsqQL7+uSEpn7RmPEi+X8=
+			dTjb0JLABTP6yFtoShw4+Dz50bE8TwIDNIAxfgiRDGY=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/img/profile/report_card_1.png</key>
@@ -696,11 +700,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			5bTa/5RAZBgKHDR+Er8yNRUyMoI=
+			9qrvEUkm2u6Akfc2DHSgFccTJuA=
 			</data>
 			<key>hash2</key>
 			<data>
-			nMTf/fDPBnIpoP5NLpZrA79Sq24sqWkpHJ+Qxmy+4Dc=
+			c0laYiZfvC4qvsbbv8Ob0wyM35mq1kUoCulhkU0XYLM=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

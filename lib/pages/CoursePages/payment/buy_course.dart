@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/repositories/payment_repository.dart';
 import 'package:medlegten/repositories/repository.dart';
@@ -125,14 +126,14 @@ class CoursePaymentState extends State<CoursePaymentPage> {
                 child: getPaymentFunction(
                     title: "Qpay",
                     body: "QPay-р төлбөр төлөх",
-                    icon: "assets/img/payment/qpay.png"),
+                    icon: "assets/img/payment/qpay.svg"),
               ),
               GestureDetector(
                 onTap: () {},
                 child: getPaymentFunction(
                   title: "Social pay",
                   body: "Social pay-р төлбөр төлөх",
-                  icon: "assets/img/payment/socialpay.png",
+                  icon: "assets/img/payment/socialpay.svg",
                 ),
               )
             ],
@@ -177,7 +178,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image.asset(icon!, width: 50),
+          SvgPicture.asset(icon!, width: 50),
           const SizedBox(
             width: 20,
           ),
