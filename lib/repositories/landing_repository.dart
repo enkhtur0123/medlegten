@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Landing/course_unit_module_list.dart';
@@ -6,12 +6,14 @@ import 'package:medlegten/models/Landing/customer_review.dart';
 import 'package:medlegten/models/Landing/quiz_history.dart';
 import 'package:medlegten/models/Landing/self_quiz.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
+import 'package:medlegten/services/http_helper.dart';
 
 class LandingRepository {
   Future<List<CourseUnitModuleList>?> getCourseUnitModuleList(String id) async {
     try {
-      final response = await dioRepository.instance.get('Course/UnitModule/$id');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Course/UnitModule/$id');
+
       if (res['isSuccess']) {
         var list = res['unitModules'] as List;
         return list.map((i) => CourseUnitModuleList.fromJson(i)).toList();
@@ -27,8 +29,7 @@ class LandingRepository {
 
   Future<List<CourseInfo>?> getCourseList() async {
     try {
-      final response = await dioRepository.instance.get('Course');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Course');
       if (res['isSuccess']) {
         var list = res['courseList'] as List;
         return list.map((i) => CourseInfo.fromJson(i)).toList();
@@ -44,8 +45,7 @@ class LandingRepository {
 
   Future<List<CourseUnit>?> getCourseUnitList(String courseId) async {
     try {
-      final response = await dioRepository.instance.get('Course/Unit/$courseId');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Course/Unit/$courseId');
       if (res['isSuccess']) {
         var list = res['courseUnitList'] as List;
         return list.map((i) => CourseUnit.fromJson(i)).toList();
@@ -61,8 +61,7 @@ class LandingRepository {
 
   Future<SelfQuiz?> getSelfQuiz() async {
     try {
-      final response = await dioRepository.instance.get('Course/SelfQuiz');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Course/SelfQuiz');
       if (res['isSuccess']) {
         return SelfQuiz.fromJson(res['quizInfo']);
       } else {
@@ -77,8 +76,7 @@ class LandingRepository {
 
   Future<List<CustomerReview>?> getCustomerReviewList(int count) async {
     try {
-      final response = await dioRepository.instance.get('Course/Review/$count');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Course/Review/$count');
       if (res['isSuccess']) {
         var list = res['reviews'] as List;
         return list.map((i) => CustomerReview.fromJson(i)).toList();
@@ -104,8 +102,7 @@ class LandingRepository {
 
   Future<QuizHistory?> getQuizHistory() async {
     try {
-      final response = await dioRepository.instance.get('Course/SelfQuiz/History');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Course/SelfQuiz/History');
       if (res['isSuccess']) {
         return QuizHistory.fromJson(res['quizDetial']);
       } else {
@@ -121,8 +118,8 @@ class LandingRepository {
   //// Шалгалтын мэдээлэл хадгалах сервис
   Future<dynamic> setCourseSelfTestHistory({Map<String, dynamic>? body}) async {
     try {
-      final response = await dioRepository.instance.post('Course/SelfQuiz/SetHistory', data: body);
-      final res = json.decode('$response');
+      final res = await HttpHelper()
+          .postUrl(url: 'Course/SelfQuiz/SetHistory', body: body);
       if (res['isSuccess']) {
         return res;
       } else {
@@ -132,6 +129,22 @@ class LandingRepository {
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       return null;
+    }
+  }
+
+  //// Шалгалтын мэдээлэл авах
+  Future<dynamic> getSelfTestDetail() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'Course/SelfQuiz/History');
+      if (res['isSuccess']) {
+        return res;
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+         throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString());
     }
   }
 }

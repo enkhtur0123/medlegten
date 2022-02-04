@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/hooks/useVideoController.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
@@ -56,7 +55,6 @@ class GrammarTablePage extends HookWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            LandingHeader(100),
             addVerticalSpace(20),
             Text(
               unitGrammar.grammar[0].grammarNameEng.toUpperCase(),

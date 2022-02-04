@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/login_repository.dart';
-import 'package:medlegten/repositories/repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'medlegten_vertical.dart';
@@ -83,9 +83,6 @@ class Init {
     // This is where you can initialize the resources needed by your app while
     // the splash screen is displayed.  Remove the following example because
     // delaying the user experience is a bad design practice!
-    dioRepository.setDioOptions();
-    dioRepository.setTokenToDefault();
-
     ref.read(loginNotifierProvider.notifier).getAppVersion();
 
     ref.read(authProvider.notifier).login();

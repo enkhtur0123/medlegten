@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/landing_header.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Landing/quiz_question.dart';
@@ -40,9 +39,9 @@ class CourseSelfTestPage extends HookWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(),
       body: Column(
         children: [
-          LandingHeader(100),
           addVerticalSpace(20),
           Text(
             'Өөрийгөө үнэлэх тест'.toUpperCase(),

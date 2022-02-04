@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,6 +9,7 @@ import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/repositories/rep_state.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/http_helper.dart';
 
 final loginNotifierProvider = StateNotifierProvider<LoginNotifier, RepState>(
   (ref) => LoginNotifier(
@@ -61,6 +63,7 @@ class LoginNotifier extends StateNotifier<RepState> {
 
 abstract class ILoginRepository {
   Future<Version?> getAppVersion();
+
   Future<List<Onboarding>?> getOnboardingInfo();
 }
 
@@ -68,8 +71,7 @@ class LoginRepository implements ILoginRepository {
   @override
   Future<Version?> getAppVersion() async {
     try {
-      final response = await dioRepository.instance.get('Login/Version');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Login/Version');
       if (res['isSuccess']) {
         return Version.fromJson(res);
       } else {
@@ -80,42 +82,10 @@ class LoginRepository implements ILoginRepository {
     }
   }
 
-  Future fetchLoginInfo(User? fbuser, bool isGoogle) async {
-    try {
-      if (fbuser != null) {
-        dioRepository.setTokenToDefault();
-        final response = await dioRepository.instance.post(
-          'Login',
-          data: json.encode({
-            'userId': fbuser.providerData.first.uid,
-            'firstName': fbuser.displayName,
-            'lastName': fbuser.displayName,
-            'profileUrl': fbuser.photoURL,
-            'socialType': isGoogle ? 'google' : 'facebook',
-            'deviceInfo': 'Android', //DO IT
-            'channel': 'app',
-            'email': fbuser.email,
-            'birthDate': ''
-          }),
-        );
-
-        final res = json.decode('$response');
-        if (res['isSuccess']) {
-          GetStorage().write('token', res['token']);
-          dioRepository.setToken();
-        }
-      }
-    } catch (e) {
-      dioRepository.snackBar(e.toString().toUpperCase());
-    }
-  }
-
   @override
   Future<List<Onboarding>?> getOnboardingInfo() async {
     try {
-      dioRepository.setTokenToDefault();
-      final response = await dioRepository.instance.get('Login/Slider');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'Login/Slider');
       if (res['isSuccess']) {
         var list = res['onBoarding'] as List;
         return list.map((i) => Onboarding.fromJson(i)).toList();
@@ -128,10 +98,35 @@ class LoginRepository implements ILoginRepository {
     }
   }
 
+  Future fetchLoginInfo({User? fbuser, bool? isGoogle}) async {
+    try {
+      if (fbuser != null) {
+        final res = await HttpHelper().postUrl(
+          url: 'Login',
+          body: json.encode({
+            'userId': fbuser.providerData.first.uid,
+            'firstName': fbuser.displayName,
+            'lastName': fbuser.displayName,
+            'profileUrl': fbuser.photoURL,
+            'socialType': isGoogle! ? 'google' : 'facebook',
+            'deviceInfo': Platform.operatingSystem, //DO IT
+            'channel': 'app',
+            'email': fbuser.email,
+            'birthDate': ''
+          }),
+        );
+        if (res['isSuccess']) {
+          GetStorage().write('token', res['token']);
+        }
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+    }
+  }
+
   Future<MUserInfo?> getUserInfo() async {
     try {
-      final response = await dioRepository.instance.get('UserInfo');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'UserInfo');
       if (res['isSuccess']) {
         return MUserInfo.fromJson(res['userInfo']);
       } else {
@@ -145,14 +140,14 @@ class LoginRepository implements ILoginRepository {
 
   Future<bool> checkValid() async {
     try {
-      final response = await dioRepository.instance.get('UserInfo');
-      final res = json.decode('$response');
+      final res = await HttpHelper().getUrl(url: 'UserInfo');
       return res['errorCode'] == '200';
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       return false;
     }
   }
+
   // Future<String> getUserInfoBirthDate() async {
   //   try {
   //     final response = await dioRepository.instance.post('UserInfo/BDATE',data: json.encode({

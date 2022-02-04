@@ -23,9 +23,12 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+		   	<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb264867155362191</string>
+			    <string>com.googleusercontent.apps.300736177830-ucib707qafusksls5p3s78r23gbqud2t</string>
 			</array>
 		</dict>
 	</array>
@@ -93,3 +96,4 @@
 	<false/>
 </dict>
 </plist>
+<!-- com.googleusercontent.apps.300736177830-ucib707qafusksls5p3s78r23gbqud2t -->

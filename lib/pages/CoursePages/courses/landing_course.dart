@@ -3,6 +3,7 @@ import 'package:medlegten/pages/CoursePages/courses/course_list.dart';
 import 'package:medlegten/pages/CoursePages/customer_review/customer_review_list.dart';
 import 'package:medlegten/pages/CoursePages/courses/level_info.dart';
 import 'package:medlegten/pages/CoursePages/courses/preliminary_test.dart';
+import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/services/http_helper.dart';
 import 'package:medlegten/utils/date_time_formatter.dart';
 
@@ -28,10 +29,11 @@ class LandingCourseState extends State<LandingCourse> {
       child: Column(
         children: [
           FutureBuilder(
-              future: HttpHelper().getUrl(url: "Course/SelfQuiz/History"),
+              future: LandingRepository().getSelfTestDetail(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return PreliminaryTest();
+                  //Aldaa zaagaad baihaar ni tur disable hiiv.
                   //bool isExam = checkExam(data: snapshot.data);
                   //return isExam ? PreliminaryTest() : const LevelInfoWidget();
                 } else if (snapshot.hasError) {
@@ -59,15 +61,19 @@ class LandingCourseState extends State<LandingCourse> {
   }
 
   bool checkExam({Object? data}) {
-    DateTime currentDateTime =
-        MyDateTimeFormatter(nowDateTime: true).toDateTime();
-    DateTime examDateTime =
-        MyDateTimeFormatter(date: (data as Map)["quizDetial"]["createdAt"])
-            .toDateTime()
-            .add(const Duration(days: 3));
-    if (examDateTime.isAfter(currentDateTime)) {
-      return false;
-    } else {
+    try {
+      DateTime currentDateTime =
+          MyDateTimeFormatter(nowDateTime: true).toDateTime();
+      DateTime examDateTime =
+          MyDateTimeFormatter(date: (data as Map)["quizDetial"]["createdAt"])
+              .toDateTime()
+              .add(const Duration(days: 3));
+      if (examDateTime.isAfter(currentDateTime)) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (e) {
       return true;
     }
   }

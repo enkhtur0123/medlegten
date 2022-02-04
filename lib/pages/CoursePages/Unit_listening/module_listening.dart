@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/components/landing_header.dart';
+
 
 class ModuleListenPage extends StatefulWidget {
   const ModuleListenPage({Key? key}) : super(key: key);
@@ -20,7 +20,6 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LandingHeader(100),
             const Text(
               'listening',
               style: TextStyle(color: colorPrimary),

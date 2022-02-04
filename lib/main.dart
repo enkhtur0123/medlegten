@@ -29,12 +29,12 @@ class MyApp extends ConsumerWidget {
     return FutureBuilder(
       future: Init.instance.initialize(ref),
       builder: (context, AsyncSnapshot snapshot) {
-        // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const MaterialApp(
               debugShowCheckedModeBanner: false, home: InitializationPage());
         } else {
           return MaterialApp.router(
+            color: Colors.white,
             key: GlobalKeys.navigatorKey,
             routerDelegate: _appRouter.delegate(),
             routeInformationParser: _appRouter.defaultRouteParser(),
@@ -44,7 +44,7 @@ class MyApp extends ConsumerWidget {
               ),
             ),
             debugShowCheckedModeBanner: false,
-            title: 'Medlegten',
+            title: 'Мэдлэгтэн',
             theme: appTheme,
             builder: FlutterSmartDialog.init(),
           );
