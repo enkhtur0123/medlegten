@@ -59,7 +59,7 @@ class LandingCourseState extends State<LandingCourse> {
 
   bool checkExam({Object? data}) {
     try {
-       DateTime currentDateTime =
+      DateTime currentDateTime =
           MyDateTimeFormatter(nowDateTime: true).toDateTime();
       DateTime examDateTime =
           MyDateTimeFormatter(date: (data as Map)["quizDetial"]["createdAt"])
@@ -73,6 +73,5 @@ class LandingCourseState extends State<LandingCourse> {
     } catch (e) {
       return true;
     }
-   
   }
 }

@@ -31,7 +31,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
         children: widget.paragraph.words.map(
           (w) {
             Widget widgetRet;
-            if (widget.currentWord! == w.word) {
+            if (widget.currentWord != null && widget.currentWord! == w.word) {
               widgetRet = buildTextElevated(w);
               beforeSpace = true;
             } else {
@@ -47,21 +47,20 @@ class _CueTexteState extends State<SubtitleParagraph> {
 
   Widget buildTextElevated(CWord word) {
     final globalKey = GlobalKey();
-    var childWidget = Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black26, // red as border color
+    var childWidget = PhysicalModel(
+      elevation: 6.0,
+      shape: BoxShape.rectangle,
+      shadowColor: Colors.black45,
+      color: Colors.white,
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+        child: Text(
+          word.word,
+          key: globalKey,
+          style: const TextStyle(
+              color: colorSecondary, fontSize: 18, fontWeight: FontWeight.w800),
         ),
-        borderRadius: BorderRadius.circular(10),
-        // boxShadow: [
-        //   const BoxShadow(color: Colors.green, spreadRadius: 3),
-        // ],
-      ),
-      child: Text(
-        word.word,
-        key: globalKey,
-        style: const TextStyle(
-            color: colorSecondary, fontSize: 24, fontWeight: FontWeight.w400),
       ),
     );
     widget.wordWidgets[word] =

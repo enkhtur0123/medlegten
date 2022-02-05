@@ -133,7 +133,8 @@ courseBgImg(context, CourseInfo courseInfo) {
   return Stack(
     children: [
       ClipRRect(
-        borderRadius: BorderRadius.only(topRight: Radius.circular(8),bottomRight: Radius.circular(8)),
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(8), bottomRight: Radius.circular(8)),
         child: Image.asset(
           imgUrl,
           fit: BoxFit.fitHeight,
@@ -161,10 +162,10 @@ courseBgImg(context, CourseInfo courseInfo) {
             ),
             addVerticalSpace(10),
             Container(
-              margin:const EdgeInsets.only(left: 10, right: 10),
+              margin: const EdgeInsets.only(left: 10, right: 10),
               child: CustomOutlinedButton(
                   onTap: () {
-                    if (courseInfo.isPurchased) {
+                    if (!courseInfo.isPurchased) {
                       AutoRouter.of(context)
                           .push(CourseDetailRoute(courseInfo: courseInfo));
                     } else {

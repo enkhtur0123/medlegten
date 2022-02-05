@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/navigator/navigator_key.dart';
@@ -45,6 +46,7 @@ class MyApp extends ConsumerWidget {
             debugShowCheckedModeBanner: false,
             title: 'Мэдлэгтэн',
             theme: appTheme,
+            builder: FlutterSmartDialog.init(),
           );
         }
       },

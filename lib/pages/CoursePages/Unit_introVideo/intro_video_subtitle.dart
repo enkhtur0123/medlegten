@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:video_player/video_player.dart';

@@ -50,9 +50,9 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       list.add(subtitleWidget());
     } else {
       list.add(
-        const SizedBox(
-          height: 150,
-          child: Loading(),
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 100,
+          child: const Loading(),
         ),
       );
     }

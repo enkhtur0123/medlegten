@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medlegten/common/widget_functions.dart';
 
 class Loading extends StatelessWidget {
   const Loading({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class Loading extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const CircularProgressIndicator(),
+          addVerticalSpace(10),
           const Text('Түр хүлээнэ үү', style: TextStyle(color: Colors.black))
         ],
       ),

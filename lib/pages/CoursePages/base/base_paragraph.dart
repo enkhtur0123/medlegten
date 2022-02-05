@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/subtitle_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
+
+typedef SubtitleWordCallback = void Function(CWord? word, Rect position);
+typedef SubtitleParagraphCallback = void Function(CParagraph? paragraph);
 
 abstract class BaseSubtitlePage extends StatefulWidget {
   const BaseSubtitlePage(this.paragraph,
@@ -46,14 +48,14 @@ mixin BaseSubtitleMixin<Page extends BaseSubtitlePage>
             var rect = value.item1.globalPaintBounds!;
             if (rect.contains(position)) {
               selectedWord = key.word;
-              widget.wordCallback!(key, position);
+              widget.wordCallback!(key, rect);
               refreshCue.value = !refreshCue.value;
             } else {
-              widget.wordCallback!(null, Offset.zero);
+              widget.wordCallback!(null, Rect.zero);
             }
           });
         } else {
-          widget.wordCallback!(null, Offset.zero);
+          widget.wordCallback!(null, Rect.zero);
         }
       },
       child: buildParagraph(context, widget.paragraph, selectedWord),
