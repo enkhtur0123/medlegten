@@ -28,7 +28,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
       child: Wrap(
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
-        children: widget.paragraph.words.map(
+        children: widget.paragraph.words!.map(
           (w) {
             Widget widgetRet;
             if (widget.currentWord != null && widget.currentWord! == w.word) {

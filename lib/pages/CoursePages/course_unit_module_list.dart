@@ -24,8 +24,25 @@ class CourseUnitModuleListPage extends HookWidget {
   final double indicatorHeight = 25;
   final double indicatorWidth = 25;
 
+  Future<List<Tuple2<int, CourseUnitModuleList>>> fetchData() async {
+    var result =
+        await LandingRepository().getCourseUnitModuleList(unitInfo.unitId);
+
+    List<Tuple2<int, CourseUnitModuleList>> listTuple = [];
+
+    if (result != null) {
+      for (int i = 0; i < result.length; i++) {
+        listTuple.add(Tuple2<int, CourseUnitModuleList>(i, result[i]));
+      }
+    }
+    return listTuple;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final future = useMemoized(fetchData);
+    final snapshot = useFuture(future);
+
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
@@ -79,60 +96,98 @@ class CourseUnitModuleListPage extends HookWidget {
               thickness: 1,
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  FutureBuilder<List<CourseUnitModuleList>?>(
-                      future: LandingRepository()
-                          .getCourseUnitModuleList(unitInfo.unitId),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<CourseUnitModuleList>?> snapshot) {
-                        if (snapshot.hasData) {
-                          List<Tuple2<int, CourseUnitModuleList>> listTuple =
-                              <Tuple2<int, CourseUnitModuleList>>[];
-                          for (int i = 0; i < snapshot.data!.length; i++) {
-                            listTuple.add(Tuple2<int, CourseUnitModuleList>(
-                                i, snapshot.data![i]));
-                          }
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: listTuple
-                                .map(
-                                  (tuple) => buildTimeline(
-                                      tuple.item2,
-                                      tuple.item1,
-                                      tuple.item1 == 0
-                                          ? 0
-                                          : tuple.item1 == listTuple.length - 1
-                                              ? 1
-                                              : -1,
-                                      context),
-                                )
-                                .toList()
-                              ..add(addVerticalSpace(10))
-                              ..add(WideButton(
-                                "Let's Start",
-                                colorSecondary,
-                                colorWhite,
-                                () {},
-                              )),
-                          );
-                        } else if (snapshot.hasError) {
-                          return const Loading();
-                        } else {
-                          return const Loading();
-                        }
-                      }),
-                ],
-              ),
-            ),
+          gradientButton(
+            "Үгсийн сан - Unit ${unitInfo.unitNumber}",
+            () {
+              AutoRouter.of(context).push(VocabularyListRoute(unit: unitInfo));
+            },
           ),
+          Expanded(
+            child: snapshot.hasData
+                ? ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var tuple = snapshot.data![index];
+                      return buildTimeline(
+                          tuple.item2,
+                          tuple.item1,
+                          tuple.item1 == 0
+                              ? 0
+                              : tuple.item1 == snapshot.data!.length - 1
+                                  ? 1
+                                  : -1,
+                          context);
+                    },
+                  )
+                : const Loading(),
+          ),
+          WideButton(
+            "Let's Start",
+            colorSecondary,
+            colorWhite,
+            () {},
+          ),
+          addVerticalSpace(20),
         ],
       ),
     );
   }
+}
+
+Widget gradientButton(String caption, Function() whenTap) {
+  return SizedBox(
+    height: 52,
+    width: double.infinity, // <-- match_parent
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 28),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(68, 129, 235, 1),
+              Color.fromRGBO(68, 129, 235, 0.8),
+              Color.fromRGBO(68, 129, 235, 1),
+            ],
+            stops: [0.0, .5, 1.0],
+          ),
+        ),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.transparent,
+            onSurface: Colors.transparent,
+            shadowColor: Colors.transparent,
+          ),
+          onPressed: whenTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.bookmark,
+                color: Color(0xffffffff),
+                size: 20,
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Text(
+                caption,
+                style: const TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xffffffff)),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 Widget buildTimeline(
@@ -194,9 +249,9 @@ Widget buildTimeline(
 
                 case "3":
                   {
-                    UnitRepository().getMixedVideo('1001').then((value) =>
-                        AutoRouter.of(context).push(MixedVideoRoute(
-                            unitIntroVideo: value!, url: value.url)));
+                    UnitRepository().getMixedVideo(data.moduleId).then(
+                        (value) => AutoRouter.of(context).push(MixedVideoRoute(
+                            unitMixedVideo: value!, url: value.url)));
                   }
                   break;
 
@@ -225,9 +280,10 @@ Widget buildTimeline(
                 case "7":
                   {
                     // Conversation video
-                    UnitRepository().getMixedVideo('1001').then((value) =>
-                        AutoRouter.of(context).push(ConversationVideoRoute(
-                            unitIntroVideo: value!, url: value.url)));
+                    UnitRepository().getConversationVideo('1001').then(
+                        (value) => AutoRouter.of(context).push(
+                            ConversationVideoRoute(
+                                unitIntroVideo: value!, url: value.url)));
                   }
                   break;
 

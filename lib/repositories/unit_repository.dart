@@ -3,8 +3,12 @@ import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
+import 'package:medlegten/models/Unit/unit_mixed_video.dart';
+import 'package:medlegten/models/Unit/unit_vocabulary.dart';
+import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
 import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/services/http_helper.dart';
+import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
 class UnitRepository {
   //moduleTypeId =
@@ -15,7 +19,7 @@ class UnitRepository {
       if (res['isSuccess']) {
         return UnitIntroVideo.fromJson(res['introVideo']);
       } else {
-        dioRepository.snackBar(res['resultMessage']);
+        MySnackBar(text: res['resultMessage']);
         return null;
       }
     } catch (e) {
@@ -58,12 +62,12 @@ class UnitRepository {
     }
   }
 
-  Future<UnitIntroVideo?> getMixedVideo(String moduleId) async {
+  Future<UnitMixedVideo?> getMixedVideo(String moduleId) async {
     try {
       final res =
-          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/1');
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/3');
       if (res['isSuccess']) {
-        return UnitIntroVideo.fromJson(res['introVideo']);
+        return UnitMixedVideo.fromJson(res['mixedVideo']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;
@@ -80,6 +84,24 @@ class UnitRepository {
           await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/4');
       if (res['isSuccess']) {
         return Reading.fromJson(res['reading']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return null;
+    }
+  }
+
+  Future<UnitVocabulary?> getUnitVocabulary(String unitId) async {
+    try {
+      final res = await HttpHelper()
+          .getUrl(url: 'Course/Vocabulary/$unitId?pageNumber=1&pageSize=50');
+      if (res['isSuccess']) {
+        var list = res['words'] as List;
+        var words = list.map((i) => UnitVocabularyWord.fromJson(i)).toList();
+        return UnitVocabulary(res['wordCount'], words);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;

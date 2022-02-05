@@ -30,7 +30,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate _) => true;
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 
   @override
   double get maxExtent => 250.0;
