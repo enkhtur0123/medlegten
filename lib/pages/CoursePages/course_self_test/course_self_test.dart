@@ -6,7 +6,6 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Landing/quiz_question.dart';
-import 'package:medlegten/navigator/navigator_key.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test_question.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/widgets/dialog/custom_popup.dart';

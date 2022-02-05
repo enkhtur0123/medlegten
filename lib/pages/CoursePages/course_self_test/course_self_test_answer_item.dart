@@ -26,7 +26,7 @@ class CourseSelfAnswerItem extends HookWidget {
             state.value = int.parse(answer!.ordering) == state.value ? int.parse(answer!.ordering) : 0;
             quizQuestionEx!.selectedAnswerId = answer!.answerId;
           }
-          isSelected.value = int.parse(answer!.ordering) == state.value;
+          isSelected.value = int.parse(answer!.ordering) == state.value || quizQuestionEx!.selectedAnswerId == answer!.answerId;
           setCnt(answer: answer);
         },
         child: Container(
@@ -36,7 +36,7 @@ class CourseSelfAnswerItem extends HookWidget {
           width: double.infinity,
           height: 50,
           decoration: BoxDecoration(
-            color: isSelected.value ? Colors.greenAccent : Colors.white,
+            color: isSelected.value && mode==0 ? Colors.greenAccent : Colors.white,
             borderRadius: const BorderRadius.all(Radius.circular(20)),
             boxShadow: [
               BoxShadow(

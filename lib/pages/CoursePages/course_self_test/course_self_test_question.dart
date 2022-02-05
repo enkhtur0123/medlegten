@@ -79,31 +79,6 @@ class CourseSelfTestQuestion extends HookWidget {
                         ),
                       )
                       .toList()
-                  // children: sortedAnswers
-                  //     .map(
-                  //       (answer) => ChoiceChip(
-                  //           backgroundColor: ColorTable.color255_255_255,
-                  //           elevation: 5.0,
-                  //           shape: RoundedRectangleBorder(
-                  //               side: getBorderSide(answer), borderRadius: const BorderRadius.all(Radius.circular(20.0))),
-                  //           label: IntrinsicWidth(
-                  //             stepWidth: 50,
-                  //             child: Center(
-                  //               child: Text(answer.answer, style: style),
-                  //             ),
-                  //           ),
-                  //           selected: int.parse(answer.ordering) == state.value,
-                  //           selectedColor: mode == 0 ? Colors.greenAccent : Colors.white,
-                  //           onSelected: (bool selected) {
-                  //             if (mode == 0) {
-                  //               state.value = selected ? int.parse(answer.ordering) : 0;
-                  //               quizQuestionEx.selectedAnswerId = answer.answerId;
-                  //             }
-                  //             setCnt(answer: answer);
-                  //           }),
-                  //     )
-                  //     .toList(),
-
                   ),
             ),
           )
