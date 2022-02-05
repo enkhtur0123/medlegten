@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 
 class GoogleLogin extends ConsumerWidget {
@@ -21,14 +19,13 @@ class GoogleLogin extends ConsumerWidget {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
           onPressed: () {
-           if (_authState != AuthState.Authorized) {
+            if (_authState != AuthState.Authorized) {
               WidgetsBinding.instance?.addPostFrameCallback(
                   (_) => ref.read(authProvider.notifier).loginGoogle());
             }
           },
         ));
 
-  
     // return OutlinedButton(
     //   child: InkWell(
     //     onTap: () async {

@@ -11,11 +11,9 @@ import 'package:medlegten/utils/app_router.dart';
 import 'unit_progress_status.dart';
 
 class UnitCart extends HookWidget {
-  UnitCart({Key? key, this.courseInfo, this.unitInfo}) : super(key: key);
+  const UnitCart({Key? key, this.courseInfo, this.unitInfo}) : super(key: key);
   final CourseUnit? unitInfo;
   final CourseInfo? courseInfo;
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class UnitCart extends HookWidget {
     };
     return InkWell(
       onTap: () => {
-         AutoRouter.of(context)
+        AutoRouter.of(context)
             .push(CourseUnitModuleListRoute(unitInfo: unitInfo!))
         // showModalBottomSheet(
         //     context: context,
@@ -85,6 +83,4 @@ class UnitCart extends HookWidget {
       ),
     );
   }
-
 }
-
