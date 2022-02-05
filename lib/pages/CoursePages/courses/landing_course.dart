@@ -4,7 +4,6 @@ import 'package:medlegten/pages/CoursePages/customer_review/customer_review_list
 import 'package:medlegten/pages/CoursePages/courses/level_info.dart';
 import 'package:medlegten/pages/CoursePages/courses/preliminary_test.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
-import 'package:medlegten/services/http_helper.dart';
 import 'package:medlegten/utils/date_time_formatter.dart';
 
 class LandingCourse extends StatefulWidget {
@@ -33,7 +32,7 @@ class LandingCourseState extends State<LandingCourse> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   bool isExam = checkExam(data: snapshot.data);
-                  return isExam ? PreliminaryTest() : const LevelInfoWidget();
+                  return isExam ? const PreliminaryTest() : const LevelInfoWidget();
                 } else if (snapshot.hasError) {
                   return Container();
                 } else {

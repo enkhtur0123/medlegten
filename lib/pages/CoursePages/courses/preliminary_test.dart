@@ -2,43 +2,31 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/wide_button.dart';
+import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/utils/app_router.dart';
 
 class PreliminaryTest extends StatelessWidget {
-  PreliminaryTest({Key? key}) : super(key: key);
-
-  final TextStyle textStyle = TextStyle(
-      color: ColorTable.color120_100_254,
-      fontWeight: FontWeight.w700,
-      fontSize: 18,
-      fontFamily: 'Roboto',
-      height: 1.2);
+  const PreliminaryTest({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 130,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Do you want to',
-                      style: textStyle,
-                    ),
-                    Text(
-                      'take preliminary test ?',
-                      style: textStyle,
-                    ),
-                  ],
-                ),
+          Container(
+            margin: const EdgeInsets.only(left: 15,right: 15),
+            padding:const  EdgeInsets.all(10),
+            child: const Text(
+              'Та өөрийн англи хэлний\nтүвшинг шалгана уу?',
+              style: TextStyle(
+                color: secondaryColor,
+                fontWeight: FontWeight.w900,
+                fontSize: 18,
+                fontStyle: FontStyle.normal,
               ),
-            ],
+            ),
           ),
           WideButton('Start Quiz', ColorTable.color120_100_254,
               ColorTable.color255_255_255, () {
@@ -49,4 +37,3 @@ class PreliminaryTest extends StatelessWidget {
     );
   }
 }
-  

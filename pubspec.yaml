@@ -66,6 +66,8 @@ flutter:
   assets:
     - assets/img/
     - assets/img/Landing/
+    - assets/img/Landing/selected/
+    - assets/img/Landing/unselected/
     - assets/img/payment/
     - assets/img/Course/
     - assets/svg/
