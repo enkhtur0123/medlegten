@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
+import 'package:medlegten/pages/app_bar.dart';
+import 'package:medlegten/providers/auth_provider.dart';
 import 'landing_home.dart';
 
-class LandingPage extends HookWidget {
+class LandingPage extends ConsumerStatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return LandingPageState();
+  }
+}
+
+class LandingPageState extends ConsumerState<LandingPage>
+    with SingleTickerProviderStateMixin {
+  TabController? tabController;
+  ValueNotifier<int>? _index = ValueNotifier(0);
 
   List<Widget> get pages => [
         const LandingHome(),
@@ -21,76 +35,22 @@ class LandingPage extends HookWidget {
       ];
 
   @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 5, vsync: this, initialIndex: 0);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final _controller = useTabController(initialLength: 5, initialIndex: 0);
-    final _index = useState(0);
     final _key = GlobalKey();
 
     return Scaffold(
-      appBar: AppBar(
-        primary: true,
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Icon(Icons.search),
-                const SizedBox(
-                  width: 15,
-                ),
-                const Icon(Icons.notifications_active)
-              ],
-            ),
-          )
-        ],
-        title: Container(
-          margin: const EdgeInsets.only(left: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  SvgPicture.asset("assets/svg/logo.svg"),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  const Text(
-                    "МЭДЛЭГТЭН",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    "Сайн уу,BatToday’s Goal:",
-                    style: TextStyle(
-                        color: Color(0xffC7C9D9),
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-        centerTitle: false,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(8),
-          ),
-        ),
+      appBar: CustomAppBar(
+        height: 130,
+        isRichText: true,
+        text1: "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
+        text2: "Today’s Goal:",
+        text3: ' A1 UNIT - Reading',
       ),
       backgroundColor: Colors.white,
       body: DefaultTabController(
@@ -99,7 +59,7 @@ class LandingPage extends HookWidget {
           body: TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             key: _key,
-            controller: _controller,
+            controller: tabController,
             children: pages.map((e) {
               return e;
             }).toList(),
@@ -114,29 +74,35 @@ class LandingPage extends HookWidget {
         tabs: [
           getTab(
               index: 0,
-              imgUrl: "assets/img/Landing/${0==_index.value?"selected":"unselected"}/home.svg",
+              imgUrl:
+                  "assets/img/Landing/${0 == _index!.value ? "selected" : "unselected"}/home.svg",
               text: "Нүүр"),
           getTab(
               index: 1,
-              imgUrl: "assets/img/Landing/${1 == _index.value ? "selected" : "unselected"}/course.svg",
+              imgUrl:
+                  "assets/img/Landing/${1 == _index!.value ? "selected" : "unselected"}/course.svg",
               text: "Курс"),
           getTab(
               index: 2,
-              imgUrl: "assets/img/Landing/${2 == _index.value ? "selected" : "unselected"}/video.svg",
+              imgUrl:
+                  "assets/img/Landing/${2 == _index!.value ? "selected" : "unselected"}/video.svg",
               text: "Видео"),
           getTab(
               index: 3,
-              imgUrl: "assets/img/Landing/${3 == _index.value ? "selected" : "unselected"}/blog.svg",
+              imgUrl:
+                  "assets/img/Landing/${3 == _index!.value ? "selected" : "unselected"}/blog.svg",
               text: "Нийтлэл"),
           getTab(
               index: 4,
-              imgUrl: "assets/img/Landing/${4 == _index.value ? "selected" : "unselected"}/user.svg",
+              imgUrl:
+                  "assets/img/Landing/${4 == _index!.value ? "selected" : "unselected"}/user.svg",
               text: "Миний"),
         ],
         onTap: (index) {
-          _index.value = index;
+          _index!.value = index;
+          setState(() {});
         },
-        controller: _controller,
+        controller: tabController,
         labelColor: const Color(0xff30359F),
         labelStyle: const TextStyle(
           color: Color(0xff30359F),

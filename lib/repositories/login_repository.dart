@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/models/Starting/onboarding.dart';
@@ -98,25 +99,38 @@ class LoginRepository implements ILoginRepository {
     }
   }
 
-  Future fetchLoginInfo({User? fbuser, bool? isGoogle}) async {
+  Future fetchLoginInfo(
+      {User? user,
+      bool? isGoogle,
+      Map<String, dynamic>? fUser,
+      GoogleSignInAccount? googleSignInAccount}) async {
     try {
-      if (fbuser != null) {
+      if (user != null) {
         final res = await HttpHelper().postUrl(
           url: 'Login',
           body: json.encode({
-            'userId': fbuser.providerData.first.uid,
-            'firstName': fbuser.displayName,
-            'lastName': fbuser.displayName,
-            'profileUrl': fbuser.photoURL,
-            'socialType': isGoogle! ? 'google' : 'facebook',
+            'userId': user.providerData.first.uid,
+            'firstName':  isGoogle!
+                ? googleSignInAccount!.displayName
+                : fUser!["name"],
+            'lastName': isGoogle
+                ? googleSignInAccount!.displayName
+                : fUser!["name"],
+            'profileUrl':  isGoogle
+                ? googleSignInAccount!.photoUrl
+                : fUser!["picture"]["data"]["url"],
+            'socialType': isGoogle ? 'google' : 'facebook',
             'deviceInfo': Platform.operatingSystem, //DO IT
             'channel': 'app',
-            'email': fbuser.email,
+            'email':isGoogle
+                ? googleSignInAccount!.email
+                : fUser!["email"],
             'birthDate': ''
           }),
         );
         if (res['isSuccess']) {
           GetStorage().write('token', res['token']);
+          // print(res['token']);
         }
       }
     } catch (e) {

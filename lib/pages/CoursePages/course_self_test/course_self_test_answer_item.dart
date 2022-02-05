@@ -31,19 +31,19 @@ class CourseSelfAnswerItem extends HookWidget {
         },
         child: Container(
           alignment: Alignment.center,
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(5),
           width: double.infinity,
           height: 50,
           decoration: BoxDecoration(
             color: isSelected.value ? Colors.greenAccent : Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
             border: Border(
