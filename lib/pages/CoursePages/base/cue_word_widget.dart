@@ -26,6 +26,8 @@ class CueWordWidget extends StatefulWidget {
 }
 
 class _CueWordWidgetState extends State<CueWordWidget> {
+  String bookMarkResult = '';
+
   @override
   Widget build(BuildContext context) {
     return body(context, widget.word);
@@ -70,76 +72,6 @@ class _CueWordWidgetState extends State<CueWordWidget> {
         ),
       ),
     );
-    // var left = widget.pointerPosition.left + widget.pointerPosition.width / 2;
-    // if (left > MediaQuery.of(context).size.width * 0.88 - 10) {
-    //   left = MediaQuery.of(context).size.width * 0.88 - 10;
-    // }
-    // if (left < 40) {
-    //   left = 40;
-    // }
-    // return SizedBox(
-    //   height: cueWidgetHeight,
-    //   width: double.infinity,
-    //   child: Stack(
-    //     children: [
-    //       Positioned(
-    //         top: widget.isTop ? 15 : 5,
-    //         left: 20,
-    //         child: Container(
-    //           height: cueWidgetHeight - 30,
-    //           width: MediaQuery.of(context).size.width * 0.88,
-    //           decoration: BoxDecoration(
-    //             boxShadow: [
-    //               BoxShadow(
-    //                 color: widget.isShadow
-    //                     ? Colors.grey.withOpacity(0.2)
-    //                     : Colors.transparent,
-    //                 spreadRadius: widget.isShadow ? 5 : 0,
-    //                 blurRadius: widget.isShadow ? 7 : 0,
-    //                 offset: const Offset(0, 3), // changes position of shadow
-    //               ),
-    //             ],
-    //             color: Colors.white,
-    //             borderRadius: BorderRadius.circular(8),
-    //             border: Border.all(
-    //                 color: const Color.fromRGBO(174, 177, 239, .3), width: 1),
-    //           ),
-    //           child: FutureBuilder<CueWord?>(
-    //             future:
-    //                 UnitRepository().getCueWord(word.wordValue), // async work
-    //             builder:
-    //                 (BuildContext context, AsyncSnapshot<CueWord?> snapshot) {
-    //               switch (snapshot.connectionState) {
-    //                 case ConnectionState.waiting:
-    //                   return const Loading();
-    //                 default:
-    //                   if (snapshot.hasError) {
-    //                     return Text('Error: ${snapshot.error}');
-    //                   } else {
-    //                     return innerWidget(snapshot.data);
-    //                   }
-    //               }
-    //             },
-    //           ),
-    //         ),
-    //       ),
-    //       Positioned(
-    //           top: widget.isTop ? 5 : cueWidgetHeight - 11,
-    //           left: left,
-    //           child: CustomPaint(
-    //               size: const Size(40, 40),
-    //               painter:
-    //                   ShapesPainter(widget.isShadow, widget.isTop, false))),
-    //       Positioned(
-    //           top: !widget.isShadow ? 6 : cueWidgetHeight * -10,
-    //           left: left,
-    //           child: CustomPaint(
-    //               size: const Size(40, 40),
-    //               painter:
-    //                   ShapesPainter(!widget.isShadow, widget.isTop, true))),
-    //     ],
-    //   ),
-    // );
   }
 
   Widget innerWidget(CueWord? cueWord) {
@@ -148,6 +80,18 @@ class _CueWordWidgetState extends State<CueWordWidget> {
         child: Text(
           'Олдсонгүй!',
           style: TextStyle(
+              color: Colors.red, fontSize: 15, fontWeight: FontWeight.w500),
+        ),
+      );
+    }
+
+    if (bookMarkResult != '' && bookMarkResult != 'Success') {
+      var errorText = bookMarkResult;
+      bookMarkResult = '';
+      return Center(
+        child: Text(
+          'Bookmark error: $errorText',
+          style: const TextStyle(
               color: Colors.red, fontSize: 15, fontWeight: FontWeight.w500),
         ),
       );
@@ -188,10 +132,14 @@ class _CueWordWidgetState extends State<CueWordWidget> {
         Expanded(child: Container()),
         IconButton(
           padding: const EdgeInsets.only(bottom: 16),
-          onPressed: () => {},
-          icon: const Icon(
-            Icons.bookmark_outline_sharp,
-            color: Color.fromRGBO(48, 53, 159, 0.8),
+          onPressed: () async {
+            bookMarkResult =
+                await UnitRepository().setBookMark(cueWord.wordId, 0);
+            setState(() {});
+          },
+          icon: Icon(
+            cueWord.bookMarked ? Icons.bookmark : Icons.bookmark_outline_sharp,
+            color: const Color.fromRGBO(48, 53, 159, 0.8),
             size: 28.0,
           ),
         ),

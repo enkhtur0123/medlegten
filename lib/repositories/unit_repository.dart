@@ -7,6 +7,7 @@ import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
@@ -91,6 +92,19 @@ class UnitRepository {
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       return null;
+    }
+  }
+
+  Future<String> setBookMark(String wordId, int set) async {
+    try {
+      var res = await HttpHelper().getUrl(url: 'Word/bookmark/$wordId/$set');
+      if (res['isSuccess']) {
+        return 'Success';
+      } else {
+        return res['resultMessage'];
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
     }
   }
 

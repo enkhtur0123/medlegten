@@ -12,6 +12,8 @@ _$_CueWord _$$_CueWordFromJson(Map<String, dynamic> json) => _$_CueWord(
       json['resultMessage'] as String,
       json['wordId'] as String,
       json['word'] as String,
+      json['bookMarked'] as bool,
+      json['isKnow'] as bool,
       RootWordInfo.fromJson(json['rootWordInfo'] as Map<String, dynamic>),
       WordType.fromJson(json['wordType'] as Map<String, dynamic>),
       (json['translation'] as List<dynamic>)
@@ -26,6 +28,8 @@ Map<String, dynamic> _$$_CueWordToJson(_$_CueWord instance) =>
       'resultMessage': instance.resultMessage,
       'wordId': instance.wordId,
       'word': instance.word,
+      'bookMarked': instance.bookMarked,
+      'isKnow': instance.isKnow,
       'rootWordInfo': instance.rootWordInfo,
       'wordType': instance.wordType,
       'translation': instance.translation,

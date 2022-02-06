@@ -14,6 +14,8 @@ class CueWord with _$CueWord {
       String resultMessage,
       String wordId,
       String word,
+      bool bookMarked,
+      bool isKnow,
       RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation) = _CueWord;

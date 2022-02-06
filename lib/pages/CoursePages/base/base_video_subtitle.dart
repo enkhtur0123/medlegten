@@ -216,9 +216,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       physics:
                           const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
                       itemExtent: maxExtent,
-                      //useMagnifier: true,
-                      //overAndUnderCenterOpacity: 0.4,
-                      //magnification: 1.01, // голын item нь илүү том харагдах
+                      useMagnifier: false,
+                      overAndUnderCenterOpacity: 0.4,
+                      magnification: 1, // голын item нь илүү том харагдах
                       //perspective: 0.001,
                       controller: _fixedExtentScrollController,
                       onSelectedItemChanged: (index) {
