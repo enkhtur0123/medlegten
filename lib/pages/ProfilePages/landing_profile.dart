@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/auth_provider.dart';

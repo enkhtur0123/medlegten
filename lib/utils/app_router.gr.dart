@@ -88,8 +88,14 @@ class _$AppRouter extends RootStackRouter {
           child: ReadingPage(args.reading, key: args.key));
     },
     ModuleListenRoute.name: (routeData) {
+      final args = routeData.argsAs<ModuleListenRouteArgs>(
+          orElse: () => const ModuleListenRouteArgs());
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const ModuleListenPage());
+          routeData: routeData,
+          child: ModuleListenPage(
+              key: args.key,
+              unitInfo: args.unitInfo,
+              listeningQuiz: args.listeningQuiz));
     },
     ModuleWritingRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -399,11 +405,30 @@ class ReadingRouteArgs {
 
 /// generated route for
 /// [ModuleListenPage]
-class ModuleListenRoute extends PageRouteInfo<void> {
-  const ModuleListenRoute()
-      : super(ModuleListenRoute.name, path: '/unit_module_listening');
+class ModuleListenRoute extends PageRouteInfo<ModuleListenRouteArgs> {
+  ModuleListenRoute(
+      {Key? key, CourseUnit? unitInfo, ListeningQuiz? listeningQuiz})
+      : super(ModuleListenRoute.name,
+            path: '/unit_module_listening',
+            args: ModuleListenRouteArgs(
+                key: key, unitInfo: unitInfo, listeningQuiz: listeningQuiz));
 
   static const String name = 'ModuleListenRoute';
+}
+
+class ModuleListenRouteArgs {
+  const ModuleListenRouteArgs({this.key, this.unitInfo, this.listeningQuiz});
+
+  final Key? key;
+
+  final CourseUnit? unitInfo;
+
+  final ListeningQuiz? listeningQuiz;
+
+  @override
+  String toString() {
+    return 'ModuleListenRouteArgs{key: $key, unitInfo: $unitInfo, listeningQuiz: $listeningQuiz}';
+  }
 }
 
 /// generated route for

@@ -1,39 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-
-import 'common.dart';
+import 'package:medlegten/themes/style.dart';
 
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
 
-  ControlButtons(this.player);
+  const ControlButtons(this.player, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Opens volume slider dialog
-        IconButton(
-          icon: Icon(Icons.volume_up,color: Colors.black,),
-          onPressed: () {
-            showSliderDialog(
-              context: context,
-              title: "Adjust volume",
-              divisions: 10,
-              min: 0.0,
-              max: 1.0,
-              value: player.volume,
-              stream: player.volumeStream,
-              onChanged: player.setVolume,
-            );
-          },
+        StreamBuilder<SequenceState?>(
+          stream: player.sequenceStateStream,
+          builder: (context, snapshot) => IconButton(
+                icon: const Icon(
+                  Icons.skip_previous,
+                  size: 50,
+                  color: secondaryColor,
+                ),
+                onPressed: player.hasPrevious ? player.seekToPrevious : null,
+              ),
         ),
-
-        /// This StreamBuilder rebuilds whenever the player state changes, which
-        /// includes the playing/paused state and also the
-        /// loading/buffering/ready state. Depending on the state we show the
-        /// appropriate button or loading indicator.
         StreamBuilder<PlayerState>(
           stream: player.playerStateStream,
           builder: (context, snapshot) {
@@ -43,51 +34,65 @@ class ControlButtons extends StatelessWidget {
             if (processingState == ProcessingState.loading ||
                 processingState == ProcessingState.buffering) {
               return Container(
-                margin: EdgeInsets.all(8.0),
+                margin: const EdgeInsets.all(8.0),
                 width: 64.0,
                 height: 64.0,
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(),
               );
             } else if (playing != true) {
-              return IconButton(
-                icon: Icon(Icons.play_arrow,color: Colors.black,),
-                iconSize: 64.0,
+              return Container(
+                decoration: getDecoration(),
+                child: IconButton(
+                icon: const Icon(
+                  Icons.play_arrow,
+                  color: secondaryColor,
+                ),
+                iconSize: 50.0,
                 onPressed: player.play,
-              );
+              ));
             } else if (processingState != ProcessingState.completed) {
-              return IconButton(
-                icon: Icon(Icons.pause,color: Colors.black,),
-                iconSize: 64.0,
-                onPressed: player.pause,
-              );
+              return Container(
+                  decoration: getDecoration(),
+                  child: IconButton(
+                    icon: const Icon(Icons.pause, color: secondaryColor),
+                    iconSize: 50.0,
+                    onPressed: player.pause,
+                  ));
             } else {
               return IconButton(
-                icon: Icon(Icons.replay,color: Colors.black,),
-                iconSize: 64.0,
+                icon: const Icon(
+                  Icons.replay,
+                  color: secondaryColor,
+                ),
+                iconSize: 50.0,
                 onPressed: () => player.seek(Duration.zero),
               );
             }
           },
         ),
-        // Opens speed slider dialog
-        StreamBuilder<double>(
-          stream: player.speedStream,
-          builder: (context, snapshot) => IconButton(
-            icon: Text("${snapshot.data?.toStringAsFixed(1)}x",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              showSliderDialog(
-                context: context,
-                title: "Adjust speed",
-                divisions: 10,
-                min: 0.5,
-                max: 1.5,
-                value: player.speed,
-                stream: player.speedStream,
-                onChanged: player.setSpeed,
-              );
-            },
+        StreamBuilder<SequenceState?>(
+          stream: player.sequenceStateStream,
+          builder: (context, snapshot) =>  IconButton(
+            icon: const Icon(Icons.skip_next,size: 50,color: secondaryColor,),
+            onPressed: player.hasNext ? player.seekToNext : null,
           ),
+       
+        ),
+      ],
+    );
+  }
+
+  BoxDecoration getDecoration() {
+    
+    return BoxDecoration(
+      shape: BoxShape.circle,
+      color: const Color(0xffF4F4F4),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: const Offset(0, 3), // changes position of shadow
         ),
       ],
     );

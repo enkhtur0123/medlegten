@@ -133,128 +133,133 @@ class CourseUnitModuleListPage extends HookWidget {
       ),
     );
   }
-}
 
-Widget buildTimeline(
-    CourseUnitModuleList data, int idx, int isLast, BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 40),
-    child: SizedBox(
-      width: double.infinity,
-      height: 70,
-      child: TimelineTile(
-        axis: TimelineAxis.vertical,
-        hasIndicator: true,
-        isFirst: isLast == 0,
-        isLast: isLast == 1,
-        indicatorStyle: IndicatorStyle(
-          indicator: Container(
-            decoration: const BoxDecoration(
-              border: Border.fromBorderSide(
-                BorderSide(
-                  color: colorPrimary,
+  Widget buildTimeline(
+      CourseUnitModuleList data, int idx, int isLast, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 40),
+      child: SizedBox(
+        width: double.infinity,
+        height: 70,
+        child: TimelineTile(
+          axis: TimelineAxis.vertical,
+          hasIndicator: true,
+          isFirst: isLast == 0,
+          isLast: isLast == 1,
+          indicatorStyle: IndicatorStyle(
+            indicator: Container(
+              decoration: const BoxDecoration(
+                border: Border.fromBorderSide(
+                  BorderSide(
+                    color: colorPrimary,
+                  ),
+                ),
+                color: colorPrimary,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  '${idx + 1}',
+                  style: TextStyle(
+                      color: ColorTable.color255_255_255,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
-              color: colorPrimary,
-              shape: BoxShape.circle,
             ),
-            child: Center(
-              child: Text(
-                '${idx + 1}',
-                style: TextStyle(
-                    color: ColorTable.color255_255_255,
-                    fontWeight: FontWeight.w400),
-              ),
-            ),
+            color: colorPrimary,
+            width: 25,
+            height: 25,
           ),
-          color: colorPrimary,
-          width: 25,
-          height: 25,
-        ),
-        endChild: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: GestureDetector(
-            onTap: () {
-              switch (data.moduleTypeId) {
-                case "1":
-                  {
-                    UnitRepository().getUnitIntroVideo(data.moduleId).then(
-                        (value) => AutoRouter.of(context).push(
-                            CourseUnitIntroVideoRoute(
-                                unitIntroVideo: value!, url: value.url)));
-                  }
-                  break;
-                case "2":
-                  {
-                    UnitRepository().getUnitGrammar(data.moduleId).then(
-                        (value) => AutoRouter.of(context)
-                            .push(GrammarTableRoute(unitGrammar: value!)));
-                  }
-                  break;
+          endChild: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: GestureDetector(
+              onTap: () {
+                switch (data.moduleTypeId) {
+                  case "1":
+                    {
+                      UnitRepository().getUnitIntroVideo(data.moduleId).then(
+                          (value) => AutoRouter.of(context).push(
+                              CourseUnitIntroVideoRoute(
+                                  unitIntroVideo: value!, url: value.url)));
+                    }
+                    break;
+                  case "2":
+                    {
+                      UnitRepository().getUnitGrammar(data.moduleId).then(
+                          (value) => AutoRouter.of(context)
+                              .push(GrammarTableRoute(unitGrammar: value!)));
+                    }
+                    break;
 
-                case "3":
-                  {
-                    UnitRepository().getMixedVideo('1001').then((value) =>
-                        AutoRouter.of(context).push(MixedVideoRoute(
-                            unitIntroVideo: value!, url: value.url)));
-                  }
-                  break;
+                  case "3":
+                    {
+                      UnitRepository().getMixedVideo('1001').then((value) =>
+                          AutoRouter.of(context).push(MixedVideoRoute(
+                              unitIntroVideo: value!, url: value.url)));
+                    }
+                    break;
 
-                case "4":
-                  {
-                    UnitRepository().getReading(data.moduleId).then((value) =>
-                        AutoRouter.of(context)
-                            .push(ReadingRoute(reading: value!)));
-                  }
-                  break;
+                  case "4":
+                    {
+                      UnitRepository().getReading(data.moduleId).then((value) =>
+                          AutoRouter.of(context)
+                              .push(ReadingRoute(reading: value!)));
+                    }
+                    break;
 
-                case "5":
-                  {
-                    // Listening
-                    AutoRouter.of(context).push(const ModuleListenRoute());
-                  }
-                  break;
+                  case "5":
+                    {
+                      UnitRepository()
+                          .getUnitListening(
+                              moduleId: data.moduleId,
+                              moduleTypeid: data.moduleTypeId)
+                          .then((value) {
+                        AutoRouter.of(context)  
+                            .push(ModuleListenRoute(unitInfo: unitInfo,listeningQuiz: value));
+                      });
+                    }
+                    break;
+                  case "6":
+                    {
+                      // Writing
+                      AutoRouter.of(context).push(const ModuleWritingRoute());
+                    }
+                    break;
 
-                case "6":
-                  {
-                    // Writing
-                    AutoRouter.of(context).push(const ModuleWritingRoute());
-                  }
-                  break;
+                  case "7":
+                    {
+                      // Conversation video
+                      UnitRepository().getMixedVideo('1001').then((value) =>
+                          AutoRouter.of(context).push(ConversationVideoRoute(
+                              unitIntroVideo: value!, url: value.url)));
+                    }
+                    break;
 
-                case "7":
-                  {
-                    // Conversation video
-                    UnitRepository().getMixedVideo('1001').then((value) =>
-                        AutoRouter.of(context).push(ConversationVideoRoute(
-                            unitIntroVideo: value!, url: value.url)));
-                  }
-                  break;
+                  case "8":
+                    {
+                      // progress exam
+                      AutoRouter.of(context)
+                          .push(const ModuleProgressExamRoute());
+                    }
+                    break;
 
-                case "8":
-                  {
-                    // progress exam
-                    AutoRouter.of(context)
-                        .push(const ModuleProgressExamRoute());
-                  }
-                  break;
-
-                default:
-                  {
-                    print('no module');
-                  }
-              }
-            },
-            child: Text(
-              data.moduleTypeName,
-              style: const TextStyle(
-                  color: colorPrimary,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16),
+                  default:
+                    {
+                      print('no module');
+                    }
+                }
+              },
+              child: Text(
+                data.moduleTypeName,
+                style: const TextStyle(
+                    color: colorPrimary,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16),
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

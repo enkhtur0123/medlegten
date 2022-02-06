@@ -23,6 +23,7 @@ _$_CourseInfo _$$_CourseInfoFromJson(Map<String, dynamic> json) =>
       json['minToWatch'] as String,
       json['isPurchased'] as bool,
       json['purchaseExpireDate'] as String,
+      json['isCreatedPlan'] as bool,
     );
 
 Map<String, dynamic> _$$_CourseInfoToJson(_$_CourseInfo instance) =>
@@ -42,4 +43,5 @@ Map<String, dynamic> _$$_CourseInfoToJson(_$_CourseInfo instance) =>
       'minToWatch': instance.minToWatch,
       'isPurchased': instance.isPurchased,
       'purchaseExpireDate': instance.purchaseExpireDate,
+      'isCreatedPlan': instance.isCreatedPlan,
     };

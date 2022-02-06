@@ -10,6 +10,7 @@ import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test_qu
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/widgets/dialog/custom_popup.dart';
 
+// ignore: must_be_immutable
 class CourseSelfTestPage extends HookWidget {
   CourseSelfTestPage({Key? key}) : super(key: key);
 
@@ -19,7 +20,6 @@ class CourseSelfTestPage extends HookWidget {
     List<QuizQuestionEx> sortedList = [];
     var result = await LandingRepository().getSelfQuiz();
     quizId?.value = result!.quizId;
-    print(quizId?.value);
     var _sortedList = result!.questions..sort((a, b) => int.parse(b.ordering).compareTo(int.parse(a.ordering)));
     for (var e in _sortedList) {
       sortedList.add(QuizQuestionEx(e));

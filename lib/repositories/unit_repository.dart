@@ -3,10 +3,29 @@ import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
+import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class UnitRepository {
+  Future<ListeningQuiz?> getUnitListening(
+      {String? moduleId, String? moduleTypeid}) async {
+    try {
+      final res = await HttpHelper()
+          .getUrl(url: 'Course/UnitModule/$moduleId/$moduleTypeid');
+      if (res['isSuccess']) {
+        return ListeningQuiz.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
   //moduleTypeId =
   Future<UnitIntroVideo?> getUnitIntroVideo(String moduleId) async {
     try {

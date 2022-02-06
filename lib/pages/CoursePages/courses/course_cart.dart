@@ -4,6 +4,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
@@ -165,16 +166,22 @@ courseBgImg(context, CourseInfo courseInfo) {
             Container(
               margin: const EdgeInsets.only(left: 10, right: 10),
               child: CustomOutlinedButton(
-                  onTap: () {
-                    if (courseInfo.isPurchased) {
-                      AutoRouter.of(context)
-                          .push(CourseDetailRoute(courseInfo: courseInfo));
-                    } else {
-                      AutoRouter.of(context)
-                          .push(CoursePaymentRoute(courseInfo: courseInfo));
-                    }
-                  },
-                  text: courseInfo.isPurchased ? "Эхлэх" : "Худалдаж авах",textAlign: TextAlign.center,),
+                onTap: () async {
+                  if (!courseInfo.isCreatedPlan) {
+                    await CourseRepository()
+                        .setCoursePlan(id: courseInfo.courseId);
+                  }
+                  if (courseInfo.isPurchased) {
+                    AutoRouter.of(context)
+                        .push(CourseDetailRoute(courseInfo: courseInfo));
+                  } else {
+                    AutoRouter.of(context)
+                        .push(CoursePaymentRoute(courseInfo: courseInfo));
+                  }
+                },
+                text: courseInfo.isPurchased ? "Эхлэх" : "Худалдаж авах",
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

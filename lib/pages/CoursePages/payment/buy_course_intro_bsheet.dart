@@ -40,6 +40,7 @@ class BuyCourseIntroWidget extends StatelessWidget {
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.normal),
               ),
+              const SizedBox(height: 20,),
               AmountWidget(
                 amount: double.parse(
                   courseInfo!.price.replaceAll(",", ""),
@@ -48,7 +49,7 @@ class BuyCourseIntroWidget extends StatelessWidget {
                 fontStyle: FontStyle.normal,
                 fontSize: 50,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -66,11 +67,11 @@ class BuyCourseIntroWidget extends StatelessWidget {
                 ),
                 child: Text(
                   courseInfo!.levelName.toUpperCase(),
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 30, right: 60),
+                margin: const EdgeInsets.only(top: 30, right: 60),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,10 +88,10 @@ class BuyCourseIntroWidget extends StatelessWidget {
             ],
           ),
           Container(
-              margin: const EdgeInsets.all(15),
+              margin: const EdgeInsets.all(25),
               child: CustomOutlinedButton(
                 color: secondaryColor,
-                text: "Buy Now",
+                text: "Худалдаж авах",
                 height: 50,
                 onTap: () {
                   AutoRouter.of(context)

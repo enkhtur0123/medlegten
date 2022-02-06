@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,6 +6,7 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
+import 'package:medlegten/pages/CoursePages/payment/buy_course_intro_bsheet.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'unit_progress_status.dart';
 
@@ -17,29 +17,30 @@ class UnitCart extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rnd = Random();
-    var iconWidgets = {
-      0: iconLocked(),
-      1: iconFree(),
-      2: iconCompleted(),
-    };
     return InkWell(
-      onTap: () => {
-        AutoRouter.of(context)
-            .push(CourseUnitModuleListRoute(unitInfo: unitInfo!))
-        // showModalBottomSheet(
-        //     context: context,
-        //     shape: const RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.only(
-        //           topLeft: Radius.circular(26), topRight: Radius.circular(26)),
-        //     ),
-        //     elevation: 10,
-        //     isDismissible: true,
-        //     backgroundColor: Colors.white.withOpacity(0.69),
-        //     enableDrag: true,
-        //     builder: (context) {
-        //       return BuyCourseIntroWidget(courseInfo: courseInfo);
-        //     })
+      onTap: () async {
+        // unitInfo!.hasTrial==0  free :price
+        if (unitInfo!.hasTrial == "0" || courseInfo!.isPurchased) {
+          AutoRouter.of(context)
+              .push(CourseUnitModuleListRoute(unitInfo: unitInfo!));
+        } else {
+          await showModalBottomSheet(
+              context: context,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(26),
+                    topRight: Radius.circular(26)),
+              ),
+              elevation: 10,
+              isDismissible: true,
+              backgroundColor: Colors.white.withOpacity(0.69),
+              enableDrag: true,
+              builder: (context) {
+                return BuyCourseIntroWidget(courseInfo: courseInfo);
+              }).then((value) {
+            Navigator.pop(context);
+          });
+        }
       },
       child: Card(
         color: ColorTable.color255_255_255,
@@ -76,11 +77,28 @@ class UnitCart extends HookWidget {
                   )
                 ],
               ),
-              Container(child: iconWidgets[rnd.nextInt(100) % 3]),
+              Container(child: getUnitStatusWidget()),
             ],
           ),
         ),
       ),
     );
+  }
+
+  ///Unit Status
+  getUnitStatusWidget() {
+    if (courseInfo!.isPurchased) {
+      if (unitInfo!.isCompleted) {
+        return iconCompleted();
+      } else {
+        return iconLocked();
+      }
+    } else {
+      if (unitInfo!.hasTrial == '0') {
+        return iconFree();
+      } else {
+        return iconLocked();
+      }
+    }
   }
 }

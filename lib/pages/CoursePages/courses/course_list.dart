@@ -6,7 +6,9 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/pages/CoursePages/courses/course_cart.dart';
+import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
+import 'package:medlegten/repositories/payment_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/TextButton.dart';
 
@@ -22,26 +24,28 @@ class CourseList extends HookWidget {
       children: [
         addVerticalSpace(20),
         Align(
-          alignment: Alignment.topLeft,
-          child: TextButtonWidget(
-            text:'Courses' ,
-            onTap:(){
-
-          })
-        ),
+            alignment: Alignment.topLeft,
+            child: TextButtonWidget(text: 'Courses', onTap: () {})),
         addVerticalSpace(5),
         FutureBuilder<List<CourseInfo>?>(
           future: LandingRepository().getCourseList(),
-          builder: (BuildContext context, AsyncSnapshot<List<CourseInfo>?> snapshot) {
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CourseInfo>?> snapshot) {
             if (snapshot.hasData) {
               var orderedCourses = snapshot.data!
-                ..sort((a, b) => int.parse(a.ordering).compareTo(int.parse(b.ordering)));
+                ..sort((a, b) =>
+                    int.parse(a.ordering).compareTo(int.parse(b.ordering)));
               return Column(
                 children: orderedCourses
                     .map((courseInfo) => CourseCart(
                           courseInfo,
-                          onTap: (String id) {
-                           AutoRouter.of(context).push(CourseDetailRoute(courseInfo: courseInfo));
+                          onTap: (String id) async {
+                            if (!courseInfo.isCreatedPlan) {
+                              await CourseRepository()
+                                  .setCoursePlan(id: courseInfo.courseId);
+                            }
+                            AutoRouter.of(context).push(
+                                CourseDetailRoute(courseInfo: courseInfo));
                           },
                         ))
                     .toList(),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:medlegten/themes/style.dart';
 
 class SeekBar extends StatefulWidget {
   final Duration duration;
@@ -31,6 +32,16 @@ class _SeekBarState extends State<SeekBar> {
 
     _sliderThemeData = SliderTheme.of(context).copyWith(
       trackHeight: 2.0,
+      // valueIndicatorShape: SliderComponentShape.noOverlay,
+      activeTrackColor: const Color(0xff7864FE),
+      inactiveTrackColor: const Color(0xffDFDFDF),
+      // disabledActiveTrackColor:const  Color(0xffDFDFDF),
+      thumbColor: secondaryColor ,
+      // valueIndicatorColor: const Color(0xff7864FE),
+      showValueIndicator: ShowValueIndicator.always,
+      valueIndicatorTextStyle: const TextStyle(color: Colors.black,fontSize: 10,fontStyle: FontStyle.normal,fontWeight: FontWeight.normal),
+      activeTickMarkColor: Colors.black
+      
     );
   }
 
@@ -41,8 +52,8 @@ class _SeekBarState extends State<SeekBar> {
         SliderTheme(
           data: _sliderThemeData.copyWith(
             thumbShape: HiddenThumbComponentShape(),
-            activeTrackColor: Colors.blue.shade100,
-            inactiveTrackColor: Colors.grey.shade300,
+            activeTrackColor: secondaryColor,
+            inactiveTrackColor: const Color(0xffDFDFDF),
           ),
           child: ExcludeSemantics(
             child: Slider(

@@ -41,7 +41,7 @@ class _CourseDetailState extends State<CourseDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text(widget.courseInfo.courseName),),
       backgroundColor: ColorTable.color255_255_255,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +81,10 @@ class _CourseDetailState extends State<CourseDetailPage> {
                         if (snapshot.hasData) {
                           return Column(
                             children: snapshot.data!
-                                .map((unitInfo) => UnitCart(unitInfo: unitInfo,courseInfo: widget.courseInfo,))
+                                .map((unitInfo) => UnitCart(
+                                      unitInfo: unitInfo,
+                                      courseInfo: widget.courseInfo,
+                                    ))
                                 .toList(),
                           );
                         } else if (snapshot.hasError) {

@@ -18,11 +18,11 @@ class LandingRepository {
         return list.map((i) => CourseUnitModuleList.fromJson(i)).toList();
       } else {
         dioRepository.snackBar(res['resultMessage']);
-        return null;
+        throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -34,11 +34,11 @@ class LandingRepository {
         return list.map((i) => CourseInfo.fromJson(i)).toList();
       } else {
         dioRepository.snackBar(res['resultMessage']);
-        return null;
+        throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -46,15 +46,17 @@ class LandingRepository {
     try {
       final res = await HttpHelper().getUrl(url: 'Course/Unit/$courseId');
       if (res['isSuccess']) {
+        // print(res['courseUnitList']);
         var list = res['courseUnitList'] as List;
         return list.map((i) => CourseUnit.fromJson(i)).toList();
       } else {
         dioRepository.snackBar(res['resultMessage']);
-        return null;
+        throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
+      print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -65,11 +67,11 @@ class LandingRepository {
         return SelfQuiz.fromJson(res['quizInfo']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
-        return null;
+        throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -81,7 +83,7 @@ class LandingRepository {
         return list.map((i) => CustomerReview.fromJson(i)).toList();
       } else {
         dioRepository.snackBar(res['resultMessage']);
-        return null;
+        throw CustomException(errorMsg: res['resultMessage']);
       }
 
       // return [
@@ -95,7 +97,7 @@ class LandingRepository {
       // ];
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -106,11 +108,11 @@ class LandingRepository {
         return QuizHistory.fromJson(res['quizDetial']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
-        return null;
+        throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -122,12 +124,11 @@ class LandingRepository {
       if (res['isSuccess']) {
         return res;
       } else {
-        dioRepository.snackBar(res['resultMessage']);
-        return null;
+        throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString());
     }
   }
 
@@ -139,7 +140,7 @@ class LandingRepository {
         return res;
       } else {
         dioRepository.snackBar(res['resultMessage']);
-         throw CustomException(errorMsg: res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
