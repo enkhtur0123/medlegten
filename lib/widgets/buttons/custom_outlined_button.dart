@@ -4,12 +4,18 @@ import 'package:medlegten/common/colors.dart';
 // ignore: must_be_immutable
 class CustomOutlinedButton extends StatelessWidget {
   CustomOutlinedButton(
-      {Key? key, this.text, this.color, this.onTap, this.height})
+      {Key? key,
+      this.text,
+      this.color,
+      this.onTap,
+      this.height,
+      this.textAlign})
       : super(key: key);
   String? text;
   Function? onTap;
   Color? color;
   double? height;
+  TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,7 @@ class CustomOutlinedButton extends StatelessWidget {
               fontWeight: FontWeight.w500,
               fontSize: 14,
               fontFamily: 'Roboto'),
+          textAlign: textAlign ?? TextAlign.start,
         ),
         style: ButtonStyle(
           backgroundColor:

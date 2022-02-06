@@ -16,7 +16,7 @@ class PreliminaryTest extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 15,right: 15),
+            margin: const EdgeInsets.only(right: 15),
             padding:const  EdgeInsets.all(10),
             child: const Text(
               'Та өөрийн англи хэлний\nтүвшинг шалгана уу?',

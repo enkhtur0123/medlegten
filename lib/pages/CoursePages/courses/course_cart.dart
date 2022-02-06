@@ -9,6 +9,7 @@ import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 ////Cart байгаа хэсэгт заавал Flexible ашигла
+// ignore: must_be_immutable
 class CourseCart extends StatelessWidget {
   CourseCart(this.courseInfo, {Key? key, this.onTap}) : super(key: key);
 
@@ -133,7 +134,7 @@ courseBgImg(context, CourseInfo courseInfo) {
   return Stack(
     children: [
       ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             topRight: Radius.circular(8), bottomRight: Radius.circular(8)),
         child: Image.asset(
           imgUrl,
@@ -150,7 +151,7 @@ courseBgImg(context, CourseInfo courseInfo) {
           children: [
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Text(
                 courseInfo.levelName + ' level'.toUpperCase(),
                 style: const TextStyle(
@@ -165,7 +166,7 @@ courseBgImg(context, CourseInfo courseInfo) {
               margin: const EdgeInsets.only(left: 10, right: 10),
               child: CustomOutlinedButton(
                   onTap: () {
-                    if (!courseInfo.isPurchased) {
+                    if (courseInfo.isPurchased) {
                       AutoRouter.of(context)
                           .push(CourseDetailRoute(courseInfo: courseInfo));
                     } else {
@@ -173,7 +174,7 @@ courseBgImg(context, CourseInfo courseInfo) {
                           .push(CoursePaymentRoute(courseInfo: courseInfo));
                     }
                   },
-                  text: courseInfo.isPurchased ? "See units" : "Buy Now"),
+                  text: courseInfo.isPurchased ? "Эхлэх" : "Худалдаж авах",textAlign: TextAlign.center,),
             ),
           ],
         ),

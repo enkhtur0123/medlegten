@@ -1,17 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
+import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/widgets/TextButton.dart';
 import 'report_items.dart';
 
+// ignore: must_be_immutable
 class LandingProfile extends ConsumerWidget {
   LandingProfile({Key? key}) : super(key: key);
 
   final TextStyle textStyle = const TextStyle(color: Colors.black);
+  MUserInfo? userInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    userInfo = ref.read(authProvider.notifier).userInfo;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -130,7 +135,7 @@ class LandingProfile extends ConsumerWidget {
             width: 120,
             height: 120,
             child: CachedNetworkImage(
-              imageUrl:
+              imageUrl: userInfo!.profileUrl ??
                   'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg',
               placeholder: (context, url) => CircleAvatar(
                 backgroundColor: Colors.grey.withOpacity(0.5),
@@ -149,10 +154,10 @@ class LandingProfile extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              "@Soyol2323",
+            Text(
+              userInfo?.firstName ?? "",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.bold,
                   fontSize: 20),
