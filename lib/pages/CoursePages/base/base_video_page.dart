@@ -3,6 +3,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
+import 'package:medlegten/utils/global.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
@@ -46,12 +47,12 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
     List<Widget> list = [];
     if (videoPlayerController.value.isInitialized) {
       list.add(VideoPlayerChewie(videoPlayerController));
-      list.add(addVerticalSpace(20));
+      list.add(addVerticalSpace(10));
       list.add(subtitleWidget());
     } else {
       list.add(
         SizedBox(
-          height: MediaQuery.of(context).size.height - 100,
+          height: GlobalValues.screenHeight - 100,
           child: const Loading(),
         ),
       );

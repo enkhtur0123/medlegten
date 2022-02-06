@@ -28,7 +28,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
       child: Wrap(
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
-        children: widget.paragraph.words.map(
+        children: widget.paragraph.words!.map(
           (w) {
             Widget widgetRet;
             if (widget.currentWord != null && widget.currentWord! == w.word) {
@@ -59,7 +59,10 @@ class _CueTexteState extends State<SubtitleParagraph> {
           word.word,
           key: globalKey,
           style: const TextStyle(
-              color: colorSecondary, fontSize: 18, fontWeight: FontWeight.w800),
+              fontFamily: 'Roboto',
+              color: colorPrimary,
+              fontSize: 18,
+              fontWeight: FontWeight.w800),
         ),
       ),
     );

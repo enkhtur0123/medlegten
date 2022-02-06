@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
-import 'package:medlegten/models/Unit/unit_introduction_video.dart';
-import 'package:medlegten/pages/CoursePages/Unit_introVideo/intro_video_helper.dart';
+import 'package:medlegten/models/Unit/unit_mixed_video.dart';
+import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
-import 'package:medlegten/repositories/unit_repository.dart';
+import 'package:medlegten/utils/global.dart';
 
 class MixedVideoPage extends BaseVideoPage {
-  const MixedVideoPage(this.unitIntroVideo, this.url, {Key? key})
+  const MixedVideoPage(this.unitMixedVideo, this.url, {Key? key})
       : super(url, key: key);
 
-  final UnitIntroVideo unitIntroVideo;
+  final UnitMixedVideo unitMixedVideo;
   final String url;
 
   @override
@@ -34,7 +34,7 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   @override
   Widget subtitleWidget() {
     return MixedVideoSubtitle(
-        videoPlayerController, IntroVideohelper.convert(widget.unitIntroVideo),
+        videoPlayerController, MixedVideohelper.convert(widget.unitMixedVideo),
         (val) {
       paragraph = val;
       refreshNotifier.value = !refreshNotifier.value;
@@ -59,86 +59,46 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
       enableDrag: false,
       builder: (BuildContext context) {
         return SizedBox(
-          height: 250,
+          height: GlobalValues.getHeightRelativeToScreen(25),
           width: double.infinity,
-          child: Container(
-            height: 220,
-            width: MediaQuery.of(context).size.width * 0.88,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                  color: const Color.fromRGBO(174, 177, 239, .3), width: 1),
-            ),
-            child: FutureBuilder<CueWord?>(
-              future: UnitRepository().getCueWord('Noun'), // async work
-              builder:
-                  (BuildContext context, AsyncSnapshot<CueWord?> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return const Loading();
-                  default:
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return innerBottonSheetWidget(paragraph);
-                    }
-                }
-              },
-            ),
-          ),
+          child: innerBottonSheetWidget(paragraph),
         );
       },
       onClosing: () {},
     );
   }
 
-  Widget innerBottonSheetWidget(CParagraph? paragraph) {
-    if (paragraph == null) {
-      return Text('NULL', style: TextStyle(color: ColorTable.color48_53_159));
-    }
-
+  Widget innerBottonSheetWidget(CParagraph paragraph) {
     List<Widget> list = [];
 
-    //for (var translation in cueWord.translation) {
-    //  {
+    list.add(const Text(
+      'Grammar',
+      style: TextStyle(
+          fontFamily: 'Roboto',
+          color: Color.fromRGBO(48, 53, 159, 1),
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
+    ));
+
     list.add(
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              paragraph.monText,
-              style: const TextStyle(
-                  color: Color.fromRGBO(48, 53, 159, 1),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500),
-            ),
-            Text(
-              paragraph.engText,
-              style: const TextStyle(
-                  color: Color.fromRGBO(48, 53, 159, .3),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500),
-            ),
-          ],
+        child: Text(
+          paragraph.grammarDescription ?? 'NO DATA',
+          style: const TextStyle(
+              fontFamily: 'Roboto',
+              color: Color.fromRGBO(120, 100, 254, 1),
+              fontSize: 14,
+              fontWeight: FontWeight.w500),
         ),
       ),
     );
-    //}
-    //}
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.unmodifiable(() sync* {
-            yield* list;
-          }()),
-        ),
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) => list[index],
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Footer extends StatefulWidget {
@@ -8,7 +7,8 @@ class Footer extends StatefulWidget {
   //final double padding;
   final EdgeInsetsGeometry? padding;
   final Widget child;
-  Footer(
+  // ignore: use_key_in_widget_constructors
+  const Footer(
       {this.backgroundColor,
       this.alignment,
       this.padding,
@@ -20,18 +20,17 @@ class Footer extends StatefulWidget {
 class FooterState extends State<Footer> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      color: widget.backgroundColor == null
-          ? Colors.grey.shade200
-          : widget.backgroundColor,
-      child: new Align(
+    return Container(
+      color: widget.backgroundColor ?? Colors.grey.shade200,
+      child: Align(
         alignment: widget.alignment == null
             ? Alignment.bottomCenter
             : widget.alignment!,
-        child: new Padding(
+        child: Padding(
           //padding: EdgeInsets.all(widget.padding == null ?5.0:widget.padding),
-          padding:
-              widget.padding == null ? EdgeInsets.all(5.0) : widget.padding!,
+          padding: widget.padding == null
+              ? const EdgeInsets.all(5.0)
+              : widget.padding!,
           child: widget.child,
         ),
       ),

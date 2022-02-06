@@ -5,13 +5,11 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 class IntroVideohelper {
   static List<CParagraph> convert(UnitIntroVideo unitIntroVideo) {
     List<CParagraph> retList = [];
+    int i = 0;
     for (var cue in unitIntroVideo.cue) {
       retList.add(CParagraph(
-          cue.cueId,
-          int.parse(cue.ordering),
-          cue.toLangTranslation,
-          cue.fromLangTranslation,
-          convertWords(cue.words),
+          cue.cueId, i++, cue.toLangTranslation, cue.fromLangTranslation,
+          words: convertWords(cue.words),
           startTime: cue.startTime,
           endTime: cue.endTime));
     }

@@ -133,7 +133,7 @@ class LandingProfile extends ConsumerWidget {
         const SizedBox(
           height: 20,
         ),
-        Container(
+        SizedBox(
             width: 120,
             height: 120,
             child: CachedNetworkImage(

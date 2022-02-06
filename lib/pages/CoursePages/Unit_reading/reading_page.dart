@@ -8,7 +8,7 @@ import 'package:medlegten/pages/CoursePages/Unit_reading/reading_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
-import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/utils/global.dart';
 
 class ReadingPage extends HookWidget {
   const ReadingPage(this.reading, {Key? key}) : super(key: key);
@@ -17,16 +17,11 @@ class ReadingPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final helper = useMemoized(() => ReadingHelper());
+    final helper = useMemoized(() => ReadingHelper());
     final refreshNotifier = useState(false);
-    final paragraphs = useMemoized(() => ReadingHelper.convert(reading));
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final valueKeys = useMemoized(() => <CParagraph, int>{});
-    final lastIndex = useMemoized(() => <int>[0]);
 
     useEffect(() {
-      lastIndex[0] = -1;
+      helper.paragraphs = ReadingHelper.convert(reading);
     }, const []);
 
     return Scaffold(
@@ -42,16 +37,17 @@ class ReadingPage extends HookWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                var paragraph = paragraphs[index];
-                if (!valueKeys.containsKey(paragraph)) {
-                  valueKeys[paragraph] = 0;
+                var paragraph = helper.paragraphs[index];
+                if (!helper.valueKeys.containsKey(paragraph)) {
+                  helper.valueKeys[paragraph] = 0;
                 }
                 return SizedBox(
                   height: 40,
                   child: ReadingParagraph(paragraph, (word, position) {
                     if (word != null) {
-                      lastIndex[0] = index;
-                      var isTop = screenHeight - position.top > cueWidgetHeight;
+                      helper.lastIndex = index;
+                      var isTop = GlobalValues.screenHeight - position.top >
+                          cueWidgetHeight;
                       SmartDialog.showAttach(
                         isLoadingTemp: false,
                         targetContext: null,
@@ -67,7 +63,7 @@ class ReadingPage extends HookWidget {
                         maskColorTemp: Colors.transparent,
                         widget: SizedBox(
                           height: cueWidgetHeight + 20,
-                          width: screenWidth,
+                          width: GlobalValues.screenWidth,
                           //color: Colors.white60,
                           child: CueWordWidget(word,
                               ppointerPosition: position,
@@ -84,14 +80,16 @@ class ReadingPage extends HookWidget {
                       //     });
                     }
                     refreshNotifier.value = !refreshNotifier.value;
-                    if (lastIndex[0] > -1 && lastIndex[0] != index) {
-                      valueKeys[paragraphs[lastIndex[0]]] =
-                          valueKeys[paragraphs[lastIndex[0]]]! + 1;
+                    if (helper.lastIndex > -1 && helper.lastIndex != index) {
+                      helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
+                          helper.valueKeys[
+                                  helper.paragraphs[helper.lastIndex]]! +
+                              1;
                     }
-                  }, key: ValueKey<int>(valueKeys[paragraph]!)),
+                  }, key: ValueKey<int>(helper.valueKeys[paragraph]!)),
                 );
               },
-              childCount: paragraphs.length,
+              childCount: helper.paragraphs.length,
             ),
           ),
         ],

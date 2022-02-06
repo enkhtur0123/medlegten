@@ -79,7 +79,7 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<MixedVideoRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: MixedVideoPage(args.unitIntroVideo, args.url, key: args.key));
+          child: MixedVideoPage(args.unitMixedVideo, args.url, key: args.key));
     },
     ReadingRoute.name: (routeData) {
       final args = routeData.argsAs<ReadingRouteArgs>();
@@ -129,6 +129,12 @@ class _$AppRouter extends RootStackRouter {
               courseInfo: args.courseInfo,
               couponCode: args.couponCode,
               price: args.price));
+    },
+    VocabularyListRoute.name: (routeData) {
+      final args = routeData.argsAs<VocabularyListRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: VocabularyListPage(args.unit, key: args.key));
     }
   };
 
@@ -157,7 +163,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(ModuleProgressExamRoute.name,
             path: '/unit_module_progressexam'),
         RouteConfig(CoursePaymentRoute.name, path: '/payment'),
-        RouteConfig(QpayRoute.name, path: '/qpay')
+        RouteConfig(QpayRoute.name, path: '/qpay'),
+        RouteConfig(VocabularyListRoute.name, path: '/vocabulary_list')
       ];
 }
 
@@ -354,20 +361,20 @@ class CourseUnitIntroVideoRouteArgs {
 /// [MixedVideoPage]
 class MixedVideoRoute extends PageRouteInfo<MixedVideoRouteArgs> {
   MixedVideoRoute(
-      {required UnitIntroVideo unitIntroVideo, required String url, Key? key})
+      {required UnitMixedVideo unitMixedVideo, required String url, Key? key})
       : super(MixedVideoRoute.name,
             path: '/mixed_video_page',
             args: MixedVideoRouteArgs(
-                unitIntroVideo: unitIntroVideo, url: url, key: key));
+                unitMixedVideo: unitMixedVideo, url: url, key: key));
 
   static const String name = 'MixedVideoRoute';
 }
 
 class MixedVideoRouteArgs {
   const MixedVideoRouteArgs(
-      {required this.unitIntroVideo, required this.url, this.key});
+      {required this.unitMixedVideo, required this.url, this.key});
 
-  final UnitIntroVideo unitIntroVideo;
+  final UnitMixedVideo unitMixedVideo;
 
   final String url;
 
@@ -375,7 +382,7 @@ class MixedVideoRouteArgs {
 
   @override
   String toString() {
-    return 'MixedVideoRouteArgs{unitIntroVideo: $unitIntroVideo, url: $url, key: $key}';
+    return 'MixedVideoRouteArgs{unitMixedVideo: $unitMixedVideo, url: $url, key: $key}';
   }
 }
 
@@ -532,5 +539,29 @@ class QpayRouteArgs {
   @override
   String toString() {
     return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price}';
+  }
+}
+
+/// generated route for
+/// [VocabularyListPage]
+class VocabularyListRoute extends PageRouteInfo<VocabularyListRouteArgs> {
+  VocabularyListRoute({required CourseUnit unit, Key? key})
+      : super(VocabularyListRoute.name,
+            path: '/vocabulary_list',
+            args: VocabularyListRouteArgs(unit: unit, key: key));
+
+  static const String name = 'VocabularyListRoute';
+}
+
+class VocabularyListRouteArgs {
+  const VocabularyListRouteArgs({required this.unit, this.key});
+
+  final CourseUnit unit;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'VocabularyListRouteArgs{unit: $unit, key: $key}';
   }
 }

@@ -6,6 +6,7 @@ import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:medlegten/utils/global.dart';
 
 import 'medlegten_vertical.dart';
 
@@ -18,6 +19,9 @@ class InitializationPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalValues.screenHeight = MediaQuery.of(context).size.height;
+    GlobalValues.screenWidth = MediaQuery.of(context).size.height;
+    GlobalValues.screenScaleFactor = MediaQuery.of(context).textScaleFactor;
     //final loginState = ref.watch(loginNotifierProvider);
 
     var str = 'Medlegten app v1.0';
@@ -65,7 +69,7 @@ class InitializationPage extends HookWidget {
                   height: 1),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 12,
+              height: GlobalValues.screenHeight / 12,
             )
           ],
         ),

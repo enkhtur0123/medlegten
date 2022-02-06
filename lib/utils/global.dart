@@ -7,6 +7,20 @@ class Utils {
   }
 }
 
+class GlobalValues {
+  static double screenHeight = 1;
+  static double screenWidth = 1;
+  static double screenScaleFactor = 1;
+
+  static double getWidthRelativeToScreen(double percent) {
+    return screenWidth * percent / 100;
+  }
+
+  static double getHeightRelativeToScreen(double percent) {
+    return screenHeight * percent / 100;
+  }
+}
+
 extension GlobalKeyExtension on GlobalKey {
   Rect? get globalPaintBounds {
     final renderObject = currentContext?.findRenderObject();

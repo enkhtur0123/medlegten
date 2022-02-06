@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'cue_word.dart';
+part of 'unit_vocabulary_word.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,119 +14,84 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-CueWord _$CueWordFromJson(Map<String, dynamic> json) {
-  return _CueWord.fromJson(json);
+UnitVocabularyWord _$UnitVocabularyWordFromJson(Map<String, dynamic> json) {
+  return _UnitVocabularyWord.fromJson(json);
 }
 
 /// @nodoc
-class _$CueWordTearOff {
-  const _$CueWordTearOff();
+class _$UnitVocabularyWordTearOff {
+  const _$UnitVocabularyWordTearOff();
 
-  _CueWord call(
-      bool isSuccess,
-      String errorCode,
-      String resultMessage,
-      String wordId,
-      String word,
-      bool bookMarked,
-      bool isKnow,
-      RootWordInfo rootWordInfo,
-      WordType wordType,
-      List<Translation> translation) {
-    return _CueWord(
-      isSuccess,
-      errorCode,
-      resultMessage,
+  _UnitVocabularyWord call(String wordId, String word, bool bookMarked,
+      bool isKnow, WordType wordType, List<Translation> translation) {
+    return _UnitVocabularyWord(
       wordId,
       word,
       bookMarked,
       isKnow,
-      rootWordInfo,
       wordType,
       translation,
     );
   }
 
-  CueWord fromJson(Map<String, Object?> json) {
-    return CueWord.fromJson(json);
+  UnitVocabularyWord fromJson(Map<String, Object?> json) {
+    return UnitVocabularyWord.fromJson(json);
   }
 }
 
 /// @nodoc
-const $CueWord = _$CueWordTearOff();
+const $UnitVocabularyWord = _$UnitVocabularyWordTearOff();
 
 /// @nodoc
-mixin _$CueWord {
-  bool get isSuccess => throw _privateConstructorUsedError;
-  String get errorCode => throw _privateConstructorUsedError;
-  String get resultMessage => throw _privateConstructorUsedError;
+mixin _$UnitVocabularyWord {
   String get wordId => throw _privateConstructorUsedError;
   String get word => throw _privateConstructorUsedError;
   bool get bookMarked => throw _privateConstructorUsedError;
   bool get isKnow => throw _privateConstructorUsedError;
-  RootWordInfo get rootWordInfo => throw _privateConstructorUsedError;
   WordType get wordType => throw _privateConstructorUsedError;
   List<Translation> get translation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CueWordCopyWith<CueWord> get copyWith => throw _privateConstructorUsedError;
+  $UnitVocabularyWordCopyWith<UnitVocabularyWord> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CueWordCopyWith<$Res> {
-  factory $CueWordCopyWith(CueWord value, $Res Function(CueWord) then) =
-      _$CueWordCopyWithImpl<$Res>;
+abstract class $UnitVocabularyWordCopyWith<$Res> {
+  factory $UnitVocabularyWordCopyWith(
+          UnitVocabularyWord value, $Res Function(UnitVocabularyWord) then) =
+      _$UnitVocabularyWordCopyWithImpl<$Res>;
   $Res call(
-      {bool isSuccess,
-      String errorCode,
-      String resultMessage,
-      String wordId,
+      {String wordId,
       String word,
       bool bookMarked,
       bool isKnow,
-      RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation});
 
-  $RootWordInfoCopyWith<$Res> get rootWordInfo;
   $WordTypeCopyWith<$Res> get wordType;
 }
 
 /// @nodoc
-class _$CueWordCopyWithImpl<$Res> implements $CueWordCopyWith<$Res> {
-  _$CueWordCopyWithImpl(this._value, this._then);
+class _$UnitVocabularyWordCopyWithImpl<$Res>
+    implements $UnitVocabularyWordCopyWith<$Res> {
+  _$UnitVocabularyWordCopyWithImpl(this._value, this._then);
 
-  final CueWord _value;
+  final UnitVocabularyWord _value;
   // ignore: unused_field
-  final $Res Function(CueWord) _then;
+  final $Res Function(UnitVocabularyWord) _then;
 
   @override
   $Res call({
-    Object? isSuccess = freezed,
-    Object? errorCode = freezed,
-    Object? resultMessage = freezed,
     Object? wordId = freezed,
     Object? word = freezed,
     Object? bookMarked = freezed,
     Object? isKnow = freezed,
-    Object? rootWordInfo = freezed,
     Object? wordType = freezed,
     Object? translation = freezed,
   }) {
     return _then(_value.copyWith(
-      isSuccess: isSuccess == freezed
-          ? _value.isSuccess
-          : isSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorCode: errorCode == freezed
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      resultMessage: resultMessage == freezed
-          ? _value.resultMessage
-          : resultMessage // ignore: cast_nullable_to_non_nullable
-              as String,
       wordId: wordId == freezed
           ? _value.wordId
           : wordId // ignore: cast_nullable_to_non_nullable
@@ -143,10 +108,6 @@ class _$CueWordCopyWithImpl<$Res> implements $CueWordCopyWith<$Res> {
           ? _value.isKnow
           : isKnow // ignore: cast_nullable_to_non_nullable
               as bool,
-      rootWordInfo: rootWordInfo == freezed
-          ? _value.rootWordInfo
-          : rootWordInfo // ignore: cast_nullable_to_non_nullable
-              as RootWordInfo,
       wordType: wordType == freezed
           ? _value.wordType
           : wordType // ignore: cast_nullable_to_non_nullable
@@ -159,13 +120,6 @@ class _$CueWordCopyWithImpl<$Res> implements $CueWordCopyWith<$Res> {
   }
 
   @override
-  $RootWordInfoCopyWith<$Res> get rootWordInfo {
-    return $RootWordInfoCopyWith<$Res>(_value.rootWordInfo, (value) {
-      return _then(_value.copyWith(rootWordInfo: value));
-    });
-  }
-
-  @override
   $WordTypeCopyWith<$Res> get wordType {
     return $WordTypeCopyWith<$Res>(_value.wordType, (value) {
       return _then(_value.copyWith(wordType: value));
@@ -174,63 +128,45 @@ class _$CueWordCopyWithImpl<$Res> implements $CueWordCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$CueWordCopyWith<$Res> implements $CueWordCopyWith<$Res> {
-  factory _$CueWordCopyWith(_CueWord value, $Res Function(_CueWord) then) =
-      __$CueWordCopyWithImpl<$Res>;
+abstract class _$UnitVocabularyWordCopyWith<$Res>
+    implements $UnitVocabularyWordCopyWith<$Res> {
+  factory _$UnitVocabularyWordCopyWith(
+          _UnitVocabularyWord value, $Res Function(_UnitVocabularyWord) then) =
+      __$UnitVocabularyWordCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool isSuccess,
-      String errorCode,
-      String resultMessage,
-      String wordId,
+      {String wordId,
       String word,
       bool bookMarked,
       bool isKnow,
-      RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation});
 
-  @override
-  $RootWordInfoCopyWith<$Res> get rootWordInfo;
   @override
   $WordTypeCopyWith<$Res> get wordType;
 }
 
 /// @nodoc
-class __$CueWordCopyWithImpl<$Res> extends _$CueWordCopyWithImpl<$Res>
-    implements _$CueWordCopyWith<$Res> {
-  __$CueWordCopyWithImpl(_CueWord _value, $Res Function(_CueWord) _then)
-      : super(_value, (v) => _then(v as _CueWord));
+class __$UnitVocabularyWordCopyWithImpl<$Res>
+    extends _$UnitVocabularyWordCopyWithImpl<$Res>
+    implements _$UnitVocabularyWordCopyWith<$Res> {
+  __$UnitVocabularyWordCopyWithImpl(
+      _UnitVocabularyWord _value, $Res Function(_UnitVocabularyWord) _then)
+      : super(_value, (v) => _then(v as _UnitVocabularyWord));
 
   @override
-  _CueWord get _value => super._value as _CueWord;
+  _UnitVocabularyWord get _value => super._value as _UnitVocabularyWord;
 
   @override
   $Res call({
-    Object? isSuccess = freezed,
-    Object? errorCode = freezed,
-    Object? resultMessage = freezed,
     Object? wordId = freezed,
     Object? word = freezed,
     Object? bookMarked = freezed,
     Object? isKnow = freezed,
-    Object? rootWordInfo = freezed,
     Object? wordType = freezed,
     Object? translation = freezed,
   }) {
-    return _then(_CueWord(
-      isSuccess == freezed
-          ? _value.isSuccess
-          : isSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorCode == freezed
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      resultMessage == freezed
-          ? _value.resultMessage
-          : resultMessage // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_UnitVocabularyWord(
       wordId == freezed
           ? _value.wordId
           : wordId // ignore: cast_nullable_to_non_nullable
@@ -247,10 +183,6 @@ class __$CueWordCopyWithImpl<$Res> extends _$CueWordCopyWithImpl<$Res>
           ? _value.isKnow
           : isKnow // ignore: cast_nullable_to_non_nullable
               as bool,
-      rootWordInfo == freezed
-          ? _value.rootWordInfo
-          : rootWordInfo // ignore: cast_nullable_to_non_nullable
-              as RootWordInfo,
       wordType == freezed
           ? _value.wordType
           : wordType // ignore: cast_nullable_to_non_nullable
@@ -265,28 +197,13 @@ class __$CueWordCopyWithImpl<$Res> extends _$CueWordCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CueWord implements _CueWord {
-  _$_CueWord(
-      this.isSuccess,
-      this.errorCode,
-      this.resultMessage,
-      this.wordId,
-      this.word,
-      this.bookMarked,
-      this.isKnow,
-      this.rootWordInfo,
-      this.wordType,
-      this.translation);
+class _$_UnitVocabularyWord implements _UnitVocabularyWord {
+  _$_UnitVocabularyWord(this.wordId, this.word, this.bookMarked, this.isKnow,
+      this.wordType, this.translation);
 
-  factory _$_CueWord.fromJson(Map<String, dynamic> json) =>
-      _$$_CueWordFromJson(json);
+  factory _$_UnitVocabularyWord.fromJson(Map<String, dynamic> json) =>
+      _$$_UnitVocabularyWordFromJson(json);
 
-  @override
-  final bool isSuccess;
-  @override
-  final String errorCode;
-  @override
-  final String resultMessage;
   @override
   final String wordId;
   @override
@@ -296,33 +213,25 @@ class _$_CueWord implements _CueWord {
   @override
   final bool isKnow;
   @override
-  final RootWordInfo rootWordInfo;
-  @override
   final WordType wordType;
   @override
   final List<Translation> translation;
 
   @override
   String toString() {
-    return 'CueWord(isSuccess: $isSuccess, errorCode: $errorCode, resultMessage: $resultMessage, wordId: $wordId, word: $word, bookMarked: $bookMarked, isKnow: $isKnow, rootWordInfo: $rootWordInfo, wordType: $wordType, translation: $translation)';
+    return 'UnitVocabularyWord(wordId: $wordId, word: $word, bookMarked: $bookMarked, isKnow: $isKnow, wordType: $wordType, translation: $translation)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CueWord &&
-            const DeepCollectionEquality().equals(other.isSuccess, isSuccess) &&
-            const DeepCollectionEquality().equals(other.errorCode, errorCode) &&
-            const DeepCollectionEquality()
-                .equals(other.resultMessage, resultMessage) &&
+            other is _UnitVocabularyWord &&
             const DeepCollectionEquality().equals(other.wordId, wordId) &&
             const DeepCollectionEquality().equals(other.word, word) &&
             const DeepCollectionEquality()
                 .equals(other.bookMarked, bookMarked) &&
             const DeepCollectionEquality().equals(other.isKnow, isKnow) &&
-            const DeepCollectionEquality()
-                .equals(other.rootWordInfo, rootWordInfo) &&
             const DeepCollectionEquality().equals(other.wordType, wordType) &&
             const DeepCollectionEquality()
                 .equals(other.translation, translation));
@@ -331,49 +240,36 @@ class _$_CueWord implements _CueWord {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(isSuccess),
-      const DeepCollectionEquality().hash(errorCode),
-      const DeepCollectionEquality().hash(resultMessage),
       const DeepCollectionEquality().hash(wordId),
       const DeepCollectionEquality().hash(word),
       const DeepCollectionEquality().hash(bookMarked),
       const DeepCollectionEquality().hash(isKnow),
-      const DeepCollectionEquality().hash(rootWordInfo),
       const DeepCollectionEquality().hash(wordType),
       const DeepCollectionEquality().hash(translation));
 
   @JsonKey(ignore: true)
   @override
-  _$CueWordCopyWith<_CueWord> get copyWith =>
-      __$CueWordCopyWithImpl<_CueWord>(this, _$identity);
+  _$UnitVocabularyWordCopyWith<_UnitVocabularyWord> get copyWith =>
+      __$UnitVocabularyWordCopyWithImpl<_UnitVocabularyWord>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CueWordToJson(this);
+    return _$$_UnitVocabularyWordToJson(this);
   }
 }
 
-abstract class _CueWord implements CueWord {
-  factory _CueWord(
-      bool isSuccess,
-      String errorCode,
-      String resultMessage,
+abstract class _UnitVocabularyWord implements UnitVocabularyWord {
+  factory _UnitVocabularyWord(
       String wordId,
       String word,
       bool bookMarked,
       bool isKnow,
-      RootWordInfo rootWordInfo,
       WordType wordType,
-      List<Translation> translation) = _$_CueWord;
+      List<Translation> translation) = _$_UnitVocabularyWord;
 
-  factory _CueWord.fromJson(Map<String, dynamic> json) = _$_CueWord.fromJson;
+  factory _UnitVocabularyWord.fromJson(Map<String, dynamic> json) =
+      _$_UnitVocabularyWord.fromJson;
 
-  @override
-  bool get isSuccess;
-  @override
-  String get errorCode;
-  @override
-  String get resultMessage;
   @override
   String get wordId;
   @override
@@ -383,13 +279,11 @@ abstract class _CueWord implements CueWord {
   @override
   bool get isKnow;
   @override
-  RootWordInfo get rootWordInfo;
-  @override
   WordType get wordType;
   @override
   List<Translation> get translation;
   @override
   @JsonKey(ignore: true)
-  _$CueWordCopyWith<_CueWord> get copyWith =>
+  _$UnitVocabularyWordCopyWith<_UnitVocabularyWord> get copyWith =>
       throw _privateConstructorUsedError;
 }
