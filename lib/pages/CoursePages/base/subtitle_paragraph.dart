@@ -59,7 +59,10 @@ class _CueTexteState extends State<SubtitleParagraph> {
           word.word,
           key: globalKey,
           style: const TextStyle(
-              color: colorSecondary, fontSize: 18, fontWeight: FontWeight.w800),
+              fontFamily: 'Roboto',
+              color: colorPrimary,
+              fontSize: 18,
+              fontWeight: FontWeight.w800),
         ),
       ),
     );

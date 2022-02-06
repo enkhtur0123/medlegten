@@ -7,10 +7,7 @@ class MixedVideohelper {
     int i = 0;
     for (var cue in unitIntroVideo.cue) {
       retList.add(CParagraph(
-          cue.cueId,
-          i++,
-          cue.toLangTranslation + ' ' + cue.toLangTranslation,
-          cue.fromLangTranslation + ' ' + cue.fromLangTranslation,
+          cue.cueId, i++, cue.toLangTranslation, cue.fromLangTranslation,
           startTime: cue.startTime,
           endTime: cue.endTime,
           grammarIsHighLighted: cue.grammarIsHighLighted,

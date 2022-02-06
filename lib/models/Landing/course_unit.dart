@@ -11,7 +11,7 @@ class CourseUnit with _$CourseUnit {
       String unitNumber,
       String unitName,
       String hasTrial,
-      String isActive,
+      bool isCompleted,
       String minToWatch) = _CourseUnit;
 
   factory CourseUnit.fromJson(Map<String, dynamic> json) =>

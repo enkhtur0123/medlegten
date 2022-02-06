@@ -43,7 +43,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   late final isMon = ValueNotifier<bool>(true)..addListener(_listener);
   int prevCueId = -1;
   late final refreshCue = ValueNotifier<bool>(false)..addListener(_listener2);
-  double maxExtent = 50;
+  double maxExtent = 60;
 
   void _listener() {
     setMaxExtent();
@@ -216,10 +216,10 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       physics:
                           const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
                       itemExtent: maxExtent,
-                      useMagnifier: true,
-                      overAndUnderCenterOpacity: 0.3,
-                      magnification: 1.03, // голын item нь илүү том харагдах
-                      perspective: 0.001,
+                      //useMagnifier: true,
+                      //overAndUnderCenterOpacity: 0.4,
+                      //magnification: 1.01, // голын item нь илүү том харагдах
+                      //perspective: 0.001,
                       controller: _fixedExtentScrollController,
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
