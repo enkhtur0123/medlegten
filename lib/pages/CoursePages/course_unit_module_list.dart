@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
@@ -134,80 +133,81 @@ class CourseUnitModuleListPage extends HookWidget {
     );
   }
 
-Widget gradientButton(String caption, Function() whenTap) {
-  return SizedBox(
-    height: 52,
-    width: double.infinity, // <-- match_parent
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromRGBO(68, 129, 235, 1),
-              Color.fromRGBO(68, 129, 235, 0.8),
-              Color.fromRGBO(68, 129, 235, 1),
-            ],
-            stops: [0.0, .5, 1.0],
+  Widget gradientButton(String caption, Function() whenTap) {
+    return SizedBox(
+      height: 52,
+      width: double.infinity, // <-- match_parent
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromRGBO(68, 129, 235, 1),
+                Color.fromRGBO(68, 129, 235, 0.8),
+                Color.fromRGBO(68, 129, 235, 1),
+              ],
+              stops: [0.0, .5, 1.0],
+            ),
           ),
-        ),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.transparent,
-            onSurface: Colors.transparent,
-            shadowColor: Colors.transparent,
-          ),
-          onPressed: whenTap,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.bookmark,
-                color: Color(0xffffffff),
-                size: 20,
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Text(
-                caption,
-                style: const TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xffffffff)),
-                textAlign: TextAlign.center,
-              ),
-            ],
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.transparent,
+              onSurface: Colors.transparent,
+              shadowColor: Colors.transparent,
+            ),
+            onPressed: whenTap,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.bookmark,
+                  color: Color(0xffffffff),
+                  size: 20,
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  caption,
+                  style: const TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xffffffff)),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget buildTimeline(
-    CourseUnitModuleList data, int idx, int isLast, BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 40),
-    child: SizedBox(
-      width: double.infinity,
-      height: 70,
-      child: TimelineTile(
-        axis: TimelineAxis.vertical,
-        hasIndicator: true,
-        isFirst: isLast == 0,
-        isLast: isLast == 1,
-        indicatorStyle: IndicatorStyle(
-          indicator: Container(
-            decoration: const BoxDecoration(
-              border: Border.fromBorderSide(
-                BorderSide(
-                  color: colorPrimary,
+  Widget buildTimeline(
+      CourseUnitModuleList data, int idx, int isLast, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 40),
+      child: SizedBox(
+        width: double.infinity,
+        height: 70,
+        child: TimelineTile(
+          axis: TimelineAxis.vertical,
+          hasIndicator: true,
+          isFirst: isLast == 0,
+          isLast: isLast == 1,
+          indicatorStyle: IndicatorStyle(
+            indicator: Container(
+              decoration: const BoxDecoration(
+                border: Border.fromBorderSide(
+                  BorderSide(
+                    color: colorPrimary,
+                  ),
                 ),
                 color: colorPrimary,
                 shape: BoxShape.circle,
@@ -246,13 +246,14 @@ Widget buildTimeline(
                     }
                     break;
 
-                case "3":
-                  {
-                    UnitRepository().getMixedVideo(data.moduleId).then(
-                        (value) => AutoRouter.of(context).push(MixedVideoRoute(
-                            unitMixedVideo: value!, url: value.url)));
-                  }
-                  break;
+                  case "3":
+                    {
+                      UnitRepository().getMixedVideo(data.moduleId).then(
+                          (value) => AutoRouter.of(context).push(
+                              MixedVideoRoute(
+                                  unitMixedVideo: value!, url: value.url)));
+                    }
+                    break;
 
                   case "4":
                     {
@@ -269,8 +270,8 @@ Widget buildTimeline(
                               moduleId: data.moduleId,
                               moduleTypeid: data.moduleTypeId)
                           .then((value) {
-                        AutoRouter.of(context)  
-                            .push(ModuleListenRoute(unitInfo: unitInfo,listeningQuiz: value));
+                        AutoRouter.of(context).push(ModuleListenRoute(
+                            unitInfo: unitInfo, listeningQuiz: value));
                       });
                     }
                     break;
@@ -284,21 +285,12 @@ Widget buildTimeline(
                   case "7":
                     {
                       // Conversation video
-                      UnitRepository().getMixedVideo('1001').then((value) =>
-                          AutoRouter.of(context).push(ConversationVideoRoute(
-                              unitIntroVideo: value!, url: value.url)));
+                      UnitRepository().getConversationVideo('1001').then(
+                          (value) => AutoRouter.of(context).push(
+                              ConversationVideoRoute(
+                                  unitIntroVideo: value!, url: value.url)));
                     }
                     break;
-
-                case "7":
-                  {
-                    // Conversation video
-                    UnitRepository().getConversationVideo('1001').then(
-                        (value) => AutoRouter.of(context).push(
-                            ConversationVideoRoute(
-                                unitIntroVideo: value!, url: value.url)));
-                  }
-                  break;
 
                   default:
                     {
@@ -317,6 +309,6 @@ Widget buildTimeline(
           ),
         ),
       ),
-    ));
+    );
   }
 }
