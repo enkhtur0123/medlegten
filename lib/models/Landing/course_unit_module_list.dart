@@ -11,7 +11,9 @@ class CourseUnitModuleList with _$CourseUnitModuleList {
       String moduleId,
       String moduleTypeId,
       String moduleTypeName,
-      String mandatory) = _CourseUnitModuleList;
+      String mandatory,
+      bool isCompleted,
+      bool isUpcoming) = _CourseUnitModuleList;
 
   factory CourseUnitModuleList.fromJson(Map<String, dynamic> json) =>
       _$CourseUnitModuleListFromJson(json);

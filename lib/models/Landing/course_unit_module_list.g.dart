@@ -15,6 +15,8 @@ _$_CourseUnitModuleList _$$_CourseUnitModuleListFromJson(
       json['moduleTypeId'] as String,
       json['moduleTypeName'] as String,
       json['mandatory'] as String,
+      json['isCompleted'] as bool,
+      json['isUpcoming'] as bool,
     );
 
 Map<String, dynamic> _$$_CourseUnitModuleListToJson(
@@ -26,4 +28,6 @@ Map<String, dynamic> _$$_CourseUnitModuleListToJson(
       'moduleTypeId': instance.moduleTypeId,
       'moduleTypeName': instance.moduleTypeName,
       'mandatory': instance.mandatory,
+      'isCompleted': instance.isCompleted,
+      'isUpcoming': instance.isUpcoming,
     };

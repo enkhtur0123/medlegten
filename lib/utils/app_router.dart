@@ -18,7 +18,7 @@ import 'package:medlegten/pages/CoursePages/Unit_reading/reading_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_vocabolary/vocabulary_list.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/module_writing.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
-import 'package:medlegten/pages/CoursePages/course_unit_module_list.dart';
+import 'package:medlegten/pages/CoursePages/course_unit_module_list/course_unit_module_list.dart';
 import 'package:medlegten/pages/CoursePages/courses/course_detail.dart';
 import 'package:medlegten/pages/CoursePages/payment/buy_course.dart';
 import 'package:medlegten/pages/CoursePages/payment/qpay_page.dart';

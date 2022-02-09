@@ -22,8 +22,15 @@ CourseUnitModuleList _$CourseUnitModuleListFromJson(Map<String, dynamic> json) {
 class _$CourseUnitModuleListTearOff {
   const _$CourseUnitModuleListTearOff();
 
-  _CourseUnitModuleList call(String id, String unitId, String moduleId,
-      String moduleTypeId, String moduleTypeName, String mandatory) {
+  _CourseUnitModuleList call(
+      String id,
+      String unitId,
+      String moduleId,
+      String moduleTypeId,
+      String moduleTypeName,
+      String mandatory,
+      bool isCompleted,
+      bool isUpcoming) {
     return _CourseUnitModuleList(
       id,
       unitId,
@@ -31,6 +38,8 @@ class _$CourseUnitModuleListTearOff {
       moduleTypeId,
       moduleTypeName,
       mandatory,
+      isCompleted,
+      isUpcoming,
     );
   }
 
@@ -50,6 +59,8 @@ mixin _$CourseUnitModuleList {
   String get moduleTypeId => throw _privateConstructorUsedError;
   String get moduleTypeName => throw _privateConstructorUsedError;
   String get mandatory => throw _privateConstructorUsedError;
+  bool get isCompleted => throw _privateConstructorUsedError;
+  bool get isUpcoming => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -68,7 +79,9 @@ abstract class $CourseUnitModuleListCopyWith<$Res> {
       String moduleId,
       String moduleTypeId,
       String moduleTypeName,
-      String mandatory});
+      String mandatory,
+      bool isCompleted,
+      bool isUpcoming});
 }
 
 /// @nodoc
@@ -88,6 +101,8 @@ class _$CourseUnitModuleListCopyWithImpl<$Res>
     Object? moduleTypeId = freezed,
     Object? moduleTypeName = freezed,
     Object? mandatory = freezed,
+    Object? isCompleted = freezed,
+    Object? isUpcoming = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -114,6 +129,14 @@ class _$CourseUnitModuleListCopyWithImpl<$Res>
           ? _value.mandatory
           : mandatory // ignore: cast_nullable_to_non_nullable
               as String,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isUpcoming: isUpcoming == freezed
+          ? _value.isUpcoming
+          : isUpcoming // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -131,7 +154,9 @@ abstract class _$CourseUnitModuleListCopyWith<$Res>
       String moduleId,
       String moduleTypeId,
       String moduleTypeName,
-      String mandatory});
+      String mandatory,
+      bool isCompleted,
+      bool isUpcoming});
 }
 
 /// @nodoc
@@ -153,6 +178,8 @@ class __$CourseUnitModuleListCopyWithImpl<$Res>
     Object? moduleTypeId = freezed,
     Object? moduleTypeName = freezed,
     Object? mandatory = freezed,
+    Object? isCompleted = freezed,
+    Object? isUpcoming = freezed,
   }) {
     return _then(_CourseUnitModuleList(
       id == freezed
@@ -179,6 +206,14 @@ class __$CourseUnitModuleListCopyWithImpl<$Res>
           ? _value.mandatory
           : mandatory // ignore: cast_nullable_to_non_nullable
               as String,
+      isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isUpcoming == freezed
+          ? _value.isUpcoming
+          : isUpcoming // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -186,8 +221,15 @@ class __$CourseUnitModuleListCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CourseUnitModuleList implements _CourseUnitModuleList {
-  _$_CourseUnitModuleList(this.id, this.unitId, this.moduleId,
-      this.moduleTypeId, this.moduleTypeName, this.mandatory);
+  _$_CourseUnitModuleList(
+      this.id,
+      this.unitId,
+      this.moduleId,
+      this.moduleTypeId,
+      this.moduleTypeName,
+      this.mandatory,
+      this.isCompleted,
+      this.isUpcoming);
 
   factory _$_CourseUnitModuleList.fromJson(Map<String, dynamic> json) =>
       _$$_CourseUnitModuleListFromJson(json);
@@ -204,10 +246,14 @@ class _$_CourseUnitModuleList implements _CourseUnitModuleList {
   final String moduleTypeName;
   @override
   final String mandatory;
+  @override
+  final bool isCompleted;
+  @override
+  final bool isUpcoming;
 
   @override
   String toString() {
-    return 'CourseUnitModuleList(id: $id, unitId: $unitId, moduleId: $moduleId, moduleTypeId: $moduleTypeId, moduleTypeName: $moduleTypeName, mandatory: $mandatory)';
+    return 'CourseUnitModuleList(id: $id, unitId: $unitId, moduleId: $moduleId, moduleTypeId: $moduleTypeId, moduleTypeName: $moduleTypeName, mandatory: $mandatory, isCompleted: $isCompleted, isUpcoming: $isUpcoming)';
   }
 
   @override
@@ -222,7 +268,11 @@ class _$_CourseUnitModuleList implements _CourseUnitModuleList {
                 .equals(other.moduleTypeId, moduleTypeId) &&
             const DeepCollectionEquality()
                 .equals(other.moduleTypeName, moduleTypeName) &&
-            const DeepCollectionEquality().equals(other.mandatory, mandatory));
+            const DeepCollectionEquality().equals(other.mandatory, mandatory) &&
+            const DeepCollectionEquality()
+                .equals(other.isCompleted, isCompleted) &&
+            const DeepCollectionEquality()
+                .equals(other.isUpcoming, isUpcoming));
   }
 
   @override
@@ -233,7 +283,9 @@ class _$_CourseUnitModuleList implements _CourseUnitModuleList {
       const DeepCollectionEquality().hash(moduleId),
       const DeepCollectionEquality().hash(moduleTypeId),
       const DeepCollectionEquality().hash(moduleTypeName),
-      const DeepCollectionEquality().hash(mandatory));
+      const DeepCollectionEquality().hash(mandatory),
+      const DeepCollectionEquality().hash(isCompleted),
+      const DeepCollectionEquality().hash(isUpcoming));
 
   @JsonKey(ignore: true)
   @override
@@ -254,7 +306,9 @@ abstract class _CourseUnitModuleList implements CourseUnitModuleList {
       String moduleId,
       String moduleTypeId,
       String moduleTypeName,
-      String mandatory) = _$_CourseUnitModuleList;
+      String mandatory,
+      bool isCompleted,
+      bool isUpcoming) = _$_CourseUnitModuleList;
 
   factory _CourseUnitModuleList.fromJson(Map<String, dynamic> json) =
       _$_CourseUnitModuleList.fromJson;
@@ -271,6 +325,10 @@ abstract class _CourseUnitModuleList implements CourseUnitModuleList {
   String get moduleTypeName;
   @override
   String get mandatory;
+  @override
+  bool get isCompleted;
+  @override
+  bool get isUpcoming;
   @override
   @JsonKey(ignore: true)
   _$CourseUnitModuleListCopyWith<_CourseUnitModuleList> get copyWith =>
