@@ -4,6 +4,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 class PreliminaryTest extends StatelessWidget {
   const PreliminaryTest({Key? key}) : super(key: key);
@@ -28,10 +29,13 @@ class PreliminaryTest extends StatelessWidget {
               ),
             ),
           ),
-          WideButton('Start Quiz', ColorTable.color120_100_254,
-              ColorTable.color255_255_255, () {
-            AutoRouter.of(context).push(CourseSelfTestRoute());
-          }, horizontalEdge: 0),
+          CustomOutlinedButton(
+            height: 50,
+            text: "Шалгалт өгөх",
+            color:secondaryColor,onTap: (){
+                AutoRouter.of(context).push(CourseSelfTestRoute());
+
+          },)
         ],
       ),
     );

@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/themes/style.dart';
+
 // ignore: must_be_immutable
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends ConsumerStatefulWidget
+    implements PreferredSizeWidget {
   final Widget? child;
   final double height;
   bool? isRichText;
@@ -19,9 +22,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.text2 = "",
     this.text3,
   }) : super(key: key);
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return CustomAppBarState();
+  }
 
   @override
   Size get preferredSize => Size.fromHeight(height);
+}
+
+class CustomAppBarState extends ConsumerState<CustomAppBar> {
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: secondaryColor,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
-      height: preferredSize.height,
+      height: Size.fromHeight(widget.height).height,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 25, top: 40),
       child: Column(
@@ -76,11 +86,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           const SizedBox(
             height: 10,
           ),
-          isRichText!
+          widget.isRichText!
               ? RichText(
                   maxLines: 2,
                   text: TextSpan(
-                    text: text1,
+                    text: widget.text1,
                     style: const TextStyle(
                         color: Color(0xffC7C9D9),
                         fontSize: 14,
@@ -88,10 +98,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         fontWeight: FontWeight.normal),
                     children: <TextSpan>[
                       TextSpan(
-                        text: text2,
+                        text: widget.text2,
                       ),
                       TextSpan(
-                          text: text3,
+                          text: widget.text3,
                           style: const TextStyle(
                               color: Color(0xff1AE5EF),
                               fontStyle: FontStyle.normal,
@@ -100,7 +110,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 )
               : Text(
-                  text1!,
+                  widget.text1!,
                   style: const TextStyle(
                       color: Color(0xffC7C9D9),
                       fontSize: 14,

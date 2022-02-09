@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LandingHome extends StatelessWidget {
+class LandingHome extends ConsumerStatefulWidget {
   const LandingHome({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return LandingHomeState();
+  }
+}
+
+class LandingHomeState extends ConsumerState<LandingHome> {
   @override
   Widget build(BuildContext context) {
     return Column(
