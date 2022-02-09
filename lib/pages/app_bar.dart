@@ -2,25 +2,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
 
 // ignore: must_be_immutable
 class CustomAppBar extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
   final Widget? child;
-  final double height;
-  bool? isRichText;
   String? text1;
   String? text2;
   String? text3;
+  WidgetRef? ref;
   CustomAppBar({
     Key? key,
     this.child,
-    this.height = kToolbarHeight,
-    this.isRichText = false,
     this.text1 = "",
     this.text2 = "",
     this.text3,
+    this.ref
   }) : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -28,10 +27,19 @@ class CustomAppBar extends ConsumerStatefulWidget
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(height);
+  Size get preferredSize => Size.fromHeight(ref!.read(appbarProvider.notifier).height);
 }
 
 class CustomAppBarState extends ConsumerState<CustomAppBar> {
+  bool? isRichText;
+  double? height;
+
+  @override
+  void initState() {
+    super.initState();
+    isRichText = ref.read(appbarProvider.notifier).isRichText;
+    height = ref.read(appbarProvider.notifier).height;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +48,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
           color: secondaryColor,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
-      height: Size.fromHeight(widget.height).height,
+      height: Size.fromHeight(height!).height,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 25, top: 40),
       child: Column(
@@ -86,7 +94,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
           const SizedBox(
             height: 10,
           ),
-          widget.isRichText!
+          isRichText!
               ? RichText(
                   maxLines: 2,
                   text: TextSpan(

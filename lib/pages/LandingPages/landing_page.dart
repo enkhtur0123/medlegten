@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
 import 'package:medlegten/pages/app_bar.dart';
+import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'landing_home.dart';
 
@@ -20,6 +20,7 @@ class LandingPage extends ConsumerStatefulWidget {
 class LandingPageState extends ConsumerState<LandingPage>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
+  // ignore: prefer_final_fields
   ValueNotifier<int>? _index = ValueNotifier(0);
 
   List<Widget> get pages => [
@@ -38,6 +39,14 @@ class LandingPageState extends ConsumerState<LandingPage>
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
+    tabController!.addListener(() {
+      if (tabController!.indexIsChanging) {
+        if (tabController!.index != 0) {
+          ref.read(appbarProvider.notifier).changeIsRichText(value: false);
+          ref.read(appbarProvider.notifier).changeHeight(height: 90);
+        }
+      }
+    });
   }
 
   @override
@@ -46,11 +55,11 @@ class LandingPageState extends ConsumerState<LandingPage>
 
     return Scaffold(
       appBar: CustomAppBar(
-        height: 130,
-        isRichText: true,
-        text1: "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
+        text1:
+            "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
         text2: "Today’s Goal:",
         text3: ' A1 UNIT - Reading',
+        ref: ref,
       ),
       backgroundColor: Colors.white,
       body: DefaultTabController(

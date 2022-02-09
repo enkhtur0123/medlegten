@@ -19,7 +19,6 @@ class UnitCart extends HookWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        // unitInfo!.hasTrial==0  free :price
         if (unitInfo!.hasTrial == "0" || courseInfo!.isPurchased) {
           AutoRouter.of(context)
               .push(CourseUnitModuleListRoute(unitInfo: unitInfo!));

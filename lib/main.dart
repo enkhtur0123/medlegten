@@ -61,7 +61,7 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
                 location: '/',
               ),
             ),
-            debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: true,
             title: 'Мэдлэгтэн',
             theme: appTheme,
             builder: FlutterSmartDialog.init(),

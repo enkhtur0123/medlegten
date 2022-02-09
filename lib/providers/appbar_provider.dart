@@ -8,13 +8,25 @@ final appbarProvider =
     StateNotifierProvider<AppBarViewModel, AppBarState>((ref) {
   return AppBarViewModel();
 });
-  
+
 class AppBarViewModel extends StateNotifier<AppBarState> {
   AppBarViewModel() : super(AppBarState.Home);
+
+  bool? isRichText = true;
+  String? title = "";
+  double height = 130;
 
   AppBarState get appBarState => state;
 
   changeStatus(AppBarState status) async {
     state = status;
+  }
+
+  changeHeight({double? height}) {
+    height = height;
+  }
+
+  changeIsRichText({bool? value}) {
+    isRichText = value;
   }
 }
