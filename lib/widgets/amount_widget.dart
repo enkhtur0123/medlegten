@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlegten/common/colors.dart';
@@ -27,7 +25,7 @@ class AmountWidget extends StatelessWidget {
         toMoney(amount ?? 0),
         style: TextStyle(
             color: color ?? colorPrimary,
-            fontStyle: fontStyle??FontStyle.normal,
+            fontStyle: fontStyle ?? FontStyle.normal,
             fontWeight: fontWeight ?? FontWeight.w700,
             fontSize: fontSize ?? 23,
             fontFamily: 'Arial'),

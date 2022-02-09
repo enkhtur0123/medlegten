@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/components/loading.dart';
-import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_subtitle.dart';

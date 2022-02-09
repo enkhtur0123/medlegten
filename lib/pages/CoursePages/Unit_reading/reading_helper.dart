@@ -9,13 +9,15 @@ class ReadingHelper {
 
   static List<CParagraph> convert(Reading reading) {
     List<CParagraph> retList = [];
-    for (int i = 0; i < 20; i++) {
-      for (var cue in reading.cue) {
-        retList.add(CParagraph(cue.cueId, int.parse(cue.ordering),
-            cue.fromLangTranslation, cue.toLangTranslation,
-            words: convertWords(cue.words)));
-      }
+
+    for (var cue in reading.cue) {
+      retList.add(CParagraph(cue.cueId, int.parse(cue.ordering),
+          cue.fromLangTranslation, cue.toLangTranslation,
+          grammarDescription: cue.grammarDescription,
+          grammarIsHighLighted: cue.grammarIsHighLighted,
+          words: convertWords(cue.words)));
     }
+
     return retList;
   }
 

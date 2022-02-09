@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
@@ -48,7 +47,8 @@ class LandingPageState extends ConsumerState<LandingPage>
       appBar: CustomAppBar(
         height: 130,
         isRichText: true,
-        text1: "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
+        text1:
+            "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
         text2: "Today’s Goal:",
         text3: ' A1 UNIT - Reading',
       ),

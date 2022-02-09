@@ -1,68 +1,120 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/video_player_chewie.dart';
-import 'package:medlegten/hooks/useVideoController.dart';
+import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
+import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/utils/global.dart';
+import 'package:video_player/video_player.dart';
 
-typedef UnitGrammarCallback = void Function(String val, int level);
+typedef UnitGrammarCallback = void Function(GrammarAnswerEx asnwer, int level);
 
-class GrammarTablePage extends HookWidget {
+class GrammarTablePage extends StatefulWidget {
   const GrammarTablePage(this.unitGrammar, {Key? key}) : super(key: key);
 
   final UnitGrammar unitGrammar;
+  @override
+  _GrammarTablePageState createState() => _GrammarTablePageState();
+}
+
+class _GrammarTablePageState extends State<GrammarTablePage>
+    with SingleTickerProviderStateMixin {
+  late final Grammarhelper helper = Grammarhelper(widget.unitGrammar);
+  late final refreshView = ValueNotifier<bool>(false)
+    ..addListener(() {
+      setState(() {});
+    });
+  final selectedIndex = [0, 1, 0];
+  late TabController _controller;
+  late VideoPlayerController _videoPlayerController;
+  @override
+  void initState() {
+    _controller =
+        TabController(length: widget.unitGrammar.grammar.length, vsync: this);
+    _videoPlayerController = VideoPlayerController.network(helper.avatarUrl);
+
+    _videoPlayerController
+      ..setLooping(false)
+      ..initialize().then((value) {
+        //WidgetsBinding.instance?.addPostFrameCallback((_) {
+        setState(() {
+          _videoPlayerController.play();
+        });
+        //});
+      });
+
+    _videoPlayerController.addListener(_listener);
+    super.initState();
+  }
+
+  void _listener() {
+    if (_videoPlayerController.value.isPlaying) {
+      var _duration =
+          _videoPlayerController.value.position.inSeconds - selectedIndex[2];
+      if (_duration < 0) {
+        _duration = _videoPlayerController.value.position.inSeconds;
+        selectedIndex[2] = 0;
+      }
+      var blink = helper.getNextAvatarPart(selectedIndex[1]);
+      if (blink <= _duration) {
+        helper.selectedLabelId = selectedIndex[1];
+        selectedIndex[1] = selectedIndex[1] + 1;
+        //dioRepository.snackBar('At seconds: $blink');
+        refreshView.value = !refreshView.value;
+      } else if (helper.selectedLabelId > 0) {
+        helper.selectedLabelId = -1;
+        refreshView.value = !refreshView.value;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Tab> tabs = [];
-    for (var element in unitGrammar.grammar) {
-      tabs.add(Tab(text: element.label));
-    }
-    final _videoPlayerController = useVideoController('assets/avatar.MOV');
-    final _controller = useTabController(initialLength: tabs.length);
-    final refreshView = useState(false);
-    final helper = useMemoized(() => Grammarhelper(unitGrammar));
-    final selectedIndex = useMemoized(() => [0]);
-
-    _controller.addListener(() {
-      refreshView.value = !refreshView.value;
-    });
-
-    List<Widget> listWidget = [];
+    Widget videoWidget = const SizedBox(
+      height: 110,
+      width: 1,
+    );
     if (_videoPlayerController.value.isInitialized) {
-      listWidget.add(SizedBox(
-          height: 90,
-          width: 110,
-          child: VideoPlayerChewie(
-            _videoPlayerController,
-            aspectRatio: 1,
-          )));
-    } else {
-      listWidget.add(const SizedBox(
-        height: 90,
-        width: 110,
-      ));
+      videoWidget = SizedBox(
+          height: 110,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () async {
+              if (_videoPlayerController.value.isPlaying) {
+                _videoPlayerController.pause();
+                selectedIndex[2] =
+                    _videoPlayerController.value.position.inSeconds;
+              } else {
+                //_videoPlayerController.initialize();
+
+                _videoPlayerController.seekTo(Duration.zero);
+                _videoPlayerController.removeListener(_listener);
+                _videoPlayerController.addListener(_listener);
+                selectedIndex[1] = 1;
+                _videoPlayerController.play();
+                refreshView.value = !refreshView.value;
+              }
+            },
+            child: VideoPlayerWidget(
+              controller: _videoPlayerController,
+              height: 110,
+            ),
+          ));
     }
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             addVerticalSpace(20),
-            Text(
-              unitGrammar.grammar[0].grammarNameEng.toUpperCase(),
-              style: const TextStyle(
-                  color: colorPrimary,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14),
-            ),
+            videoWidget,
             addVerticalSpace(20),
             const Align(
               alignment: Alignment.centerLeft,
@@ -74,43 +126,27 @@ class GrammarTablePage extends HookWidget {
                     fontSize: 16),
               ),
             ),
-            Row(children: List.unmodifiable(() sync* {
-              yield* listWidget;
-              yield Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    addVerticalSpace(20),
-                    Text(
-                      helper
-                          .getSentence(unitGrammar.grammar[_controller.index],
-                              helper.selectedAnswers)
-                          .textEng,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: colorBlack,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17),
-                    ),
-                    addVerticalSpace(20),
-                    Text(
-                      helper
-                          .getSentence(unitGrammar.grammar[_controller.index],
-                              helper.selectedAnswers)
-                          .textMon,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: Color.fromRGBO(168, 175, 229, 1),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    addVerticalSpace(25)
-                  ],
-                ),
-              );
-            }())),
+            Text(
+              helper
+                  .getSentence(widget.unitGrammar.grammar[_controller.index])
+                  .textEng,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: colorBlack, fontWeight: FontWeight.w400, fontSize: 17),
+            ),
+            addVerticalSpace(20),
+            Text(
+              helper
+                  .getSentence(widget.unitGrammar.grammar[_controller.index])
+                  .textMon,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Color.fromRGBO(168, 175, 229, 1),
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic),
+            ),
+            addVerticalSpace(20),
             const Divider(
               color: Color.fromRGBO(199, 201, 217, 0.2),
               thickness: 1,
@@ -121,62 +157,73 @@ class GrammarTablePage extends HookWidget {
               child: Text(
                 'Өгүүлбэрийн төрөл сонгох',
                 style: TextStyle(
+                  fontFamily: 'Roboto',
                   color: colorPrimary,
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: TabBar(
-                isScrollable: false,
-                unselectedLabelColor: Colors.black,
-                labelColor: Colors.black,
-                indicatorSize: TabBarIndicatorSize.tab,
-                padding: const EdgeInsets.all(10),
-                indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      20.0,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: SizedBox(
+                width: double.infinity,
+                height: 35,
+                child: TabBar(
+                  isScrollable: false,
+                  unselectedLabelColor: Colors.black,
+                  labelColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorColor: Colors.transparent,
+                  tabs: [
+                    Tab(
+                      child: _buildTab(
+                          text: widget.unitGrammar.grammar[0].label,
+                          isSelected: selectedIndex[0] == 0),
                     ),
-                    border: Border.all(color: Colors.blueAccent),
-                    color: Colors.white),
-                tabs: tabs,
-                controller: _controller,
-                onTap: (index) {
-                  selectedIndex[0] = index;
-                },
+                    Tab(
+                      child: _buildTab(
+                          text: widget.unitGrammar.grammar[1].label,
+                          isSelected: selectedIndex[0] == 1),
+                    ),
+                    Tab(
+                      child: _buildTab(
+                          text: widget.unitGrammar.grammar[2].label,
+                          isSelected: selectedIndex[0] == 2),
+                    ),
+                  ],
+                  controller: _controller,
+                  onTap: (index) {
+                    selectedIndex[0] = index;
+                    refreshView.value = !refreshView.value;
+                  },
+                ),
               ),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 382,
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _controller,
-                children: unitGrammar.grammar.map((grammar) {
-                  if (grammar == unitGrammar.grammar[selectedIndex[0]]) {
-                    return buildTabview(grammar, helper, (val, level) {
-                      // helper.valueKeyList.forEach((key, value) {
-                      //   var prefixNum = helper.grammarIndex(grammar);
-                      //   if (key > level + prefixNum &&
-                      //       key - prefixNum < 10000) {
-                      //     helper.valueKeyList[key] = value + 1;
-                      //   }
-                      // });
-                      if (level == 1) {
-                        helper.selectedAnswers = {};
-                      }
-                      helper.selectedAnswers[level] = val;
-                      helper.selectedGrammar = grammar;
-                      refreshView.value = !refreshView.value;
-                    });
-                  } else {
-                    return Container();
-                  }
-                }).toList(),
-              ),
-            )
+            Flexible(
+              fit: FlexFit.tight,
+              child: buildTabview(
+                  widget.unitGrammar.grammar[selectedIndex[0]], helper,
+                  (answer, level) {
+                var id = helper.grammarIndex(
+                        widget.unitGrammar.grammar[selectedIndex[0]]) +
+                    level;
+                if (level == 1 &&
+                    helper.selectedGrammar ==
+                        widget.unitGrammar.grammar[selectedIndex[0]]) {
+                  helper.selectedAnswers = {};
+                  helper.selectedChips = {};
+                }
+
+                if (helper.selectedAnswers[id] != answer.answer) {
+                  helper.selectedAnswers[id] = answer.answer;
+                  helper.selectedChips[id] = answer.answerId;
+                  helper.selectedGrammar =
+                      widget.unitGrammar.grammar[selectedIndex[0]];
+                  refreshView.value = !refreshView.value;
+                }
+              }),
+            ),
           ],
         ),
       ),
@@ -186,23 +233,19 @@ class GrammarTablePage extends HookWidget {
   Widget buildTabview(
     Grammar grammar,
     Grammarhelper helper,
-    Function(String val, int level) callBack,
+    UnitGrammarCallback callBack,
   ) {
     List<Widget> list = [];
 
     for (int i = 1; i < 7; i++) {
       if (grammar.getPart(i) != null) {
-        list.addAll(buildStructure(
-          grammar,
-          helper,
-          grammar.getPart(i)!,
-          i,
-          callBack,
-        ));
+        list.addAll(
+            buildStructure(grammar, helper, grammar.getPart(i)!, i, callBack));
       }
     }
 
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: list.length,
       itemBuilder: (context, index) {
         return list[index];
@@ -210,53 +253,96 @@ class GrammarTablePage extends HookWidget {
     );
   }
 
-  List<Widget> buildStructure(
-    Grammar grammar,
-    Grammarhelper helper,
-    String partLabel,
-    int partId,
-    Function(String val, int level) callBack,
-  ) {
-    // var keyInner = helper.grammarIndex(grammar) + partId;
-    // if (!helper.valueKeyList.containsKey(key)) {
-    //   helper.valueKeyList[keyInner] = keyInner;
-    // }
-
+  List<Widget> buildStructure(Grammar grammar, Grammarhelper helper,
+      String partLabel, int partId, UnitGrammarCallback callBack) {
     return [
-      buildStructureLabel(partLabel),
-      StructureBody(
-        grammar,
-        helper,
-        partLabel,
-        partId,
-        (val, level) {
-          callBack.call(val, level);
-        },
-      ) //key: ValueKey<int>(helper.valueKeyList[keyInner]!)
+      buildStructureLabel(partLabel, partId == helper.selectedLabelId),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: StructureBody(
+          grammar,
+          helper,
+          partLabel,
+          partId,
+          (val, level) {
+            callBack.call(val, level);
+          },
+        ),
+      )
     ];
   }
 
-  Widget buildStructureLabel(String partLabel) {
+  Widget buildStructureLabel(String partLabel, bool isLight) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Chip(
-        backgroundColor: ColorTable.color255_255_255,
-        elevation: 0.0,
-        shape: const RoundedRectangleBorder(
-            side: BorderSide(color: Colors.white38),
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        label: IntrinsicWidth(
-          stepWidth: 50,
-          child: Center(
-            child: Text(partLabel,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+        decoration: BoxDecoration(
+            border: Border.all(
+                color: isLight
+                    ? const Color.fromRGBO(51, 51, 51, 1)
+                    : const Color.fromRGBO(199, 201, 217, .5)),
+            borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+        child: isLight
+            ? BlinkWidget([
+                Text(
+                  partLabel,
+                  style: const TextStyle(
+                      color: Color.fromRGBO(0, 0, 0, 1),
+                      fontFamily: 'Roboto',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800),
+                ),
+                Text(
+                  partLabel,
+                  style: const TextStyle(
+                      color: Color.fromRGBO(0, 0, 0, 1),
+                      fontFamily: 'Roboto',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500),
+                )
+              ])
+            : Text(
+                partLabel,
                 style: const TextStyle(
-                    color: Color.fromRGBO(51, 51, 51, 1),
+                    color: Color.fromRGBO(0, 0, 0, 1),
                     fontFamily: 'Roboto',
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400)),
-          ),
-        ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
+              ),
       ),
     );
+  }
+
+  _buildTab({required String text, required bool isSelected}) {
+    return isSelected
+        ? PhysicalModel(
+            color: Colors.white,
+            elevation: 2,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              width: GlobalValues.getWidthRelativeToScreen(30),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: const Color.fromRGBO(120, 100, 254, 1),
+                  ),
+                  color: const Color.fromRGBO(255, 255, 255, 1)),
+              //color: color,
+              child: Text(text),
+            ))
+        : PhysicalModel(
+            color: Colors.white,
+            elevation: 2,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              width: GlobalValues.getWidthRelativeToScreen(30),
+              alignment: Alignment.center,
+              child: Text(text),
+            ),
+          );
   }
 }

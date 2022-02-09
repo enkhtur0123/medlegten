@@ -63,7 +63,7 @@ class ReadingPage extends HookWidget {
                         maskColorTemp: Colors.transparent,
                         widget: SizedBox(
                           height: cueWidgetHeight + 20,
-                          width: GlobalValues.screenWidth,
+                          width: GlobalValues.getWidthRelativeToScreen(51),
                           //color: Colors.white60,
                           child: CueWordWidget(word,
                               ppointerPosition: position,

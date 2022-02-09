@@ -1,38 +1,79 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
-import 'package:medlegten/models/Unit/unit_vocabulary.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
 import 'package:medlegten/pages/CoursePages/Unit_vocabolary/vocabulary_card.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/global.dart';
 
-class VocabularyListPage extends HookWidget {
-  final CourseUnit unit;
+class VocabularyListPage extends StatefulWidget {
   const VocabularyListPage(this.unit, {Key? key}) : super(key: key);
+  final CourseUnit unit;
+  @override
+  _VocabularyListPageState createState() => _VocabularyListPageState();
+}
 
-  Future<UnitVocabulary> fetchData() async {
-    var result = await UnitRepository().getUnitVocabulary(unit.unitId);
-    return result!;
+class _VocabularyListPageState extends State<VocabularyListPage> {
+  static const _pageSize = 20;
+  late final isBookmarked = ValueNotifier<bool>(true)..addListener(_listener);
+
+  void _listener() {
+    _pagingController.refresh();
+    setState(() {});
   }
 
-  List<UnitVocabularyWord> getBookMarked(
-      List<UnitVocabularyWord> words, bool isBookmarked) {
-    if (isBookmarked) {
-      return words.where((element) => element.bookMarked == true).toList();
-    } else {
-      return words;
+  // List<UnitVocabularyWord> getBookMarked(
+  //     List<UnitVocabularyWord> words, bool isBookmarked) {
+  //   if (isBookmarked) {
+  //     return words.where((element) => element.bookMarked == true).toList();
+  //   } else {
+  //     return words;
+  //   }
+  // }
+
+  final PagingController<int, UnitVocabularyWord> _pagingController =
+      PagingController(firstPageKey: 1);
+
+  Future<void> fetchPage(int pageKey) async {
+    try {
+      final vocabulary = await UnitRepository().getUnitVocabulary(
+          widget.unit.unitId, pageKey, _pageSize, isBookmarked.value ? 1 : 0);
+      if (vocabulary != null) {
+        final isLastPage = vocabulary.words.length < _pageSize;
+        if (isLastPage) {
+          _pagingController.appendLastPage(vocabulary.words);
+        } else {
+          final nextPageKey = pageKey + 1;
+          _pagingController.appendPage(vocabulary.words, nextPageKey);
+        }
+      } else {
+        _pagingController.appendLastPage(<UnitVocabularyWord>[]);
+      }
+    } catch (error) {
+      _pagingController.error = error;
     }
   }
 
   @override
+  void initState() {
+    isBookmarked.value = false;
+    _pagingController.addPageRequestListener((pageKey) {
+      fetchPage(pageKey);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    isBookmarked.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final future = useMemoized(fetchData);
-    final snapshot = useFuture(future);
-    final isBookmarked = useState(false);
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
@@ -54,23 +95,16 @@ class VocabularyListPage extends HookWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-              child: snapshot.hasData
-                  ? getListView(snapshot.data!.words, isBookmarked.value)
-                  : const Loading(),
+              child: PagedListView<int, UnitVocabularyWord>(
+                pagingController: _pagingController,
+                builderDelegate: PagedChildBuilderDelegate<UnitVocabularyWord>(
+                    itemBuilder: (context, item, index) =>
+                        VocabularyCart(item)),
+              ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget getListView(List<UnitVocabularyWord> words, bool isBookmarked) {
-    var filteredList = getBookMarked(words, isBookmarked);
-    return ListView.builder(
-      itemCount: filteredList.length,
-      itemBuilder: (context, index) {
-        return VocabularyCart(filteredList[index]);
-      },
     );
   }
 
@@ -79,7 +113,7 @@ class VocabularyListPage extends HookWidget {
     return isSelected
         ? SizedBox(
             width: GlobalValues.getWidthRelativeToScreen(
-                40), // GlobalValues.screenWidth / 2.4,
+                20), // GlobalValues.screenWidth / 2.4,
             child: ElevatedButton(
               onPressed: () {},
               child: Text(caption,
@@ -103,7 +137,7 @@ class VocabularyListPage extends HookWidget {
               onSelected.value = !onSelected.value;
             },
             child: SizedBox(
-              width: GlobalValues.getWidthRelativeToScreen(40),
+              width: GlobalValues.getWidthRelativeToScreen(20),
               child: Center(
                 child: Text(
                   caption,
