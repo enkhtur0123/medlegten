@@ -9,13 +9,14 @@ class CustomOutlinedButton extends StatelessWidget {
       this.color,
       this.onTap,
       this.height,
-      this.textAlign})
+      this.textAlign,this.fontSize})
       : super(key: key);
   String? text;
   Function? onTap;
   Color? color;
   double? height;
   TextAlign? textAlign;
+  double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +29,10 @@ class CustomOutlinedButton extends StatelessWidget {
         },
         child: Text(
           text ?? "",
-          style: const TextStyle(
+          style: TextStyle(
               color: colorWhite,
               fontWeight: FontWeight.w500,
-              fontSize: 14,
+              fontSize: fontSize ?? 14,
               fontFamily: 'Roboto'),
           textAlign: textAlign ?? TextAlign.start,
         ),

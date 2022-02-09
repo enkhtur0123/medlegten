@@ -4,8 +4,11 @@ import 'package:medlegten/themes/style.dart';
 
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
+  VoidCallback? previousBtn;
+  VoidCallback? nextBtn;
 
-  const ControlButtons(this.player, {Key? key}) : super(key: key);
+  ControlButtons(this.player, {Key? key, this.nextBtn, this.previousBtn})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +20,15 @@ class ControlButtons extends StatelessWidget {
         StreamBuilder<SequenceState?>(
           stream: player.sequenceStateStream,
           builder: (context, snapshot) => IconButton(
-                icon: const Icon(
-                  Icons.skip_previous,
-                  size: 50,
-                  color: secondaryColor,
-                ),
-                onPressed: player.hasPrevious ? player.seekToPrevious : null,
-              ),
+            icon: const Icon(
+              Icons.skip_previous,
+              size: 50,
+              color: secondaryColor,
+            ),
+            onPressed: () {
+              previousBtn!();
+            },
+          ),
         ),
         StreamBuilder<PlayerState>(
           stream: player.playerStateStream,
@@ -41,15 +46,15 @@ class ControlButtons extends StatelessWidget {
               );
             } else if (playing != true) {
               return Container(
-                decoration: getDecoration(),
-                child: IconButton(
-                icon: const Icon(
-                  Icons.play_arrow,
-                  color: secondaryColor,
-                ),
-                iconSize: 50.0,
-                onPressed: player.play,
-              ));
+                  decoration: getDecoration(),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.play_arrow,
+                      color: secondaryColor,
+                    ),
+                    iconSize: 50.0,
+                    onPressed: player.play,
+                  ));
             } else if (processingState != ProcessingState.completed) {
               return Container(
                   decoration: getDecoration(),
@@ -72,18 +77,22 @@ class ControlButtons extends StatelessWidget {
         ),
         StreamBuilder<SequenceState?>(
           stream: player.sequenceStateStream,
-          builder: (context, snapshot) =>  IconButton(
-            icon: const Icon(Icons.skip_next,size: 50,color: secondaryColor,),
-            onPressed: player.hasNext ? player.seekToNext : null,
+          builder: (context, snapshot) => IconButton(
+            icon: const Icon(
+              Icons.skip_next,
+              size: 50,
+              color: secondaryColor,
+            ),
+            onPressed: () {
+              nextBtn!();
+            },
           ),
-       
         ),
       ],
     );
   }
 
   BoxDecoration getDecoration() {
-    
     return BoxDecoration(
       shape: BoxShape.circle,
       color: const Color(0xffF4F4F4),
