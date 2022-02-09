@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';

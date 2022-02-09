@@ -38,7 +38,7 @@ class CourseUnitModuleListPage extends HookWidget {
     final snapshot = useFuture(future);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: const Text("Courses"),),
       backgroundColor: ColorTable.color255_255_255,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

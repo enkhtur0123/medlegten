@@ -8,7 +8,6 @@ import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/pages/CoursePages/courses/course_cart.dart';
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
-import 'package:medlegten/repositories/payment_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/TextButton.dart';
 
@@ -22,7 +21,7 @@ class CourseList extends HookWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        addVerticalSpace(20),
+        addVerticalSpace(10),
         Align(
             alignment: Alignment.topLeft,
             child: TextButtonWidget(text: 'Courses', onTap: () {})),

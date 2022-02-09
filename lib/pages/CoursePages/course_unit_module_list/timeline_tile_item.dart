@@ -28,11 +28,12 @@ class TimeLineTileItemWidget extends HookWidget {
         height: 70,
         child: TimelineTile(
           beforeLineStyle: LineStyle(
-              color: data!.isUpcoming ? colorPrimary : const Color(0xffA8AFE5),
+              color: data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5),
               thickness: 3),
           afterLineStyle: LineStyle(
               thickness: 3,
-              color: data!.isUpcoming ? colorPrimary : const Color(0xffA8AFE5)),
+              color:
+                  data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5)),
           axis: TimelineAxis.vertical,
           hasIndicator: true,
           isFirst: isLast == 0,
@@ -42,11 +43,12 @@ class TimeLineTileItemWidget extends HookWidget {
               decoration: BoxDecoration(
                 border: Border.fromBorderSide(
                   BorderSide(
-                    color: data!.isUpcoming ? colorPrimary : Colors.transparent,
+                    color:
+                        data!.isCompleted ? colorPrimary : Colors.transparent,
                   ),
                 ),
                 color:
-                    data!.isUpcoming ? colorPrimary : const Color(0xffA8AFE5),
+                    data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5),
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -66,7 +68,7 @@ class TimeLineTileItemWidget extends HookWidget {
             padding: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
-                if (!data!.isUpcoming) {
+                if (data!.isUpcoming || data!.isCompleted) {
                   switch (data!.moduleTypeId) {
                     case "1":
                       {
@@ -140,12 +142,12 @@ class TimeLineTileItemWidget extends HookWidget {
               child: Text(
                 data!.moduleTypeName,
                 style: TextStyle(
-                    color: data!.isUpcoming
+                    color: data!.isCompleted
                         ? colorPrimary
                         : const Color(0xff6573DB),
                     fontStyle: FontStyle.normal,
                     fontWeight:
-                        data!.isUpcoming ? FontWeight.bold : FontWeight.normal,
+                        data!.isCompleted ? FontWeight.bold : FontWeight.normal,
                     fontSize: 16),
               ),
             ),

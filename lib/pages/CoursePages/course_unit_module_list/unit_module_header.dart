@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -19,27 +18,13 @@ class UnitModuleHeader extends HookWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'UNIT ${unitInfo!.unitNumber}: ${unitInfo!.unitName.toUpperCase()}',
-                  style: const TextStyle(
-                      color: colorPrimary,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16),
-                ),
-                addVerticalSpace(8),
-                Row(
-                  children: [
-                    const IconText(Icons.person_outline_outlined, 'Beginner'),
-                    addHorizontalSpace(20),
-                    const IconText(Icons.timer, '16 min'),
-                  ],
-                )
-              ],
+             Text(
+              'UNIT ${unitInfo!.unitNumber}: ${unitInfo!.unitName.toUpperCase()}',
+              style: const TextStyle(
+                  color: colorPrimary,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16),
             ),
             addHorizontalSpace(20),
             CircularPercentIndicator(
