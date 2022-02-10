@@ -31,20 +31,22 @@ class CourseUnitModuleListPage extends HookWidget {
     }
     return listTuple;
   }
-
   @override
   Widget build(BuildContext context) {
-    final future = useMemoized(fetchData);
-    final snapshot = useFuture(future);
-
+    final moduleFuture = useMemoized(fetchData);
+    final moduleSnapshot = useFuture(moduleFuture);
     return Scaffold(
-      appBar: AppBar(title: const Text("Courses"),),
+      appBar: AppBar(
+        title: const Text("Courses"),
+      ),
       backgroundColor: ColorTable.color255_255_255,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          UnitModuleHeader(unitInfo: unitInfo,),
+          UnitModuleHeader(
+            unitInfo: unitInfo,
+          ),
           gradientButton(
             "Үгсийн сан - Unit ${unitInfo.unitNumber}",
             () {
@@ -55,18 +57,18 @@ class CourseUnitModuleListPage extends HookWidget {
             height: 15,
           ),
           Expanded(
-            child: snapshot.hasData
+            child: moduleSnapshot.hasData
                 ? ListView.builder(
-                    itemCount: snapshot.data!.length,
+                    itemCount: moduleSnapshot.data!.length,
                     itemBuilder: (context, index) {
-                      var tuple = snapshot.data![index];
+                      var tuple = moduleSnapshot.data![index];
                       return TimeLineTileItemWidget(
-                        unitInfo: unitInfo,
+                          unitInfo: unitInfo,
                           data: tuple.item2,
                           idx: tuple.item1,
                           isLast: tuple.item1 == 0
                               ? 0
-                              : tuple.item1 == snapshot.data!.length - 1
+                              : tuple.item1 == moduleSnapshot.data!.length - 1
                                   ? 1
                                   : -1);
                     },

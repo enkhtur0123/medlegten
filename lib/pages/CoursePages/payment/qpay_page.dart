@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/repositories/payment_repository.dart';
-import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/dialog/custom_bottom_sheet_dialog.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';

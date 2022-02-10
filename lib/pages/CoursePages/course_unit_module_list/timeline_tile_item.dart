@@ -68,6 +68,8 @@ class TimeLineTileItemWidget extends HookWidget {
             padding: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
+                // print(data!.moduleId);
+                // print(data!.moduleTypeId);
                 if (data!.isUpcoming || data!.isCompleted) {
                   switch (data!.moduleTypeId) {
                     case "1":

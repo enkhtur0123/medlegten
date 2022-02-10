@@ -67,6 +67,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
             return ListenQuizWidget(
               listeningQuiz: widget.listeningQuiz,
               randomColors: randomColors[currentIndex],
+              currentIndex: currentIndex,
             );
           },
         );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:medlegten/models/Landing/unit_complete_percent.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
@@ -13,6 +14,26 @@ import 'package:medlegten/services/http_helper.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
 class UnitRepository {
+  ///course or unit complete
+  Future<UnitCompleteInfo> getUnitCompletePercent(
+      {String? id, String? mode}) async {
+    try {
+      print(id);
+      final res = await HttpHelper().getUrl(url: 'Course/Precent/$id/$mode');
+      if (res['isSuccess']) {
+        return UnitCompleteInfo.fromJson(res);
+      } else {
+        print(res['resultMessage']);
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      print(e.toString());
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
   Future<ListeningQuiz?> getUnitListening(
       {String? moduleId, String? moduleTypeid}) async {
     try {

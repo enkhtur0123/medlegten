@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
+import 'package:medlegten/pages/VideoPage/index.dart';
 import 'package:medlegten/pages/app_bar.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
@@ -26,9 +27,7 @@ class LandingPageState extends ConsumerState<LandingPage>
   List<Widget> get pages => [
         const LandingHome(),
         const LandingCourse(),
-        const Center(
-          child: Text("Index 2", style: TextStyle(color: Colors.black)),
-        ),
+        VideoPage(),
         const Center(
           child: Text("Index 3", style: TextStyle(color: Colors.black)),
         ),
