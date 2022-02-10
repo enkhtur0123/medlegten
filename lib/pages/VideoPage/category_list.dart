@@ -41,7 +41,7 @@ class CategoryPage extends HookWidget {
                     CachedNetworkImage(
                       imageUrl: "https://image.similarpng.com/very-thumbnail/2020/06/Thumb-up-like-icon-social-media-transparent-PNG.png",
                       fit: BoxFit.contain,
-                      width: 15,
+                      width: 20,
                     ),
                     const SizedBox(width: 10),
                     Text(
