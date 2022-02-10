@@ -2,7 +2,17 @@
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-enum AppBarState { Home, Course, Video, Blog, Profile }
+// enum AppBarState { Home, Course, Video, Blog, Profile }
+
+class AppBarState {
+  bool? isRichText;
+  String? title;
+  double? height;
+  String? text1;
+  String? text2;
+  String? text3;
+  AppBarState({this.isRichText = true, this.title, this.height = 130,this.text1,this.text2,this.text3});
+}
 
 final appbarProvider =
     StateNotifierProvider<AppBarViewModel, AppBarState>((ref) {
@@ -10,23 +20,12 @@ final appbarProvider =
 });
 
 class AppBarViewModel extends StateNotifier<AppBarState> {
-  AppBarViewModel() : super(AppBarState.Home);
-
-  bool? isRichText = true;
-  String? title = "";
-  double height = 130;
+  AppBarViewModel() : super(AppBarState());
 
   AppBarState get appBarState => state;
 
+
   changeStatus(AppBarState status) async {
     state = status;
-  }
-
-  changeHeight({double? height}) {
-    height = height;
-  }
-
-  changeIsRichText({bool? value}) {
-    isRichText = value;
   }
 }

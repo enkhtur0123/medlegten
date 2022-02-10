@@ -8,26 +8,25 @@ import 'package:medlegten/themes/style.dart';
 // ignore: must_be_immutable
 class CustomAppBar extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
-  final Widget? child;
   String? text1;
   String? text2;
   String? text3;
   WidgetRef? ref;
-  CustomAppBar({
-    Key? key,
-    this.child,
-    this.text1 = "",
-    this.text2 = "",
-    this.text3,
-    this.ref
-  }) : super(key: key);
+  CustomAppBar(
+      {Key? key,
+      this.text1 = "",
+      this.text2 = "",
+      this.text3,
+      this.ref})
+      : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
     return CustomAppBarState();
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(ref!.read(appbarProvider.notifier).height);
+  Size get preferredSize =>
+      Size.fromHeight(ref!.read(appbarProvider.notifier).appBarState.height!);
 }
 
 class CustomAppBarState extends ConsumerState<CustomAppBar> {
@@ -37,8 +36,6 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
   @override
   void initState() {
     super.initState();
-    isRichText = ref.read(appbarProvider.notifier).isRichText;
-    height = ref.read(appbarProvider.notifier).height;
   }
 
   @override
@@ -48,7 +45,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
           color: secondaryColor,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
-      height: Size.fromHeight(height!).height,
+      height: ref.read(appbarProvider.notifier).appBarState.height,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 25, top: 40),
       child: Column(
@@ -94,11 +91,11 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
           const SizedBox(
             height: 10,
           ),
-          isRichText!
+          ref.read(appbarProvider.notifier).appBarState.isRichText!
               ? RichText(
                   maxLines: 2,
                   text: TextSpan(
-                    text: widget.text1,
+                    text:  ref.read(appbarProvider.notifier).appBarState.text1,
                     style: const TextStyle(
                         color: Color(0xffC7C9D9),
                         fontSize: 14,
@@ -106,10 +103,13 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                         fontWeight: FontWeight.normal),
                     children: <TextSpan>[
                       TextSpan(
-                        text: widget.text2,
+                        text:  ref.read(appbarProvider.notifier).appBarState.text2,
                       ),
                       TextSpan(
-                          text: widget.text3,
+                          text: ref
+                              .read(appbarProvider.notifier)
+                              .appBarState
+                              .text3,
                           style: const TextStyle(
                               color: Color(0xff1AE5EF),
                               fontStyle: FontStyle.normal,
@@ -118,7 +118,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                   ),
                 )
               : Text(
-                  widget.text1!,
+                   ref.read(appbarProvider.notifier).appBarState.text1!,
                   style: const TextStyle(
                       color: Color(0xffC7C9D9),
                       fontSize: 14,

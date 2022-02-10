@@ -39,11 +39,46 @@ class LandingPageState extends ConsumerState<LandingPage>
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
+    ref.read(appbarProvider.notifier).changeStatus(AppBarState(
+          height: 130,
+          isRichText: true,
+          text1:
+              "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
+          text2: "Today’s Goal:",
+          text3: ' A1 UNIT - Reading',
+        ));
     tabController!.addListener(() {
       if (tabController!.indexIsChanging) {
-        if (tabController!.index != 0) {
-          ref.read(appbarProvider.notifier).changeIsRichText(value: false);
-          ref.read(appbarProvider.notifier).changeHeight(height: 90);
+        if (tabController!.index == 0) {
+          ref.read(appbarProvider.notifier).changeStatus(AppBarState(
+                height: 130,
+                isRichText: true,
+                text1:
+                    "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
+                text2: "Today’s Goal:",
+                text3: ' A1 UNIT - Reading',
+              ));
+        }
+        if (tabController!.index == 1) {
+          ref.read(appbarProvider.notifier).changeStatus(AppBarState(
+              height: 110,
+              isRichText: false,
+              text1: "Өнөөдрийн хичээлдээ бэлэн үү? ✍️"));
+        }
+        if (tabController!.index == 2) {
+          ref
+              .read(appbarProvider.notifier)
+              .changeStatus(AppBarState(height: 110, isRichText: false,text1: "Have fun!"));
+        }
+        if (tabController!.index == 3) {
+          ref
+              .read(appbarProvider.notifier)
+              .changeStatus(AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+        }
+        if (tabController!.index == 4) {
+          ref
+              .read(appbarProvider.notifier)
+              .changeStatus(AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
         }
       }
     });
@@ -55,10 +90,6 @@ class LandingPageState extends ConsumerState<LandingPage>
 
     return Scaffold(
       appBar: CustomAppBar(
-        text1:
-            "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
-        text2: "Today’s Goal:",
-        text3: ' A1 UNIT - Reading',
         ref: ref,
       ),
       backgroundColor: Colors.white,
