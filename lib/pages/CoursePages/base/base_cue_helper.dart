@@ -14,7 +14,7 @@ class BaseCueHelper {
       }
     }
 
-    maxHeight = (maxHeight / (style.fontSize ?? 18)).round() * 23;
+    maxHeight = (maxHeight / (style.fontSize ?? 18)).round() * 21;
     if (maxHeight < 50) {
       maxHeight = 50;
     }

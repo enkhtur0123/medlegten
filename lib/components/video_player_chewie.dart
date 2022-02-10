@@ -35,13 +35,6 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
       // showOptions: false,
       allowPlaybackSpeedChanging: true,
       autoPlay: true,
-      overlay: const Center(
-        child: Icon(
-          Icons.play_arrow,
-          color: colorPrimary,
-          size: 40,
-        ),
-      ),
       placeholder: Container(
         color: Colors.white,
         child: const Center(

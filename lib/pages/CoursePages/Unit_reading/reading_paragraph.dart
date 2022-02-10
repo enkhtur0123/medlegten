@@ -4,8 +4,11 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 
 class ReadingParagraph extends BaseSubtitlePage {
   const ReadingParagraph(CParagraph paragraph, SubtitleWordCallback callback,
-      {Key? key})
-      : super(paragraph, pwordCallback: callback, key: key);
+      SubtitleParagraphCallback paragraphCallback, {Key? key})
+      : super(paragraph,
+            pwordCallback: callback,
+            pparagraphCallback: paragraphCallback,
+            key: key);
 
   @override
   _ReadingParagraphState createState() => _ReadingParagraphState();

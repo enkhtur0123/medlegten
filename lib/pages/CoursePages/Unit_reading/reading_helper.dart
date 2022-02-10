@@ -1,11 +1,14 @@
 import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/utils/global.dart';
 
 class ReadingHelper {
   List<CParagraph> paragraphs = [];
   Map<CParagraph, int> valueKeys = <CParagraph, int>{};
   int lastIndex = -1;
+
+  double width = GlobalValues.screenWidth - 80;
 
   static List<CParagraph> convert(Reading reading) {
     List<CParagraph> retList = [];

@@ -5,10 +5,11 @@ import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/drawverticalline.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
-import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/utils/global.dart';
+import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
 
 typedef UnitGrammarCallback = void Function(GrammarAnswerEx asnwer, int level);
@@ -31,6 +32,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   final selectedIndex = [0, 1, 0];
   late TabController _controller;
   late VideoPlayerController _videoPlayerController;
+
   @override
   void initState() {
     _controller =
@@ -48,7 +50,17 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       });
 
     _videoPlayerController.addListener(_listener);
+
+    helper.selectedGrammar = widget.unitGrammar.grammar[0];
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    _controller.dispose();
+    super.dispose();
   }
 
   void _listener() {
@@ -89,8 +101,6 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                 selectedIndex[2] =
                     _videoPlayerController.value.position.inSeconds;
               } else {
-                //_videoPlayerController.initialize();
-
                 _videoPlayerController.seekTo(Duration.zero);
                 _videoPlayerController.removeListener(_listener);
                 _videoPlayerController.addListener(_listener);
@@ -203,26 +213,28 @@ class _GrammarTablePageState extends State<GrammarTablePage>
             Flexible(
               fit: FlexFit.tight,
               child: buildTabview(
-                  widget.unitGrammar.grammar[selectedIndex[0]], helper,
-                  (answer, level) {
-                var id = helper.grammarIndex(
-                        widget.unitGrammar.grammar[selectedIndex[0]]) +
-                    level;
-                if (level == 1 &&
-                    helper.selectedGrammar ==
-                        widget.unitGrammar.grammar[selectedIndex[0]]) {
-                  helper.selectedAnswers = {};
-                  helper.selectedChips = {};
-                }
+                widget.unitGrammar.grammar[selectedIndex[0]],
+                helper,
+                (answer, level) {
+                  var id = helper.grammarIndex(
+                          widget.unitGrammar.grammar[selectedIndex[0]]) +
+                      level;
+                  if (level == 1 &&
+                      helper.selectedGrammar ==
+                          widget.unitGrammar.grammar[selectedIndex[0]]) {
+                    helper.selectedAnswers = {};
+                    helper.selectedChips = {};
+                  }
 
-                if (helper.selectedAnswers[id] != answer.answer) {
-                  helper.selectedAnswers[id] = answer.answer;
-                  helper.selectedChips[id] = answer.answerId;
-                  helper.selectedGrammar =
-                      widget.unitGrammar.grammar[selectedIndex[0]];
-                  refreshView.value = !refreshView.value;
-                }
-              }),
+                  if (helper.selectedAnswers[id] != answer.answer) {
+                    helper.selectedAnswers[id] = answer.answer;
+                    helper.selectedChips[id] = answer.answerId;
+                    helper.selectedGrammar =
+                        widget.unitGrammar.grammar[selectedIndex[0]];
+                    refreshView.value = !refreshView.value;
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -256,24 +268,47 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   List<Widget> buildStructure(Grammar grammar, Grammarhelper helper,
       String partLabel, int partId, UnitGrammarCallback callBack) {
     return [
-      buildStructureLabel(partLabel, partId == helper.selectedLabelId),
+      buildStructureLabel(
+          partLabel, grammar, partId, partId == helper.selectedLabelId),
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: StructureBody(
-          grammar,
-          helper,
-          partLabel,
-          partId,
-          (val, level) {
-            callBack.call(val, level);
-          },
+        padding: EdgeInsets.only(
+            left: (grammar.getPartCount() - 1 == partId ? 10 : 25), right: 10),
+        child: Flexible(
+          fit: FlexFit.tight,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: grammar.getPartCount() - 1 == partId
+                      ? Colors.transparent
+                      : const Color.fromRGBO(199, 201, 217, .5),
+                  width: grammar.getPartCount() - 1 == partId ? 0 : 1,
+                ),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: StructureBody(
+                grammar,
+                helper,
+                partLabel,
+                partId,
+                (val, level) {
+                  callBack.call(val, level);
+                },
+              ),
+            ),
+          ),
         ),
-      )
+      ),
     ];
   }
 
-  Widget buildStructureLabel(String partLabel, bool isLight) {
-    return Align(
+  Widget buildStructureLabel(
+      String partLabel, Grammar grammar, int labelIndex, bool isLight) {
+    final globalKey = GlobalKey();
+    var widget = Align(
+      key: globalKey,
       alignment: Alignment.centerLeft,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
@@ -312,6 +347,8 @@ class _GrammarTablePageState extends State<GrammarTablePage>
               ),
       ),
     );
+    helper.labelWidgets[Tuple2<Grammar, int>(grammar, labelIndex)] = globalKey;
+    return widget;
   }
 
   _buildTab({required String text, required bool isSelected}) {

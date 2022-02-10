@@ -8,19 +8,23 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/message.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 
-const double cueWidgetHeight = 240;
-
 class CueWordWidget extends StatefulWidget {
   const CueWordWidget(this.word,
-      {Key? key, Rect? ppointerPosition, bool? isshadow, bool? istop})
+      {Key? key,
+      Rect? ppointerPosition,
+      bool? isshadow,
+      bool? istop,
+      double? heigHt})
       : pointerPosition = ppointerPosition ?? Rect.zero,
         isShadow = isshadow ?? false,
         isTop = istop ?? true,
+        height = heigHt ?? 220,
         super(key: key);
   final CWord word;
   final Rect pointerPosition;
   final bool isShadow;
   final bool isTop;
+  final double height;
   @override
   _CueWordWidgetState createState() => _CueWordWidgetState();
 }
@@ -53,7 +57,7 @@ class _CueWordWidgetState extends State<CueWordWidget> {
         child: Container(
           color: Colors.white,
           width: messageBoxWidth,
-          height: cueWidgetHeight,
+          height: widget.height,
           child: FutureBuilder<CueWord?>(
             future: UnitRepository().getCueWord(word.wordValue), // async work
             builder: (BuildContext context, AsyncSnapshot<CueWord?> snapshot) {
@@ -98,53 +102,6 @@ class _CueWordWidgetState extends State<CueWordWidget> {
     }
 
     List<Widget> list = [];
-
-    list.add(Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(120, 100, 254, 1),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-                color: const Color.fromRGBO(174, 177, 239, .3), width: 1),
-          ),
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 12, top: 5, right: 12, bottom: 5),
-            child: Text(
-              cueWord.word,
-              style: const TextStyle(
-                  color: colorWhite, fontWeight: FontWeight.w700, fontSize: 16),
-            ),
-          ),
-        ),
-        IconButton(
-          padding: const EdgeInsets.only(bottom: 16),
-          onPressed: () => {},
-          icon: const Icon(
-            Icons.volume_up_outlined,
-            color: Color.fromRGBO(48, 53, 159, 0.8),
-            size: 28.0,
-          ),
-        ),
-        Expanded(child: Container()),
-        IconButton(
-          padding: const EdgeInsets.only(bottom: 16),
-          onPressed: () async {
-            bookMarkResult =
-                await UnitRepository().setBookMark(cueWord.wordId, 0);
-            setState(() {});
-          },
-          icon: Icon(
-            cueWord.bookMarked ? Icons.bookmark : Icons.bookmark_outline_sharp,
-            color: const Color.fromRGBO(48, 53, 159, 0.8),
-            size: 28.0,
-          ),
-        ),
-      ],
-    ));
 
     if (cueWord.rootWordInfo.rootWord != null) {
       list.add(
@@ -215,12 +172,72 @@ class _CueWordWidgetState extends State<CueWordWidget> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: list.length,
-        //separatorBuilder: (BuildContext context, int index) =>
-        //    addVerticalSpace(10),
-        itemBuilder: (context, index) => list[index],
+      child: Column(
+        children: [
+          SizedBox(
+            height: 35,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(120, 100, 254, 1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                        color: const Color.fromRGBO(174, 177, 239, .3),
+                        width: 1),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 12, top: 5, right: 12, bottom: 5),
+                    child: Text(
+                      cueWord.word,
+                      style: const TextStyle(
+                          color: colorWhite,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  onPressed: () => {},
+                  icon: const Icon(
+                    Icons.volume_up_outlined,
+                    color: Color.fromRGBO(48, 53, 159, 0.8),
+                    size: 28.0,
+                  ),
+                ),
+                Expanded(child: Container()),
+                IconButton(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  onPressed: () async {
+                    bookMarkResult =
+                        await UnitRepository().setBookMark(cueWord.wordId, 0);
+                    setState(() {});
+                  },
+                  icon: Icon(
+                    cueWord.bookMarked
+                        ? Icons.bookmark
+                        : Icons.bookmark_outline_sharp,
+                    color: const Color.fromRGBO(48, 53, 159, 0.8),
+                    size: 28.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: list.length,
+              //separatorBuilder: (BuildContext context, int index) =>
+              //    addVerticalSpace(10),
+              itemBuilder: (context, index) => list[index],
+            ),
+          ),
+        ],
       ),
     );
   }

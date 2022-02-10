@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/sentence.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
+import 'package:tuple/tuple.dart';
 
 class Grammarhelper {
   Grammarhelper(this.unitGrammar);
@@ -18,6 +20,7 @@ class Grammarhelper {
   Grammar? selectedGrammar;
   Sentence? selectedSentence;
   int selectedLabelId = -1;
+  Map<Tuple2<Grammar, int>, GlobalKey> labelWidgets = {};
 
   Map<int, int> get avatarParts => {
         1: int.tryParse(unitGrammar.grammar[0].part1) ?? -1,

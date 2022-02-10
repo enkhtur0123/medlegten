@@ -49,4 +49,32 @@ class Grammar with _$Grammar {
     }
     return retVal;
   }
+
+  int getPartCount() {
+    int retVal = 0;
+
+    if (structure.isNotEmpty) {
+      retVal++;
+    }
+    if (structure.isNotEmpty) {
+      retVal++;
+    }
+    if (structure.length > 1) {
+      retVal++;
+    }
+    if (structure.length > 2) {
+      retVal++;
+    }
+    if (structure.length > 3) {
+      retVal++;
+    }
+    if (structure.length > 4) {
+      retVal++;
+    }
+    if (structure.length > 5) {
+      retVal++;
+    }
+
+    return retVal;
+  }
 }

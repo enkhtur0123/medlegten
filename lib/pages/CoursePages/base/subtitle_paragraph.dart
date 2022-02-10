@@ -22,21 +22,23 @@ class SubtitleParagraph extends StatefulWidget {
 class _CueTexteState extends State<SubtitleParagraph> {
   @override
   Widget build(BuildContext context) {
-    bool beforeSpace = false;
+    //bool beforeSpace = false;
     return Align(
       alignment: widget.alignment ?? Alignment.center,
       child: Wrap(
-        alignment: WrapAlignment.center,
+        alignment: widget.alignment == Alignment.center
+            ? WrapAlignment.center
+            : WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: widget.paragraph.words!.map(
           (w) {
             Widget widgetRet;
             if (widget.currentWord != null && widget.currentWord! == w.word) {
               widgetRet = buildTextElevated(w);
-              beforeSpace = true;
+              //beforeSpace = true;
             } else {
-              widgetRet = buildText(w, beforeSpace);
-              beforeSpace = false;
+              widgetRet = buildText(w); //, beforeSpace);
+              //beforeSpace = false;
             }
             return widgetRet;
           },
@@ -71,13 +73,14 @@ class _CueTexteState extends State<SubtitleParagraph> {
     return childWidget;
   }
 
-  Widget buildText(CWord w, bool beforeSpace) {
+  Widget buildText(CWord w) {
+    //, bool beforeSpace
     final globalKey = GlobalKey();
     var childWidget = Text(
-      '${beforeSpace ? ' ' : ''}${w.word}${w.spaceNext == true ? ' ' : ''}',
+      '${w.word}${w.spaceNext == true ? ' ' : ''}', // //'${beforeSpace ? ' ' : ''}$
       key: globalKey,
       style: TextStyle(
-          color: widget.currentIndex == widget.paragraph.ordering - 1
+          color: widget.currentIndex == widget.paragraph.ordering
               ? colorBlack
               : Colors.black54,
           fontSize: 18,
