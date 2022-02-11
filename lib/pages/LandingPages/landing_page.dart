@@ -65,19 +65,16 @@ class LandingPageState extends ConsumerState<LandingPage>
               text1: "Өнөөдрийн хичээлдээ бэлэн үү? ✍️"));
         }
         if (tabController!.index == 2) {
-          ref
-              .read(appbarProvider.notifier)
-              .changeStatus(AppBarState(height: 110, isRichText: false,text1: "Have fun!"));
+          ref.read(appbarProvider.notifier).changeStatus(
+              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
         }
         if (tabController!.index == 3) {
-          ref
-              .read(appbarProvider.notifier)
-              .changeStatus(AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          ref.read(appbarProvider.notifier).changeStatus(
+              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
         }
         if (tabController!.index == 4) {
-          ref
-              .read(appbarProvider.notifier)
-              .changeStatus(AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          ref.read(appbarProvider.notifier).changeStatus(
+              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
         }
       }
     });
