@@ -14,7 +14,7 @@ class ReadingPopUpDialog extends StatelessWidget {
     var _mediaQueryData = MediaQuery.of(context);
     var mediaHeight = _mediaQueryData.size.height -
         (_mediaQueryData.padding.top + _mediaQueryData.padding.bottom);
-    var isTop = mediaHeight - position.top > cueWidgetHeight;
+    var isTop = mediaHeight - position.top > 220;
     //var actualTop = (_mediaQueryData.size.height - cueWidgetHeight) / 2;
     //var edgeInsetTop = (actualTop - ((mediaHeight - position.top) / 2)) / 2;
     return //Dialog(

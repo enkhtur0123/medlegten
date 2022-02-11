@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
-import 'package:medlegten/components/video_player_widget.dart';
+import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/pages/CoursePages/unit/unit_card.dart';
@@ -47,7 +47,7 @@ class _CourseDetailState extends State<CourseDetailPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VideoPlayerWidget(controller: _controller),
+          //VideoPlayerChewie(_controller),
           addVerticalSpace(20),
           CourseIntroWidget(courseInfo: widget.courseInfo),
           const Divider(

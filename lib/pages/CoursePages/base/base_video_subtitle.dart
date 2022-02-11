@@ -40,13 +40,17 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   late FixedExtentScrollController _fixedExtentScrollController;
   var valueKeyList = <CParagraph, int>{};
   String selectedWord = '';
+  int selectedWordParagraphIndex = -1;
   late final isMon = ValueNotifier<bool>(true)..addListener(_listener);
   int prevCueId = -1;
   late final refreshCue = ValueNotifier<bool>(false)..addListener(_listener2);
   double maxExtent = 60;
 
+  Rect? selectedRect;
+  CWord? selectedCWord;
+
   void _listener() {
-    setMaxExtent();
+    //setMaxExtent();
     setState(() {});
   }
 
@@ -63,24 +67,36 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   void initState() {
     _fixedExtentScrollController = FixedExtentScrollController();
 
-    widget.videoPlayerController.addListener(() {
-      if (widget.videoPlayerController.value.isPlaying) {
-        if (isUser == -1) {
-          var _duration = widget.videoPlayerController.value.position;
-          var idx = widget.paragraphs.firstWhereOrNull((element) =>
-              getDuration(element.startTime!) <= _duration &&
-              getDuration(element.endTime!) > _duration);
-          if (idx != null && prevCueId != idx.ordering) {
-            _fixedExtentScrollController.animateToItem(idx.ordering + 1,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.linear);
-            prevCueId = idx.ordering;
-          }
-        }
-      }
-    });
+    widget.videoPlayerController.addListener(videoPlayerListener);
+    //_fixedExtentScrollController.addListener(scrollerListener);
     setMaxExtent();
     super.initState();
+  }
+
+  scrollerListener() {
+    if (selectedWordParagraphIndex != -1) {
+      _fixedExtentScrollController.animateToItem(selectedWordParagraphIndex,
+          duration: const Duration(milliseconds: 100), curve: Curves.linear);
+
+      selectedWordParagraphIndex = -1;
+    }
+  }
+
+  videoPlayerListener() {
+    if (widget.videoPlayerController.value.isPlaying) {
+      if (isUser == -1) {
+        var _duration = widget.videoPlayerController.value.position;
+        var idx = widget.paragraphs.firstWhereOrNull((element) =>
+            getDuration(element.startTime!) <= _duration &&
+            getDuration(element.endTime!) > _duration);
+        if (idx != null && prevCueId != idx.ordering) {
+          _fixedExtentScrollController.animateToItem(idx.ordering,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.linear);
+          prevCueId = idx.ordering;
+        }
+      }
+    }
   }
 
   @override
@@ -153,39 +169,54 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: GestureDetector(
-              // onLongPress: () {
-              //   if (widget.videoPlayerController.value.isPlaying) {
-              //     widget.videoPlayerController.pause();
-              //   }
-              // },
+              onLongPress: () {
+                if (widget.videoPlayerController.value.isPlaying) {
+                  widget.videoPlayerController.pause();
+                }
+                // if (selectedCWord != null && selectedRect != null) {
+                //   widget.wordCallback!(selectedCWord!, selectedRect!);
+                //   refreshCue.value = !refreshCue.value;
+
+                //   selectedCWord = null;
+                //   selectedRect = null;
+                // }
+              },
               onTapDown: (TapDownDetails details) {
-                if (widget.wordCallback != null && isMon.value == false) {
-                  var position = details.globalPosition;
-                  if (currentIndex > -1 &&
-                      currentIndex < widget.paragraphs.length) {
-                    var cue = widget.paragraphs[currentIndex];
-                    for (var entry in cueWidgets[cue]!.entries) {
-                      var rect = entry.value.item1.globalPaintBounds!;
-                      if (rect.contains(position)) {
-                        if (widget.videoPlayerController.value.isPlaying) {
-                          widget.videoPlayerController.pause();
+                selectedWordParagraphIndex = -1;
+                if (!widget.videoPlayerController.value.isPlaying) {
+                  widget.videoPlayerController.pause();
+
+                  if (widget.wordCallback != null && isMon.value == false) {
+                    var position = details.globalPosition;
+                    if (currentIndex > -1 &&
+                        currentIndex < widget.paragraphs.length) {
+                      var cue = widget.paragraphs[currentIndex];
+                      for (var entry in cueWidgets[cue]!.entries) {
+                        var rect = entry.value.item1.globalPaintBounds!;
+                        if (rect.contains(position) &&
+                            entry.key.wordValue != '') {
+                          selectedWord = entry.key.word;
+                          selectedWordParagraphIndex = currentIndex;
+                          valueKeyList[cue] = valueKeyList[cue]! + 1;
+                          selectedRect = rect;
+                          selectedCWord = entry.key;
+                          widget.wordCallback!(selectedCWord!, selectedRect!);
+                          refreshCue.value = !refreshCue.value;
+                          break;
                         }
-                        selectedWord = entry.key.word;
-                        valueKeyList[cue] = valueKeyList[cue]! + 1;
-                        widget.wordCallback!(entry.key, rect);
-                        refreshCue.value = !refreshCue.value;
-                        break;
-                      } else {
-                        widget.wordCallback!(null, Rect.zero);
+                        // else {
+                        //   widget.wordCallback!(null, Rect.zero);
+                        // }
                       }
                     }
-                  } else {
-                    widget.wordCallback!(null, Rect.zero);
+                    // else {
+                    //   widget.wordCallback!(null, Rect.zero);
+                    // }
                   }
                 }
               },
               child: SizedBox(
-                height: maxExtent * 3 + 20,
+                height: maxExtent * 3 + 15,
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (scrollNotification) {
                     if (scrollNotification is UserScrollNotification) {
@@ -197,11 +228,13 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                     } else if (scrollNotification is ScrollEndNotification &&
                         isUser == 1) {
                       isUser = 0;
+                      //widget.videoPlayerController.removeListener(listener);
                       widget.videoPlayerController.seekTo(getDuration(
                           widget.paragraphs[currentIndex].startTime!));
-                      //if (widget.videoPlayerController.value.isPlaying == false) {
-                      //  widget.videoPlayerController.play();
-                      //}
+                      //widget.videoPlayerController.addListener(listener);
+                      if (!widget.videoPlayerController.value.isPlaying) {
+                        widget.videoPlayerController.play();
+                      }
                     }
                     return false;
                   },
@@ -217,12 +250,15 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                           const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
                       itemExtent: maxExtent,
                       useMagnifier: false,
-                      overAndUnderCenterOpacity: 0.4,
-                      magnification: 1, // голын item нь илүү том харагдах
-                      //perspective: 0.001,
+                      //overAndUnderCenterOpacity: 0.5,
+                      diameterRatio: 50,
+                      magnification: 1.01, // голын item нь илүү том харагдах
+                      perspective: 0.001,
                       controller: _fixedExtentScrollController,
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
+                        //print(
+                        //    'currentIndex: ${widget.paragraphs[index].engText}');
                         if (!widget.videoPlayerController.value.isPlaying &&
                             widget.paragraphCallback != null) {
                           widget.paragraphCallback!(widget.paragraphs[index]);
@@ -237,6 +273,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                                   ? widget.paragraphs[index]
                                   : null);
                         }
+
+                        refreshCue.value = !refreshCue.value;
                       },
                       childDelegate: ListWheelChildBuilderDelegate(
                         builder: (context, index) => buildParagraph(
@@ -268,15 +306,16 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
       valueKeyList[paragraph] = 0;
     }
     var widget = isMon
-        ? getTextWidget(paragraph.monText, paragraph)
+        ? getTextWidget(paragraph.monText, paragraph, isSelectedIndex)
         : paragraph.words != null
             ? SubtitleParagraph(
                 paragraph,
                 currentIndex,
                 key: ValueKey<int>(valueKeyList[paragraph]!),
                 currentWord: isSelectedIndex ? selectedWord : null,
+                alignment: Alignment.center,
               )
-            : getTextWidget(paragraph.engText, paragraph);
+            : getTextWidget(paragraph.engText, paragraph, true);
 
     if (widget is SubtitleParagraph) {
       cueWidgets[paragraph] = widget.wordWidgets;
@@ -284,11 +323,16 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     return widget;
   }
 
-  Widget getTextWidget(String caption, CParagraph paragraph) {
+  Widget getTextWidget(String caption, CParagraph paragraph, bool isSelected) {
     return Center(
       child: Text(
         caption,
-        style: subtitleTextStyle,
+        style: isSelected
+            ? subtitleTextStyle
+            : const TextStyle(
+                color: Colors.black54,
+                fontSize: 18,
+                fontWeight: FontWeight.w400),
         textAlign: TextAlign.center,
       ),
     );

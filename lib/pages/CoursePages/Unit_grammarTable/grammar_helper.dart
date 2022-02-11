@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/sentence.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
@@ -6,11 +7,34 @@ import 'package:tuple/tuple.dart';
 class Grammarhelper {
   Grammarhelper(this.unitGrammar);
   UnitGrammar unitGrammar;
+
+  // Map<int, String> selectedAnswersCombined() {
+  //   return {}
+  //     ..addAll(selectedAnswers)
+  //     ..addAll(selectedAnswersAuto);
+  // }
+
   //Map<int, int> valueKeyList = {};
   Map<int, String> selectedAnswers = {};
-  Map<Tuple2<Grammar, int>, int> selectedChips = {};
+  Map<int, int> selectedChips = {};
   Grammar? selectedGrammar;
   Sentence? selectedSentence;
+  int selectedLabelId = -1;
+  Map<Tuple2<Grammar, int>, GlobalKey> labelWidgets = {};
+
+  Map<int, int> get avatarParts => {
+        1: int.tryParse(unitGrammar.grammar[0].part1) ?? -1,
+        2: int.tryParse(unitGrammar.grammar[0].part2) ?? -1,
+        3: int.tryParse(unitGrammar.grammar[0].part3) ?? -1,
+        4: int.tryParse(unitGrammar.grammar[0].part4) ?? -1,
+        5: int.tryParse(unitGrammar.grammar[0].part5) ?? -1,
+        6: int.tryParse(unitGrammar.grammar[0].part6) ?? -1,
+      };
+  String get avatarUrl => unitGrammar.grammar[0].avatar;
+  int getNextAvatarPart(int id) {
+    return avatarParts[id]!;
+  }
+
   List<String> get getPartNames {
     List<String> retVal = [];
 
@@ -21,13 +45,18 @@ class Grammarhelper {
     return retVal;
   }
 
-  Sentence getSentence(Grammar grammar, Map<int, String> selectedAnswers) {
+  Sentence getSentence(Grammar grammar) {
     List<String> _partNames = [];
-    selectedAnswers.forEach((key, value) {
-      if (key < selectedAnswers.length + 1) {
-        _partNames.add(value);
-      }
-    });
+    var prefixNumber = grammarIndex(grammar);
+    selectedAnswers.keys.toList()
+      ..sort()
+      ..forEach((key) {
+        if (key > prefixNumber && key < prefixNumber + 9999) {
+          //  if (key < prefixNumber + selectedAnswers.length + 6) {
+          _partNames.add(selectedAnswers[key]!);
+          //  }
+        }
+      });
     Sentence? firstSentence;
     List<Sentence> sentences = [];
     for (var sentence in unitGrammar.sentences.where((sentence) =>
@@ -36,13 +65,13 @@ class Grammarhelper {
       if (selectedGrammar != null &&
           selectedSentence != null &&
           selectedGrammar != grammar) {
-        if (selectedSentence!.group == sentence.group) {
+        if (selectedSentence!.groupNumber == sentence.groupNumber) {
           sentences.add(sentence);
         }
       } else {
         if (_partNames.isNotEmpty) {
           bool add = true;
-          for (int i = 1; i < 11; i++) {
+          for (int i = 1; i < 7; i++) {
             if (_partNames.length > i - 1 &&
                 sentence.getPart(i) != null &&
                 _partNames[i - 1] != '' &&
@@ -77,14 +106,18 @@ class Grammarhelper {
     return i * 10000;
   }
 
-  List<GrammarAnswerEx> getPartStructureNames(
-      Grammar grammar, int partId, Map<int, String> selectedAnswers) {
+  List<GrammarAnswerEx> getPartStructureNames(Grammar grammar, int partId) {
     List<String> _partNames = [];
-    selectedAnswers.forEach((key, value) {
-      if (key < partId) {
-        _partNames.add(value);
-      }
-    });
+    var prefixNumber = grammarIndex(grammar);
+    selectedAnswers.keys.toList()
+      ..sort()
+      ..forEach((key) {
+        if (key > prefixNumber && key < prefixNumber + 9999) {
+          if (key < partId + prefixNumber) {
+            _partNames.add(selectedAnswers[key]!);
+          }
+        }
+      });
 
     List<String> retVal = [];
 
@@ -93,8 +126,8 @@ class Grammarhelper {
       if (selectedAnswers.isNotEmpty &&
           selectedGrammar != null &&
           selectedGrammar != grammar) {
-        var selectedSentence = getSentence(selectedGrammar!, selectedAnswers);
-        if (selectedSentence.group != sentence.group) {
+        var selectedSentence = getSentence(selectedGrammar!);
+        if (selectedSentence.groupNumber != sentence.groupNumber) {
           continue;
         } else {
           retVal.add(sentence.getPart(partId)!);
@@ -131,10 +164,45 @@ class Grammarhelper {
 
     return retValEx;
   }
+
+  List<GrammarAnswerEx> getAllPartStructureNames(Grammar grammar, int partId) {
+    List<String> retVal = [];
+
+    for (var sentence in unitGrammar.sentences.where((sentence) =>
+        sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase())) {
+      if (sentence.getPart(partId) != null) {
+        retVal.add(sentence.getPart(partId)!);
+      }
+    }
+
+    var distinctIds = [
+      ...{...retVal}
+    ];
+
+    int i = 0;
+    List<GrammarAnswerEx> retValEx = [];
+    for (var element in distinctIds) {
+      var exElement = GrammarAnswerEx(element);
+      exElement.answerId = i++;
+      retValEx.add(exElement);
+    }
+
+    return retValEx;
+  }
 }
 
 class GrammarAnswerEx {
   GrammarAnswerEx(this.answer);
   String answer;
   int answerId = 0;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GrammarAnswerEx &&
+          runtimeType == other.runtimeType &&
+          answer == other.answer;
+
+  @override
+  int get hashCode => answer.hashCode;
 }

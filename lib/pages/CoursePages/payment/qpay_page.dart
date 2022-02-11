@@ -19,7 +19,7 @@ class QpayPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String,dynamic> body = {
+    Map<String, dynamic> body = {
       "paymentType": "1001",
       "productId": courseInfo!.courseId,
       "price": price,
@@ -147,6 +147,7 @@ class QpayPage extends HookWidget {
       ));
     }
   }
+
   modalBottomSheetMenu({BuildContext? context}) {
     showModalBottomSheet(
         context: context!,

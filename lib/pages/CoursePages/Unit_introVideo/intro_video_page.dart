@@ -23,12 +23,25 @@ class _CourseUnitIntroVideoPageState
     extends BaseVideoPageState<CourseUnitIntroVideoPage> with BaseVideoMixin {
   CWord? word;
   Rect position = Rect.zero;
+  bool bottomIsVisible = false;
   late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false);
   //..addListener(_listener);
 
   // void _listener() {
   //   setState(() {});
   // }
+
+  @override
+  void initState() {
+    super.initState();
+    videoPlayerController.addListener(() {
+      if (videoPlayerController.value.isPlaying && bottomIsVisible) {
+        bottomIsVisible = false;
+        word = null;
+        refreshNotifier.value = !refreshNotifier.value;
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -60,7 +73,7 @@ class _CourseUnitIntroVideoPageState
 
   Widget _showBottomSheet(context, CWord? word, Rect position) {
     if (word == null) return const SizedBox(height: 1);
-
+    bottomIsVisible = true;
     return BottomSheet(
       backgroundColor: colorWhite,
       enableDrag: false,

@@ -7,8 +7,8 @@ class IntroVideohelper {
     List<CParagraph> retList = [];
     int i = 0;
     for (var cue in unitIntroVideo.cue) {
-      retList.add(CParagraph(
-          cue.cueId, i++, cue.toLangTranslation, cue.fromLangTranslation,
+      retList.add(CParagraph(cue.cueId, int.parse(cue.ordering) - 1,
+          cue.toLangTranslation, cue.fromLangTranslation,
           words: convertWords(cue.words),
           startTime: cue.startTime,
           endTime: cue.endTime));

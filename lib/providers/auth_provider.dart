@@ -35,8 +35,11 @@ class AuthViewModel extends StateNotifier<AuthState> {
       } else {
         user = user;
         if (isGoogle != null) {
-          await LoginRepository()
-              .fetchLoginInfo(user: user, isGoogle: isGoogle!,googleSignInAccount: googleSignInAccount,fUser: fUser);
+          await LoginRepository().fetchLoginInfo(
+              user: user,
+              isGoogle: isGoogle!,
+              googleSignInAccount: googleSignInAccount,
+              fUser: fUser);
           _login();
         }
       }
@@ -111,7 +114,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
             idToken: googleSignInAuthentication.idToken);
         _auth.signInWithCredential(credential);
       } else {
-        await LoginRepository().fetchLoginInfo(user: user, isGoogle: isGoogle!,googleSignInAccount: googleSignInAccount);
+        await LoginRepository().fetchLoginInfo(
+            user: user,
+            isGoogle: isGoogle!,
+            googleSignInAccount: googleSignInAccount);
         _login();
       }
     } catch (e) {
@@ -136,7 +142,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
           changeStatus(AuthState.UnAuthorized);
         }
       } else {
-        await LoginRepository().fetchLoginInfo(user: user, isGoogle: isGoogle!,fUser: fUser);
+        await LoginRepository()
+            .fetchLoginInfo(user: user, isGoogle: isGoogle!, fUser: fUser);
         _login();
       }
     } catch (e) {

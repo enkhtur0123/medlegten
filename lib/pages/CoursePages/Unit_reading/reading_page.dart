@@ -7,6 +7,7 @@ import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
+import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/utils/global.dart';
 
@@ -22,6 +23,7 @@ class ReadingPage extends HookWidget {
 
     useEffect(() {
       helper.paragraphs = ReadingHelper.convert(reading);
+      return null;
     }, const []);
 
     return Scaffold(
@@ -41,52 +43,28 @@ class ReadingPage extends HookWidget {
                 if (!helper.valueKeys.containsKey(paragraph)) {
                   helper.valueKeys[paragraph] = 0;
                 }
-                return SizedBox(
-                  height: 40,
-                  child: ReadingParagraph(paragraph, (word, position) {
-                    if (word != null) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: SizedBox(
+                    height: BaseCueHelper().getMaxHeight(
+                        [paragraph],
+                        true,
+                        const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400),
+                        helper.width),
+                    child: ReadingParagraph(paragraph, (word, position) {
                       helper.lastIndex = index;
-                      var isTop = GlobalValues.screenHeight - position.top >
-                          cueWidgetHeight;
-                      SmartDialog.showAttach(
-                        isLoadingTemp: false,
-                        targetContext: null,
-                        target: Offset(
-                            10,
-                            isTop == false
-                                ? position.top - cueWidgetHeight - 30
-                                : position.top + 30),
-                        //isPenetrateTemp: true,
-                        //alignmentTemp: Alignment.bottomCenter,
-                        useSystem: false,
-                        isUseAnimationTemp: false,
-                        maskColorTemp: Colors.transparent,
-                        widget: SizedBox(
-                          height: cueWidgetHeight + 20,
-                          width: GlobalValues.screenWidth,
-                          //color: Colors.white60,
-                          child: CueWordWidget(word,
-                              ppointerPosition: position,
-                              isshadow: true,
-                              istop: isTop),
-                        ),
-                      );
-                      // showDialog(
-                      //     context: context,
-                      //     barrierColor: Colors.transparent,
-                      //     barrierDismissible: true,
-                      //     builder: (BuildContext context) {
-                      //       return ReadingPopUpDialog(word, position);
-                      //     });
-                    }
-                    refreshNotifier.value = !refreshNotifier.value;
-                    if (helper.lastIndex > -1 && helper.lastIndex != index) {
-                      helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
-                          helper.valueKeys[
-                                  helper.paragraphs[helper.lastIndex]]! +
-                              1;
-                    }
-                  }, key: ValueKey<int>(helper.valueKeys[paragraph]!)),
+                      wordCallBack(word, position);
+                      refreshNotifier.value = !refreshNotifier.value;
+                      if (helper.lastIndex > -1 && helper.lastIndex != index) {
+                        helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
+                            helper.valueKeys[
+                                    helper.paragraphs[helper.lastIndex]]! +
+                                1;
+                      }
+                    }, (paragraph) {},
+                        key: ValueKey<int>(helper.valueKeys[paragraph]!)),
+                  ),
                 );
               },
               childCount: helper.paragraphs.length,
@@ -95,6 +73,37 @@ class ReadingPage extends HookWidget {
         ],
       ),
     );
+  }
+
+  void wordCallBack(word, position) {
+    if (word != null) {
+      var isTop = GlobalValues.screenHeight - position.top > 220;
+      SmartDialog.showAttach(
+        isLoadingTemp: false,
+        targetContext: null,
+        target: Offset(
+            10, isTop == false ? position.top - 220 - 30 : position.top + 30),
+        //isPenetrateTemp: true,
+        //alignmentTemp: Alignment.bottomCenter,
+        useSystem: false,
+        isUseAnimationTemp: false,
+        maskColorTemp: Colors.transparent,
+        widget: SizedBox(
+          height: 220 + 20,
+          width: GlobalValues.getWidthRelativeToScreen(51),
+          //color: Colors.white60,
+          child: CueWordWidget(word,
+              ppointerPosition: position, isshadow: true, istop: isTop),
+        ),
+      );
+      // showDialog(
+      //     context: context,
+      //     barrierColor: Colors.transparent,
+      //     barrierDismissible: true,
+      //     builder: (BuildContext context) {
+      //       return ReadingPopUpDialog(word, position);
+      //     });
+    }
   }
 
   Widget maxExtentProtoType() {

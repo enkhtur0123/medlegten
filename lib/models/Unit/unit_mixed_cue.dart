@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 
 part 'unit_mixed_cue.freezed.dart';
 part 'unit_mixed_cue.g.dart';
