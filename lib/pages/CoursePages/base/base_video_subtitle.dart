@@ -183,36 +183,35 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
               },
               onTapDown: (TapDownDetails details) {
                 selectedWordParagraphIndex = -1;
-                if (!widget.videoPlayerController.value.isPlaying) {
-                  widget.videoPlayerController.pause();
-
-                  if (widget.wordCallback != null && isMon.value == false) {
-                    var position = details.globalPosition;
-                    if (currentIndex > -1 &&
-                        currentIndex < widget.paragraphs.length) {
-                      var cue = widget.paragraphs[currentIndex];
-                      for (var entry in cueWidgets[cue]!.entries) {
-                        var rect = entry.value.item1.globalPaintBounds!;
-                        if (rect.contains(position) &&
-                            entry.key.wordValue != '') {
-                          selectedWord = entry.key.word;
-                          selectedWordParagraphIndex = currentIndex;
-                          valueKeyList[cue] = valueKeyList[cue]! + 1;
-                          selectedRect = rect;
-                          selectedCWord = entry.key;
-                          widget.wordCallback!(selectedCWord!, selectedRect!);
-                          refreshCue.value = !refreshCue.value;
-                          break;
+                if (widget.wordCallback != null && isMon.value == false) {
+                  var position = details.globalPosition;
+                  if (currentIndex > -1 &&
+                      currentIndex < widget.paragraphs.length) {
+                    var cue = widget.paragraphs[currentIndex];
+                    for (var entry in cueWidgets[cue]!.entries) {
+                      var rect = entry.value.item1.globalPaintBounds!;
+                      if (rect.contains(position) &&
+                          entry.key.wordValue != '') {
+                        selectedWord = entry.key.word;
+                        selectedWordParagraphIndex = currentIndex;
+                        valueKeyList[cue] = valueKeyList[cue]! + 1;
+                        selectedRect = rect;
+                        selectedCWord = entry.key;
+                        widget.wordCallback!(selectedCWord!, selectedRect!);
+                        if (widget.videoPlayerController.value.isPlaying) {
+                          widget.videoPlayerController.pause();
                         }
-                        // else {
-                        //   widget.wordCallback!(null, Rect.zero);
-                        // }
+                        refreshCue.value = !refreshCue.value;
+                        break;
                       }
+                      // else {
+                      //   widget.wordCallback!(null, Rect.zero);
+                      // }
                     }
-                    // else {
-                    //   widget.wordCallback!(null, Rect.zero);
-                    // }
                   }
+                  // else {
+                  //   widget.wordCallback!(null, Rect.zero);
+                  // }
                 }
               },
               child: SizedBox(
