@@ -22,10 +22,11 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
 class _$CategoryTearOff {
   const _$CategoryTearOff();
 
-  _Category call(String? id, String? name) {
+  _Category call(String? id, String? name, String? imgUrl) {
     return _Category(
       id,
       name,
+      imgUrl,
     );
   }
 
@@ -41,6 +42,7 @@ const $Category = _$CategoryTearOff();
 mixin _$Category {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String? get imgUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +54,7 @@ mixin _$Category {
 abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res>;
-  $Res call({String? id, String? name});
+  $Res call({String? id, String? name, String? imgUrl});
 }
 
 /// @nodoc
@@ -67,6 +69,7 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? imgUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -77,6 +80,10 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      imgUrl: imgUrl == freezed
+          ? _value.imgUrl
+          : imgUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -86,7 +93,7 @@ abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
   factory _$CategoryCopyWith(_Category value, $Res Function(_Category) then) =
       __$CategoryCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String? name});
+  $Res call({String? id, String? name, String? imgUrl});
 }
 
 /// @nodoc
@@ -102,6 +109,7 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? imgUrl = freezed,
   }) {
     return _then(_Category(
       id == freezed
@@ -112,6 +120,10 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      imgUrl == freezed
+          ? _value.imgUrl
+          : imgUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -119,7 +131,7 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Category implements _Category {
-  _$_Category(this.id, this.name);
+  _$_Category(this.id, this.name, this.imgUrl);
 
   factory _$_Category.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryFromJson(json);
@@ -128,10 +140,12 @@ class _$_Category implements _Category {
   final String? id;
   @override
   final String? name;
+  @override
+  final String? imgUrl;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name)';
+    return 'Category(id: $id, name: $name, imgUrl: $imgUrl)';
   }
 
   @override
@@ -140,14 +154,16 @@ class _$_Category implements _Category {
         (other.runtimeType == runtimeType &&
             other is _Category &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.imgUrl, imgUrl));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(imgUrl));
 
   @JsonKey(ignore: true)
   @override
@@ -161,7 +177,7 @@ class _$_Category implements _Category {
 }
 
 abstract class _Category implements Category {
-  factory _Category(String? id, String? name) = _$_Category;
+  factory _Category(String? id, String? name, String? imgUrl) = _$_Category;
 
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
@@ -169,6 +185,8 @@ abstract class _Category implements Category {
   String? get id;
   @override
   String? get name;
+  @override
+  String? get imgUrl;
   @override
   @JsonKey(ignore: true)
   _$CategoryCopyWith<_Category> get copyWith =>

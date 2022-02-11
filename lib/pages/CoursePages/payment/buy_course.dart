@@ -90,7 +90,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
                                   courseInfo: widget.courseInfo,
                                   couponCode: controller.text.toString())
                               .then((value) {
-                            // print(value);
+                          //  if(value["coupon"]["couponCode"]==null || value["coupon"]["price"]==null)
                             couponCode = value["coupon"]["couponCode"];
                             price = value["coupon"]["price"];
                             ScaffoldMessenger.of(context)
@@ -149,7 +149,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
               padding: const EdgeInsets.only(bottom: 100),
               child: Text(infoText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 14,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.normal)));
@@ -163,7 +163,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         color: Colors.white,
         boxShadow: [
           BoxShadow(

@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:medlegten/models/video/category.dart';
+import 'package:medlegten/models/video/level_event.dart';
 import 'package:medlegten/pages/VideoPage/category_list.dart';
+import 'package:medlegten/pages/VideoPage/level_event_list.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 
 class VideoPage extends StatefulWidget {
@@ -14,11 +16,12 @@ class VideoPage extends StatefulWidget {
 
 class VideoPageState extends State<VideoPage> {
   List<Category>? categories = [];
+  List<LevelEvent>? levelEvents;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.max,
       children: [
         FutureBuilder(
             future: VideoRepository().getCategory(),
@@ -29,7 +32,17 @@ class VideoPageState extends State<VideoPage> {
               } else {
                 return Container();
               }
-            })
+            }),
+        FutureBuilder(
+            future: VideoRepository().getLevelEvent(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                levelEvents = snapshot.data as List<LevelEvent>?;
+                return Expanded(child:LevelEventPage(levelEvents: levelEvents));
+              } else {
+                return Container();
+              }
+            }),
       ],
     );
   }

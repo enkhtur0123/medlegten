@@ -6,6 +6,7 @@ import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
+// ignore: must_be_immutable
 class BuyCourseIntroWidget extends StatelessWidget {
   BuyCourseIntroWidget({Key? key,this.courseInfo}) : super(key: key);
   CourseInfo? courseInfo;

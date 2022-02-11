@@ -46,17 +46,23 @@ class UnitModuleHeader extends HookWidget {
                             totalCount: (percentSnapshot.data!.completedCount +
                                 percentSnapshot.data!.unCompletedCount),
                             unCompletedCount:
-                                percentSnapshot.data!.unCompletedCount,fixed: 3)
+                                percentSnapshot.data!.unCompletedCount,
+                            fixed: 3)
                         .toDouble()
                     : 0,
                 center: percentSnapshot.hasData
                     ? Text(
                         (calculatePercent(
-                                totalCount:
-                                    (percentSnapshot.data!.completedCount +
-                                        percentSnapshot.data!.unCompletedCount),
-                                unCompletedCount:
-                                    percentSnapshot.data!.unCompletedCount,fixed: 1)*100).toStringAsFixed(0)+"%",
+                                        totalCount: (percentSnapshot
+                                                .data!.completedCount +
+                                            percentSnapshot
+                                                .data!.unCompletedCount),
+                                        unCompletedCount: percentSnapshot
+                                            .data!.unCompletedCount,
+                                        fixed: 1) *
+                                    100)
+                                .toStringAsFixed(0) +
+                            "%",
                         style: const TextStyle(color: colorPrimary),
                         textAlign: TextAlign.center,
                       )
@@ -78,9 +84,16 @@ class UnitModuleHeader extends HookWidget {
       ],
     );
   }
+
 ////Хувь тооцох
-  double calculatePercent({int? totalCount, int? unCompletedCount,int? fixed=3}) {
-    double percent = ((100 * unCompletedCount!) / totalCount!) / 100;
+  double calculatePercent(
+      {int? totalCount, int? unCompletedCount, int? fixed = 3}) {
+    double percent = ((100 * unCompletedCount!) / totalCount!);
+    if (percent > 0) {
+      percent = percent / 100;
+    } else {
+      return 0;
+    }
     return double.parse(percent.toStringAsFixed(fixed!));
- }
+  }
 }

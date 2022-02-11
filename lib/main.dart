@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -14,6 +15,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+  ///Алдаа гарах үед дуудагдана
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    if (kDebugMode) {
+      return ErrorWidget(details.exception);
+    }
+    return Container(
+      alignment: Alignment.center,
+      child: Text(
+        'Error!\n${details.exception}',
+        style: const TextStyle(color: Colors.yellow),
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+      ),
+    );
+  };
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -32,18 +49,13 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-     WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
     ));
-
   }
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-    //    overlays: [SystemUiOverlay.bottom]);
     return FutureBuilder(
       future: Init.instance.initialize(ref),
       builder: (context, AsyncSnapshot snapshot) {
