@@ -273,30 +273,28 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       Padding(
         padding: EdgeInsets.only(
             left: (grammar.getPartCount() - 1 == partId ? 10 : 25), right: 10),
-        child: Flexible(
-          fit: FlexFit.tight,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  color: grammar.getPartCount() - 1 == partId
-                      ? Colors.transparent
-                      : const Color.fromRGBO(199, 201, 217, .5),
-                  width: grammar.getPartCount() - 1 == partId ? 0 : 1,
-                ),
+        child: Container(
+          width: GlobalValues.screenWidth - 20,
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: grammar.getPartCount() - 1 == partId
+                    ? Colors.transparent
+                    : const Color.fromRGBO(199, 201, 217, .5),
+                width: grammar.getPartCount() - 1 == partId ? 0 : 1,
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: StructureBody(
-                grammar,
-                helper,
-                partLabel,
-                partId,
-                (val, level) {
-                  callBack.call(val, level);
-                },
-              ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: StructureBody(
+              grammar,
+              helper,
+              partLabel,
+              partId,
+              (val, level) {
+                callBack.call(val, level);
+              },
             ),
           ),
         ),

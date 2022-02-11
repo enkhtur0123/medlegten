@@ -237,7 +237,8 @@ class CourseUnitModuleListPage extends HookWidget {
                       UnitRepository().getUnitIntroVideo(data.moduleId).then(
                           (value) => AutoRouter.of(context).push(
                               CourseUnitIntroVideoRoute(
-                                  unitIntroVideo: value!, url: value.url)));
+                                  unitIntroVideo: value!,
+                                  url: 'assets/A1-U1-INTRO.mp4'))); //value.url
                     }
                     break;
                   case "2":

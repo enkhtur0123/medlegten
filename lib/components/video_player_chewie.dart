@@ -1,6 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/components/chewie_custom_controls.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:video_player/video_player.dart';
 
@@ -28,12 +29,13 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
       videoPlayerController: widget.videoPlayerController,
       aspectRatio: widget.videoPlayerController.value.aspectRatio,
       allowFullScreen: false,
-      customControls: Container(),
       allowMuting: false,
       showControls: true,
       showControlsOnInitialize: false,
+      customControls: const ChewieCustomControls(),
       // showOptions: false,
       allowPlaybackSpeedChanging: true,
+      overlay: null,
       autoPlay: true,
       placeholder: Container(
         color: Colors.white,

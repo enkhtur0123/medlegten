@@ -213,8 +213,8 @@ class _CueWordWidgetState extends State<CueWordWidget> {
                 IconButton(
                   padding: const EdgeInsets.only(bottom: 2),
                   onPressed: () async {
-                    bookMarkResult =
-                        await UnitRepository().setBookMark(cueWord.wordId, 0);
+                    bookMarkResult = await UnitRepository().setBookMark(
+                        cueWord.wordId, cueWord.bookMarked ? 1 : 0);
                     setState(() {});
                   },
                   icon: Icon(
