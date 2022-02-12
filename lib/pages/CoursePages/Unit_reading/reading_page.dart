@@ -43,6 +43,9 @@ class _ReadingPageState extends State<ReadingPage> {
   Widget build(BuildContext context) {
     List<Widget> widgetList = [];
     isWidgetIsShown = false;
+
+    widgetList.add(addVerticalSpace(20));
+
     for (int i = 0; i < helper.paragraphs.length; i++) {
       var paragraph = helper.paragraphs[i];
       if (!helper.valueKeys.containsKey(paragraph)) {
@@ -64,11 +67,11 @@ class _ReadingPageState extends State<ReadingPage> {
       appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
       body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverPersistentHeader(
             pinned: true,
-            delegate: MyDynamicHeader(),
+            delegate:
+                MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -85,7 +88,7 @@ class _ReadingPageState extends State<ReadingPage> {
 
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SizedBox(
         height: BaseCueHelper().getMaxHeight(
             [paragraph],
