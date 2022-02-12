@@ -15,7 +15,7 @@ A new Flutter project.
 ## Getting Started
 
 ### Модел дээр өөрчлөлт оруулсан дараах комманд ажиллуулна 
-*** flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs ***
+***flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs***
 
 This project is a starting point for a Flutter application.
 
