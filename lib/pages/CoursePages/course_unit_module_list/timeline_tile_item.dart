@@ -68,8 +68,6 @@ class TimeLineTileItemWidget extends HookWidget {
             padding: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
-                // print(data!.moduleId);
-                // print(data!.moduleTypeId);
                 if (data!.isUpcoming || data!.isCompleted) {
                 switch (data!.moduleTypeId) {
                   case "1":
@@ -77,14 +75,15 @@ class TimeLineTileItemWidget extends HookWidget {
                       UnitRepository().getUnitIntroVideo(data!.moduleId).then(
                           (value) => AutoRouter.of(context).push(
                               CourseUnitIntroVideoRoute(
-                                  unitIntroVideo: value!, url: value.url)));
+                                  unitIntroVideo: value!, url: value.url,moduleId: data!.moduleId)));
                     }
                     break;
                   case "2":
                     {
                       UnitRepository().getUnitGrammar(data!.moduleId).then(
                           (value) => AutoRouter.of(context)
-                              .push(GrammarTableRoute(unitGrammar: value!)));
+                              .push(GrammarTableRoute(unitGrammar: value!,
+                                    moduleId: data!.moduleId)));
                     }
                     break;
 
@@ -93,7 +92,8 @@ class TimeLineTileItemWidget extends HookWidget {
                       UnitRepository().getMixedVideo(data!.moduleId).then(
                           (value) => AutoRouter.of(context).push(
                               MixedVideoRoute(
-                                  unitMixedVideo: value!, url: value.url)));
+                                  unitMixedVideo: value!, url: value.url,
+                                    moduleId: data!.moduleId)));
                     }
                     break;
 
@@ -101,7 +101,7 @@ class TimeLineTileItemWidget extends HookWidget {
                     {
                       UnitRepository().getReading(data!.moduleId).then(
                           (value) => AutoRouter.of(context)
-                              .push(ReadingRoute(reading: value!)));
+                              .push(ReadingRoute(reading: value!, moduleId: data!.moduleId)));
                     }
                     break;
 
@@ -113,7 +113,8 @@ class TimeLineTileItemWidget extends HookWidget {
                               moduleTypeid: data!.moduleTypeId)
                           .then((value) {
                         AutoRouter.of(context).push(ModuleListenRoute(
-                            unitInfo: unitInfo, listeningQuiz: value));
+                            unitInfo: unitInfo, listeningQuiz: value,
+                              moduleId: data!.moduleId));
                       });
                     }
                     break;
@@ -122,7 +123,8 @@ class TimeLineTileItemWidget extends HookWidget {
                       // Writing
                       UnitRepository().getWriting(data!.moduleId).then(
                           (value) => AutoRouter.of(context)
-                              .push(WritingVideoRoute(unitWriting: value!)));
+                              .push(WritingVideoRoute(unitWriting: value!,
+                                    moduleId: data!.moduleId)));
                     }
                     break;
 
@@ -134,7 +136,8 @@ class TimeLineTileItemWidget extends HookWidget {
                           .then((value) {
                         if (value != null) {
                           AutoRouter.of(context).push(ConversationVideoRoute(
-                              unitConversationVideo: value, url: value.url));
+                              unitConversationVideo: value, url: value.url,
+                                moduleId: data!.moduleId));
                         }
                       });
                     }

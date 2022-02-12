@@ -26,11 +26,6 @@ class _CourseUnitIntroVideoPageState
   Rect position = Rect.zero;
   bool bottomIsVisible = false;
   late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false);
-  //..addListener(_listener);
-
-  // void _listener() {
-  //   setState(() {});
-  // }
 
   @override
   void initState() {

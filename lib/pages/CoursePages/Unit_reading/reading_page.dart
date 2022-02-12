@@ -10,10 +10,11 @@ import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:medlegten/utils/global.dart';
 
 class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading, {Key? key,this.moduleId}) : super(key: key);
+  const ReadingPage(this.reading, {Key? key, this.moduleId}) : super(key: key);
 
   final Reading reading;
   final String? moduleId;
@@ -62,7 +63,15 @@ class _ReadingPageState extends State<ReadingPage> {
       }
     }
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          UnitModuleCompletedBtn(
+            moduleId: widget.moduleId,
+            completeBtn: () {},
+            unCompleteBtn: () {},
+          ),
+        ],
+      ),
       backgroundColor: ColorTable.color255_255_255,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),

@@ -7,6 +7,7 @@ import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/card_colors.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/common.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/control_button.dart';
+import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:rxdart/rxdart.dart';
 import 'bottom_sheet_dialog.dart';
 
@@ -128,6 +129,13 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("UNIT ${widget.unitInfo!.unitNumber} - Listening"),
+         actions: [
+          UnitModuleCompletedBtn(
+            moduleId: widget.moduleId,
+            completeBtn: () {},
+            unCompleteBtn: () {},
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
