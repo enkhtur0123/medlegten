@@ -5,7 +5,6 @@ import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
-import 'package:medlegten/pages/CoursePages/Unit_grammarTable/drawverticalline.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
 import 'package:medlegten/utils/global.dart';

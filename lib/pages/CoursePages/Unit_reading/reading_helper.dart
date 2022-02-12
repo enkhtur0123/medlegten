@@ -14,11 +14,13 @@ class ReadingHelper {
     List<CParagraph> retList = [];
 
     for (var cue in reading.cue) {
-      retList.add(CParagraph(cue.cueId, int.parse(cue.ordering),
-          cue.fromLangTranslation, cue.toLangTranslation,
-          grammarDescription: cue.grammarDescription,
-          grammarIsHighLighted: cue.grammarIsHighLighted,
-          words: convertWords(cue.words)));
+      if (cue.words.isNotEmpty) {
+        retList.add(CParagraph(cue.cueId, int.parse(cue.ordering),
+            cue.fromLangTranslation, cue.toLangTranslation,
+            grammarDescription: cue.grammarDescription,
+            grammarIsHighLighted: cue.grammarIsHighLighted,
+            words: convertWords(cue.words)));
+      }
     }
 
     return retList;

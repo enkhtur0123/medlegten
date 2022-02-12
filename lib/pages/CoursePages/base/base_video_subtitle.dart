@@ -39,15 +39,15 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   late FixedExtentScrollController _fixedExtentScrollController;
   var valueKeyList = <CParagraph, int>{};
-  String selectedWord = '';
-  int selectedWordParagraphIndex = -1;
+
   late final isMon = ValueNotifier<bool>(true)..addListener(_listener);
   int prevCueId = -1;
   late final refreshCue = ValueNotifier<bool>(false)..addListener(_listener2);
   double maxExtent = 60;
 
   Rect? selectedRect;
-  CWord? selectedCWord;
+  CWord? selectedWord;
+  int selectedWordParagraphIndex = -1;
 
   void _listener() {
     //setMaxExtent();
@@ -77,7 +77,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     if (selectedWordParagraphIndex != -1) {
       _fixedExtentScrollController.animateToItem(selectedWordParagraphIndex,
           duration: const Duration(milliseconds: 100), curve: Curves.linear);
-
+      selectedWord = null;
       selectedWordParagraphIndex = -1;
     }
   }
@@ -183,36 +183,35 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
               },
               onTapDown: (TapDownDetails details) {
                 selectedWordParagraphIndex = -1;
-                if (!widget.videoPlayerController.value.isPlaying) {
-                  widget.videoPlayerController.pause();
+                if (widget.wordCallback != null && isMon.value == false) {
+                  var position = details.globalPosition;
+                  if (currentIndex > -1 &&
+                      currentIndex < widget.paragraphs.length) {
+                    var cue = widget.paragraphs[currentIndex];
+                    for (var entry in cueWidgets[cue]!.entries) {
+                      var rect = entry.value.item1.globalPaintBounds!;
+                      if (rect.contains(position) &&
+                          entry.key.wordValue != '') {
+                        selectedWord = entry.key;
+                        selectedWordParagraphIndex = currentIndex;
+                        selectedRect = rect;
+                        valueKeyList[cue] = valueKeyList[cue]! + 1;
 
-                  if (widget.wordCallback != null && isMon.value == false) {
-                    var position = details.globalPosition;
-                    if (currentIndex > -1 &&
-                        currentIndex < widget.paragraphs.length) {
-                      var cue = widget.paragraphs[currentIndex];
-                      for (var entry in cueWidgets[cue]!.entries) {
-                        var rect = entry.value.item1.globalPaintBounds!;
-                        if (rect.contains(position) &&
-                            entry.key.wordValue != '') {
-                          selectedWord = entry.key.word;
-                          selectedWordParagraphIndex = currentIndex;
-                          valueKeyList[cue] = valueKeyList[cue]! + 1;
-                          selectedRect = rect;
-                          selectedCWord = entry.key;
-                          widget.wordCallback!(selectedCWord!, selectedRect!);
-                          refreshCue.value = !refreshCue.value;
-                          break;
+                        widget.wordCallback!(selectedWord!, selectedRect!);
+                        if (widget.videoPlayerController.value.isPlaying) {
+                          widget.videoPlayerController.pause();
                         }
-                        // else {
-                        //   widget.wordCallback!(null, Rect.zero);
-                        // }
+                        refreshCue.value = !refreshCue.value;
+                        break;
                       }
+                      // else {
+                      //   widget.wordCallback!(null, Rect.zero);
+                      // }
                     }
-                    // else {
-                    //   widget.wordCallback!(null, Rect.zero);
-                    // }
                   }
+                  // else {
+                  //   widget.wordCallback!(null, Rect.zero);
+                  // }
                 }
               },
               child: SizedBox(
@@ -257,6 +256,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       controller: _fixedExtentScrollController,
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
+                        selectedWord = null;
                         //print(
                         //    'currentIndex: ${widget.paragraphs[index].engText}');
                         if (!widget.videoPlayerController.value.isPlaying &&
@@ -300,7 +300,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
       bool isMon,
       CParagraph paragraph,
       Map<CParagraph, int> valueKeyList,
-      String selectedWord,
+      CWord? selectedWord,
       bool isSelectedIndex) {
     if (!valueKeyList.containsKey(paragraph)) {
       valueKeyList[paragraph] = 0;

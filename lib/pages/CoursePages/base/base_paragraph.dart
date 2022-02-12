@@ -11,14 +11,23 @@ abstract class BaseSubtitlePage extends StatefulWidget {
   const BaseSubtitlePage(this.paragraph,
       {Key? key,
       SubtitleWordCallback? pwordCallback,
-      SubtitleParagraphCallback? pparagraphCallback})
+      SubtitleParagraphCallback? pparagraphCallback,
+      Widget? ptailWidget,
+      SubtitleParagraphCallback? ptailCallback,
+      bool? pselectedParagraph})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
+        tailWidget = ptailWidget,
+        tailCallback = ptailCallback,
+        selectedParagraph = pselectedParagraph,
         super(key: key);
 
   final CParagraph paragraph;
   final SubtitleWordCallback? wordCallback;
   final SubtitleParagraphCallback? paragraphCallback;
+  final Widget? tailWidget;
+  final SubtitleParagraphCallback? tailCallback;
+  final bool? selectedParagraph;
 }
 
 abstract class BaseSubtitleState<Page extends BaseSubtitlePage>
@@ -27,7 +36,7 @@ abstract class BaseSubtitleState<Page extends BaseSubtitlePage>
   int isUser = -1;
 
   Map<CParagraph, Map<CWord, Tuple2<GlobalKey, Widget>>> cueWidgets = {};
-  String selectedWord = '';
+  CWord? selectedWord;
   late final refreshCue = ValueNotifier<bool>(false)..addListener(_listener);
 
   void _listener() {
@@ -47,8 +56,12 @@ mixin BaseSubtitleMixin<Page extends BaseSubtitlePage>
           cueWidgets[paragraph]!.forEach((key, value) {
             var rect = value.item1.globalPaintBounds!;
             if (rect.contains(position)) {
-              selectedWord = key.word;
-              widget.wordCallback!(key, rect);
+              if (key.id == '-1') {
+                widget.tailCallback!(paragraph);
+              } else {
+                selectedWord = key;
+                widget.wordCallback!(key, rect);
+              }
               refreshCue.value = !refreshCue.value;
             } else {
               widget.wordCallback!(null, Rect.zero);
@@ -58,17 +71,18 @@ mixin BaseSubtitleMixin<Page extends BaseSubtitlePage>
           widget.wordCallback!(null, Rect.zero);
         }
       },
-      child: buildParagraph(context, widget.paragraph, selectedWord),
+      child: buildParagraph(context, widget.paragraph, selectedWord,
+          widget.tailWidget, widget.selectedParagraph),
     );
   }
 
-  Widget buildParagraph(context, CParagraph paragraph, String selectedWord) {
-    var widget = SubtitleParagraph(
-      paragraph,
-      currentIndex,
-      currentWord: selectedWord,
-      alignment: Alignment.centerLeft,
-    );
+  Widget buildParagraph(context, CParagraph paragraph, CWord? selectedWord,
+      Widget? tailWidget, bool? selectParagraph) {
+    var widget = SubtitleParagraph(paragraph, currentIndex,
+        currentWord: selectedWord,
+        alignment: Alignment.centerLeft,
+        tailWidget: tailWidget,
+        selectParagraph: selectParagraph);
 
     cueWidgets[paragraph] = widget.wordWidgets;
     return widget;

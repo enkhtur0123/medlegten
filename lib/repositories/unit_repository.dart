@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:medlegten/models/Landing/unit_complete_percent.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
+import 'package:medlegten/models/Unit/unit_conversation_video.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
 import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
+import 'package:medlegten/models/Unit/unit_writing.dart';
 import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
@@ -86,12 +88,12 @@ class UnitRepository {
     }
   }
 
-  Future<UnitIntroVideo?> getConversationVideo(String moduleId) async {
+  Future<UnitConversationVideo?> getConversationVideo(String moduleId) async {
     try {
       final res =
-          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/1');
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/7');
       if (res['isSuccess']) {
-        return UnitIntroVideo.fromJson(res['introVideo']);
+        return UnitConversationVideo.fromJson(res['conversation']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;
@@ -179,6 +181,22 @@ class UnitRepository {
       }
     } catch (e) {
       print(e.toString().toUpperCase());
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return null;
+    }
+  }
+
+  Future<UnitWriting?> getWriting(String moduleId) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/6');
+      if (res['isSuccess']) {
+        return UnitWriting.fromJson(res['writing']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       return null;
     }
