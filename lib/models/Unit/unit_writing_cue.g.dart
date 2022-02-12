@@ -1,45 +1,43 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'unit_mixed_cue.dart';
+part of 'unit_writing_cue.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UnitMixedCueParagraph _$$_UnitMixedCueParagraphFromJson(
+_$_UnitWritingCueParagraph _$$_UnitWritingCueParagraphFromJson(
         Map<String, dynamic> json) =>
-    _$_UnitMixedCueParagraph(
+    _$_UnitWritingCueParagraph(
       json['cueId'] as String,
       json['ordering'] as String,
-      json['startTime'] as String,
-      json['endTime'] as String,
       json['fromLangId'] as String,
       json['fromLangTranslation'] as String,
       json['fromLangIsDefault'] as String,
       json['toLangId'] as String,
       json['toLangTranslation'] as String,
       json['toLangIsDefault'] as String,
-      json['grammarIsHighLighted'] as String,
-      json['grammarDescription'] as String,
-      (json['words'] as List<dynamic>)
-          .map((e) => UnitIntroCueWord.fromJson(e as Map<String, dynamic>))
+      json['missWordRequired'] as String,
+      json['startTime'] as String,
+      json['endTime'] as String,
+      (json['missWords'] as List<dynamic>)
+          .map((e) => UnitWritingCueWord.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_UnitMixedCueParagraphToJson(
-        _$_UnitMixedCueParagraph instance) =>
+Map<String, dynamic> _$$_UnitWritingCueParagraphToJson(
+        _$_UnitWritingCueParagraph instance) =>
     <String, dynamic>{
       'cueId': instance.cueId,
       'ordering': instance.ordering,
-      'startTime': instance.startTime,
-      'endTime': instance.endTime,
       'fromLangId': instance.fromLangId,
       'fromLangTranslation': instance.fromLangTranslation,
       'fromLangIsDefault': instance.fromLangIsDefault,
       'toLangId': instance.toLangId,
       'toLangTranslation': instance.toLangTranslation,
       'toLangIsDefault': instance.toLangIsDefault,
-      'grammarIsHighLighted': instance.grammarIsHighLighted,
-      'grammarDescription': instance.grammarDescription,
-      'words': instance.words,
+      'missWordRequired': instance.missWordRequired,
+      'startTime': instance.startTime,
+      'endTime': instance.endTime,
+      'missWords': instance.missWords,
     };

@@ -70,76 +70,82 @@ class TimeLineTileItemWidget extends HookWidget {
               onTap: () {
                 // print(data!.moduleId);
                 // print(data!.moduleTypeId);
-                if (data!.isUpcoming || data!.isCompleted) {
-                  switch (data!.moduleTypeId) {
-                    case "1":
-                      {
-                        UnitRepository().getUnitIntroVideo(data!.moduleId).then(
-                            (value) => AutoRouter.of(context).push(
-                                CourseUnitIntroVideoRoute(
-                                    unitIntroVideo: value!, url: value.url)));
-                      }
-                      break;
-                    case "2":
-                      {
-                        UnitRepository().getUnitGrammar(data!.moduleId).then(
-                            (value) => AutoRouter.of(context)
-                                .push(GrammarTableRoute(unitGrammar: value!)));
-                      }
-                      break;
+                //if (data!.isUpcoming || data!.isCompleted) {
+                switch (data!.moduleTypeId) {
+                  case "1":
+                    {
+                      UnitRepository().getUnitIntroVideo(data!.moduleId).then(
+                          (value) => AutoRouter.of(context).push(
+                              CourseUnitIntroVideoRoute(
+                                  unitIntroVideo: value!, url: value.url)));
+                    }
+                    break;
+                  case "2":
+                    {
+                      UnitRepository().getUnitGrammar(data!.moduleId).then(
+                          (value) => AutoRouter.of(context)
+                              .push(GrammarTableRoute(unitGrammar: value!)));
+                    }
+                    break;
 
-                    case "3":
-                      {
-                        UnitRepository().getMixedVideo(data!.moduleId).then(
-                            (value) => AutoRouter.of(context).push(
-                                MixedVideoRoute(
-                                    unitMixedVideo: value!, url: value.url)));
-                      }
-                      break;
+                  case "3":
+                    {
+                      UnitRepository().getMixedVideo(data!.moduleId).then(
+                          (value) => AutoRouter.of(context).push(
+                              MixedVideoRoute(
+                                  unitMixedVideo: value!, url: value.url)));
+                    }
+                    break;
 
-                    case "4":
-                      {
-                        UnitRepository().getReading(data!.moduleId).then(
-                            (value) => AutoRouter.of(context)
-                                .push(ReadingRoute(reading: value!)));
-                      }
-                      break;
+                  case "4":
+                    {
+                      UnitRepository().getReading(data!.moduleId).then(
+                          (value) => AutoRouter.of(context)
+                              .push(ReadingRoute(reading: value!)));
+                    }
+                    break;
 
-                    case "5":
-                      {
-                        UnitRepository()
-                            .getUnitListening(
-                                moduleId: data!.moduleId,
-                                moduleTypeid: data!.moduleTypeId)
-                            .then((value) {
-                          AutoRouter.of(context).push(ModuleListenRoute(
-                              unitInfo: unitInfo, listeningQuiz: value));
-                        });
-                      }
-                      break;
-                    case "6":
-                      {
-                        // Writing
-                        AutoRouter.of(context).push(const ModuleWritingRoute());
-                      }
-                      break;
+                  case "5":
+                    {
+                      UnitRepository()
+                          .getUnitListening(
+                              moduleId: data!.moduleId,
+                              moduleTypeid: data!.moduleTypeId)
+                          .then((value) {
+                        AutoRouter.of(context).push(ModuleListenRoute(
+                            unitInfo: unitInfo, listeningQuiz: value));
+                      });
+                    }
+                    break;
+                  case "6":
+                    {
+                      // Writing
+                      UnitRepository().getWriting(data!.moduleId).then(
+                          (value) => AutoRouter.of(context)
+                              .push(WritingVideoRoute(unitWriting: value!)));
+                    }
+                    break;
 
-                    case "7":
-                      {
-                        // Conversation video
-                        UnitRepository().getConversationVideo('1001').then(
-                            (value) => AutoRouter.of(context).push(
-                                ConversationVideoRoute(
-                                    unitIntroVideo: value!, url: value.url)));
-                      }
-                      break;
+                  case "7":
+                    {
+                      // Conversation video
+                      UnitRepository()
+                          .getConversationVideo(data!.moduleId)
+                          .then((value) {
+                        if (value != null) {
+                          AutoRouter.of(context).push(ConversationVideoRoute(
+                              unitConversationVideo: value, url: value.url));
+                        }
+                      });
+                    }
+                    break;
 
-                    default:
-                      {
-                        print('no module');
-                      }
-                  }
+                  default:
+                    {
+                      print('no module');
+                    }
                 }
+                //}
               },
               child: Text(
                 data!.moduleTypeName,

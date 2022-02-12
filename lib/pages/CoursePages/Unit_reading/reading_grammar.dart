@@ -1,0 +1,89 @@
+import 'package:flutter/material.dart';
+import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/pages/CoursePages/base/message.dart';
+
+import '../base/clip_shadow.dart';
+
+class ReadingGrammar extends StatelessWidget {
+  const ReadingGrammar(this.paragraph, {Key? key}) : super(key: key);
+
+  final CParagraph paragraph;
+
+  @override
+  Widget build(BuildContext context) {
+    double messageBoxWidth = MediaQuery.of(context).size.width - 40;
+    var left = 20.0;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Message(
+        triangleX1: left, //0.4 * messageBoxWidth,
+        triangleX2: left + 22, //0.5 * messageBoxWidth,
+        triangleX3: left + 11, //0.5 * messageBoxWidth,
+        triangleY1: 12, // cueWidgetHeight * 0.2,
+        clipShadows: [ClipShadow(color: Colors.grey.withOpacity(0.8))],
+        isTop: true,
+        isShadow: false,
+        child: Container(
+          color: Colors.white,
+          width: messageBoxWidth,
+          height: 150,
+          child: innerWidget(),
+        ),
+      ),
+    );
+  }
+
+  Widget innerWidget() {
+    List<Widget> list = [];
+
+    list.add(const Text(
+      'Translate',
+      style: TextStyle(
+          fontFamily: 'Roboto',
+          color: colorPrimary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
+    ));
+    list.add(addVerticalSpace(3));
+    list.add(Text(
+      paragraph.monText,
+      style: const TextStyle(
+          fontFamily: 'Roboto',
+          color: Color.fromRGBO(79, 79, 79, 1),
+          fontSize: 12,
+          fontWeight: FontWeight.w400),
+    ));
+    list.add(addVerticalSpace(10));
+    list.add(const Text(
+      'Grammar',
+      style: TextStyle(
+          fontFamily: 'Roboto',
+          color: colorPrimary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
+    ));
+    list.add(addVerticalSpace(3));
+    list.add(Text(
+      paragraph.grammarDescription!,
+      style: const TextStyle(
+          fontFamily: 'Roboto',
+          color: Color.fromRGBO(120, 100, 254, 1),
+          fontSize: 12,
+          fontWeight: FontWeight.w500),
+    ));
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+      child: ListView.builder(
+        //shrinkWrap: true,
+        itemCount: list.length,
+        //separatorBuilder: (BuildContext context, int index) =>
+        //    addVerticalSpace(10),
+        itemBuilder: (context, index) => list[index],
+      ),
+    );
+  }
+}

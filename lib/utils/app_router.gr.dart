@@ -97,15 +97,17 @@ class _$AppRouter extends RootStackRouter {
               unitInfo: args.unitInfo,
               listeningQuiz: args.listeningQuiz));
     },
-    ModuleWritingRoute.name: (routeData) {
+    WritingVideoRoute.name: (routeData) {
+      final args = routeData.argsAs<WritingVideoRouteArgs>();
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const ModuleWritingPage());
+          routeData: routeData,
+          child: WritingVideoPage(args.unitWriting, key: args.key));
     },
     ConversationVideoRoute.name: (routeData) {
       final args = routeData.argsAs<ConversationVideoRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: ConversationVideoPage(args.unitIntroVideo, args.url,
+          child: ConversationVideoPage(args.unitConversationVideo, args.url,
               key: args.key));
     },
     ModuleProgressExamRoute.name: (routeData) {
@@ -157,7 +159,7 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(MixedVideoRoute.name, path: '/mixed_video_page'),
         RouteConfig(ReadingRoute.name, path: '/reading_page'),
         RouteConfig(ModuleListenRoute.name, path: '/unit_module_listening'),
-        RouteConfig(ModuleWritingRoute.name, path: '/unit_module_writing'),
+        RouteConfig(WritingVideoRoute.name, path: '/writing_video_page'),
         RouteConfig(ConversationVideoRoute.name,
             path: '/conversation_video_page'),
         RouteConfig(ModuleProgressExamRoute.name,
@@ -439,32 +441,51 @@ class ModuleListenRouteArgs {
 }
 
 /// generated route for
-/// [ModuleWritingPage]
-class ModuleWritingRoute extends PageRouteInfo<void> {
-  const ModuleWritingRoute()
-      : super(ModuleWritingRoute.name, path: '/unit_module_writing');
+/// [WritingVideoPage]
+class WritingVideoRoute extends PageRouteInfo<WritingVideoRouteArgs> {
+  WritingVideoRoute({required UnitWriting unitWriting, Key? key})
+      : super(WritingVideoRoute.name,
+            path: '/writing_video_page',
+            args: WritingVideoRouteArgs(unitWriting: unitWriting, key: key));
 
-  static const String name = 'ModuleWritingRoute';
+  static const String name = 'WritingVideoRoute';
+}
+
+class WritingVideoRouteArgs {
+  const WritingVideoRouteArgs({required this.unitWriting, this.key});
+
+  final UnitWriting unitWriting;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'WritingVideoRouteArgs{unitWriting: $unitWriting, key: $key}';
+  }
 }
 
 /// generated route for
 /// [ConversationVideoPage]
 class ConversationVideoRoute extends PageRouteInfo<ConversationVideoRouteArgs> {
   ConversationVideoRoute(
-      {required UnitIntroVideo unitIntroVideo, required String url, Key? key})
+      {required UnitConversationVideo unitConversationVideo,
+      required String url,
+      Key? key})
       : super(ConversationVideoRoute.name,
             path: '/conversation_video_page',
             args: ConversationVideoRouteArgs(
-                unitIntroVideo: unitIntroVideo, url: url, key: key));
+                unitConversationVideo: unitConversationVideo,
+                url: url,
+                key: key));
 
   static const String name = 'ConversationVideoRoute';
 }
 
 class ConversationVideoRouteArgs {
   const ConversationVideoRouteArgs(
-      {required this.unitIntroVideo, required this.url, this.key});
+      {required this.unitConversationVideo, required this.url, this.key});
 
-  final UnitIntroVideo unitIntroVideo;
+  final UnitConversationVideo unitConversationVideo;
 
   final String url;
 
@@ -472,7 +493,7 @@ class ConversationVideoRouteArgs {
 
   @override
   String toString() {
-    return 'ConversationVideoRouteArgs{unitIntroVideo: $unitIntroVideo, url: $url, key: $key}';
+    return 'ConversationVideoRouteArgs{unitConversationVideo: $unitConversationVideo, url: $url, key: $key}';
   }
 }
 

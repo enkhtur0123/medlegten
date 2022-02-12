@@ -1,31 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Unit/reading.dart';
+import 'package:medlegten/pages/CoursePages/Unit_reading/reading_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
+import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/utils/global.dart';
 
-class ReadingPage extends HookWidget {
+class ReadingPage extends StatefulWidget {
   const ReadingPage(this.reading, {Key? key}) : super(key: key);
 
   final Reading reading;
+  @override
+  _ReadingPageState createState() => _ReadingPageState();
+}
+
+class _ReadingPageState extends State<ReadingPage> {
+  late ReadingHelper helper;
+  CParagraph? selectedParagraph;
+  late bool isShowGrammar;
+  late bool isWidgetIsShown;
+  late final refreshView = ValueNotifier<bool>(false)
+    ..addListener(() {
+      setState(() {});
+    });
+
+  @override
+  void initState() {
+    isShowGrammar = false;
+    isWidgetIsShown = false;
+    helper = ReadingHelper();
+    helper.paragraphs = ReadingHelper.convert(widget.reading);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final helper = useMemoized(() => ReadingHelper());
-    final refreshNotifier = useState(false);
+    List<Widget> widgetList = [];
+    isWidgetIsShown = false;
+    for (int i = 0; i < helper.paragraphs.length; i++) {
+      var paragraph = helper.paragraphs[i];
+      if (!helper.valueKeys.containsKey(paragraph)) {
+        helper.valueKeys[paragraph] = 0;
+      }
 
-    useEffect(() {
-      helper.paragraphs = ReadingHelper.convert(reading);
-      return null;
-    }, const []);
-
+      if (isShowGrammar &&
+          selectedParagraph != null &&
+          paragraph.ordering == selectedParagraph!.ordering) {
+        widgetList.add(childWidget(paragraph, i, true));
+        widgetList.add(ReadingGrammar(paragraph));
+        isShowGrammar = false;
+        isWidgetIsShown = true;
+      } else {
+        widgetList.add(childWidget(paragraph, i, false));
+      }
+    }
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
@@ -39,39 +73,64 @@ class ReadingPage extends HookWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                var paragraph = helper.paragraphs[index];
-                if (!helper.valueKeys.containsKey(paragraph)) {
-                  helper.valueKeys[paragraph] = 0;
-                }
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: SizedBox(
-                    height: BaseCueHelper().getMaxHeight(
-                        [paragraph],
-                        true,
-                        const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w400),
-                        helper.width),
-                    child: ReadingParagraph(paragraph, (word, position) {
-                      helper.lastIndex = index;
-                      wordCallBack(word, position);
-                      refreshNotifier.value = !refreshNotifier.value;
-                      if (helper.lastIndex > -1 && helper.lastIndex != index) {
-                        helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
-                            helper.valueKeys[
-                                    helper.paragraphs[helper.lastIndex]]! +
-                                1;
-                      }
-                    }, (paragraph) {},
-                        key: ValueKey<int>(helper.valueKeys[paragraph]!)),
-                  ),
-                );
+                return widgetList[index];
               },
               childCount: helper.paragraphs.length,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+        height: BaseCueHelper().getMaxHeight(
+            [paragraph],
+            true,
+            const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+            helper.width),
+        child: ReadingParagraph(
+            paragraph,
+            (word, position) {
+              wordCallBack(word, position);
+              if (helper.lastIndex > -1 && helper.lastIndex != index) {
+                helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
+                    helper.valueKeys[helper.paragraphs[helper.lastIndex]]! + 1;
+              }
+              helper.lastIndex = index;
+              refreshView.value = !refreshView.value;
+            },
+            (paragraph) {
+              selectedParagraph = paragraph;
+            },
+            tailWidget(selectParagraph),
+            (paragraph) {
+              if (isWidgetIsShown) {
+                isShowGrammar = false;
+              } else {
+                isShowGrammar = true;
+                selectedParagraph = paragraph;
+              }
+              helper.valueKeys[paragraph]! + 1;
+              refreshView.value = !refreshView.value;
+            },
+            selectParagraph,
+            key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
+      ),
+    );
+  }
+
+  Widget tailWidget(bool selected) {
+    return Text(
+      ' ..... ',
+      style: TextStyle(
+          color: selected ? colorBlack : Colors.black45,
+          fontWeight: FontWeight.w700,
+          fontSize: 16),
+      //key: UniqueKey(),
     );
   }
 

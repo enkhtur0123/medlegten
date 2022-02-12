@@ -36,7 +36,7 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
       // showOptions: false,
       allowPlaybackSpeedChanging: true,
       overlay: null,
-      autoPlay: true,
+      autoPlay: false,
       placeholder: Container(
         color: Colors.white,
         child: const Center(

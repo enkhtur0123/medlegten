@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'unit_mixed_cue.dart';
+part of 'unit_writing_cue.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,121 +14,116 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-UnitMixedCueParagraph _$UnitMixedCueParagraphFromJson(
+UnitWritingCueParagraph _$UnitWritingCueParagraphFromJson(
     Map<String, dynamic> json) {
-  return _UnitMixedCueParagraph.fromJson(json);
+  return _UnitWritingCueParagraph.fromJson(json);
 }
 
 /// @nodoc
-class _$UnitMixedCueParagraphTearOff {
-  const _$UnitMixedCueParagraphTearOff();
+class _$UnitWritingCueParagraphTearOff {
+  const _$UnitWritingCueParagraphTearOff();
 
-  _UnitMixedCueParagraph call(
+  _UnitWritingCueParagraph call(
       String cueId,
       String ordering,
-      String startTime,
-      String endTime,
       String fromLangId,
       String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       String toLangIsDefault,
-      String grammarIsHighLighted,
-      String grammarDescription,
-      List<UnitIntroCueWord> words) {
-    return _UnitMixedCueParagraph(
+      String missWordRequired,
+      String startTime,
+      String endTime,
+      List<UnitWritingCueWord> missWords) {
+    return _UnitWritingCueParagraph(
       cueId,
       ordering,
-      startTime,
-      endTime,
       fromLangId,
       fromLangTranslation,
       fromLangIsDefault,
       toLangId,
       toLangTranslation,
       toLangIsDefault,
-      grammarIsHighLighted,
-      grammarDescription,
-      words,
+      missWordRequired,
+      startTime,
+      endTime,
+      missWords,
     );
   }
 
-  UnitMixedCueParagraph fromJson(Map<String, Object?> json) {
-    return UnitMixedCueParagraph.fromJson(json);
+  UnitWritingCueParagraph fromJson(Map<String, Object?> json) {
+    return UnitWritingCueParagraph.fromJson(json);
   }
 }
 
 /// @nodoc
-const $UnitMixedCueParagraph = _$UnitMixedCueParagraphTearOff();
+const $UnitWritingCueParagraph = _$UnitWritingCueParagraphTearOff();
 
 /// @nodoc
-mixin _$UnitMixedCueParagraph {
+mixin _$UnitWritingCueParagraph {
   String get cueId => throw _privateConstructorUsedError;
   String get ordering => throw _privateConstructorUsedError;
-  String get startTime => throw _privateConstructorUsedError;
-  String get endTime => throw _privateConstructorUsedError;
   String get fromLangId => throw _privateConstructorUsedError;
   String get fromLangTranslation => throw _privateConstructorUsedError;
   String get fromLangIsDefault => throw _privateConstructorUsedError;
   String get toLangId => throw _privateConstructorUsedError;
   String get toLangTranslation => throw _privateConstructorUsedError;
   String get toLangIsDefault => throw _privateConstructorUsedError;
-  String get grammarIsHighLighted => throw _privateConstructorUsedError;
-  String get grammarDescription => throw _privateConstructorUsedError;
-  List<UnitIntroCueWord> get words => throw _privateConstructorUsedError;
+  String get missWordRequired => throw _privateConstructorUsedError;
+  String get startTime => throw _privateConstructorUsedError;
+  String get endTime => throw _privateConstructorUsedError;
+  List<UnitWritingCueWord> get missWords => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UnitMixedCueParagraphCopyWith<UnitMixedCueParagraph> get copyWith =>
+  $UnitWritingCueParagraphCopyWith<UnitWritingCueParagraph> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UnitMixedCueParagraphCopyWith<$Res> {
-  factory $UnitMixedCueParagraphCopyWith(UnitMixedCueParagraph value,
-          $Res Function(UnitMixedCueParagraph) then) =
-      _$UnitMixedCueParagraphCopyWithImpl<$Res>;
+abstract class $UnitWritingCueParagraphCopyWith<$Res> {
+  factory $UnitWritingCueParagraphCopyWith(UnitWritingCueParagraph value,
+          $Res Function(UnitWritingCueParagraph) then) =
+      _$UnitWritingCueParagraphCopyWithImpl<$Res>;
   $Res call(
       {String cueId,
       String ordering,
-      String startTime,
-      String endTime,
       String fromLangId,
       String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       String toLangIsDefault,
-      String grammarIsHighLighted,
-      String grammarDescription,
-      List<UnitIntroCueWord> words});
+      String missWordRequired,
+      String startTime,
+      String endTime,
+      List<UnitWritingCueWord> missWords});
 }
 
 /// @nodoc
-class _$UnitMixedCueParagraphCopyWithImpl<$Res>
-    implements $UnitMixedCueParagraphCopyWith<$Res> {
-  _$UnitMixedCueParagraphCopyWithImpl(this._value, this._then);
+class _$UnitWritingCueParagraphCopyWithImpl<$Res>
+    implements $UnitWritingCueParagraphCopyWith<$Res> {
+  _$UnitWritingCueParagraphCopyWithImpl(this._value, this._then);
 
-  final UnitMixedCueParagraph _value;
+  final UnitWritingCueParagraph _value;
   // ignore: unused_field
-  final $Res Function(UnitMixedCueParagraph) _then;
+  final $Res Function(UnitWritingCueParagraph) _then;
 
   @override
   $Res call({
     Object? cueId = freezed,
     Object? ordering = freezed,
-    Object? startTime = freezed,
-    Object? endTime = freezed,
     Object? fromLangId = freezed,
     Object? fromLangTranslation = freezed,
     Object? fromLangIsDefault = freezed,
     Object? toLangId = freezed,
     Object? toLangTranslation = freezed,
     Object? toLangIsDefault = freezed,
-    Object? grammarIsHighLighted = freezed,
-    Object? grammarDescription = freezed,
-    Object? words = freezed,
+    Object? missWordRequired = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+    Object? missWords = freezed,
   }) {
     return _then(_value.copyWith(
       cueId: cueId == freezed
@@ -138,14 +133,6 @@ class _$UnitMixedCueParagraphCopyWithImpl<$Res>
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
-      startTime: startTime == freezed
-          ? _value.startTime
-          : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      endTime: endTime == freezed
-          ? _value.endTime
-          : endTime // ignore: cast_nullable_to_non_nullable
               as String,
       fromLangId: fromLangId == freezed
           ? _value.fromLangId
@@ -171,73 +158,76 @@ class _$UnitMixedCueParagraphCopyWithImpl<$Res>
           ? _value.toLangIsDefault
           : toLangIsDefault // ignore: cast_nullable_to_non_nullable
               as String,
-      grammarIsHighLighted: grammarIsHighLighted == freezed
-          ? _value.grammarIsHighLighted
-          : grammarIsHighLighted // ignore: cast_nullable_to_non_nullable
+      missWordRequired: missWordRequired == freezed
+          ? _value.missWordRequired
+          : missWordRequired // ignore: cast_nullable_to_non_nullable
               as String,
-      grammarDescription: grammarDescription == freezed
-          ? _value.grammarDescription
-          : grammarDescription // ignore: cast_nullable_to_non_nullable
+      startTime: startTime == freezed
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
               as String,
-      words: words == freezed
-          ? _value.words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<UnitIntroCueWord>,
+      endTime: endTime == freezed
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      missWords: missWords == freezed
+          ? _value.missWords
+          : missWords // ignore: cast_nullable_to_non_nullable
+              as List<UnitWritingCueWord>,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$UnitMixedCueParagraphCopyWith<$Res>
-    implements $UnitMixedCueParagraphCopyWith<$Res> {
-  factory _$UnitMixedCueParagraphCopyWith(_UnitMixedCueParagraph value,
-          $Res Function(_UnitMixedCueParagraph) then) =
-      __$UnitMixedCueParagraphCopyWithImpl<$Res>;
+abstract class _$UnitWritingCueParagraphCopyWith<$Res>
+    implements $UnitWritingCueParagraphCopyWith<$Res> {
+  factory _$UnitWritingCueParagraphCopyWith(_UnitWritingCueParagraph value,
+          $Res Function(_UnitWritingCueParagraph) then) =
+      __$UnitWritingCueParagraphCopyWithImpl<$Res>;
   @override
   $Res call(
       {String cueId,
       String ordering,
-      String startTime,
-      String endTime,
       String fromLangId,
       String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       String toLangIsDefault,
-      String grammarIsHighLighted,
-      String grammarDescription,
-      List<UnitIntroCueWord> words});
+      String missWordRequired,
+      String startTime,
+      String endTime,
+      List<UnitWritingCueWord> missWords});
 }
 
 /// @nodoc
-class __$UnitMixedCueParagraphCopyWithImpl<$Res>
-    extends _$UnitMixedCueParagraphCopyWithImpl<$Res>
-    implements _$UnitMixedCueParagraphCopyWith<$Res> {
-  __$UnitMixedCueParagraphCopyWithImpl(_UnitMixedCueParagraph _value,
-      $Res Function(_UnitMixedCueParagraph) _then)
-      : super(_value, (v) => _then(v as _UnitMixedCueParagraph));
+class __$UnitWritingCueParagraphCopyWithImpl<$Res>
+    extends _$UnitWritingCueParagraphCopyWithImpl<$Res>
+    implements _$UnitWritingCueParagraphCopyWith<$Res> {
+  __$UnitWritingCueParagraphCopyWithImpl(_UnitWritingCueParagraph _value,
+      $Res Function(_UnitWritingCueParagraph) _then)
+      : super(_value, (v) => _then(v as _UnitWritingCueParagraph));
 
   @override
-  _UnitMixedCueParagraph get _value => super._value as _UnitMixedCueParagraph;
+  _UnitWritingCueParagraph get _value =>
+      super._value as _UnitWritingCueParagraph;
 
   @override
   $Res call({
     Object? cueId = freezed,
     Object? ordering = freezed,
-    Object? startTime = freezed,
-    Object? endTime = freezed,
     Object? fromLangId = freezed,
     Object? fromLangTranslation = freezed,
     Object? fromLangIsDefault = freezed,
     Object? toLangId = freezed,
     Object? toLangTranslation = freezed,
     Object? toLangIsDefault = freezed,
-    Object? grammarIsHighLighted = freezed,
-    Object? grammarDescription = freezed,
-    Object? words = freezed,
+    Object? missWordRequired = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+    Object? missWords = freezed,
   }) {
-    return _then(_UnitMixedCueParagraph(
+    return _then(_UnitWritingCueParagraph(
       cueId == freezed
           ? _value.cueId
           : cueId // ignore: cast_nullable_to_non_nullable
@@ -245,14 +235,6 @@ class __$UnitMixedCueParagraphCopyWithImpl<$Res>
       ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
-      startTime == freezed
-          ? _value.startTime
-          : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      endTime == freezed
-          ? _value.endTime
-          : endTime // ignore: cast_nullable_to_non_nullable
               as String,
       fromLangId == freezed
           ? _value.fromLangId
@@ -278,51 +260,50 @@ class __$UnitMixedCueParagraphCopyWithImpl<$Res>
           ? _value.toLangIsDefault
           : toLangIsDefault // ignore: cast_nullable_to_non_nullable
               as String,
-      grammarIsHighLighted == freezed
-          ? _value.grammarIsHighLighted
-          : grammarIsHighLighted // ignore: cast_nullable_to_non_nullable
+      missWordRequired == freezed
+          ? _value.missWordRequired
+          : missWordRequired // ignore: cast_nullable_to_non_nullable
               as String,
-      grammarDescription == freezed
-          ? _value.grammarDescription
-          : grammarDescription // ignore: cast_nullable_to_non_nullable
+      startTime == freezed
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
               as String,
-      words == freezed
-          ? _value.words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<UnitIntroCueWord>,
+      endTime == freezed
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      missWords == freezed
+          ? _value.missWords
+          : missWords // ignore: cast_nullable_to_non_nullable
+              as List<UnitWritingCueWord>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_UnitMixedCueParagraph implements _UnitMixedCueParagraph {
-  _$_UnitMixedCueParagraph(
+class _$_UnitWritingCueParagraph implements _UnitWritingCueParagraph {
+  _$_UnitWritingCueParagraph(
       this.cueId,
       this.ordering,
-      this.startTime,
-      this.endTime,
       this.fromLangId,
       this.fromLangTranslation,
       this.fromLangIsDefault,
       this.toLangId,
       this.toLangTranslation,
       this.toLangIsDefault,
-      this.grammarIsHighLighted,
-      this.grammarDescription,
-      this.words);
+      this.missWordRequired,
+      this.startTime,
+      this.endTime,
+      this.missWords);
 
-  factory _$_UnitMixedCueParagraph.fromJson(Map<String, dynamic> json) =>
-      _$$_UnitMixedCueParagraphFromJson(json);
+  factory _$_UnitWritingCueParagraph.fromJson(Map<String, dynamic> json) =>
+      _$$_UnitWritingCueParagraphFromJson(json);
 
   @override
   final String cueId;
   @override
   final String ordering;
-  @override
-  final String startTime;
-  @override
-  final String endTime;
   @override
   final String fromLangId;
   @override
@@ -336,26 +317,26 @@ class _$_UnitMixedCueParagraph implements _UnitMixedCueParagraph {
   @override
   final String toLangIsDefault;
   @override
-  final String grammarIsHighLighted;
+  final String missWordRequired;
   @override
-  final String grammarDescription;
+  final String startTime;
   @override
-  final List<UnitIntroCueWord> words;
+  final String endTime;
+  @override
+  final List<UnitWritingCueWord> missWords;
 
   @override
   String toString() {
-    return 'UnitMixedCueParagraph(cueId: $cueId, ordering: $ordering, startTime: $startTime, endTime: $endTime, fromLangId: $fromLangId, fromLangTranslation: $fromLangTranslation, fromLangIsDefault: $fromLangIsDefault, toLangId: $toLangId, toLangTranslation: $toLangTranslation, toLangIsDefault: $toLangIsDefault, grammarIsHighLighted: $grammarIsHighLighted, grammarDescription: $grammarDescription, words: $words)';
+    return 'UnitWritingCueParagraph(cueId: $cueId, ordering: $ordering, fromLangId: $fromLangId, fromLangTranslation: $fromLangTranslation, fromLangIsDefault: $fromLangIsDefault, toLangId: $toLangId, toLangTranslation: $toLangTranslation, toLangIsDefault: $toLangIsDefault, missWordRequired: $missWordRequired, startTime: $startTime, endTime: $endTime, missWords: $missWords)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UnitMixedCueParagraph &&
+            other is _UnitWritingCueParagraph &&
             const DeepCollectionEquality().equals(other.cueId, cueId) &&
             const DeepCollectionEquality().equals(other.ordering, ordering) &&
-            const DeepCollectionEquality().equals(other.startTime, startTime) &&
-            const DeepCollectionEquality().equals(other.endTime, endTime) &&
             const DeepCollectionEquality()
                 .equals(other.fromLangId, fromLangId) &&
             const DeepCollectionEquality()
@@ -368,10 +349,10 @@ class _$_UnitMixedCueParagraph implements _UnitMixedCueParagraph {
             const DeepCollectionEquality()
                 .equals(other.toLangIsDefault, toLangIsDefault) &&
             const DeepCollectionEquality()
-                .equals(other.grammarIsHighLighted, grammarIsHighLighted) &&
-            const DeepCollectionEquality()
-                .equals(other.grammarDescription, grammarDescription) &&
-            const DeepCollectionEquality().equals(other.words, words));
+                .equals(other.missWordRequired, missWordRequired) &&
+            const DeepCollectionEquality().equals(other.startTime, startTime) &&
+            const DeepCollectionEquality().equals(other.endTime, endTime) &&
+            const DeepCollectionEquality().equals(other.missWords, missWords));
   }
 
   @override
@@ -379,57 +360,51 @@ class _$_UnitMixedCueParagraph implements _UnitMixedCueParagraph {
       runtimeType,
       const DeepCollectionEquality().hash(cueId),
       const DeepCollectionEquality().hash(ordering),
-      const DeepCollectionEquality().hash(startTime),
-      const DeepCollectionEquality().hash(endTime),
       const DeepCollectionEquality().hash(fromLangId),
       const DeepCollectionEquality().hash(fromLangTranslation),
       const DeepCollectionEquality().hash(fromLangIsDefault),
       const DeepCollectionEquality().hash(toLangId),
       const DeepCollectionEquality().hash(toLangTranslation),
       const DeepCollectionEquality().hash(toLangIsDefault),
-      const DeepCollectionEquality().hash(grammarIsHighLighted),
-      const DeepCollectionEquality().hash(grammarDescription),
-      const DeepCollectionEquality().hash(words));
+      const DeepCollectionEquality().hash(missWordRequired),
+      const DeepCollectionEquality().hash(startTime),
+      const DeepCollectionEquality().hash(endTime),
+      const DeepCollectionEquality().hash(missWords));
 
   @JsonKey(ignore: true)
   @override
-  _$UnitMixedCueParagraphCopyWith<_UnitMixedCueParagraph> get copyWith =>
-      __$UnitMixedCueParagraphCopyWithImpl<_UnitMixedCueParagraph>(
+  _$UnitWritingCueParagraphCopyWith<_UnitWritingCueParagraph> get copyWith =>
+      __$UnitWritingCueParagraphCopyWithImpl<_UnitWritingCueParagraph>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UnitMixedCueParagraphToJson(this);
+    return _$$_UnitWritingCueParagraphToJson(this);
   }
 }
 
-abstract class _UnitMixedCueParagraph implements UnitMixedCueParagraph {
-  factory _UnitMixedCueParagraph(
+abstract class _UnitWritingCueParagraph implements UnitWritingCueParagraph {
+  factory _UnitWritingCueParagraph(
       String cueId,
       String ordering,
-      String startTime,
-      String endTime,
       String fromLangId,
       String fromLangTranslation,
       String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       String toLangIsDefault,
-      String grammarIsHighLighted,
-      String grammarDescription,
-      List<UnitIntroCueWord> words) = _$_UnitMixedCueParagraph;
+      String missWordRequired,
+      String startTime,
+      String endTime,
+      List<UnitWritingCueWord> missWords) = _$_UnitWritingCueParagraph;
 
-  factory _UnitMixedCueParagraph.fromJson(Map<String, dynamic> json) =
-      _$_UnitMixedCueParagraph.fromJson;
+  factory _UnitWritingCueParagraph.fromJson(Map<String, dynamic> json) =
+      _$_UnitWritingCueParagraph.fromJson;
 
   @override
   String get cueId;
   @override
   String get ordering;
-  @override
-  String get startTime;
-  @override
-  String get endTime;
   @override
   String get fromLangId;
   @override
@@ -443,13 +418,15 @@ abstract class _UnitMixedCueParagraph implements UnitMixedCueParagraph {
   @override
   String get toLangIsDefault;
   @override
-  String get grammarIsHighLighted;
+  String get missWordRequired;
   @override
-  String get grammarDescription;
+  String get startTime;
   @override
-  List<UnitIntroCueWord> get words;
+  String get endTime;
+  @override
+  List<UnitWritingCueWord> get missWords;
   @override
   @JsonKey(ignore: true)
-  _$UnitMixedCueParagraphCopyWith<_UnitMixedCueParagraph> get copyWith =>
+  _$UnitWritingCueParagraphCopyWith<_UnitWritingCueParagraph> get copyWith =>
       throw _privateConstructorUsedError;
 }

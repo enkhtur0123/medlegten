@@ -7,6 +7,7 @@ import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/pages/CoursePages/unit/unit_card.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
+import 'package:medlegten/utils/global.dart';
 import 'package:video_player/video_player.dart';
 import 'course_introduction_widget.dart';
 
@@ -24,7 +25,7 @@ class _CourseDetailState extends State<CourseDetailPage> {
 
   @override
   void dispose() {
-    //_controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -32,22 +33,33 @@ class _CourseDetailState extends State<CourseDetailPage> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(widget.courseInfo.introVideoUrl)
-      ..addListener(() => setState(() {}))
+      //VideoPlayerController.asset('assets/A1-U1-INTRO.mp4')
       ..setLooping(false)
-      ..initialize();
-    // ..initialize().then((_) => _controller.play());
+      ..initialize().then((value) {
+        WidgetsBinding.instance?.addPostFrameCallback((_) {
+          setState(() {
+            _controller.play();
+          });
+        });
+      });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.courseInfo.courseName),),
+      appBar: AppBar(
+        title: Text(widget.courseInfo.courseName),
+      ),
       backgroundColor: ColorTable.color255_255_255,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //VideoPlayerChewie(_controller),
+          _controller.value.isInitialized
+              ? VideoPlayerChewie(_controller)
+              : const AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: SizedBox(width: double.infinity, child: Loading())),
           addVerticalSpace(20),
           CourseIntroWidget(courseInfo: widget.courseInfo),
           const Divider(

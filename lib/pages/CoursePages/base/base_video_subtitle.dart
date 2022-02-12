@@ -39,15 +39,15 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   late FixedExtentScrollController _fixedExtentScrollController;
   var valueKeyList = <CParagraph, int>{};
-  String selectedWord = '';
-  int selectedWordParagraphIndex = -1;
+
   late final isMon = ValueNotifier<bool>(true)..addListener(_listener);
   int prevCueId = -1;
   late final refreshCue = ValueNotifier<bool>(false)..addListener(_listener2);
   double maxExtent = 60;
 
   Rect? selectedRect;
-  CWord? selectedCWord;
+  CWord? selectedWord;
+  int selectedWordParagraphIndex = -1;
 
   void _listener() {
     //setMaxExtent();
@@ -77,7 +77,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     if (selectedWordParagraphIndex != -1) {
       _fixedExtentScrollController.animateToItem(selectedWordParagraphIndex,
           duration: const Duration(milliseconds: 100), curve: Curves.linear);
-
+      selectedWord = null;
       selectedWordParagraphIndex = -1;
     }
   }
@@ -192,12 +192,12 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       var rect = entry.value.item1.globalPaintBounds!;
                       if (rect.contains(position) &&
                           entry.key.wordValue != '') {
-                        selectedWord = entry.key.word;
+                        selectedWord = entry.key;
                         selectedWordParagraphIndex = currentIndex;
-                        valueKeyList[cue] = valueKeyList[cue]! + 1;
                         selectedRect = rect;
-                        selectedCWord = entry.key;
-                        widget.wordCallback!(selectedCWord!, selectedRect!);
+                        valueKeyList[cue] = valueKeyList[cue]! + 1;
+
+                        widget.wordCallback!(selectedWord!, selectedRect!);
                         if (widget.videoPlayerController.value.isPlaying) {
                           widget.videoPlayerController.pause();
                         }
@@ -256,6 +256,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       controller: _fixedExtentScrollController,
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
+                        selectedWord = null;
                         //print(
                         //    'currentIndex: ${widget.paragraphs[index].engText}');
                         if (!widget.videoPlayerController.value.isPlaying &&
@@ -299,7 +300,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
       bool isMon,
       CParagraph paragraph,
       Map<CParagraph, int> valueKeyList,
-      String selectedWord,
+      CWord? selectedWord,
       bool isSelectedIndex) {
     if (!valueKeyList.containsKey(paragraph)) {
       valueKeyList[paragraph] = 0;

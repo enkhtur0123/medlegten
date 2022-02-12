@@ -24,7 +24,6 @@ Map<String, dynamic> _$$_CourseUnitToJson(_$_CourseUnit instance) =>
       'unitNumber': instance.unitNumber,
       'unitName': instance.unitName,
       'hasTrial': instance.hasTrial,
-      'isCompleted': instance.isCompleted,
       'minToWatch': instance.minToWatch,
       'isCompleted': instance.isCompleted,
     };

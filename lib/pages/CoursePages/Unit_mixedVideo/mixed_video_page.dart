@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_helper.dart';
@@ -58,6 +57,7 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
         videoPlayerController, MixedVideohelper.convert(widget.unitMixedVideo),
         (val) {
       paragraph = val;
+      word = null;
       refreshNotifier.value = !refreshNotifier.value;
     }, (cword, pposition) {
       if (cword != null) {
@@ -72,13 +72,32 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   Widget bottomSheetWidget() {
     return ValueListenableBuilder<bool>(
         builder: (BuildContext context, bool value, Widget? child) {
-          return child!;
+          return word != null
+              ? _showBottomSheetWord(context, word, position)
+              : _showBottomSheetParagraph(context, paragraph);
         },
-        valueListenable: refreshNotifier,
-        child: _showBottomSheet(context, paragraph));
+        valueListenable: refreshNotifier);
   }
 
-  Widget _showBottomSheet(BuildContext context, CParagraph? paragraph) {
+  Widget _showBottomSheetWord(context, CWord? word, Rect position) {
+    if (word == null) return const SizedBox(height: 1);
+    bottomIsVisible = true;
+    return BottomSheet(
+      backgroundColor: colorWhite,
+      enableDrag: false,
+      builder: (BuildContext context) {
+        return CueWordWidget(
+          word,
+          ppointerPosition: position,
+          isshadow: false,
+        );
+      },
+      onClosing: () {},
+    );
+  }
+
+  Widget _showBottomSheetParagraph(
+      BuildContext context, CParagraph? paragraph) {
     if (paragraph == null) return const SizedBox(height: 1);
 
     return BottomSheet(
@@ -93,37 +112,6 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
       },
       onClosing: () {},
     );
-  }
-
-  void wordCallBack(word, position) {
-    if (word != null) {
-      var isTop = GlobalValues.screenHeight - position.top > 220;
-      SmartDialog.showAttach(
-        isLoadingTemp: false,
-        targetContext: null,
-        target: Offset(
-            10, isTop == false ? position.top - 220 - 30 : position.top + 30),
-        //isPenetrateTemp: true,
-        //alignmentTemp: Alignment.bottomCenter,
-        useSystem: false,
-        isUseAnimationTemp: false,
-        maskColorTemp: Colors.transparent,
-        widget: SizedBox(
-          height: 220 + 20,
-          width: GlobalValues.getWidthRelativeToScreen(51),
-          //color: Colors.white60,
-          child: CueWordWidget(word,
-              ppointerPosition: position, isshadow: true, istop: isTop),
-        ),
-      );
-      // showDialog(
-      //     context: context,
-      //     barrierColor: Colors.transparent,
-      //     barrierDismissible: true,
-      //     builder: (BuildContext context) {
-      //       return ReadingPopUpDialog(word, position);
-      //     });
-    }
   }
 
   Widget innerBottonSheetWidget(CParagraph paragraph) {

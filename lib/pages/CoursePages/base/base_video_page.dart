@@ -81,7 +81,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   }
 
   Widget subtitleWidget() {
-    return const Text('', style: TextStyle(color: Colors.black));
+    return const SizedBox(height: 1);
   }
 
   Widget bottomSheetWidget() {

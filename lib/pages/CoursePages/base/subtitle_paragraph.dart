@@ -7,12 +7,18 @@ import 'package:tuple/tuple.dart';
 class SubtitleParagraph extends StatefulWidget {
   final CParagraph paragraph;
   final int currentIndex;
-  final String? currentWord;
+  final CWord? currentWord;
   final Alignment? alignment;
+  final Widget? tailWidget;
+  final bool? selectParagraph;
   Map<CWord, Tuple2<GlobalKey, Widget>> wordWidgets = {};
 
   SubtitleParagraph(this.paragraph, this.currentIndex,
-      {Key? key, this.currentWord, this.alignment})
+      {Key? key,
+      this.currentWord,
+      this.alignment,
+      this.tailWidget,
+      this.selectParagraph})
       : super(key: key);
 
   @override
@@ -23,6 +29,30 @@ class _CueTexteState extends State<SubtitleParagraph> {
   @override
   Widget build(BuildContext context) {
     //bool beforeSpace = false;
+    List<Widget> widgetList = widget.paragraph.words!.map(
+      (w) {
+        Widget widgetRet;
+        if (widget.currentWord != null &&
+            widget.currentWord!.word == w.word &&
+            widget.currentWord!.id == w.id) {
+          widgetRet = buildTextElevated(w);
+          //beforeSpace = true;
+        } else {
+          widgetRet = buildText(w, widget.selectParagraph); //, beforeSpace);
+          //beforeSpace = false;
+        }
+        return widgetRet;
+      },
+    ).toList();
+
+    if (widget.tailWidget != null) {
+      final globalKey = GlobalKey();
+      var childWidget = Container(key: globalKey, child: widget.tailWidget!);
+      widget.wordWidgets[CWord('-1', '-1', '-1', false)] =
+          Tuple2<GlobalKey, Widget>(globalKey, childWidget);
+      widgetList.add(childWidget);
+    }
+
     return Align(
       alignment: widget.alignment ?? Alignment.center,
       child: Wrap(
@@ -30,19 +60,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
             ? WrapAlignment.center
             : WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.center,
-        children: widget.paragraph.words!.map(
-          (w) {
-            Widget widgetRet;
-            if (widget.currentWord != null && widget.currentWord! == w.word) {
-              widgetRet = buildTextElevated(w);
-              //beforeSpace = true;
-            } else {
-              widgetRet = buildText(w); //, beforeSpace);
-              //beforeSpace = false;
-            }
-            return widgetRet;
-          },
-        ).toList(),
+        children: widgetList,
       ),
     );
   }
@@ -73,7 +91,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
     return childWidget;
   }
 
-  Widget buildText(CWord w) {
+  Widget buildText(CWord w, bool? selectWord) {
     //, bool beforeSpace
     final globalKey = GlobalKey();
     var childWidget = Text(
@@ -82,7 +100,9 @@ class _CueTexteState extends State<SubtitleParagraph> {
       style: TextStyle(
           color: widget.currentIndex == widget.paragraph.ordering
               ? colorBlack
-              : Colors.black54,
+              : (selectWord != null
+                  ? (selectWord ? colorBlack : Colors.black54)
+                  : Colors.black54),
           fontSize: 18,
           fontWeight: FontWeight.w400),
     );
