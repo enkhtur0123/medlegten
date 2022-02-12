@@ -7,6 +7,7 @@ import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
+import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
@@ -14,9 +15,10 @@ import 'package:video_player/video_player.dart';
 typedef UnitGrammarCallback = void Function(GrammarAnswerEx asnwer, int level);
 
 class GrammarTablePage extends StatefulWidget {
-  const GrammarTablePage(this.unitGrammar, {Key? key}) : super(key: key);
+  const GrammarTablePage(this.unitGrammar, {Key? key,this.moduleId}) : super(key: key);
 
   final UnitGrammar unitGrammar;
+  final String? moduleId;
   @override
   _GrammarTablePageState createState() => _GrammarTablePageState();
 }
@@ -115,7 +117,15 @@ class _GrammarTablePageState extends State<GrammarTablePage>
           ));
     }
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          UnitModuleCompletedBtn(
+            moduleId: "",
+            completeBtn: () {},
+            unCompleteBtn: () {},
+          )
+        ],
+      ),
       backgroundColor: ColorTable.color255_255_255,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

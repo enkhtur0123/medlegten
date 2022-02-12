@@ -11,11 +11,12 @@ import 'package:rxdart/rxdart.dart';
 import 'bottom_sheet_dialog.dart';
 
 class ModuleListenPage extends StatefulWidget {
-  const ModuleListenPage({Key? key, this.unitInfo, this.listeningQuiz})
+  const ModuleListenPage({Key? key, this.unitInfo, this.listeningQuiz,this.moduleId})
       : super(key: key);
 
   final CourseUnit? unitInfo;
   final ListeningQuiz? listeningQuiz;
+  final String? moduleId;
 
   @override
   _ModuleListenPageState createState() => _ModuleListenPageState();
@@ -85,8 +86,8 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _player.dispose();
+    super.dispose();
   }
 
   int getRandom() {

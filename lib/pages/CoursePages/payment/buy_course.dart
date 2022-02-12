@@ -27,8 +27,8 @@ class CoursePaymentState extends State<CoursePaymentPage> {
   FocusNode couponNode = FocusNode();
   String infoText =
       "Гүйлгээний мэдээллийг нэг бүрчлэн оруулах шаардлагагүйгээр дээрх банкны апп-р төлбөр төлөх боломжтой.";
-  String? couponCode = "";
-  String? price = "";
+  String? couponCode;
+  String? price;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,15 +90,20 @@ class CoursePaymentState extends State<CoursePaymentPage> {
                                   courseInfo: widget.courseInfo,
                                   couponCode: controller.text.toString())
                               .then((value) {
-                          //  if(value["coupon"]["couponCode"]==null || value["coupon"]["price"]==null)
-                            couponCode = value["coupon"]["couponCode"];
-                            price = value["coupon"]["price"];
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(MySnackBar(
-                              text: "Амжилттай",
-                            ));
+                            if (value != null) {
+                              couponCode = value["coupon"]["couponCode"];
+                              price = value["coupon"]["price"];
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(MySnackBar(
+                                text: "Амжилттай",
+                              ));
+                            }else{
+                               ScaffoldMessenger.of(context)
+                                  .showSnackBar(MySnackBar(
+                                text: "Купон кодоо шалгана уу",
+                              ));
+                            }
                           }).catchError((onError) {
-                            print(onError);
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(MySnackBar(
                               text: "Купон кодоо шалгана уу",
@@ -112,16 +117,10 @@ class CoursePaymentState extends State<CoursePaymentPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  if (couponCode != "" && price != "") {
-                    AutoRouter.of(context).push(QpayRoute(
-                        courseInfo: widget.courseInfo,
-                        couponCode: couponCode,
-                        price: price));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
-                      text: "Coupon code check!",
-                    ));
-                  }
+                  AutoRouter.of(context).push(QpayRoute(
+                      courseInfo: widget.courseInfo,
+                      couponCode: couponCode,
+                      price: price ?? widget.courseInfo!.price));
                 },
                 child: getPaymentFunction(
                     title: "Qpay",

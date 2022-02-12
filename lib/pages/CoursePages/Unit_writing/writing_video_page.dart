@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
 
 class WritingVideoPage extends StatefulWidget {
-  const WritingVideoPage(this.unitWriting, {Key? key}) : super(key: key);
+  const WritingVideoPage(this.unitWriting, {Key? key,this.moduleId}) : super(key: key);
 
   final UnitWriting unitWriting;
+  final String? moduleId;
 
   @override
   _WritingVideoPageState createState() => _WritingVideoPageState();

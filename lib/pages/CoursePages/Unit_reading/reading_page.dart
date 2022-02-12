@@ -13,9 +13,10 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/utils/global.dart';
 
 class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading, {Key? key}) : super(key: key);
+  const ReadingPage(this.reading, {Key? key,this.moduleId}) : super(key: key);
 
   final Reading reading;
+  final String? moduleId;
   @override
   _ReadingPageState createState() => _ReadingPageState();
 }

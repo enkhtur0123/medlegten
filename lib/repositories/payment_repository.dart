@@ -1,6 +1,7 @@
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
+
 /// Харах
 class CoursePaymentRepository {
   Future<dynamic> checkCouponCode(

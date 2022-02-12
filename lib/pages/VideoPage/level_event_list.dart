@@ -184,8 +184,7 @@ class LevelEventPage extends HookWidget {
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
             child: CachedNetworkImage(
-              imageUrl:
-                  "https://www.flytap.com/-/media/Flytap/new-tap-pages/destinations/europe/russia/moscow/destinations-moscow-banner-mobile-1024x553.jpg",
+              imageUrl:event!.imgUrl,
               fit: BoxFit.cover,
               width: double.infinity,
               height: MediaQuery.of(context!).size.width * 0.3,

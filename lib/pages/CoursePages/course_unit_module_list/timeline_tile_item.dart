@@ -70,7 +70,7 @@ class TimeLineTileItemWidget extends HookWidget {
               onTap: () {
                 // print(data!.moduleId);
                 // print(data!.moduleTypeId);
-                //if (data!.isUpcoming || data!.isCompleted) {
+                if (data!.isUpcoming || data!.isCompleted) {
                 switch (data!.moduleTypeId) {
                   case "1":
                     {
@@ -145,8 +145,8 @@ class TimeLineTileItemWidget extends HookWidget {
                       print('no module');
                     }
                 }
-                //}
-              },
+              }
+            },
               child: Text(
                 data!.moduleTypeName,
                 style: TextStyle(
