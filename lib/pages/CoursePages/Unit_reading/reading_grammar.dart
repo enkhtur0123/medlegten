@@ -3,19 +3,35 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/message.dart';
-
+import 'package:medlegten/utils/global.dart';
 import '../base/clip_shadow.dart';
 
-class ReadingGrammar extends StatelessWidget {
+class ReadingGrammar extends StatefulWidget {
   const ReadingGrammar(this.paragraph, {Key? key}) : super(key: key);
 
   final CParagraph paragraph;
+  @override
+  _ReadingGrammarState createState() => _ReadingGrammarState();
+}
+
+class _ReadingGrammarState extends State<ReadingGrammar> {
+  //final GlobalKey _textKey = GlobalKey();
+  final left = 20.0;
+  //late Size textSize = Size(GlobalValues.screenWidth - 40, 150);
+  @override
+  void initState() {
+    super.initState();
+    //WidgetsBinding.instance?.addPostFrameCallback((_) => getSizeAndPosition());
+  }
+
+  getSizeAndPosition() {
+    //var rect = _textKey.globalPaintBounds;
+    //textSize = Size(rect!.size.width, rect.size.height + 20);
+    //setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    double messageBoxWidth = MediaQuery.of(context).size.width - 40;
-    var left = 20.0;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Message(
@@ -26,10 +42,10 @@ class ReadingGrammar extends StatelessWidget {
         clipShadows: [ClipShadow(color: Colors.grey.withOpacity(0.8))],
         isTop: true,
         isShadow: false,
-        child: Container(
-          color: Colors.white,
-          width: messageBoxWidth,
-          height: 150,
+        child: Expanded(
+          //key: _textKey,
+          //height: textSize.height,
+          //width: textSize.width,
           child: innerWidget(),
         ),
       ),
@@ -49,7 +65,7 @@ class ReadingGrammar extends StatelessWidget {
     ));
     list.add(addVerticalSpace(3));
     list.add(Text(
-      paragraph.monText,
+      widget.paragraph.monText,
       style: const TextStyle(
           fontFamily: 'Roboto',
           color: Color.fromRGBO(79, 79, 79, 1),
@@ -67,7 +83,7 @@ class ReadingGrammar extends StatelessWidget {
     ));
     list.add(addVerticalSpace(3));
     list.add(Text(
-      paragraph.grammarDescription!,
+      widget.paragraph.grammarDescription!,
       style: const TextStyle(
           fontFamily: 'Roboto',
           color: Color.fromRGBO(120, 100, 254, 1),
@@ -77,12 +93,10 @@ class ReadingGrammar extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-      child: ListView.builder(
-        //shrinkWrap: true,
-        itemCount: list.length,
-        //separatorBuilder: (BuildContext context, int index) =>
-        //    addVerticalSpace(10),
-        itemBuilder: (context, index) => list[index],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: list,
       ),
     );
   }

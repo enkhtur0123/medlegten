@@ -27,6 +27,7 @@ class _ReadingPageState extends State<ReadingPage> {
   CParagraph? selectedParagraph;
   late bool isShowGrammar;
   late bool isWidgetIsShown;
+
   late final refreshView = ValueNotifier<bool>(false)
     ..addListener(() {
       setState(() {});
@@ -178,7 +179,6 @@ class _ReadingPageState extends State<ReadingPage> {
         widget: SizedBox(
           height: 220 + 20,
           width: GlobalValues.getWidthRelativeToScreen(51),
-          //color: Colors.white60,
           child: CueWordWidget(word,
               ppointerPosition: position, isshadow: true, istop: isTop),
         ),

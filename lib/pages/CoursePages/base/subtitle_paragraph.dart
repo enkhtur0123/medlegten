@@ -30,7 +30,6 @@ class _CueTexteState extends State<SubtitleParagraph> {
   Widget build(BuildContext context) {
     //bool beforeSpace = false;
     Map<CWord, Widget> widgetList = {};
-    List<CWord> skip = [];
     for (int i1 = 0; i1 < widget.paragraph.words!.length; i1++) {
       CWord w = widget.paragraph.words![i1];
 

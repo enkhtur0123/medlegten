@@ -14,6 +14,7 @@ class CueWordWidget extends StatefulWidget {
       Rect? ppointerPosition,
       bool? isshadow,
       bool? istop,
+      bool? dynamicheight,
       double? heigHt})
       : pointerPosition = ppointerPosition ?? Rect.zero,
         isShadow = isshadow ?? false,
