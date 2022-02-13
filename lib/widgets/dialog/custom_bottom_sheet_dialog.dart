@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
+// ignore: must_be_immutable
 class CustomBottomSheetDialog extends StatelessWidget {
-  
-  CustomBottomSheetDialog({Key? key,this.isError=false,this.isSuccess=true}) : super(key: key);
+  CustomBottomSheetDialog(
+      {Key? key, this.isError = false, this.isSuccess = false,this.body=""})
+      : super(key: key);
   String text = "";
   bool? isError;
   bool? isSuccess;
+  String? body;
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +20,16 @@ class CustomBottomSheetDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: Color(0xffF4F5F3),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+                color: const Color(0xffF4F5F3),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
@@ -40,18 +43,20 @@ class CustomBottomSheetDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "амжилттай".toUpperCase(),
-                  style: TextStyle(
+                  isSuccess!
+                      ? "амжилттай".toUpperCase()
+                      : "амжилтгүй".toUpperCase(),
+                  style: const TextStyle(
                       color: Color(0xff70C217),
                       fontSize: 30,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.bold),
                 ),
                 Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: Text(
-                    "Төлбөр амжилттай төлөгдлөө. Танд сурлагын өндөр амжилт хүсье!",
-                    style: TextStyle(
+                    body??"",
+                    style: const TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.normal),
@@ -61,14 +66,14 @@ class CustomBottomSheetDialog extends StatelessWidget {
               ],
             ),
             Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 child: CustomOutlinedButton(
                   height: 50,
                   onTap: () {
                     Navigator.pop(context);
                   },
                   text: "Let’s Do this",
-                  color: Color(0xff7864FE),
+                  color: const Color(0xff7864FE),
                 )),
           ],
         ));

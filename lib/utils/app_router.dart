@@ -29,6 +29,7 @@ import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/login.dart';
 import 'package:medlegten/pages/StartPages/onboarding_page.dart';
 import 'package:medlegten/pages/StartPages/start.dart';
+import 'package:medlegten/pages/VideoPage/level_video_list.dart';
 import 'package:medlegten/pages/home.dart';
 
 part 'app_router.gr.dart';
@@ -56,6 +57,7 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/payment', page: CoursePaymentPage),
     AutoRoute(path: '/qpay', page: QpayPage),
     AutoRoute(path: '/vocabulary_list', page: VocabularyListPage),
+    AutoRoute(path: '/level/event/list', page: LevelVideoListPage),
 
     // QpayPage
   ],

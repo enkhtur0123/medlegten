@@ -16,7 +16,8 @@ class QpayPage extends HookWidget {
   CourseInfo? courseInfo;
   String? couponCode;
   String? price;
-
+  String? invoice_id;
+  ValueNotifier isCall = ValueNotifier(false);
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> body = {
@@ -26,6 +27,20 @@ class QpayPage extends HookWidget {
       "couponCode": couponCode,
       "promoId": ""
     };
+
+    AppLifecycleState? appLifecycleState = useAppLifecycleState();
+    if (appLifecycleState == AppLifecycleState.resumed && isCall.value) {
+      CoursePaymentRepository()
+          .checkPaymentStatus(invoice_id: invoice_id)
+          .then((value) async{
+        if (value != null) {
+          await modalBottomSheetMenu(context: context,isSuccess: true,body: "Төлбөр амжилттай төлөгдлөө. Танд сурлагын өндөр амжилт хүсье!");
+        }else{
+           await modalBottomSheetMenu(context: context, isError: true,body: "Төлбөр төлөлт амжилтгүй боллоо");
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Qpay Payment"),
@@ -35,6 +50,7 @@ class QpayPage extends HookWidget {
         future: CoursePaymentRepository().createInvoice(body: body),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
+            invoice_id = snapshot.data![1];
             return Container(
               color: Colors.white,
               margin: const EdgeInsets.all(20),
@@ -85,11 +101,10 @@ class QpayPage extends HookWidget {
                     mainAxisSpacing: 10,
                     crossAxisCount: 3,
                     shrinkWrap: true,
-                    children: snapshot.data!
+                    children: (snapshot.data![0] as List)
                         .map((e) => GestureDetector(
-                              onTap: () async {
-                                await launchApp(
-                                    context: context, link: e["link"]);
+                              onTap: () async{
+                                await launchApp(context: context, link: e["link"]);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -138,9 +153,10 @@ class QpayPage extends HookWidget {
   }
 
   /// Банкны аппаа дуудах
-  launchApp({BuildContext? context, String? link}) async {
+  Future launchApp({BuildContext? context, String? link}) async {
     if (await canLaunch(link!)) {
       await launch(link);
+      isCall.value = true;
     } else {
       ScaffoldMessenger.of(context!).showSnackBar(MySnackBar(
         text: "Апп суулгана уу",
@@ -148,7 +164,7 @@ class QpayPage extends HookWidget {
     }
   }
 
-  modalBottomSheetMenu({BuildContext? context}) {
+  modalBottomSheetMenu({BuildContext? context,bool? isSuccess=false,bool? isError=false,String? body}) {
     showModalBottomSheet(
         context: context!,
         shape: const RoundedRectangleBorder(
@@ -157,7 +173,7 @@ class QpayPage extends HookWidget {
         ),
         backgroundColor: Colors.white,
         builder: (context) {
-          return CustomBottomSheetDialog();
+          return CustomBottomSheetDialog(isError: isError,isSuccess: isSuccess,body: body);
         });
   }
 }

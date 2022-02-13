@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class CustomPopUpDialog extends StatelessWidget {
-  CustomPopUpDialog({Key? key, this.title, this.titleIcon, this.body,this.isBlur=true}) : super(key: key);
+  const CustomPopUpDialog({Key? key, this.title, this.titleIcon, this.body,this.isBlur=true}) : super(key: key);
 
   final String? title;
   final String? body;

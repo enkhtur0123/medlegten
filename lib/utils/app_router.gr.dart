@@ -142,6 +142,13 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: VocabularyListPage(args.unit, key: args.key));
+    },
+    LevelVideoListRoute.name: (routeData) {
+      final args = routeData.argsAs<LevelVideoListRouteArgs>(
+          orElse: () => const LevelVideoListRouteArgs());
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: LevelVideoListPage(key: args.key, levelId: args.levelId));
     }
   };
 
@@ -171,7 +178,8 @@ class _$AppRouter extends RootStackRouter {
             path: '/unit_module_progressexam'),
         RouteConfig(CoursePaymentRoute.name, path: '/payment'),
         RouteConfig(QpayRoute.name, path: '/qpay'),
-        RouteConfig(VocabularyListRoute.name, path: '/vocabulary_list')
+        RouteConfig(VocabularyListRoute.name, path: '/vocabulary_list'),
+        RouteConfig(LevelVideoListRoute.name, path: '/level/event/list')
       ];
 }
 
@@ -640,5 +648,29 @@ class VocabularyListRouteArgs {
   @override
   String toString() {
     return 'VocabularyListRouteArgs{unit: $unit, key: $key}';
+  }
+}
+
+/// generated route for
+/// [LevelVideoListPage]
+class LevelVideoListRoute extends PageRouteInfo<LevelVideoListRouteArgs> {
+  LevelVideoListRoute({Key? key, String? levelId})
+      : super(LevelVideoListRoute.name,
+            path: '/level/event/list',
+            args: LevelVideoListRouteArgs(key: key, levelId: levelId));
+
+  static const String name = 'LevelVideoListRoute';
+}
+
+class LevelVideoListRouteArgs {
+  const LevelVideoListRouteArgs({this.key, this.levelId});
+
+  final Key? key;
+
+  final String? levelId;
+
+  @override
+  String toString() {
+    return 'LevelVideoListRouteArgs{key: $key, levelId: $levelId}';
   }
 }

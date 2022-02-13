@@ -120,7 +120,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       appBar: AppBar(
         actions: [
           UnitModuleCompletedBtn(
-            moduleId: "",
+            moduleId: widget.moduleId,
             completeBtn: () {},
             unCompleteBtn: () {},
           )

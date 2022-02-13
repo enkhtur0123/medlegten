@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/repositories/payment_repository.dart';
-import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/my_textfield.dart';
