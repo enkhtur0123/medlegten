@@ -7,12 +7,18 @@ import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 // ignore: must_be_immutable
 class ListenQuizWidget extends StatefulWidget {
-  ListenQuizWidget({Key? key, this.listeningQuiz, this.randomColors,this.currentIndex})
+  ListenQuizWidget(
+      {Key? key,
+      this.listeningQuiz,
+      this.randomColors,
+      this.currentIndex,
+      this.heardIndex})
       : super(key: key);
 
   ListeningQuiz? listeningQuiz;
   List<Color>? randomColors;
   int? currentIndex;
+  Function(int index)? heardIndex;
 
   @override
   State<StatefulWidget> createState() {
@@ -61,11 +67,12 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
           height: 20,
         ),
         Container(
-             margin: const EdgeInsets.only(left: 20, right: 20),
-          child:
-        Column(
-          children: widget.listeningQuiz!.listening.cue[widget.currentIndex!].questions.map((e){
-            return Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+                children: widget.listeningQuiz!.listening
+                    .cue[widget.currentIndex!].questions
+                    .map((e) {
+              return Container(
                   margin: const EdgeInsets.only(top: 15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -105,9 +112,7 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
                       AnsWerItem(quizAnswer: e.answers, mode: mode)
                     ],
                   ));
-
-          }).toList()
-        )),
+            }).toList())),
         Container(
             margin: const EdgeInsets.all(20),
             child: CustomOutlinedButton(
@@ -117,6 +122,7 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
               height: 50,
               onTap: () {
                 mode.value = 1;
+                widget.heardIndex!(int.parse(widget.listeningQuiz!.listening.cue[widget.currentIndex!].cueId));
                 setState(() {});
               },
             ))

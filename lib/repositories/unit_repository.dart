@@ -49,6 +49,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
+      print(e.toString());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }

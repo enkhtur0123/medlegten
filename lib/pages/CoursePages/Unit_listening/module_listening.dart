@@ -12,7 +12,8 @@ import 'package:rxdart/rxdart.dart';
 import 'bottom_sheet_dialog.dart';
 
 class ModuleListenPage extends StatefulWidget {
-  const ModuleListenPage({Key? key, this.unitInfo, this.listeningQuiz,this.moduleId})
+  const ModuleListenPage(
+      {Key? key, this.unitInfo, this.listeningQuiz, this.moduleId})
       : super(key: key);
 
   final CourseUnit? unitInfo;
@@ -32,7 +33,10 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   ConcatenatingAudioSource? _playlist;
 
   List<List<Color>> randomColors = [];
+  List<int> randomNumbers = [];
   int currentIndex = 0;
+  ValueNotifier<List<ListenCheck>> listenChecks = ValueNotifier([]);
+  ScrollPhysics scrollPhysics = const NeverScrollableScrollPhysics();
 
   @override
   void initState() {
@@ -40,6 +44,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
 
     _player = AudioPlayer();
     for (var item in widget.listeningQuiz!.listening.cue) {
+      getRandom();
+      listenChecks.value
+          .add(ListenCheck(index: int.parse(item.cueId), isChecking: false));
       uriAudioSource!.add(AudioSource.uri(
         Uri.parse(item.hostUrl),
       ));
@@ -55,7 +62,8 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
 
     /// Player ээ сонсож байна
     _player.playbackEventStream.listen((event) {
-      if (event.processingState == ProcessingState.completed) {
+      if ((event.processingState == ProcessingState.completed &&
+          !listenChecks.value[currentIndex].isChecking!)) {
         showModalBottomSheet<void>(
           isScrollControlled: true,
           elevation: 5,
@@ -70,6 +78,13 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
               listeningQuiz: widget.listeningQuiz,
               randomColors: randomColors[currentIndex],
               currentIndex: currentIndex,
+              heardIndex: (index) {
+                listenChecks.value
+                    .where((element) => element.index == index)
+                    .first
+                    .isChecking = true;
+                setState(() {});
+              },
             );
           },
         );
@@ -97,13 +112,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
     int max = 9;
     rnd = Random();
     int r = min + rnd.nextInt(max - min);
+    randomNumbers.add(r);
     randomColors.add(cardColors[r]);
     return r;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override
@@ -129,7 +140,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("UNIT ${widget.unitInfo!.unitNumber} - Listening"),
-         actions: [
+        actions: [
           UnitModuleCompletedBtn(
             moduleId: widget.moduleId,
             completeBtn: () {},
@@ -169,6 +180,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.width * 0.6,
                     child: PageView.builder(
+                      physics: listenChecks.value[currentIndex].isChecking!
+                          ? const AlwaysScrollableScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
                       itemCount: _playlist!.length,
                       onPageChanged: (index) {
                         currentIndex = index;
@@ -185,7 +199,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: cardColors[getRandom()],
+                              colors: cardColors[randomNumbers[position]],
                             ),
                           ),
                           child: Container(
@@ -202,7 +216,6 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                                       fontStyle: FontStyle.normal,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white.withOpacity(0.9)),
-                                  // textAlign: TextAlign.justify
                                 )
                               ],
                             ),
@@ -262,4 +275,10 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
       ),
     );
   }
+}
+
+class ListenCheck {
+  int? index;
+  bool? isChecking;
+  ListenCheck({this.index, this.isChecking});
 }
