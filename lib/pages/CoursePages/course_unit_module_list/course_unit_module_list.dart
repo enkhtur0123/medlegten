@@ -31,6 +31,7 @@ class CourseUnitModuleListPage extends HookWidget {
     }
     return listTuple;
   }
+
   @override
   Widget build(BuildContext context) {
     final moduleFuture = useMemoized(fetchData);
@@ -50,7 +51,9 @@ class CourseUnitModuleListPage extends HookWidget {
           gradientButton(
             "Үгсийн сан - Unit ${unitInfo.unitNumber}",
             () {
-              AutoRouter.of(context).push(VocabularyListRoute(unit: unitInfo));
+              AutoRouter.of(context).push(VocabularyListRoute(
+                  unitTitle: 'UNIT ${unitInfo.unitNumber}-Vocabulary',
+                  unit: unitInfo));
             },
           ),
           const SizedBox(

@@ -7,6 +7,7 @@ import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
+import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
@@ -14,9 +15,11 @@ import 'package:video_player/video_player.dart';
 typedef UnitGrammarCallback = void Function(GrammarAnswerEx asnwer, int level);
 
 class GrammarTablePage extends StatefulWidget {
-  const GrammarTablePage(this.unitGrammar, {Key? key}) : super(key: key);
+  const GrammarTablePage(this.unitGrammar, this.unitTitle, {Key? key})
+      : super(key: key);
 
   final UnitGrammar unitGrammar;
+  final String unitTitle;
   @override
   _GrammarTablePageState createState() => _GrammarTablePageState();
 }
@@ -85,6 +88,25 @@ class _GrammarTablePageState extends State<GrammarTablePage>
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ColorTable.color255_255_255,
+      body: Stack(children: [
+        Positioned(
+          top: unitHeaderHeight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - unitHeaderHeight,
+          child: body(),
+        ),
+        Positioned(
+          width: MediaQuery.of(context).size.width,
+          height: unitHeaderHeight + 8,
+          child: UnitAppBar(widget.unitTitle),
+        ),
+      ]),
+    );
+  }
+
+  Widget body() {
     Widget videoWidget = const SizedBox(
       height: 110,
       width: 1,
@@ -114,129 +136,125 @@ class _GrammarTablePageState extends State<GrammarTablePage>
             ),
           ));
     }
-    return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: ColorTable.color255_255_255,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            addVerticalSpace(20),
-            videoWidget,
-            addVerticalSpace(20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Жишээ:',
-                style: TextStyle(
-                    color: colorPrimary,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16),
-              ),
-            ),
-            Text(
-              helper
-                  .getSentence(widget.unitGrammar.grammar[_controller.index])
-                  .textEng,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  color: colorBlack, fontWeight: FontWeight.w400, fontSize: 17),
-            ),
-            addVerticalSpace(20),
-            Text(
-              helper
-                  .getSentence(widget.unitGrammar.grammar[_controller.index])
-                  .textMon,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  color: Color.fromRGBO(168, 175, 229, 1),
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic),
-            ),
-            addVerticalSpace(20),
-            const Divider(
-              color: Color.fromRGBO(199, 201, 217, 0.2),
-              thickness: 1,
-            ),
-            addVerticalSpace(10),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Өгүүлбэрийн төрөл сонгох',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          addVerticalSpace(20),
+          videoWidget,
+          addVerticalSpace(20),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Жишээ:',
+              style: TextStyle(
                   color: colorPrimary,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
+                  fontSize: 16),
+            ),
+          ),
+          Text(
+            helper
+                .getSentence(widget.unitGrammar.grammar[_controller.index])
+                .textEng,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                color: colorBlack, fontWeight: FontWeight.w400, fontSize: 17),
+          ),
+          addVerticalSpace(20),
+          Text(
+            helper
+                .getSentence(widget.unitGrammar.grammar[_controller.index])
+                .textMon,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                color: Color.fromRGBO(168, 175, 229, 1),
+                fontWeight: FontWeight.w400,
+                fontSize: 15,
+                fontStyle: FontStyle.italic),
+          ),
+          addVerticalSpace(20),
+          const Divider(
+            color: Color.fromRGBO(199, 201, 217, 0.2),
+            thickness: 1,
+          ),
+          addVerticalSpace(10),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Өгүүлбэрийн төрөл сонгох',
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                color: colorPrimary,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: SizedBox(
-                width: double.infinity,
-                height: 35,
-                child: TabBar(
-                  isScrollable: false,
-                  unselectedLabelColor: Colors.black,
-                  labelColor: Colors.black,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorColor: Colors.transparent,
-                  tabs: [
-                    Tab(
-                      child: _buildTab(
-                          text: widget.unitGrammar.grammar[0].label,
-                          isSelected: selectedIndex[0] == 0),
-                    ),
-                    Tab(
-                      child: _buildTab(
-                          text: widget.unitGrammar.grammar[1].label,
-                          isSelected: selectedIndex[0] == 1),
-                    ),
-                    Tab(
-                      child: _buildTab(
-                          text: widget.unitGrammar.grammar[2].label,
-                          isSelected: selectedIndex[0] == 2),
-                    ),
-                  ],
-                  controller: _controller,
-                  onTap: (index) {
-                    selectedIndex[0] = index;
-                    refreshView.value = !refreshView.value;
-                  },
-                ),
-              ),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              child: buildTabview(
-                widget.unitGrammar.grammar[selectedIndex[0]],
-                helper,
-                (answer, level) {
-                  var id = helper.grammarIndex(
-                          widget.unitGrammar.grammar[selectedIndex[0]]) +
-                      level;
-                  if (level == 1 &&
-                      helper.selectedGrammar ==
-                          widget.unitGrammar.grammar[selectedIndex[0]]) {
-                    helper.selectedAnswers = {};
-                    helper.selectedChips = {};
-                  }
-
-                  if (helper.selectedAnswers[id] != answer.answer) {
-                    helper.selectedAnswers[id] = answer.answer;
-                    helper.selectedChips[id] = answer.answerId;
-                    helper.selectedGrammar =
-                        widget.unitGrammar.grammar[selectedIndex[0]];
-                    refreshView.value = !refreshView.value;
-                  }
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: SizedBox(
+              width: double.infinity,
+              height: 35,
+              child: TabBar(
+                isScrollable: false,
+                unselectedLabelColor: Colors.black,
+                labelColor: Colors.black,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorColor: Colors.transparent,
+                tabs: [
+                  Tab(
+                    child: _buildTab(
+                        text: widget.unitGrammar.grammar[0].label,
+                        isSelected: selectedIndex[0] == 0),
+                  ),
+                  Tab(
+                    child: _buildTab(
+                        text: widget.unitGrammar.grammar[1].label,
+                        isSelected: selectedIndex[0] == 1),
+                  ),
+                  Tab(
+                    child: _buildTab(
+                        text: widget.unitGrammar.grammar[2].label,
+                        isSelected: selectedIndex[0] == 2),
+                  ),
+                ],
+                controller: _controller,
+                onTap: (index) {
+                  selectedIndex[0] = index;
+                  refreshView.value = !refreshView.value;
                 },
               ),
             ),
-          ],
-        ),
+          ),
+          Flexible(
+            fit: FlexFit.tight,
+            child: buildTabview(
+              widget.unitGrammar.grammar[selectedIndex[0]],
+              helper,
+              (answer, level) {
+                var id = helper.grammarIndex(
+                        widget.unitGrammar.grammar[selectedIndex[0]]) +
+                    level;
+                if (level == 1 &&
+                    helper.selectedGrammar ==
+                        widget.unitGrammar.grammar[selectedIndex[0]]) {
+                  helper.selectedAnswers = {};
+                  helper.selectedChips = {};
+                }
+
+                if (helper.selectedAnswers[id] != answer.answer) {
+                  helper.selectedAnswers[id] = answer.answer;
+                  helper.selectedChips[id] = answer.answerId;
+                  helper.selectedGrammar =
+                      widget.unitGrammar.grammar[selectedIndex[0]];
+                  refreshView.value = !refreshView.value;
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

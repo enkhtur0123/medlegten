@@ -10,12 +10,14 @@ import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 
 class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading, {Key? key}) : super(key: key);
+  const ReadingPage(this.reading, this.unitTitle, {Key? key}) : super(key: key);
 
   final Reading reading;
+  final String unitTitle;
   @override
   _ReadingPageState createState() => _ReadingPageState();
 }
@@ -41,6 +43,33 @@ class _ReadingPageState extends State<ReadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ColorTable.color255_255_255,
+      body: Stack(children: [
+        Positioned(
+          top: unitHeaderHeight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - unitHeaderHeight,
+          child: body(),
+        ),
+        Positioned(
+          width: MediaQuery.of(context).size.width,
+          height: unitHeaderHeight + 8,
+          child: UnitAppBar(
+            widget.unitTitle,
+            tailWidget: tailWidgetHeader(),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Widget tailWidgetHeader() {
+    return IconButton(
+        onPressed: () {}, icon: const Icon(Icons.notifications_active));
+  }
+
+  Widget body() {
     List<Widget> widgetList = [];
     isWidgetIsShown = false;
 
@@ -63,26 +92,22 @@ class _ReadingPageState extends State<ReadingPage> {
         widgetList.add(childWidget(paragraph, i, false));
       }
     }
-    return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: ColorTable.color255_255_255,
-      body: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate:
-                MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
+    return CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(
+          pinned: true,
+          delegate:
+              MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return widgetList[index];
+            },
+            childCount: helper.paragraphs.length,
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return widgetList[index];
-              },
-              childCount: helper.paragraphs.length,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -3,14 +3,16 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
+import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
 
 abstract class BaseVideoPage extends StatefulWidget {
-  const BaseVideoPage(this.videoUrl, {Key? key}) : super(key: key);
+  const BaseVideoPage(this.videoUrl, {Key? key, this.title}) : super(key: key);
   final String videoUrl;
+  final String? title;
 }
 
 abstract class BaseVideoPageState<Page extends BaseVideoPage>
@@ -59,13 +61,24 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
     }
 
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: list,
-      ),
+      body: Stack(children: [
+        Positioned(
+          top: unitHeaderHeight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - unitHeaderHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: list,
+          ),
+        ),
+        Positioned(
+          width: MediaQuery.of(context).size.width,
+          height: unitHeaderHeight + 8,
+          child: UnitAppBar(widget.title!),
+        ),
+      ]),
       bottomSheet: bottomSheetWidget(),
     );
   }
@@ -85,6 +98,10 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   }
 
   Widget bottomSheetWidget() {
+    return const SizedBox(height: 1);
+  }
+
+  Widget appBarTailWidget() {
     return const SizedBox(height: 1);
   }
 }

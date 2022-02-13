@@ -5,12 +5,14 @@ import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 
 class ConversationVideoPage extends BaseVideoPage {
-  const ConversationVideoPage(this.unitConversationVideo, this.url, {Key? key})
-      : super(url, key: key);
+  const ConversationVideoPage(
+      this.unitTitle, this.unitConversationVideo, this.url,
+      {Key? key})
+      : super(url, title: unitTitle, key: key);
 
   final UnitConversationVideo unitConversationVideo;
   final String url;
-
+  final String unitTitle;
   @override
   _ConversationVideoPageState createState() => _ConversationVideoPageState();
 }

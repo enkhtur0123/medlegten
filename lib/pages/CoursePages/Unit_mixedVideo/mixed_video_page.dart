@@ -9,12 +9,13 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/utils/global.dart';
 
 class MixedVideoPage extends BaseVideoPage {
-  const MixedVideoPage(this.unitMixedVideo, this.url, {Key? key})
-      : super(url, key: key);
+  const MixedVideoPage(this.unitTitle, this.unitMixedVideo, this.url,
+      {Key? key})
+      : super(url, title: unitTitle, key: key);
 
   final UnitMixedVideo unitMixedVideo;
   final String url;
-
+  final String unitTitle;
   @override
   _MixedVideoPageState createState() => _MixedVideoPageState();
 }

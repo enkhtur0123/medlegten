@@ -8,9 +8,11 @@ import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 
 class CourseUnitIntroVideoPage extends BaseVideoPage {
-  const CourseUnitIntroVideoPage(this.unitIntroVideo, this.url, {Key? key})
-      : super(url, key: key);
+  const CourseUnitIntroVideoPage(this.unitTitle, this.unitIntroVideo, this.url,
+      {Key? key})
+      : super(url, title: unitTitle, key: key);
 
+  final String unitTitle;
   final UnitIntroVideo unitIntroVideo;
   final String url;
 
