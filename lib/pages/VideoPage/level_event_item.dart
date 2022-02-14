@@ -5,7 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlegten/models/video/event.dart';
 
 class LevelEventItem extends HookWidget {
-  const LevelEventItem({Key? key, this.event,this.edgeInsets}) : super(key: key);
+  const LevelEventItem({Key? key, this.event, this.edgeInsets})
+      : super(key: key);
 
   final Event? event;
   final EdgeInsets? edgeInsets;
@@ -13,7 +14,8 @@ class LevelEventItem extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: edgeInsets?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
+      margin:
+          edgeInsets ?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         boxShadow: [
@@ -92,56 +94,56 @@ Widget getEventInfo({Event? event}) {
       Flexible(
         flex: 4,
         child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.access_time_sharp,
-                  color: Color(0xff828282),
-                  size: 15,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Text(
-                  "3m 8sec",
-                  style: TextStyle(
-                      color: Color(0xff828282),
-                      fontSize: 10,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.normal),
-                )
-              ],
+            Flexible(
+              fit: FlexFit.loose,
+              flex: 4,
+              child: InfoItemWidget(
+                  iconData: Icons.access_time_sharp, text: "3m 8sec"),
             ),
-            const SizedBox(
-              width: 20,
-            ),
-            Row(
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/layers.svg",
-                      width: 25,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      event.vocabularyCount,
-                      style: const TextStyle(
-                          color: Color(0xff828282),
-                          fontSize: 10,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.normal),
-                    )
-                  ],
-                ),
-              ],
-            )
+            const SizedBox(width: 15),
+            Flexible(
+                fit: FlexFit.loose,
+                flex: 3,
+                child:
+                    InfoItemWidget(isSvg: true, text: event.vocabularyCount)),
+            Flexible(
+                fit: FlexFit.loose,
+                flex: 6,
+                child: InfoItemWidget(
+                    iconData: Icons.category_outlined,
+                    text: event.categoryName),),
           ],
         ),
       ),
+    ],
+  );
+}
+
+// ignore: non_constant_identifier_names
+Widget InfoItemWidget({IconData? iconData, String? text, bool? isSvg = false}) {
+  return Row(
+    children: [
+      !isSvg!
+          ? Icon(
+              iconData!,
+              color: const Color(0xff828282),
+              size: 15,
+            )
+          : SvgPicture.asset("assets/svg/layers.svg"),
+      const SizedBox(
+        width: 5,
+      ),
+      Text(
+        text!,
+        style: const TextStyle(
+            color: Color(0xff828282),
+            fontSize: 10,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.normal),
+      )
     ],
   );
 }

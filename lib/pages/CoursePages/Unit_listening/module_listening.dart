@@ -146,6 +146,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
             moduleId: widget.moduleId,
             completeBtn: () {},
             unCompleteBtn: () {},
+            isCompleted: widget.isCompleted,
           ),
         ],
       ),

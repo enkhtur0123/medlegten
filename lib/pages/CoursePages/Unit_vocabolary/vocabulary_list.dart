@@ -89,7 +89,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
         Positioned(
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
-          child: UnitAppBar(widget.unitTitle),
+          child: UnitAppBar(widget.unitTitle,isCompleted: false),
         ),
       ]),
     );

@@ -40,7 +40,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
       decoration: const BoxDecoration(
           color: secondaryColor,
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8),),),
       height: ref.read(appbarProvider.notifier).appBarState.height,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 25, top: 40),

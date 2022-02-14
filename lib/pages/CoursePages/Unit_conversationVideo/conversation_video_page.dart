@@ -3,7 +3,6 @@ import 'package:medlegten/models/Unit/unit_conversation_video.dart';
 import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
-import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 
 class ConversationVideoPage extends BaseVideoPage {
   const ConversationVideoPage(this.unitConversationVideo, this.url,

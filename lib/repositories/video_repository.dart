@@ -57,4 +57,23 @@ class VideoRepository {
   }
 
 
+  //  Future<List<Event>> getContentDetail({String? content_id}) async {
+  //   try {
+  //     final res = await HttpHelper().getUrl(url: 'ppv/LevelAll/$level_id');
+  //     if (res['isSuccess']) {
+  //       var list = res['events'] as List;
+  //       return list.map((i) => Event.fromJson(i)).toList();
+  //     } else {
+  //       dioRepository.snackBar(res['resultMessage']);
+  //       throw CustomException(errorMsg: res['resultMessage']);
+  //     }
+  //   } catch (e) {
+  //     dioRepository.snackBar(e.toString().toUpperCase());
+  //     throw CustomException(errorMsg: e.toString().toUpperCase());
+  //   }
+  // }
+
+  
+
+
 }

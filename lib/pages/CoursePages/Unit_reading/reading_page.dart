@@ -62,6 +62,7 @@ class _ReadingPageState extends State<ReadingPage> {
           child: UnitAppBar(
             widget.unitTitle!,
             moduleId: widget.moduleId,
+            isCompleted: widget.isCompleted,
           ),
         ),
       ]),

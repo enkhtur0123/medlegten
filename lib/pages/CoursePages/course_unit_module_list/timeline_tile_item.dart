@@ -7,7 +7,6 @@ import 'package:medlegten/models/Landing/course_unit_module_list.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-
 // ignore: must_be_immutable
 class TimeLineTileItemWidget extends HookWidget {
   TimeLineTileItemWidget(
@@ -32,8 +31,7 @@ class TimeLineTileItemWidget extends HookWidget {
               thickness: 3),
           afterLineStyle: LineStyle(
               thickness: 3,
-              color:
-                  data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5)),
+              color: data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5)),
           axis: TimelineAxis.vertical,
           hasIndicator: true,
           isFirst: isLast == 0,
@@ -47,8 +45,7 @@ class TimeLineTileItemWidget extends HookWidget {
                         data!.isCompleted ? colorPrimary : Colors.transparent,
                   ),
                 ),
-                color:
-                    data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5),
+                color:data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5),
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -70,105 +67,125 @@ class TimeLineTileItemWidget extends HookWidget {
             child: GestureDetector(
               onTap: () {
                 if (data!.isUpcoming || data!.isCompleted) {
-                switch (data!.moduleTypeId) {
-                  case "1":
-                    {
-                      UnitRepository().getUnitIntroVideo(data!.moduleId).then(
-                          (value) => AutoRouter.of(context)
-                                  .push(CourseUnitIntroVideoRoute(
-                                unitTitle:
-                                    'UNIT ${unitInfo!.unitNumber}-Introduction',
-                                unitIntroVideo: value!,
-                                url: value.url,
-                                moduleId: data!.moduleId,
-                                isCompleted: data!.isCompleted,
-                                
-                              )));
-                    }
-                    break;
-                  case "2":
-                    {
-                      UnitRepository().getUnitGrammar(data!.moduleId).then(
-                          (value) => AutoRouter.of(context).push(
-                              GrammarTableRoute(
-                                   isCompleted: data!.isCompleted,
+                  switch (data!.moduleTypeId) {
+                    case "1":
+                      {
+                        UnitRepository().getUnitIntroVideo(data!.moduleId).then(
+                            (value) => AutoRouter.of(context)
+                                    .push(CourseUnitIntroVideoRoute(
                                   unitTitle:
-                                      'UNIT ${unitInfo!.unitNumber}-Grammar',
-                                  unitGrammar: value!,moduleId: data!.moduleId)));
-                    }
-                    break;
-
-                  case "3":
-                    {
-                      UnitRepository().getMixedVideo(data!.moduleId).then(
-                          (value) => AutoRouter.of(context).push(MixedVideoRoute(
-                             isCompleted: data!.isCompleted,
-                              unitTitle:
-                                  'UNIT ${unitInfo!.unitNumber}-Mixed Video',
-                              unitMixedVideo: value!,
-                              url: value.url,moduleId: data!.moduleId)));
-                    }
-                    break;
-                  case "4":
-                    {
-                      UnitRepository().getReading(data!.moduleId).then(
-                          (value) => AutoRouter.of(context).push(ReadingRoute(
-                              isCompleted: data!.isCompleted,
-                              unitTitle: 'UNIT ${unitInfo!.unitNumber}-Reading',
-                              reading: value!,moduleId: data!.moduleId)));
-                    }
-                    break;
-
-                  case "5":
-                    {
-                      UnitRepository()
-                          .getUnitListening(
-                              moduleId: data!.moduleId,
-                              moduleTypeid: data!.moduleTypeId)
-                          .then((value) {
-                        AutoRouter.of(context).push(ModuleListenRoute(
-                            isCompleted: data!.isCompleted,
-                            unitInfo: unitInfo, listeningQuiz: value,
-                              moduleId: data!.moduleId));
-                      });
-                    }
-                    break;
-                  case "6":
-                    {
-                      // Writing
-                      UnitRepository().getWriting(data!.moduleId).then(
-                          (value) => AutoRouter.of(context)
-                              .push(WritingVideoRoute(
+                                      'UNIT ${unitInfo!.unitNumber}-Introduction',
+                                  unitIntroVideo: value!,
+                                  url: value.url,
+                                  moduleId: data!.moduleId,
                                   isCompleted: data!.isCompleted,
-                                unitWriting: value!,
-                                    moduleId: data!.moduleId)));
-                    }
-                    break;
+                                )));
+                      }
+                      break;
+                    case "2":
+                      {
+                        UnitRepository().getUnitGrammar(data!.moduleId).then(
+                              (value) => AutoRouter.of(context).push(
+                                GrammarTableRoute(
+                                    isCompleted: data!.isCompleted,
+                                    unitTitle:
+                                        'UNIT ${unitInfo!.unitNumber}-Grammar',
+                                    unitGrammar: value!,
+                                    moduleId: data!.moduleId),
+                              ),
+                            );
+                      }
+                      break;
 
-                  case "7":
-                    {
-                      // Conversation video
-                      UnitRepository()
-                          .getConversationVideo(data!.moduleId)
-                          .then((value) {
-                        if (value != null) {
-                          AutoRouter.of(context).push(ConversationVideoRoute(
-                                 isCompleted: data!.isCompleted,
-                              unitTitle: 'UNIT ${unitInfo!.unitNumber}-Writing',
-                              unitConversationVideo: value,
-                              url: value.url,moduleId: data!.moduleId));
-                        }
-                      });
-                    }
-                    break;
+                    case "3":
+                      {
+                        UnitRepository().getMixedVideo(data!.moduleId).then(
+                              (value) => AutoRouter.of(context).push(
+                                MixedVideoRoute(
+                                    isCompleted: data!.isCompleted,
+                                    unitTitle:
+                                        'UNIT ${unitInfo!.unitNumber}-Mixed Video',
+                                    unitMixedVideo: value!,
+                                    url: value.url,
+                                    moduleId: data!.moduleId),
+                              ),
+                            );
+                      }
+                      break;
+                    case "4":
+                      {
+                        UnitRepository().getReading(data!.moduleId).then(
+                              (value) => AutoRouter.of(context).push(
+                                ReadingRoute(
+                                    isCompleted: data!.isCompleted,
+                                    unitTitle:
+                                        'UNIT ${unitInfo!.unitNumber}-Reading',
+                                    reading: value!,
+                                    moduleId: data!.moduleId),
+                              ),
+                            );
+                      }
+                      break;
 
-                  default:
-                    {
-                      print('no module');
-                    }
+                    case "5":
+                      {
+                        UnitRepository()
+                            .getUnitListening(
+                                moduleId: data!.moduleId,
+                                moduleTypeid: data!.moduleTypeId)
+                            .then((value) {
+                          AutoRouter.of(context).push(
+                            ModuleListenRoute(
+                                isCompleted: data!.isCompleted,
+                                unitInfo: unitInfo,
+                                listeningQuiz: value,
+                                moduleId: data!.moduleId),
+                          );
+                        });
+                      }
+                      break;
+                    case "6":
+                      {
+                        // Writing
+                        UnitRepository().getWriting(data!.moduleId).then(
+                              (value) => AutoRouter.of(context).push(
+                                WritingVideoRoute(
+                                    isCompleted: data!.isCompleted,
+                                    unitWriting: value!,
+                                    moduleId: data!.moduleId),
+                              ),
+                            );
+                      }
+                      break;
+
+                    case "7":
+                      {
+                        // Conversation video
+                        UnitRepository()
+                            .getConversationVideo(data!.moduleId)
+                            .then((value) {
+                          if (value != null) {
+                            AutoRouter.of(context).push(
+                              ConversationVideoRoute(
+                                  isCompleted: data!.isCompleted,
+                                  unitTitle:
+                                      'UNIT ${unitInfo!.unitNumber}-Writing',
+                                  unitConversationVideo: value,
+                                  url: value.url,
+                                  moduleId: data!.moduleId),
+                            );
+                          }
+                        });
+                      }
+                      break;
+
+                    default:
+                      {
+                        print('no module');
+                      }
+                  }
                 }
-              }
-            },
+              },
               child: Text(
                 data!.moduleTypeName,
                 style: TextStyle(

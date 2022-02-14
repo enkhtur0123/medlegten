@@ -20,7 +20,8 @@ class CourseSelfTestPage extends HookWidget {
     List<QuizQuestionEx> sortedList = [];
     var result = await LandingRepository().getSelfQuiz();
     quizId?.value = result!.quizId;
-    var _sortedList = result!.questions..sort((a, b) => int.parse(b.ordering).compareTo(int.parse(a.ordering)));
+    var _sortedList = result!.questions
+      ..sort((a, b) => int.parse(b.ordering).compareTo(int.parse(a.ordering)));
     for (var e in _sortedList) {
       sortedList.add(QuizQuestionEx(e));
     }
@@ -44,13 +45,20 @@ class CourseSelfTestPage extends HookWidget {
           addVerticalSpace(20),
           Text(
             'Өөрийгөө үнэлэх тест'.toUpperCase(),
-            style:
-                const TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 16),
+            style: const TextStyle(
+                color: colorPrimary,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w700,
+                fontSize: 16),
           ),
           addVerticalSpace(6),
           const Text(
             'Явцын шалгалт 2',
-            style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 12),
+            style: TextStyle(
+                color: colorPrimary,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w700,
+                fontSize: 12),
           ),
           addVerticalSpace(10),
           const Divider(
@@ -62,7 +70,8 @@ class CourseSelfTestPage extends HookWidget {
             child: SingleChildScrollView(
                 child: snapshot.hasData
                     ? ValueListenableBuilder<bool>(
-                        builder: (BuildContext context, bool value, Widget? child) {
+                        builder:
+                            (BuildContext context, bool value, Widget? child) {
                           return child!;
                         },
                         valueListenable: check,
@@ -80,11 +89,16 @@ class CourseSelfTestPage extends HookWidget {
                       )
                     : const Loading()),
           ),
-          WideButton(mode.value == 0 ? 'Дуусгах' : 'Буцах', colorSecondary, colorWhite, () {
+          WideButton(
+              mode.value == 0 ? 'Дуусгах' : 'Буцах', colorSecondary, colorWhite,
+              () {
             if (mode.value == 0) {
               check.value = true;
               mode.value = 1;
-              setSelfTestResult(correctCnt: correctCnt.value, snapshot: snapshot, context: context);
+              setSelfTestResult(
+                  correctCnt: correctCnt.value,
+                  snapshot: snapshot,
+                  context: context);
             } else {
               AutoRouter.of(context).pop();
             }
@@ -94,8 +108,11 @@ class CourseSelfTestPage extends HookWidget {
       ),
     );
   }
-  
-  setSelfTestResult({int? correctCnt, AsyncSnapshot<List<QuizQuestionEx>>? snapshot, BuildContext? context}) async {
+
+  setSelfTestResult(
+      {int? correctCnt,
+      AsyncSnapshot<List<QuizQuestionEx>>? snapshot,
+      BuildContext? context}) async {
     Map<String, dynamic> data = {
       "quizId": quizId?.value.toString(),
       "correctCount": correctCnt.toString(),
@@ -106,8 +123,17 @@ class CourseSelfTestPage extends HookWidget {
       showDialog(
           context: context!,
           builder: (BuildContext context) {
-            return CustomPopUpDialog(title: "Амжилттай",body: "Шалгалтаа амжилттай гүйцэтгэлээ",);
+            return const CustomPopUpDialog(
+                title: "Амжилттай",
+                body: "Шалгалтаа амжилттай гүйцэтгэлээ",
+                isSuccess: true);
           });
+    } else {
+      showDialog(context: context!, builder: (context) {
+       return  const CustomPopUpDialog(
+          title: "Амжилтгүй", body: "", isError: true);
+      });
+     
     }
   }
 }

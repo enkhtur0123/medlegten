@@ -42,6 +42,7 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
             moduleId: widget.moduleId,
             completeBtn: () {},
             unCompleteBtn: () {},
+            isCompleted: widget.isCompleted,
           ),
         ],
       ),

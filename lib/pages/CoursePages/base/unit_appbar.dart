@@ -28,7 +28,7 @@ class UnitAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   Widget? tailWidget;
   String? moduleId;
   bool? isCompleted;
-  UnitAppBar(this.title, {Key? key, this.tailWidget, this.moduleId,this.isCompleted})
+  UnitAppBar(this.title, {Key? key, this.tailWidget, this.moduleId,required this.isCompleted})
       : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -88,7 +88,7 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
           child: UnitModuleCompletedBtn(
               moduleId: widget.moduleId,
               completeBtn: () {},
-              unCompleteBtn: () {}),
+              unCompleteBtn: () {},isCompleted: widget.isCompleted,),
         )
       ]),
     );

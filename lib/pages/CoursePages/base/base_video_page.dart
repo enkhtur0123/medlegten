@@ -83,6 +83,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
           child: UnitAppBar(
             widget.title ?? "",
             moduleId: moduleId,
+            isCompleted: widget.isCompleted,
           ),
         ),
       ]),

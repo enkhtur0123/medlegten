@@ -104,7 +104,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
         Positioned(
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
-          child: UnitAppBar(widget.unitTitle!, moduleId: widget.moduleId),
+          child: UnitAppBar(widget.unitTitle!, moduleId: widget.moduleId,isCompleted: widget.isCompleted,),
         ),
       ]),
     );
