@@ -62,7 +62,6 @@ class _ReadingPageState extends State<ReadingPage> {
           child: UnitAppBar(
             widget.unitTitle!,
             moduleId: widget.moduleId,
-            tailWidget: tailWidgetHeader(),
           ),
         ),
       ]),
@@ -72,9 +71,7 @@ class _ReadingPageState extends State<ReadingPage> {
   Widget body() {
     List<Widget> widgetList = [];
     isWidgetIsShown = false;
-
     widgetList.add(addVerticalSpace(20));
-
     for (int i = 0; i < helper.paragraphs.length; i++) {
       var paragraph = helper.paragraphs[i];
       if (!helper.valueKeys.containsKey(paragraph)) {
