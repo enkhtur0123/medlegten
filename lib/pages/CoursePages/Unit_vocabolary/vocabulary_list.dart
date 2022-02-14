@@ -5,12 +5,15 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
 import 'package:medlegten/pages/CoursePages/Unit_vocabolary/vocabulary_card.dart';
+import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/global.dart';
 
 class VocabularyListPage extends StatefulWidget {
-  const VocabularyListPage(this.unit, {Key? key}) : super(key: key);
+  const VocabularyListPage(this.unit, this.unitTitle, {Key? key})
+      : super(key: key);
   final CourseUnit unit;
+  final String unitTitle;
   @override
   _VocabularyListPageState createState() => _VocabularyListPageState();
 }
@@ -75,36 +78,49 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: ColorTable.color255_255_255,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          addVerticalSpace(20),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            getButton('All words', isBookmarked.value == false, isBookmarked),
-            getButton(
-                'Selected words', isBookmarked.value == true, isBookmarked)
-          ]),
-          addVerticalSpace(10),
-          const Divider(
-            color: Color.fromRGBO(199, 201, 217, .2),
-            thickness: 1,
-          ),
-          addVerticalSpace(10),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-              child: PagedListView<int, UnitVocabularyWord>(
-                pagingController: _pagingController,
-                builderDelegate: PagedChildBuilderDelegate<UnitVocabularyWord>(
-                    itemBuilder: (context, item, index) =>
-                        VocabularyCart(item)),
-              ),
+      body: Stack(children: [
+        Positioned(
+          top: unitHeaderHeight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - unitHeaderHeight,
+          child: body(),
+        ),
+        Positioned(
+          width: MediaQuery.of(context).size.width,
+          height: unitHeaderHeight + 8,
+          child: UnitAppBar(widget.unitTitle),
+        ),
+      ]),
+    );
+  }
+
+  Widget body() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        addVerticalSpace(20),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          getButton('All words', isBookmarked.value == false, isBookmarked),
+          getButton('Selected words', isBookmarked.value == true, isBookmarked)
+        ]),
+        addVerticalSpace(10),
+        const Divider(
+          color: Color.fromRGBO(199, 201, 217, .2),
+          thickness: 1,
+        ),
+        addVerticalSpace(10),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+            child: PagedListView<int, UnitVocabularyWord>(
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<UnitVocabularyWord>(
+                  itemBuilder: (context, item, index) => VocabularyCart(item)),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

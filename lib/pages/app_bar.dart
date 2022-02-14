@@ -13,11 +13,7 @@ class CustomAppBar extends ConsumerStatefulWidget
   String? text3;
   WidgetRef? ref;
   CustomAppBar(
-      {Key? key,
-      this.text1 = "",
-      this.text2 = "",
-      this.text3,
-      this.ref})
+      {Key? key, this.text1 = "", this.text2 = "", this.text3, this.ref})
       : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -95,7 +91,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
               ? RichText(
                   maxLines: 2,
                   text: TextSpan(
-                    text:  ref.read(appbarProvider.notifier).appBarState.text1,
+                    text: ref.read(appbarProvider.notifier).appBarState.text1,
                     style: const TextStyle(
                         color: Color(0xffC7C9D9),
                         fontSize: 14,
@@ -103,7 +99,8 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                         fontWeight: FontWeight.normal),
                     children: <TextSpan>[
                       TextSpan(
-                        text:  ref.read(appbarProvider.notifier).appBarState.text2,
+                        text:
+                            ref.read(appbarProvider.notifier).appBarState.text2,
                       ),
                       TextSpan(
                           text: ref
@@ -118,7 +115,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                   ),
                 )
               : Text(
-                   ref.read(appbarProvider.notifier).appBarState.text1!,
+                  ref.read(appbarProvider.notifier).appBarState.text1!,
                   style: const TextStyle(
                       color: Color(0xffC7C9D9),
                       fontSize: 14,

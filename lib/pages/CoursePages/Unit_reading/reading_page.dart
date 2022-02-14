@@ -10,14 +10,16 @@ import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:medlegten/utils/global.dart';
 
 class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading, {Key? key, this.moduleId}) : super(key: key);
+  const ReadingPage(this.reading, {Key? key, this.moduleId,this.unitTitle}) : super(key: key);
 
   final Reading reading;
   final String? moduleId;
+   final String? unitTitle;
   @override
   _ReadingPageState createState() => _ReadingPageState();
 }
@@ -27,6 +29,7 @@ class _ReadingPageState extends State<ReadingPage> {
   CParagraph? selectedParagraph;
   late bool isShowGrammar;
   late bool isWidgetIsShown;
+
   late final refreshView = ValueNotifier<bool>(false)
     ..addListener(() {
       setState(() {});
@@ -43,8 +46,38 @@ class _ReadingPageState extends State<ReadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ColorTable.color255_255_255,
+      body: Stack(children: [
+        Positioned(
+          top: unitHeaderHeight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - unitHeaderHeight,
+          child: body(),
+        ),
+        Positioned(
+          width: MediaQuery.of(context).size.width,
+          height: unitHeaderHeight + 8,
+          child: UnitAppBar(
+            widget.unitTitle!,
+            tailWidget: tailWidgetHeader(),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Widget tailWidgetHeader() {
+    return IconButton(
+        onPressed: () {}, icon: const Icon(Icons.notifications_active));
+  }
+
+  Widget body() {
     List<Widget> widgetList = [];
     isWidgetIsShown = false;
+
+    widgetList.add(addVerticalSpace(20));
+
     for (int i = 0; i < helper.paragraphs.length; i++) {
       var paragraph = helper.paragraphs[i];
       if (!helper.valueKeys.containsKey(paragraph)) {
@@ -78,7 +111,7 @@ class _ReadingPageState extends State<ReadingPage> {
         slivers: [
           SliverPersistentHeader(
             pinned: true,
-            delegate: MyDynamicHeader(),
+            delegate: MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -88,14 +121,14 @@ class _ReadingPageState extends State<ReadingPage> {
               childCount: helper.paragraphs.length,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SizedBox(
         height: BaseCueHelper().getMaxHeight(
             [paragraph],
@@ -160,7 +193,6 @@ class _ReadingPageState extends State<ReadingPage> {
         widget: SizedBox(
           height: 220 + 20,
           width: GlobalValues.getWidthRelativeToScreen(51),
-          //color: Colors.white60,
           child: CueWordWidget(word,
               ppointerPosition: position, isshadow: true, istop: isTop),
         ),
