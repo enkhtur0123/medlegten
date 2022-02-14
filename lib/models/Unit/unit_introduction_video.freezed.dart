@@ -23,12 +23,14 @@ class _$UnitIntroVideoTearOff {
   const _$UnitIntroVideoTearOff();
 
   _UnitIntroVideo call(String name, String url, String hostSource,
-      List<UnitIntroCueParagraph> cue) {
+      List<UnitIntroCueParagraph> cue,
+      {bool? isCompleted}) {
     return _UnitIntroVideo(
       name,
       url,
       hostSource,
       cue,
+      isCompleted: isCompleted,
     );
   }
 
@@ -46,6 +48,7 @@ mixin _$UnitIntroVideo {
   String get url => throw _privateConstructorUsedError;
   String get hostSource => throw _privateConstructorUsedError;
   List<UnitIntroCueParagraph> get cue => throw _privateConstructorUsedError;
+  bool? get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,7 +65,8 @@ abstract class $UnitIntroVideoCopyWith<$Res> {
       {String name,
       String url,
       String hostSource,
-      List<UnitIntroCueParagraph> cue});
+      List<UnitIntroCueParagraph> cue,
+      bool? isCompleted});
 }
 
 /// @nodoc
@@ -80,6 +84,7 @@ class _$UnitIntroVideoCopyWithImpl<$Res>
     Object? url = freezed,
     Object? hostSource = freezed,
     Object? cue = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -98,6 +103,10 @@ class _$UnitIntroVideoCopyWithImpl<$Res>
           ? _value.cue
           : cue // ignore: cast_nullable_to_non_nullable
               as List<UnitIntroCueParagraph>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -113,7 +122,8 @@ abstract class _$UnitIntroVideoCopyWith<$Res>
       {String name,
       String url,
       String hostSource,
-      List<UnitIntroCueParagraph> cue});
+      List<UnitIntroCueParagraph> cue,
+      bool? isCompleted});
 }
 
 /// @nodoc
@@ -133,6 +143,7 @@ class __$UnitIntroVideoCopyWithImpl<$Res>
     Object? url = freezed,
     Object? hostSource = freezed,
     Object? cue = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_UnitIntroVideo(
       name == freezed
@@ -151,6 +162,10 @@ class __$UnitIntroVideoCopyWithImpl<$Res>
           ? _value.cue
           : cue // ignore: cast_nullable_to_non_nullable
               as List<UnitIntroCueParagraph>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -158,7 +173,8 @@ class __$UnitIntroVideoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UnitIntroVideo implements _UnitIntroVideo {
-  _$_UnitIntroVideo(this.name, this.url, this.hostSource, this.cue);
+  _$_UnitIntroVideo(this.name, this.url, this.hostSource, this.cue,
+      {this.isCompleted});
 
   factory _$_UnitIntroVideo.fromJson(Map<String, dynamic> json) =>
       _$$_UnitIntroVideoFromJson(json);
@@ -171,10 +187,12 @@ class _$_UnitIntroVideo implements _UnitIntroVideo {
   final String hostSource;
   @override
   final List<UnitIntroCueParagraph> cue;
+  @override
+  final bool? isCompleted;
 
   @override
   String toString() {
-    return 'UnitIntroVideo(name: $name, url: $url, hostSource: $hostSource, cue: $cue)';
+    return 'UnitIntroVideo(name: $name, url: $url, hostSource: $hostSource, cue: $cue, isCompleted: $isCompleted)';
   }
 
   @override
@@ -186,7 +204,9 @@ class _$_UnitIntroVideo implements _UnitIntroVideo {
             const DeepCollectionEquality().equals(other.url, url) &&
             const DeepCollectionEquality()
                 .equals(other.hostSource, hostSource) &&
-            const DeepCollectionEquality().equals(other.cue, cue));
+            const DeepCollectionEquality().equals(other.cue, cue) &&
+            const DeepCollectionEquality()
+                .equals(other.isCompleted, isCompleted));
   }
 
   @override
@@ -195,7 +215,8 @@ class _$_UnitIntroVideo implements _UnitIntroVideo {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(url),
       const DeepCollectionEquality().hash(hostSource),
-      const DeepCollectionEquality().hash(cue));
+      const DeepCollectionEquality().hash(cue),
+      const DeepCollectionEquality().hash(isCompleted));
 
   @JsonKey(ignore: true)
   @override
@@ -210,7 +231,8 @@ class _$_UnitIntroVideo implements _UnitIntroVideo {
 
 abstract class _UnitIntroVideo implements UnitIntroVideo {
   factory _UnitIntroVideo(String name, String url, String hostSource,
-      List<UnitIntroCueParagraph> cue) = _$_UnitIntroVideo;
+      List<UnitIntroCueParagraph> cue,
+      {bool? isCompleted}) = _$_UnitIntroVideo;
 
   factory _UnitIntroVideo.fromJson(Map<String, dynamic> json) =
       _$_UnitIntroVideo.fromJson;
@@ -223,6 +245,8 @@ abstract class _UnitIntroVideo implements UnitIntroVideo {
   String get hostSource;
   @override
   List<UnitIntroCueParagraph> get cue;
+  @override
+  bool? get isCompleted;
   @override
   @JsonKey(ignore: true)
   _$UnitIntroVideoCopyWith<_UnitIntroVideo> get copyWith =>

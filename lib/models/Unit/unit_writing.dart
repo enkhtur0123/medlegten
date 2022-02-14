@@ -6,8 +6,8 @@ part 'unit_writing.g.dart';
 
 @freezed
 class UnitWriting with _$UnitWriting {
-  factory UnitWriting(String name, List<UnitWritingVideo> videos) =
-      _UnitWriting;
+  factory UnitWriting(String name, List<UnitWritingVideo> videos,
+      {bool? isCompleted}) = _UnitWriting;
 
   factory UnitWriting.fromJson(Map<String, dynamic> json) =>
       _$UnitWritingFromJson(json);

@@ -13,6 +13,7 @@ _$_Reading _$$_ReadingFromJson(Map<String, dynamic> json) => _$_Reading(
       (json['cue'] as List<dynamic>)
           .map((e) => ReadingCueParagraph.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isCompleted: json['isCompleted'] as bool?,
     );
 
 Map<String, dynamic> _$$_ReadingToJson(_$_Reading instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$$_ReadingToJson(_$_Reading instance) =>
       'title': instance.title,
       'imgUrl': instance.imgUrl,
       'cue': instance.cue,
+      'isCompleted': instance.isCompleted,
     };

@@ -7,7 +7,8 @@ part 'unit_introduction_video.g.dart';
 @freezed
 class UnitIntroVideo with _$UnitIntroVideo {
   factory UnitIntroVideo(String name, String url, String hostSource,
-      List<UnitIntroCueParagraph> cue) = _UnitIntroVideo;
+      List<UnitIntroCueParagraph> cue,
+      {bool? isCompleted}) = _UnitIntroVideo;
 
   factory UnitIntroVideo.fromJson(Map<String, dynamic> json) =>
       _$UnitIntroVideoFromJson(json);

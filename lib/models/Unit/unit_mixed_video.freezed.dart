@@ -23,12 +23,14 @@ class _$UnitMixedVideoTearOff {
   const _$UnitMixedVideoTearOff();
 
   _UnitMixedVideo call(String name, String url, String hostSource,
-      List<UnitMixedCueParagraph> cue) {
+      List<UnitMixedCueParagraph> cue,
+      {bool? isCompleted}) {
     return _UnitMixedVideo(
       name,
       url,
       hostSource,
       cue,
+      isCompleted: isCompleted,
     );
   }
 
@@ -46,6 +48,7 @@ mixin _$UnitMixedVideo {
   String get url => throw _privateConstructorUsedError;
   String get hostSource => throw _privateConstructorUsedError;
   List<UnitMixedCueParagraph> get cue => throw _privateConstructorUsedError;
+  bool? get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,7 +65,8 @@ abstract class $UnitMixedVideoCopyWith<$Res> {
       {String name,
       String url,
       String hostSource,
-      List<UnitMixedCueParagraph> cue});
+      List<UnitMixedCueParagraph> cue,
+      bool? isCompleted});
 }
 
 /// @nodoc
@@ -80,6 +84,7 @@ class _$UnitMixedVideoCopyWithImpl<$Res>
     Object? url = freezed,
     Object? hostSource = freezed,
     Object? cue = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -98,6 +103,10 @@ class _$UnitMixedVideoCopyWithImpl<$Res>
           ? _value.cue
           : cue // ignore: cast_nullable_to_non_nullable
               as List<UnitMixedCueParagraph>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -113,7 +122,8 @@ abstract class _$UnitMixedVideoCopyWith<$Res>
       {String name,
       String url,
       String hostSource,
-      List<UnitMixedCueParagraph> cue});
+      List<UnitMixedCueParagraph> cue,
+      bool? isCompleted});
 }
 
 /// @nodoc
@@ -133,6 +143,7 @@ class __$UnitMixedVideoCopyWithImpl<$Res>
     Object? url = freezed,
     Object? hostSource = freezed,
     Object? cue = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_UnitMixedVideo(
       name == freezed
@@ -151,6 +162,10 @@ class __$UnitMixedVideoCopyWithImpl<$Res>
           ? _value.cue
           : cue // ignore: cast_nullable_to_non_nullable
               as List<UnitMixedCueParagraph>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -158,7 +173,8 @@ class __$UnitMixedVideoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UnitMixedVideo implements _UnitMixedVideo {
-  _$_UnitMixedVideo(this.name, this.url, this.hostSource, this.cue);
+  _$_UnitMixedVideo(this.name, this.url, this.hostSource, this.cue,
+      {this.isCompleted});
 
   factory _$_UnitMixedVideo.fromJson(Map<String, dynamic> json) =>
       _$$_UnitMixedVideoFromJson(json);
@@ -171,10 +187,12 @@ class _$_UnitMixedVideo implements _UnitMixedVideo {
   final String hostSource;
   @override
   final List<UnitMixedCueParagraph> cue;
+  @override
+  final bool? isCompleted;
 
   @override
   String toString() {
-    return 'UnitMixedVideo(name: $name, url: $url, hostSource: $hostSource, cue: $cue)';
+    return 'UnitMixedVideo(name: $name, url: $url, hostSource: $hostSource, cue: $cue, isCompleted: $isCompleted)';
   }
 
   @override
@@ -186,7 +204,9 @@ class _$_UnitMixedVideo implements _UnitMixedVideo {
             const DeepCollectionEquality().equals(other.url, url) &&
             const DeepCollectionEquality()
                 .equals(other.hostSource, hostSource) &&
-            const DeepCollectionEquality().equals(other.cue, cue));
+            const DeepCollectionEquality().equals(other.cue, cue) &&
+            const DeepCollectionEquality()
+                .equals(other.isCompleted, isCompleted));
   }
 
   @override
@@ -195,7 +215,8 @@ class _$_UnitMixedVideo implements _UnitMixedVideo {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(url),
       const DeepCollectionEquality().hash(hostSource),
-      const DeepCollectionEquality().hash(cue));
+      const DeepCollectionEquality().hash(cue),
+      const DeepCollectionEquality().hash(isCompleted));
 
   @JsonKey(ignore: true)
   @override
@@ -210,7 +231,8 @@ class _$_UnitMixedVideo implements _UnitMixedVideo {
 
 abstract class _UnitMixedVideo implements UnitMixedVideo {
   factory _UnitMixedVideo(String name, String url, String hostSource,
-      List<UnitMixedCueParagraph> cue) = _$_UnitMixedVideo;
+      List<UnitMixedCueParagraph> cue,
+      {bool? isCompleted}) = _$_UnitMixedVideo;
 
   factory _UnitMixedVideo.fromJson(Map<String, dynamic> json) =
       _$_UnitMixedVideo.fromJson;
@@ -223,6 +245,8 @@ abstract class _UnitMixedVideo implements UnitMixedVideo {
   String get hostSource;
   @override
   List<UnitMixedCueParagraph> get cue;
+  @override
+  bool? get isCompleted;
   @override
   @JsonKey(ignore: true)
   _$UnitMixedVideoCopyWith<_UnitMixedVideo> get copyWith =>

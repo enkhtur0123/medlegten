@@ -69,11 +69,6 @@ class _ReadingPageState extends State<ReadingPage> {
     );
   }
 
-  Widget tailWidgetHeader() {
-    return IconButton(
-        onPressed: () {}, icon: const Icon(Icons.notifications_active));
-  }
-
   Widget body() {
     List<Widget> widgetList = [];
     isWidgetIsShown = false;
@@ -97,27 +92,22 @@ class _ReadingPageState extends State<ReadingPage> {
         widgetList.add(childWidget(paragraph, i, false));
       }
     }
-    return Scaffold(
-      backgroundColor: ColorTable.color255_255_255,
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate:
-                MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
+    return CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(
+          pinned: true,
+          delegate:
+              MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return widgetList[index];
+            },
+            childCount: widgetList.length,
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return widgetList[index];
-              },
-              childCount: helper.paragraphs.length,
-            ),
-          ),
-        ],
-      ),
-    );
+          
+    )]);
   }
 
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
