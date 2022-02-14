@@ -59,7 +59,12 @@ class UnitRepository {
       final res =
           await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/1');
       if (res['isSuccess']) {
-        return UnitIntroVideo.fromJson(res['introVideo']);
+        var json = res['introVideo'] as Map<String, dynamic>;
+        var map = <String, dynamic>{
+          'isCompleted': res['isCompleted'].toString().toLowerCase() == 'true'
+        };
+        map.addEntries(json.entries);
+        return UnitIntroVideo.fromJson(map);
       } else {
         MySnackBar(text: res['resultMessage']);
         return null;
@@ -93,7 +98,12 @@ class UnitRepository {
       final res =
           await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/7');
       if (res['isSuccess']) {
-        return UnitConversationVideo.fromJson(res['conversation']);
+        var json = res['conversation'] as Map<String, dynamic>;
+        var map = <String, dynamic>{
+          'isCompleted': res['isCompleted'].toString().toLowerCase() == 'true'
+        };
+        map.addEntries(json.entries);
+        return UnitConversationVideo.fromJson(map);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;
@@ -109,7 +119,12 @@ class UnitRepository {
       final res =
           await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/3');
       if (res['isSuccess']) {
-        return UnitMixedVideo.fromJson(res['mixedVideo']);
+        var json = res['mixedVideo'] as Map<String, dynamic>;
+        var map = <String, dynamic>{
+          'isCompleted': res['isCompleted'].toString().toLowerCase() == 'true'
+        };
+        map.addEntries(json.entries);
+        return UnitMixedVideo.fromJson(map);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;
@@ -125,7 +140,12 @@ class UnitRepository {
       final res =
           await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/4');
       if (res['isSuccess']) {
-        return Reading.fromJson(res['reading']);
+        var json = res['reading'] as Map<String, dynamic>;
+        var map = <String, dynamic>{
+          'isCompleted': res['isCompleted'].toString().toLowerCase() == 'true'
+        };
+        map.addEntries(json.entries);
+        return Reading.fromJson(map);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;
@@ -174,7 +194,12 @@ class UnitRepository {
       final res =
           await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/2');
       if (res['isSuccess']) {
-        return UnitGrammar.fromJson(res['grammarTable']);
+        var json = res['grammarTable'] as Map<String, dynamic>;
+        var map = <String, dynamic>{
+          'isCompleted': res['isCompleted'].toString().toLowerCase() == 'true'
+        };
+        map.addEntries(json.entries);
+        return UnitGrammar.fromJson(map);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;
@@ -191,7 +216,12 @@ class UnitRepository {
       final res =
           await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/6');
       if (res['isSuccess']) {
-        return UnitWriting.fromJson(res['writing']);
+        var json = res['writing'] as Map<String, dynamic>;
+        var map = <String, dynamic>{
+          'isCompleted': res['isCompleted'].toString().toLowerCase() == 'true'
+        };
+        map.addEntries(json.entries);
+        return UnitWriting.fromJson(map);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;

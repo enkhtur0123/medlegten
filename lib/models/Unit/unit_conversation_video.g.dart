@@ -15,6 +15,7 @@ _$_UnitConversationVideo _$$_UnitConversationVideoFromJson(
       (json['cue'] as List<dynamic>)
           .map((e) => UnitIntroCueParagraph.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isCompleted: json['isCompleted'] as bool?,
     );
 
 Map<String, dynamic> _$$_UnitConversationVideoToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$_UnitConversationVideoToJson(
       'url': instance.url,
       'hostSource': instance.hostSource,
       'cue': instance.cue,
+      'isCompleted': instance.isCompleted,
     };

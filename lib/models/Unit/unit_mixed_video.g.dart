@@ -14,6 +14,7 @@ _$_UnitMixedVideo _$$_UnitMixedVideoFromJson(Map<String, dynamic> json) =>
       (json['cue'] as List<dynamic>)
           .map((e) => UnitMixedCueParagraph.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isCompleted: json['isCompleted'] as bool?,
     );
 
 Map<String, dynamic> _$$_UnitMixedVideoToJson(_$_UnitMixedVideo instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$_UnitMixedVideoToJson(_$_UnitMixedVideo instance) =>
       'url': instance.url,
       'hostSource': instance.hostSource,
       'cue': instance.cue,
+      'isCompleted': instance.isCompleted,
     };

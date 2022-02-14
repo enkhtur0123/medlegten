@@ -6,16 +6,18 @@ import 'package:medlegten/pages/CoursePages/Unit_introVideo/intro_video_subtitle
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 
 class CourseUnitIntroVideoPage extends BaseVideoPage {
-  const CourseUnitIntroVideoPage(this.unitTitle, this.unitIntroVideo, this.url,
+  const CourseUnitIntroVideoPage(
+      this.unitTitle, this.unitIntroVideo, this.url, this.moduleId,
       {Key? key})
       : super(url, title: unitTitle, key: key);
 
   final String unitTitle;
   final UnitIntroVideo unitIntroVideo;
   final String url;
-
+  final String moduleId;
   @override
   _CourseUnitIntroVideoPageState createState() =>
       _CourseUnitIntroVideoPageState();
@@ -62,6 +64,12 @@ class _CourseUnitIntroVideoPageState
         refreshNotifier.value = !refreshNotifier.value;
       }
     });
+  }
+
+  @override
+  Widget appBarTailWidget() {
+    return headerCompleteButton(
+        widget.moduleId, widget.unitIntroVideo.isCompleted!);
   }
 
   @override

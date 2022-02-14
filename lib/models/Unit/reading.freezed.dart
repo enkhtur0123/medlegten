@@ -23,12 +23,14 @@ class _$ReadingTearOff {
   const _$ReadingTearOff();
 
   _Reading call(
-      String name, String title, String imgUrl, List<ReadingCueParagraph> cue) {
+      String name, String title, String imgUrl, List<ReadingCueParagraph> cue,
+      {bool? isCompleted}) {
     return _Reading(
       name,
       title,
       imgUrl,
       cue,
+      isCompleted: isCompleted,
     );
   }
 
@@ -46,6 +48,7 @@ mixin _$Reading {
   String get title => throw _privateConstructorUsedError;
   String get imgUrl => throw _privateConstructorUsedError;
   List<ReadingCueParagraph> get cue => throw _privateConstructorUsedError;
+  bool? get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,7 +63,8 @@ abstract class $ReadingCopyWith<$Res> {
       {String name,
       String title,
       String imgUrl,
-      List<ReadingCueParagraph> cue});
+      List<ReadingCueParagraph> cue,
+      bool? isCompleted});
 }
 
 /// @nodoc
@@ -77,6 +81,7 @@ class _$ReadingCopyWithImpl<$Res> implements $ReadingCopyWith<$Res> {
     Object? title = freezed,
     Object? imgUrl = freezed,
     Object? cue = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -95,6 +100,10 @@ class _$ReadingCopyWithImpl<$Res> implements $ReadingCopyWith<$Res> {
           ? _value.cue
           : cue // ignore: cast_nullable_to_non_nullable
               as List<ReadingCueParagraph>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -108,7 +117,8 @@ abstract class _$ReadingCopyWith<$Res> implements $ReadingCopyWith<$Res> {
       {String name,
       String title,
       String imgUrl,
-      List<ReadingCueParagraph> cue});
+      List<ReadingCueParagraph> cue,
+      bool? isCompleted});
 }
 
 /// @nodoc
@@ -126,6 +136,7 @@ class __$ReadingCopyWithImpl<$Res> extends _$ReadingCopyWithImpl<$Res>
     Object? title = freezed,
     Object? imgUrl = freezed,
     Object? cue = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_Reading(
       name == freezed
@@ -144,6 +155,10 @@ class __$ReadingCopyWithImpl<$Res> extends _$ReadingCopyWithImpl<$Res>
           ? _value.cue
           : cue // ignore: cast_nullable_to_non_nullable
               as List<ReadingCueParagraph>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -151,7 +166,7 @@ class __$ReadingCopyWithImpl<$Res> extends _$ReadingCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Reading implements _Reading {
-  _$_Reading(this.name, this.title, this.imgUrl, this.cue);
+  _$_Reading(this.name, this.title, this.imgUrl, this.cue, {this.isCompleted});
 
   factory _$_Reading.fromJson(Map<String, dynamic> json) =>
       _$$_ReadingFromJson(json);
@@ -164,10 +179,12 @@ class _$_Reading implements _Reading {
   final String imgUrl;
   @override
   final List<ReadingCueParagraph> cue;
+  @override
+  final bool? isCompleted;
 
   @override
   String toString() {
-    return 'Reading(name: $name, title: $title, imgUrl: $imgUrl, cue: $cue)';
+    return 'Reading(name: $name, title: $title, imgUrl: $imgUrl, cue: $cue, isCompleted: $isCompleted)';
   }
 
   @override
@@ -178,7 +195,9 @@ class _$_Reading implements _Reading {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
-            const DeepCollectionEquality().equals(other.cue, cue));
+            const DeepCollectionEquality().equals(other.cue, cue) &&
+            const DeepCollectionEquality()
+                .equals(other.isCompleted, isCompleted));
   }
 
   @override
@@ -187,7 +206,8 @@ class _$_Reading implements _Reading {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(imgUrl),
-      const DeepCollectionEquality().hash(cue));
+      const DeepCollectionEquality().hash(cue),
+      const DeepCollectionEquality().hash(isCompleted));
 
   @JsonKey(ignore: true)
   @override
@@ -201,8 +221,9 @@ class _$_Reading implements _Reading {
 }
 
 abstract class _Reading implements Reading {
-  factory _Reading(String name, String title, String imgUrl,
-      List<ReadingCueParagraph> cue) = _$_Reading;
+  factory _Reading(
+      String name, String title, String imgUrl, List<ReadingCueParagraph> cue,
+      {bool? isCompleted}) = _$_Reading;
 
   factory _Reading.fromJson(Map<String, dynamic> json) = _$_Reading.fromJson;
 
@@ -214,6 +235,8 @@ abstract class _Reading implements Reading {
   String get imgUrl;
   @override
   List<ReadingCueParagraph> get cue;
+  @override
+  bool? get isCompleted;
   @override
   @JsonKey(ignore: true)
   _$ReadingCopyWith<_Reading> get copyWith =>

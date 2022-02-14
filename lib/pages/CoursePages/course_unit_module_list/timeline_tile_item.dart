@@ -76,13 +76,13 @@ class TimeLineTileItemWidget extends HookWidget {
                   case "1":
                     {
                       UnitRepository().getUnitIntroVideo(data!.moduleId).then(
-                          (value) => AutoRouter.of(context)
-                                  .push(CourseUnitIntroVideoRoute(
-                                unitTitle:
-                                    'UNIT ${unitInfo!.unitNumber}-Introduction',
-                                unitIntroVideo: value!,
-                                url: value.url,
-                              )));
+                          (value) => AutoRouter.of(context).push(
+                              CourseUnitIntroVideoRoute(
+                                  unitTitle:
+                                      'UNIT ${unitInfo!.unitNumber}-Introduction',
+                                  unitIntroVideo: value!,
+                                  url: value.url,
+                                  moduleId: data!.moduleTypeId)));
                     }
                     break;
                   case "2":
@@ -92,18 +92,22 @@ class TimeLineTileItemWidget extends HookWidget {
                               GrammarTableRoute(
                                   unitTitle:
                                       'UNIT ${unitInfo!.unitNumber}-Grammar',
-                                  unitGrammar: value!)));
+                                  unitGrammar: value!,
+                                  moduleId: data!.moduleTypeId)));
                     }
                     break;
 
                   case "3":
                     {
                       UnitRepository().getMixedVideo(data!.moduleId).then(
-                          (value) => AutoRouter.of(context).push(MixedVideoRoute(
-                              unitTitle:
-                                  'UNIT ${unitInfo!.unitNumber}-Mixed Video',
-                              unitMixedVideo: value!,
-                              url: value.url)));
+                          (value) =>
+                              AutoRouter.of(context).push(MixedVideoRoute(
+                                unitTitle:
+                                    'UNIT ${unitInfo!.unitNumber}-Mixed Video',
+                                unitMixedVideo: value!,
+                                url: value.url,
+                                moduleId: data!.moduleTypeId,
+                              )));
                     }
                     break;
 
@@ -112,7 +116,8 @@ class TimeLineTileItemWidget extends HookWidget {
                       UnitRepository().getReading(data!.moduleId).then(
                           (value) => AutoRouter.of(context).push(ReadingRoute(
                               unitTitle: 'UNIT ${unitInfo!.unitNumber}-Reading',
-                              reading: value!)));
+                              reading: value!,
+                              moduleId: data!.moduleTypeId)));
                     }
                     break;
 
@@ -145,9 +150,12 @@ class TimeLineTileItemWidget extends HookWidget {
                           .then((value) {
                         if (value != null) {
                           AutoRouter.of(context).push(ConversationVideoRoute(
-                              unitTitle: 'UNIT ${unitInfo!.unitNumber}-Writing',
-                              unitConversationVideo: value,
-                              url: value.url));
+                            unitTitle:
+                                'UNIT ${unitInfo!.unitNumber}-Conversation Video',
+                            unitConversationVideo: value,
+                            url: value.url,
+                            moduleId: data!.moduleTypeId,
+                          ));
                         }
                       });
                     }

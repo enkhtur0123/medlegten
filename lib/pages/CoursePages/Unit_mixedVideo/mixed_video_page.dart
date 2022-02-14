@@ -6,16 +6,19 @@ import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_subtitle
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 
 class MixedVideoPage extends BaseVideoPage {
-  const MixedVideoPage(this.unitTitle, this.unitMixedVideo, this.url,
+  const MixedVideoPage(
+      this.unitTitle, this.unitMixedVideo, this.url, this.moduleId,
       {Key? key})
       : super(url, title: unitTitle, key: key);
 
   final UnitMixedVideo unitMixedVideo;
   final String url;
   final String unitTitle;
+  final String moduleId;
   @override
   _MixedVideoPageState createState() => _MixedVideoPageState();
 }
@@ -50,6 +53,12 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   void dispose() {
     refreshNotifier.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget appBarTailWidget() {
+    return headerCompleteButton(
+        widget.moduleId, widget.unitMixedVideo.isCompleted!);
   }
 
   @override

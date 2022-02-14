@@ -12,10 +12,12 @@ _$_UnitWriting _$$_UnitWritingFromJson(Map<String, dynamic> json) =>
       (json['videos'] as List<dynamic>)
           .map((e) => UnitWritingVideo.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isCompleted: json['isCompleted'] as bool?,
     );
 
 Map<String, dynamic> _$$_UnitWritingToJson(_$_UnitWriting instance) =>
     <String, dynamic>{
       'name': instance.name,
       'videos': instance.videos,
+      'isCompleted': instance.isCompleted,
     };

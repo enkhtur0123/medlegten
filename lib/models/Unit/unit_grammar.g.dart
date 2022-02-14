@@ -14,10 +14,12 @@ _$_UnitGrammar _$$_UnitGrammarFromJson(Map<String, dynamic> json) =>
       (json['sentences'] as List<dynamic>)
           .map((e) => Sentence.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isCompleted: json['isCompleted'] as bool?,
     );
 
 Map<String, dynamic> _$$_UnitGrammarToJson(_$_UnitGrammar instance) =>
     <String, dynamic>{
       'grammar': instance.grammar,
       'sentences': instance.sentences,
+      'isCompleted': instance.isCompleted,
     };

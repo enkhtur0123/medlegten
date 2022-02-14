@@ -22,10 +22,12 @@ UnitWriting _$UnitWritingFromJson(Map<String, dynamic> json) {
 class _$UnitWritingTearOff {
   const _$UnitWritingTearOff();
 
-  _UnitWriting call(String name, List<UnitWritingVideo> videos) {
+  _UnitWriting call(String name, List<UnitWritingVideo> videos,
+      {bool? isCompleted}) {
     return _UnitWriting(
       name,
       videos,
+      isCompleted: isCompleted,
     );
   }
 
@@ -41,6 +43,7 @@ const $UnitWriting = _$UnitWritingTearOff();
 mixin _$UnitWriting {
   String get name => throw _privateConstructorUsedError;
   List<UnitWritingVideo> get videos => throw _privateConstructorUsedError;
+  bool? get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +56,7 @@ abstract class $UnitWritingCopyWith<$Res> {
   factory $UnitWritingCopyWith(
           UnitWriting value, $Res Function(UnitWriting) then) =
       _$UnitWritingCopyWithImpl<$Res>;
-  $Res call({String name, List<UnitWritingVideo> videos});
+  $Res call({String name, List<UnitWritingVideo> videos, bool? isCompleted});
 }
 
 /// @nodoc
@@ -68,6 +71,7 @@ class _$UnitWritingCopyWithImpl<$Res> implements $UnitWritingCopyWith<$Res> {
   $Res call({
     Object? name = freezed,
     Object? videos = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -78,6 +82,10 @@ class _$UnitWritingCopyWithImpl<$Res> implements $UnitWritingCopyWith<$Res> {
           ? _value.videos
           : videos // ignore: cast_nullable_to_non_nullable
               as List<UnitWritingVideo>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -89,7 +97,7 @@ abstract class _$UnitWritingCopyWith<$Res>
           _UnitWriting value, $Res Function(_UnitWriting) then) =
       __$UnitWritingCopyWithImpl<$Res>;
   @override
-  $Res call({String name, List<UnitWritingVideo> videos});
+  $Res call({String name, List<UnitWritingVideo> videos, bool? isCompleted});
 }
 
 /// @nodoc
@@ -106,6 +114,7 @@ class __$UnitWritingCopyWithImpl<$Res> extends _$UnitWritingCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? videos = freezed,
+    Object? isCompleted = freezed,
   }) {
     return _then(_UnitWriting(
       name == freezed
@@ -116,6 +125,10 @@ class __$UnitWritingCopyWithImpl<$Res> extends _$UnitWritingCopyWithImpl<$Res>
           ? _value.videos
           : videos // ignore: cast_nullable_to_non_nullable
               as List<UnitWritingVideo>,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -123,7 +136,7 @@ class __$UnitWritingCopyWithImpl<$Res> extends _$UnitWritingCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UnitWriting implements _UnitWriting {
-  _$_UnitWriting(this.name, this.videos);
+  _$_UnitWriting(this.name, this.videos, {this.isCompleted});
 
   factory _$_UnitWriting.fromJson(Map<String, dynamic> json) =>
       _$$_UnitWritingFromJson(json);
@@ -132,10 +145,12 @@ class _$_UnitWriting implements _UnitWriting {
   final String name;
   @override
   final List<UnitWritingVideo> videos;
+  @override
+  final bool? isCompleted;
 
   @override
   String toString() {
-    return 'UnitWriting(name: $name, videos: $videos)';
+    return 'UnitWriting(name: $name, videos: $videos, isCompleted: $isCompleted)';
   }
 
   @override
@@ -144,14 +159,17 @@ class _$_UnitWriting implements _UnitWriting {
         (other.runtimeType == runtimeType &&
             other is _UnitWriting &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.videos, videos));
+            const DeepCollectionEquality().equals(other.videos, videos) &&
+            const DeepCollectionEquality()
+                .equals(other.isCompleted, isCompleted));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(videos));
+      const DeepCollectionEquality().hash(videos),
+      const DeepCollectionEquality().hash(isCompleted));
 
   @JsonKey(ignore: true)
   @override
@@ -165,8 +183,8 @@ class _$_UnitWriting implements _UnitWriting {
 }
 
 abstract class _UnitWriting implements UnitWriting {
-  factory _UnitWriting(String name, List<UnitWritingVideo> videos) =
-      _$_UnitWriting;
+  factory _UnitWriting(String name, List<UnitWritingVideo> videos,
+      {bool? isCompleted}) = _$_UnitWriting;
 
   factory _UnitWriting.fromJson(Map<String, dynamic> json) =
       _$_UnitWriting.fromJson;
@@ -175,6 +193,8 @@ abstract class _UnitWriting implements UnitWriting {
   String get name;
   @override
   List<UnitWritingVideo> get videos;
+  @override
+  bool? get isCompleted;
   @override
   @JsonKey(ignore: true)
   _$UnitWritingCopyWith<_UnitWriting> get copyWith =>

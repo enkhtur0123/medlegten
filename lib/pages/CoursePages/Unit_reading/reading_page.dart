@@ -14,10 +14,12 @@ import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 
 class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading, this.unitTitle, {Key? key}) : super(key: key);
+  const ReadingPage(this.reading, this.unitTitle, this.moduleId, {Key? key})
+      : super(key: key);
 
   final Reading reading;
   final String unitTitle;
+  final String moduleId;
   @override
   _ReadingPageState createState() => _ReadingPageState();
 }
@@ -58,16 +60,12 @@ class _ReadingPageState extends State<ReadingPage> {
           height: unitHeaderHeight + 8,
           child: UnitAppBar(
             widget.unitTitle,
-            tailWidget: tailWidgetHeader(),
+            tailWidget: headerCompleteButton(
+                widget.moduleId, widget.reading.isCompleted!),
           ),
         ),
       ]),
     );
-  }
-
-  Widget tailWidgetHeader() {
-    return IconButton(
-        onPressed: () {}, icon: const Icon(Icons.notifications_active));
   }
 
   Widget body() {
@@ -105,7 +103,7 @@ class _ReadingPageState extends State<ReadingPage> {
             (context, index) {
               return widgetList[index];
             },
-            childCount: helper.paragraphs.length,
+            childCount: widgetList.length,
           ),
         ),
       ],

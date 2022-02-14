@@ -15,11 +15,13 @@ import 'package:video_player/video_player.dart';
 typedef UnitGrammarCallback = void Function(GrammarAnswerEx asnwer, int level);
 
 class GrammarTablePage extends StatefulWidget {
-  const GrammarTablePage(this.unitGrammar, this.unitTitle, {Key? key})
+  const GrammarTablePage(this.unitGrammar, this.unitTitle, this.moduleId,
+      {Key? key})
       : super(key: key);
 
   final UnitGrammar unitGrammar;
   final String unitTitle;
+  final String moduleId;
   @override
   _GrammarTablePageState createState() => _GrammarTablePageState();
 }
@@ -100,7 +102,8 @@ class _GrammarTablePageState extends State<GrammarTablePage>
         Positioned(
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
-          child: UnitAppBar(widget.unitTitle),
+          child: UnitAppBar(widget.unitTitle,
+              tailWidget: headerCompleteButton(widget.moduleId, true)),
         ),
       ]),
     );
