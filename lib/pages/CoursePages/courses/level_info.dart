@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/themes/style.dart';
 
 class LevelInfoWidget extends StatelessWidget {
-  const LevelInfoWidget({Key? key}) : super(key: key);
+  const LevelInfoWidget({Key? key,this.level}) : super(key: key);
+  final String? level;
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +39,21 @@ class LevelInfoWidget extends StatelessWidget {
             children: [
               Text(
                 "Levels of study".toUpperCase(),
-                style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, fontStyle: FontStyle.normal),
+                style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
+                    fontStyle: FontStyle.normal),
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
-                "A1 - level",
-                style: TextStyle(
-                    fontSize: 14, color: secondaryColor, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
+                level!,
+                style: const TextStyle(
+                    fontSize: 14,
+                    color: secondaryColor,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold),
               )
             ],
           )

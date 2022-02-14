@@ -13,12 +13,13 @@ import 'bottom_sheet_dialog.dart';
 
 class ModuleListenPage extends StatefulWidget {
   const ModuleListenPage(
-      {Key? key, this.unitInfo, this.listeningQuiz, this.moduleId})
+      {Key? key, this.unitInfo, this.listeningQuiz, this.moduleId,this.isCompleted})
       : super(key: key);
 
   final CourseUnit? unitInfo;
   final ListeningQuiz? listeningQuiz;
   final String? moduleId;
+  final bool? isCompleted;
 
   @override
   _ModuleListenPageState createState() => _ModuleListenPageState();

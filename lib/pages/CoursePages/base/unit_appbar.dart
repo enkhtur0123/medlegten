@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:medlegten/themes/style.dart';
 
 const double unitHeaderHeight = 72;
@@ -14,7 +14,10 @@ const TextStyle titleStyle =
 class UnitAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   String title;
   Widget? tailWidget;
-  UnitAppBar(this.title, {Key? key, this.tailWidget}) : super(key: key);
+  String? moduleId;
+  bool? isCompleted;
+  UnitAppBar(this.title, {Key? key, this.tailWidget, this.moduleId,this.isCompleted})
+      : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
     return _UnitAppBarState();
@@ -56,10 +59,24 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
       height: unitHeaderHeight + 8,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 5, top: 20, right: 20),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: list),
+      child: Row(children: [
+        Flexible(
+          fit: FlexFit.tight,
+          flex: 6,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: list),
+        ),
+        Flexible(
+          fit: FlexFit.tight,
+          flex: 2,
+          child: UnitModuleCompletedBtn(
+              moduleId: widget.moduleId,
+              completeBtn: () {},
+              unCompleteBtn: () {}),
+        )
+      ]),
     );
   }
 }

@@ -16,11 +16,14 @@ import 'package:video_player/video_player.dart';
 typedef UnitGrammarCallback = void Function(GrammarAnswerEx asnwer, int level);
 
 class GrammarTablePage extends StatefulWidget {
-  const GrammarTablePage(this.unitGrammar, {Key? key,this.moduleId,this.unitTitle}) : super(key: key);
+  const GrammarTablePage(this.unitGrammar,
+      {Key? key, this.moduleId, this.unitTitle,this.isCompleted})
+      : super(key: key);
 
   final UnitGrammar unitGrammar;
   final String? moduleId;
-   final String? unitTitle;
+  final String? unitTitle;
+  final bool? isCompleted;
   @override
   _GrammarTablePageState createState() => _GrammarTablePageState();
 }
@@ -90,14 +93,6 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
-          UnitModuleCompletedBtn(
-            moduleId: widget.moduleId,
-            completeBtn: () {},
-            unCompleteBtn: () {},
-          )
-      
-      ],),
       backgroundColor: ColorTable.color255_255_255,
       body: Stack(children: [
         Positioned(
@@ -109,7 +104,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
         Positioned(
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
-          child: UnitAppBar(widget.unitTitle!),
+          child: UnitAppBar(widget.unitTitle!, moduleId: widget.moduleId),
         ),
       ]),
     );

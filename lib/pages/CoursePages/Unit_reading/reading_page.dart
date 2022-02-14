@@ -11,15 +11,16 @@ import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
-import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:medlegten/utils/global.dart';
 
 class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading, {Key? key, this.moduleId,this.unitTitle}) : super(key: key);
+  const ReadingPage(this.reading, {Key? key, this.moduleId, this.unitTitle,this.isCompleted})
+      : super(key: key);
 
   final Reading reading;
   final String? moduleId;
-   final String? unitTitle;
+  final String? unitTitle;
+  final bool? isCompleted;
   @override
   _ReadingPageState createState() => _ReadingPageState();
 }
@@ -60,6 +61,7 @@ class _ReadingPageState extends State<ReadingPage> {
           height: unitHeaderHeight + 8,
           child: UnitAppBar(
             widget.unitTitle!,
+            moduleId: widget.moduleId,
             tailWidget: tailWidgetHeader(),
           ),
         ),
@@ -96,22 +98,14 @@ class _ReadingPageState extends State<ReadingPage> {
       }
     }
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          UnitModuleCompletedBtn(
-            moduleId: widget.moduleId,
-            completeBtn: () {},
-            unCompleteBtn: () {},
-          ),
-        ],
-      ),
       backgroundColor: ColorTable.color255_255_255,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
           SliverPersistentHeader(
             pinned: true,
-            delegate: MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
+            delegate:
+                MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -121,8 +115,8 @@ class _ReadingPageState extends State<ReadingPage> {
               childCount: helper.paragraphs.length,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

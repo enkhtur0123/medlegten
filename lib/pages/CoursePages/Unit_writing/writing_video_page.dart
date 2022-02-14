@@ -3,10 +3,12 @@ import 'package:medlegten/models/Unit/unit_writing.dart';
 import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 
 class WritingVideoPage extends StatefulWidget {
-  const WritingVideoPage(this.unitWriting, {Key? key,this.moduleId}) : super(key: key);
+  const WritingVideoPage(this.unitWriting, {Key? key, this.moduleId,this.isCompleted})
+      : super(key: key);
 
   final UnitWriting unitWriting;
   final String? moduleId;
+  final bool? isCompleted;
 
   @override
   _WritingVideoPageState createState() => _WritingVideoPageState();
@@ -33,12 +35,17 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(actions: [
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
           UnitModuleCompletedBtn(
             moduleId: widget.moduleId,
             completeBtn: () {},
             unCompleteBtn: () {},
           ),
-        ],),body: Container(),);
+        ],
+      ),
+      body: Container(),
+    );
   }
 }

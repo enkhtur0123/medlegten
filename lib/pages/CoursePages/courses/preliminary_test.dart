@@ -16,7 +16,7 @@ class PreliminaryTest extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 15),
-            padding:const  EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: const Text(
               'Та өөрийн англи хэлний\nтүвшинг шалгана уу?',
               style: TextStyle(
@@ -30,10 +30,11 @@ class PreliminaryTest extends StatelessWidget {
           CustomOutlinedButton(
             height: 50,
             text: "Шалгалт өгөх",
-            color:secondaryColor,onTap: (){
-                AutoRouter.of(context).push(CourseSelfTestRoute());
-
-          },)
+            color: secondaryColor,
+            onTap: () {
+              AutoRouter.of(context).push(CourseSelfTestRoute());
+            },
+          )
         ],
       ),
     );
