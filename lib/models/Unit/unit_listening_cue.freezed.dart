@@ -23,12 +23,13 @@ class _$ListeningCueTearOff {
   const _$ListeningCueTearOff();
 
   _ListeningCue call(String cueId, String hostUrl, String hostSource,
-      String ordering, List<QuizQuestion> questions) {
+      String ordering, String title, List<QuizQuestion> questions) {
     return _ListeningCue(
       cueId,
       hostUrl,
       hostSource,
       ordering,
+      title,
       questions,
     );
   }
@@ -47,6 +48,7 @@ mixin _$ListeningCue {
   String get hostUrl => throw _privateConstructorUsedError;
   String get hostSource => throw _privateConstructorUsedError;
   String get ordering => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   List<QuizQuestion> get questions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,6 +67,7 @@ abstract class $ListeningCueCopyWith<$Res> {
       String hostUrl,
       String hostSource,
       String ordering,
+      String title,
       List<QuizQuestion> questions});
 }
 
@@ -82,6 +85,7 @@ class _$ListeningCueCopyWithImpl<$Res> implements $ListeningCueCopyWith<$Res> {
     Object? hostUrl = freezed,
     Object? hostSource = freezed,
     Object? ordering = freezed,
+    Object? title = freezed,
     Object? questions = freezed,
   }) {
     return _then(_value.copyWith(
@@ -100,6 +104,10 @@ class _$ListeningCueCopyWithImpl<$Res> implements $ListeningCueCopyWith<$Res> {
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       questions: questions == freezed
           ? _value.questions
@@ -121,6 +129,7 @@ abstract class _$ListeningCueCopyWith<$Res>
       String hostUrl,
       String hostSource,
       String ordering,
+      String title,
       List<QuizQuestion> questions});
 }
 
@@ -140,6 +149,7 @@ class __$ListeningCueCopyWithImpl<$Res> extends _$ListeningCueCopyWithImpl<$Res>
     Object? hostUrl = freezed,
     Object? hostSource = freezed,
     Object? ordering = freezed,
+    Object? title = freezed,
     Object? questions = freezed,
   }) {
     return _then(_ListeningCue(
@@ -159,6 +169,10 @@ class __$ListeningCueCopyWithImpl<$Res> extends _$ListeningCueCopyWithImpl<$Res>
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
               as String,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
       questions == freezed
           ? _value.questions
           : questions // ignore: cast_nullable_to_non_nullable
@@ -170,8 +184,8 @@ class __$ListeningCueCopyWithImpl<$Res> extends _$ListeningCueCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ListeningCue implements _ListeningCue {
-  _$_ListeningCue(
-      this.cueId, this.hostUrl, this.hostSource, this.ordering, this.questions);
+  _$_ListeningCue(this.cueId, this.hostUrl, this.hostSource, this.ordering,
+      this.title, this.questions);
 
   factory _$_ListeningCue.fromJson(Map<String, dynamic> json) =>
       _$$_ListeningCueFromJson(json);
@@ -185,11 +199,13 @@ class _$_ListeningCue implements _ListeningCue {
   @override
   final String ordering;
   @override
+  final String title;
+  @override
   final List<QuizQuestion> questions;
 
   @override
   String toString() {
-    return 'ListeningCue(cueId: $cueId, hostUrl: $hostUrl, hostSource: $hostSource, ordering: $ordering, questions: $questions)';
+    return 'ListeningCue(cueId: $cueId, hostUrl: $hostUrl, hostSource: $hostSource, ordering: $ordering, title: $title, questions: $questions)';
   }
 
   @override
@@ -202,6 +218,7 @@ class _$_ListeningCue implements _ListeningCue {
             const DeepCollectionEquality()
                 .equals(other.hostSource, hostSource) &&
             const DeepCollectionEquality().equals(other.ordering, ordering) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.questions, questions));
   }
 
@@ -212,6 +229,7 @@ class _$_ListeningCue implements _ListeningCue {
       const DeepCollectionEquality().hash(hostUrl),
       const DeepCollectionEquality().hash(hostSource),
       const DeepCollectionEquality().hash(ordering),
+      const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(questions));
 
   @JsonKey(ignore: true)
@@ -226,8 +244,13 @@ class _$_ListeningCue implements _ListeningCue {
 }
 
 abstract class _ListeningCue implements ListeningCue {
-  factory _ListeningCue(String cueId, String hostUrl, String hostSource,
-      String ordering, List<QuizQuestion> questions) = _$_ListeningCue;
+  factory _ListeningCue(
+      String cueId,
+      String hostUrl,
+      String hostSource,
+      String ordering,
+      String title,
+      List<QuizQuestion> questions) = _$_ListeningCue;
 
   factory _ListeningCue.fromJson(Map<String, dynamic> json) =
       _$_ListeningCue.fromJson;
@@ -240,6 +263,8 @@ abstract class _ListeningCue implements ListeningCue {
   String get hostSource;
   @override
   String get ordering;
+  @override
+  String get title;
   @override
   List<QuizQuestion> get questions;
   @override

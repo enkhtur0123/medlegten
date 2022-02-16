@@ -41,10 +41,17 @@ class CourseList extends HookWidget {
                           onTap: (String id) async {
                             if (!courseInfo.isCreatedPlan) {
                               await CourseRepository()
-                                  .setCoursePlan(id: courseInfo.courseId);
+                                  .setCoursePlan(id: courseInfo.courseId)
+                                  .then((value) {
+                                if (value != null) {
+                                   AutoRouter.of(context).push(CourseDetailRoute(
+                                      courseInfo: courseInfo));
+                                }
+                              });
+                            } else {
+                              AutoRouter.of(context).push(
+                                  CourseDetailRoute(courseInfo: courseInfo));
                             }
-                            AutoRouter.of(context).push(
-                                CourseDetailRoute(courseInfo: courseInfo));
                           },
                         ))
                     .toList(),

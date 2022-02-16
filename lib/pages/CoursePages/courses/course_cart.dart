@@ -169,7 +169,12 @@ courseBgImg(context, CourseInfo courseInfo) {
                 onTap: () async {
                   if (!courseInfo.isCreatedPlan) {
                     await CourseRepository()
-                        .setCoursePlan(id: courseInfo.courseId);
+                        .setCoursePlan(id: courseInfo.courseId).then((value){
+                          if(value!=null){
+                             AutoRouter.of(context)
+                            .push(CourseDetailRoute(courseInfo: courseInfo));
+                          }
+                        });
                   }
                   if (courseInfo.isPurchased) {
                     AutoRouter.of(context)

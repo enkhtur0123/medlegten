@@ -7,7 +7,7 @@ part 'unit_listening_cue.g.dart';
 
 @freezed
 class ListeningCue with _$ListeningCue {
-  factory ListeningCue(String cueId, String hostUrl, String hostSource,String ordering,
+  factory ListeningCue(String cueId, String hostUrl, String hostSource,String ordering,String title,
       List<QuizQuestion> questions) = _ListeningCue;
 
   factory ListeningCue.fromJson(Map<String, dynamic> json) =>

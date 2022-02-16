@@ -53,30 +53,40 @@ class UnitCart extends HookWidget {
           padding: const EdgeInsets.all(15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Unit ' + unitInfo!.unitNumber + ': ' + unitInfo!.unitName,
-                    style: const TextStyle(
-                        color: colorPrimary,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20),
-                  ),
-                  addVerticalSpace(5),
-                  Row(
-                    children: [
-                      const IconText(Icons.person_outline_outlined, 'Beginner'),
-                      addHorizontalSpace(20),
-                      IconText(Icons.timer, unitInfo!.minToWatch + ' minutes'),
-                    ],
-                  )
-                ],
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 6,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Unit ' +
+                          unitInfo!.unitNumber +
+                          ': ' +
+                          unitInfo!.unitName,
+                      style: const TextStyle(
+                          color: colorPrimary,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20),
+                    ),
+                    addVerticalSpace(5),
+                    Row(
+                      children: [
+                        const IconText(
+                            Icons.person_outline_outlined, 'Beginner'),
+                        addHorizontalSpace(20),
+                        IconText(
+                            Icons.timer, unitInfo!.minToWatch + ' minutes'),
+                      ],
+                    )
+                  ],
+                ),
               ),
-              Container(child: getUnitStatusWidget()),
+              Flexible(    fit: FlexFit.loose,flex: 2, child: Container(child: getUnitStatusWidget())),
             ],
           ),
         ),

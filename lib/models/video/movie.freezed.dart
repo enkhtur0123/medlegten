@@ -27,7 +27,7 @@ class _$MovieTearOff {
       String contentName,
       String categoryId,
       String categoryName,
-      String evelId,
+      String levelId,
       String levelName,
       String vocabularyCount,
       String imgUrl,
@@ -37,15 +37,13 @@ class _$MovieTearOff {
       String hostType,
       String runTime,
       String movieId,
-      bool isPurchased,
-      String segmentId,
-      String segmentName) {
+      bool isPurchased) {
     return _Movie(
       contentId,
       contentName,
       categoryId,
       categoryName,
-      evelId,
+      levelId,
       levelName,
       vocabularyCount,
       imgUrl,
@@ -56,8 +54,6 @@ class _$MovieTearOff {
       runTime,
       movieId,
       isPurchased,
-      segmentId,
-      segmentName,
     );
   }
 
@@ -75,7 +71,7 @@ mixin _$Movie {
   String get contentName => throw _privateConstructorUsedError;
   String get categoryId => throw _privateConstructorUsedError;
   String get categoryName => throw _privateConstructorUsedError;
-  String get evelId => throw _privateConstructorUsedError;
+  String get levelId => throw _privateConstructorUsedError;
   String get levelName => throw _privateConstructorUsedError;
   String get vocabularyCount => throw _privateConstructorUsedError;
   String get imgUrl => throw _privateConstructorUsedError;
@@ -86,8 +82,6 @@ mixin _$Movie {
   String get runTime => throw _privateConstructorUsedError;
   String get movieId => throw _privateConstructorUsedError;
   bool get isPurchased => throw _privateConstructorUsedError;
-  String get segmentId => throw _privateConstructorUsedError;
-  String get segmentName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -103,7 +97,7 @@ abstract class $MovieCopyWith<$Res> {
       String contentName,
       String categoryId,
       String categoryName,
-      String evelId,
+      String levelId,
       String levelName,
       String vocabularyCount,
       String imgUrl,
@@ -113,9 +107,7 @@ abstract class $MovieCopyWith<$Res> {
       String hostType,
       String runTime,
       String movieId,
-      bool isPurchased,
-      String segmentId,
-      String segmentName});
+      bool isPurchased});
 }
 
 /// @nodoc
@@ -132,7 +124,7 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
     Object? contentName = freezed,
     Object? categoryId = freezed,
     Object? categoryName = freezed,
-    Object? evelId = freezed,
+    Object? levelId = freezed,
     Object? levelName = freezed,
     Object? vocabularyCount = freezed,
     Object? imgUrl = freezed,
@@ -143,8 +135,6 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
     Object? runTime = freezed,
     Object? movieId = freezed,
     Object? isPurchased = freezed,
-    Object? segmentId = freezed,
-    Object? segmentName = freezed,
   }) {
     return _then(_value.copyWith(
       contentId: contentId == freezed
@@ -163,9 +153,9 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
-      evelId: evelId == freezed
-          ? _value.evelId
-          : evelId // ignore: cast_nullable_to_non_nullable
+      levelId: levelId == freezed
+          ? _value.levelId
+          : levelId // ignore: cast_nullable_to_non_nullable
               as String,
       levelName: levelName == freezed
           ? _value.levelName
@@ -207,14 +197,6 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
           ? _value.isPurchased
           : isPurchased // ignore: cast_nullable_to_non_nullable
               as bool,
-      segmentId: segmentId == freezed
-          ? _value.segmentId
-          : segmentId // ignore: cast_nullable_to_non_nullable
-              as String,
-      segmentName: segmentName == freezed
-          ? _value.segmentName
-          : segmentName // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -229,7 +211,7 @@ abstract class _$MovieCopyWith<$Res> implements $MovieCopyWith<$Res> {
       String contentName,
       String categoryId,
       String categoryName,
-      String evelId,
+      String levelId,
       String levelName,
       String vocabularyCount,
       String imgUrl,
@@ -239,9 +221,7 @@ abstract class _$MovieCopyWith<$Res> implements $MovieCopyWith<$Res> {
       String hostType,
       String runTime,
       String movieId,
-      bool isPurchased,
-      String segmentId,
-      String segmentName});
+      bool isPurchased});
 }
 
 /// @nodoc
@@ -259,7 +239,7 @@ class __$MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res>
     Object? contentName = freezed,
     Object? categoryId = freezed,
     Object? categoryName = freezed,
-    Object? evelId = freezed,
+    Object? levelId = freezed,
     Object? levelName = freezed,
     Object? vocabularyCount = freezed,
     Object? imgUrl = freezed,
@@ -270,8 +250,6 @@ class __$MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res>
     Object? runTime = freezed,
     Object? movieId = freezed,
     Object? isPurchased = freezed,
-    Object? segmentId = freezed,
-    Object? segmentName = freezed,
   }) {
     return _then(_Movie(
       contentId == freezed
@@ -290,9 +268,9 @@ class __$MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res>
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
-      evelId == freezed
-          ? _value.evelId
-          : evelId // ignore: cast_nullable_to_non_nullable
+      levelId == freezed
+          ? _value.levelId
+          : levelId // ignore: cast_nullable_to_non_nullable
               as String,
       levelName == freezed
           ? _value.levelName
@@ -334,14 +312,6 @@ class __$MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res>
           ? _value.isPurchased
           : isPurchased // ignore: cast_nullable_to_non_nullable
               as bool,
-      segmentId == freezed
-          ? _value.segmentId
-          : segmentId // ignore: cast_nullable_to_non_nullable
-              as String,
-      segmentName == freezed
-          ? _value.segmentName
-          : segmentName // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -354,7 +324,7 @@ class _$_Movie implements _Movie {
       this.contentName,
       this.categoryId,
       this.categoryName,
-      this.evelId,
+      this.levelId,
       this.levelName,
       this.vocabularyCount,
       this.imgUrl,
@@ -364,9 +334,7 @@ class _$_Movie implements _Movie {
       this.hostType,
       this.runTime,
       this.movieId,
-      this.isPurchased,
-      this.segmentId,
-      this.segmentName);
+      this.isPurchased);
 
   factory _$_Movie.fromJson(Map<String, dynamic> json) =>
       _$$_MovieFromJson(json);
@@ -380,7 +348,7 @@ class _$_Movie implements _Movie {
   @override
   final String categoryName;
   @override
-  final String evelId;
+  final String levelId;
   @override
   final String levelName;
   @override
@@ -401,14 +369,10 @@ class _$_Movie implements _Movie {
   final String movieId;
   @override
   final bool isPurchased;
-  @override
-  final String segmentId;
-  @override
-  final String segmentName;
 
   @override
   String toString() {
-    return 'Movie(contentId: $contentId, contentName: $contentName, categoryId: $categoryId, categoryName: $categoryName, evelId: $evelId, levelName: $levelName, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, hostUrl: $hostUrl, hostType: $hostType, runTime: $runTime, movieId: $movieId, isPurchased: $isPurchased, segmentId: $segmentId, segmentName: $segmentName)';
+    return 'Movie(contentId: $contentId, contentName: $contentName, categoryId: $categoryId, categoryName: $categoryName, levelId: $levelId, levelName: $levelName, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, hostUrl: $hostUrl, hostType: $hostType, runTime: $runTime, movieId: $movieId, isPurchased: $isPurchased)';
   }
 
   @override
@@ -423,7 +387,7 @@ class _$_Movie implements _Movie {
                 .equals(other.categoryId, categoryId) &&
             const DeepCollectionEquality()
                 .equals(other.categoryName, categoryName) &&
-            const DeepCollectionEquality().equals(other.evelId, evelId) &&
+            const DeepCollectionEquality().equals(other.levelId, levelId) &&
             const DeepCollectionEquality().equals(other.levelName, levelName) &&
             const DeepCollectionEquality()
                 .equals(other.vocabularyCount, vocabularyCount) &&
@@ -435,10 +399,7 @@ class _$_Movie implements _Movie {
             const DeepCollectionEquality().equals(other.runTime, runTime) &&
             const DeepCollectionEquality().equals(other.movieId, movieId) &&
             const DeepCollectionEquality()
-                .equals(other.isPurchased, isPurchased) &&
-            const DeepCollectionEquality().equals(other.segmentId, segmentId) &&
-            const DeepCollectionEquality()
-                .equals(other.segmentName, segmentName));
+                .equals(other.isPurchased, isPurchased));
   }
 
   @override
@@ -448,7 +409,7 @@ class _$_Movie implements _Movie {
       const DeepCollectionEquality().hash(contentName),
       const DeepCollectionEquality().hash(categoryId),
       const DeepCollectionEquality().hash(categoryName),
-      const DeepCollectionEquality().hash(evelId),
+      const DeepCollectionEquality().hash(levelId),
       const DeepCollectionEquality().hash(levelName),
       const DeepCollectionEquality().hash(vocabularyCount),
       const DeepCollectionEquality().hash(imgUrl),
@@ -458,9 +419,7 @@ class _$_Movie implements _Movie {
       const DeepCollectionEquality().hash(hostType),
       const DeepCollectionEquality().hash(runTime),
       const DeepCollectionEquality().hash(movieId),
-      const DeepCollectionEquality().hash(isPurchased),
-      const DeepCollectionEquality().hash(segmentId),
-      const DeepCollectionEquality().hash(segmentName));
+      const DeepCollectionEquality().hash(isPurchased));
 
   @JsonKey(ignore: true)
   @override
@@ -479,7 +438,7 @@ abstract class _Movie implements Movie {
       String contentName,
       String categoryId,
       String categoryName,
-      String evelId,
+      String levelId,
       String levelName,
       String vocabularyCount,
       String imgUrl,
@@ -489,9 +448,7 @@ abstract class _Movie implements Movie {
       String hostType,
       String runTime,
       String movieId,
-      bool isPurchased,
-      String segmentId,
-      String segmentName) = _$_Movie;
+      bool isPurchased) = _$_Movie;
 
   factory _Movie.fromJson(Map<String, dynamic> json) = _$_Movie.fromJson;
 
@@ -504,7 +461,7 @@ abstract class _Movie implements Movie {
   @override
   String get categoryName;
   @override
-  String get evelId;
+  String get levelId;
   @override
   String get levelName;
   @override
@@ -525,10 +482,6 @@ abstract class _Movie implements Movie {
   String get movieId;
   @override
   bool get isPurchased;
-  @override
-  String get segmentId;
-  @override
-  String get segmentName;
   @override
   @JsonKey(ignore: true)
   _$MovieCopyWith<_Movie> get copyWith => throw _privateConstructorUsedError;

@@ -1,8 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlegten/models/video/event.dart';
+import 'package:medlegten/models/video/movie.dart';
+import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/utils/app_router.dart';
 
 class LevelEventItem extends HookWidget {
   const LevelEventItem({Key? key, this.event, this.edgeInsets})
@@ -13,35 +17,45 @@ class LevelEventItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin:
-          edgeInsets ?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 7,
-            spreadRadius: 3,
-            offset: const Offset(2.0, 2.0),
-          )
-        ],
-        color: Colors.white,
-      ),
+    return GestureDetector(
+      onTap: () async {
+        List<Movie> movies =
+            await VideoRepository().getContentDetail(contentId: event!.eventId);
+        AutoRouter.of(context).push(VideoDetailRoute(
+            movies: movies,
+            url: movies[0].hostUrl,
+            isSerial: event!.isSerial == "true" ? true : false));
+      },
       child: Container(
-        margin: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Flexible(
-              flex: 8,
-              child: getEventImageWidget(context: context, event: event),
-            ),
-            const SizedBox(height: 10),
-            Flexible(flex: 3, child: getEventInfo(event: event))
+        margin:
+            edgeInsets ?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              blurRadius: 7,
+              spreadRadius: 3,
+              offset: const Offset(2.0, 2.0),
+            )
           ],
+          color: Colors.white,
+        ),
+        child: Container(
+          margin: const EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Flexible(
+                flex: 8,
+                child: getEventImageWidget(context: context, event: event),
+              ),
+              const SizedBox(height: 10),
+              Flexible(flex: 3, child: getEventInfo(event: event))
+            ],
+          ),
         ),
       ),
     );
@@ -110,11 +124,11 @@ Widget getEventInfo({Event? event}) {
                 child:
                     InfoItemWidget(isSvg: true, text: event.vocabularyCount)),
             Flexible(
-                fit: FlexFit.loose,
-                flex: 6,
-                child: InfoItemWidget(
-                    iconData: Icons.category_outlined,
-                    text: event.categoryName),),
+              fit: FlexFit.loose,
+              flex: 6,
+              child: InfoItemWidget(
+                  iconData: Icons.category_outlined, text: event.categoryName),
+            ),
           ],
         ),
       ),

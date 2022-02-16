@@ -1,7 +1,9 @@
 // ignore_for_file: implementation_imports
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:collection/src/iterable_extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
@@ -16,15 +18,20 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   const BaseVideoSubtitlePage(this.videoPlayerController, this.paragraphs,
       {Key? key,
       SubtitleWordCallback? pwordCallback,
-      SubtitleParagraphCallback? pparagraphCallback})
+      SubtitleParagraphCallback? pparagraphCallback,
+      Function? bookMark,
+      this.isBookMark = false})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
+        bookMark = bookMark,
         super(key: key);
 
   final List<CParagraph> paragraphs;
   final VideoPlayerController videoPlayerController;
   final SubtitleWordCallback? wordCallback;
   final SubtitleParagraphCallback? paragraphCallback;
+  final bool isBookMark;
+  final Function? bookMark;
 }
 
 TextStyle subtitleTextStyle = const TextStyle(
@@ -126,44 +133,56 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              OutlinedButton(
-                onPressed: () {
-                  isMon.value = false;
-                },
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: isMon.value
-                      ? ColorTable.color48_53_159.withOpacity(.5)
-                      : ColorTable.color48_53_159,
-                ),
-                child: const Text(
-                  'Eng',
-                  style: TextStyle(
-                      color: colorWhite,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      fontFamily: 'Roboto'),
-                ),
+              Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      isMon.value = false;
+                    },
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: isMon.value
+                          ? ColorTable.color48_53_159.withOpacity(.5)
+                          : ColorTable.color48_53_159,
+                    ),
+                    child: const Text(
+                      'Eng',
+                      style: TextStyle(
+                          color: colorWhite,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          fontFamily: 'Roboto'),
+                    ),
+                  ),
+                  addHorizontalSpace(10),
+                  OutlinedButton(
+                    onPressed: () {
+                      isMon.value = true;
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: isMon.value
+                            ? ColorTable.color48_53_159
+                            : ColorTable.color48_53_159.withOpacity(.5)),
+                    child: const Text(
+                      'Mon',
+                      style: TextStyle(
+                          color: colorWhite,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          fontFamily: 'Roboto'),
+                    ),
+                  ),
+                ],
               ),
-              addHorizontalSpace(10),
-              OutlinedButton(
-                onPressed: () {
-                  isMon.value = true;
-                },
-                style: OutlinedButton.styleFrom(
-                    backgroundColor: isMon.value
-                        ? ColorTable.color48_53_159
-                        : ColorTable.color48_53_159.withOpacity(.5)),
-                child: const Text(
-                  'Mon',
-                  style: TextStyle(
-                      color: colorWhite,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      fontFamily: 'Roboto'),
-                ),
-              ),
+              widget.isBookMark
+                  ? GestureDetector(
+                      onTap: () {
+                        widget.bookMark!();
+                      },
+                      child: const Icon(CupertinoIcons.bookmark,
+                          color: Color(0xffC7C9D9), size: 30))
+                  : Container()
             ],
           ),
           Padding(

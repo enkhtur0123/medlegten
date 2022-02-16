@@ -82,6 +82,7 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: list),
         ),
+        widget.moduleId!=null?
         Flexible(
           fit: FlexFit.tight,
           flex: 2,
@@ -89,7 +90,7 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
               moduleId: widget.moduleId,
               completeBtn: () {},
               unCompleteBtn: () {},isCompleted: widget.isCompleted,),
-        )
+        ):Container()
       ]),
     );
   }

@@ -13,7 +13,11 @@ import 'bottom_sheet_dialog.dart';
 
 class ModuleListenPage extends StatefulWidget {
   const ModuleListenPage(
-      {Key? key, this.unitInfo, this.listeningQuiz, this.moduleId,this.isCompleted})
+      {Key? key,
+      this.unitInfo,
+      this.listeningQuiz,
+      this.moduleId,
+      this.isCompleted})
       : super(key: key);
 
   final CourseUnit? unitInfo;
@@ -30,6 +34,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   final PageController controller =
       PageController(viewportFraction: 0.65, initialPage: 0);
   late AudioPlayer _player;
+  bool isBottomSheet = false;
 
   ConcatenatingAudioSource? _playlist;
 
@@ -42,7 +47,6 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   @override
   void initState() {
     super.initState();
-
     _player = AudioPlayer();
     for (var item in widget.listeningQuiz!.listening.cue) {
       getRandom();
@@ -62,10 +66,13 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
     await session.configure(const AudioSessionConfiguration.speech());
 
     /// Player ээ сонсож байна
-    _player.playbackEventStream.listen((event) {
-      if ((event.processingState == ProcessingState.completed &&
-          !listenChecks.value[currentIndex].isChecking!)) {
-        showModalBottomSheet<void>(
+    _player.playbackEventStream.listen((event) async {
+      if ((event.duration != null &&
+          event.duration!.inSeconds == _player.position.inSeconds &&
+          !listenChecks.value[currentIndex].isChecking!) && !isBottomSheet) {
+        isBottomSheet = true;
+        setState(() {});
+        await showModalBottomSheet<void>(
           isScrollControlled: true,
           elevation: 5,
           backgroundColor: Colors.white.withOpacity(0.8),
@@ -88,7 +95,12 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
               },
             );
           },
-        );
+        ).then((value) async {
+          isBottomSheet = false;
+          setState(() {
+            
+          });
+        });
       }
     }, onError: (Object e, StackTrace stackTrace) {
       print('A stream error occurred: $e');
@@ -212,7 +224,8 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Audio 2:\n BTS Show",
+                                  widget.listeningQuiz!.listening.cue[position]
+                                      .title,
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontStyle: FontStyle.normal,

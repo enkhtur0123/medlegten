@@ -167,6 +167,16 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: LevelVideoListPage(key: args.key, levelId: args.levelId));
+    },
+    VideoDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<VideoDetailRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: VideoDetailPage(args.url,
+              key: args.key,
+              movies: args.movies,
+              title: args.title,
+              isSerial: args.isSerial));
     }
   };
 
@@ -197,7 +207,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(CoursePaymentRoute.name, path: '/payment'),
         RouteConfig(QpayRoute.name, path: '/qpay'),
         RouteConfig(VocabularyListRoute.name, path: '/vocabulary_list'),
-        RouteConfig(LevelVideoListRoute.name, path: '/level/event/list')
+        RouteConfig(LevelVideoListRoute.name, path: '/level/event/list'),
+        RouteConfig(VideoDetailRoute.name, path: '/video/detail')
       ];
 }
 
@@ -775,5 +786,50 @@ class LevelVideoListRouteArgs {
   @override
   String toString() {
     return 'LevelVideoListRouteArgs{key: $key, levelId: $levelId}';
+  }
+}
+
+/// generated route for
+/// [VideoDetailPage]
+class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
+  VideoDetailRoute(
+      {required String url,
+      Key? key,
+      List<Movie>? movies,
+      String? title = "Video",
+      bool? isSerial})
+      : super(VideoDetailRoute.name,
+            path: '/video/detail',
+            args: VideoDetailRouteArgs(
+                url: url,
+                key: key,
+                movies: movies,
+                title: title,
+                isSerial: isSerial));
+
+  static const String name = 'VideoDetailRoute';
+}
+
+class VideoDetailRouteArgs {
+  const VideoDetailRouteArgs(
+      {required this.url,
+      this.key,
+      this.movies,
+      this.title = "Video",
+      this.isSerial});
+
+  final String url;
+
+  final Key? key;
+
+  final List<Movie>? movies;
+
+  final String? title;
+
+  final bool? isSerial;
+
+  @override
+  String toString() {
+    return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial}';
   }
 }

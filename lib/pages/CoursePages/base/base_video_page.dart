@@ -10,7 +10,8 @@ import 'package:video_player/video_player.dart';
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
 
 abstract class BaseVideoPage extends StatefulWidget {
-  const BaseVideoPage(this.videoUrl, {Key? key, this.moduleId, this.title,this.isCompleted})
+  const BaseVideoPage(this.videoUrl,
+      {Key? key, this.moduleId, this.title, this.isCompleted})
       : super(key: key);
   final String videoUrl;
   final String? moduleId;
@@ -114,41 +115,3 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   }
 }
 
-
-
-// class SampleScreen extends BaseVideoPage {
-//   @override
-//   _HomeScreenState createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends BaseVideoPageState<SampleScreen>
-//     with BaseScreen {
-//   bool isButtonTapped = false;
-
-//   @override
-//   void initState() {
-//     isBackButton(false);
-//     super.initState();
-//   }
-
-//   // TO GIVE THE TITLE OF THE APP BAR
-//   @override
-//   String appBarTitle() {
-//     return "Home";
-//   }
-
-
-//   // THIS WILL RETURN THE BODY OF THE SCREEN
-//   @override
-//   Widget body() {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           const Text("HOME SCREEN BODY"),
-//           Text(isButtonTapped ? "BUTTON TAPPED" : "BUTTON NOT TAPPED")
-//         ],
-//       ),
-//     );
-//   }
-// }

@@ -11,7 +11,7 @@ _$_Movie _$$_MovieFromJson(Map<String, dynamic> json) => _$_Movie(
       json['contentName'] as String,
       json['categoryId'] as String,
       json['categoryName'] as String,
-      json['evelId'] as String,
+      json['levelId'] as String,
       json['levelName'] as String,
       json['vocabularyCount'] as String,
       json['imgUrl'] as String,
@@ -22,8 +22,6 @@ _$_Movie _$$_MovieFromJson(Map<String, dynamic> json) => _$_Movie(
       json['runTime'] as String,
       json['movieId'] as String,
       json['isPurchased'] as bool,
-      json['segmentId'] as String,
-      json['segmentName'] as String,
     );
 
 Map<String, dynamic> _$$_MovieToJson(_$_Movie instance) => <String, dynamic>{
@@ -31,7 +29,7 @@ Map<String, dynamic> _$$_MovieToJson(_$_Movie instance) => <String, dynamic>{
       'contentName': instance.contentName,
       'categoryId': instance.categoryId,
       'categoryName': instance.categoryName,
-      'evelId': instance.evelId,
+      'levelId': instance.levelId,
       'levelName': instance.levelName,
       'vocabularyCount': instance.vocabularyCount,
       'imgUrl': instance.imgUrl,
@@ -42,6 +40,4 @@ Map<String, dynamic> _$$_MovieToJson(_$_Movie instance) => <String, dynamic>{
       'runTime': instance.runTime,
       'movieId': instance.movieId,
       'isPurchased': instance.isPurchased,
-      'segmentId': instance.segmentId,
-      'segmentName': instance.segmentName,
     };

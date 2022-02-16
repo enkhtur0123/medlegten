@@ -5,7 +5,6 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 class IntroVideohelper {
   static List<CParagraph> convert(UnitIntroVideo unitIntroVideo) {
     List<CParagraph> retList = [];
-    int i = 0;
     for (var cue in unitIntroVideo.cue) {
       retList.add(CParagraph(cue.cueId, int.parse(cue.ordering) - 1,
           cue.toLangTranslation, cue.fromLangTranslation,
