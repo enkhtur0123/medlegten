@@ -13,7 +13,7 @@ import 'video_helper.dart';
 
 class VideoDetailPage extends BaseVideoPage {
   const VideoDetailPage(this.url,
-      {Key? key, this.movies, this.title = "Video", this.isSerial})
+      {Key? key, this.movies, this.title, this.isSerial})
       : super(url, key: key);
   final String url;
   final List<Movie>? movies;

@@ -24,6 +24,7 @@ class LevelEventItem extends HookWidget {
         AutoRouter.of(context).push(VideoDetailRoute(
             movies: movies,
             url: movies[0].hostUrl,
+            title: movies[0].contentName,
             isSerial: event!.isSerial == "true" ? true : false));
       },
       child: Container(
