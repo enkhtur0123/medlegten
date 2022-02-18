@@ -31,6 +31,7 @@ import 'package:medlegten/pages/StartPages/login.dart';
 import 'package:medlegten/pages/StartPages/onboarding_page.dart';
 import 'package:medlegten/pages/StartPages/start.dart';
 import 'package:medlegten/pages/VideoPage/level_video_list.dart';
+
 import 'package:medlegten/pages/VideoPage/video_detail.dart';
 import 'package:medlegten/pages/home.dart';
 
@@ -60,7 +61,8 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/qpay', page: QpayPage),
     AutoRoute(path: '/vocabulary_list', page: VocabularyListPage),
     AutoRoute(path: '/level/event/list', page: LevelVideoListPage),
-     AutoRoute(path: '/video/detail', page: VideoDetailPage),
+    AutoRoute(path: '/video/detail', page: VideoDetailPage),
+    // AutoRoute(path: '/serial/detail', page: SerialDetailPage),
 
     // QpayPage
   ],

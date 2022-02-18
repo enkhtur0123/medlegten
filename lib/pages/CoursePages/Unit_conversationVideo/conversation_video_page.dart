@@ -23,7 +23,7 @@ class _ConversationVideoPageState
     extends BaseVideoPageState<ConversationVideoPage> with BaseVideoMixin {
   @override
   Widget subtitleWidget() {
-    return ConversationVideoSubtitle(videoPlayerController,
+    return ConversationVideoSubtitle(videoPlayerController!,
         ConversationVideohelper.convert(widget.unitConversationVideo));
   }
 }

@@ -162,11 +162,13 @@ class _$AppRouter extends RootStackRouter {
           child: VocabularyListPage(args.unit, args.unitTitle, key: args.key));
     },
     LevelVideoListRoute.name: (routeData) {
-      final args = routeData.argsAs<LevelVideoListRouteArgs>(
-          orElse: () => const LevelVideoListRouteArgs());
+      final args = routeData.argsAs<LevelVideoListRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: LevelVideoListPage(key: args.key, levelId: args.levelId));
+          child: LevelVideoListPage(
+              key: args.key,
+              levelId: args.levelId,
+              categoryName: args.categoryName));
     },
     VideoDetailRoute.name: (routeData) {
       final args = routeData.argsAs<VideoDetailRouteArgs>();
@@ -176,7 +178,8 @@ class _$AppRouter extends RootStackRouter {
               key: args.key,
               movies: args.movies,
               title: args.title,
-              isSerial: args.isSerial));
+              isSerial: args.isSerial,
+              serialChange: args.serialChange));
     }
   };
 
@@ -768,24 +771,29 @@ class VocabularyListRouteArgs {
 /// generated route for
 /// [LevelVideoListPage]
 class LevelVideoListRoute extends PageRouteInfo<LevelVideoListRouteArgs> {
-  LevelVideoListRoute({Key? key, String? levelId})
+  LevelVideoListRoute(
+      {Key? key, String? levelId, required String? categoryName})
       : super(LevelVideoListRoute.name,
             path: '/level/event/list',
-            args: LevelVideoListRouteArgs(key: key, levelId: levelId));
+            args: LevelVideoListRouteArgs(
+                key: key, levelId: levelId, categoryName: categoryName));
 
   static const String name = 'LevelVideoListRoute';
 }
 
 class LevelVideoListRouteArgs {
-  const LevelVideoListRouteArgs({this.key, this.levelId});
+  const LevelVideoListRouteArgs(
+      {this.key, this.levelId, required this.categoryName});
 
   final Key? key;
 
   final String? levelId;
 
+  final String? categoryName;
+
   @override
   String toString() {
-    return 'LevelVideoListRouteArgs{key: $key, levelId: $levelId}';
+    return 'LevelVideoListRouteArgs{key: $key, levelId: $levelId, categoryName: $categoryName}';
   }
 }
 
@@ -796,8 +804,9 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
       {required String url,
       Key? key,
       List<Movie>? movies,
-      String? title = "Video",
-      bool? isSerial})
+      String? title,
+      bool? isSerial,
+      dynamic Function(int)? serialChange})
       : super(VideoDetailRoute.name,
             path: '/video/detail',
             args: VideoDetailRouteArgs(
@@ -805,7 +814,8 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
                 key: key,
                 movies: movies,
                 title: title,
-                isSerial: isSerial));
+                isSerial: isSerial,
+                serialChange: serialChange));
 
   static const String name = 'VideoDetailRoute';
 }
@@ -815,8 +825,9 @@ class VideoDetailRouteArgs {
       {required this.url,
       this.key,
       this.movies,
-      this.title = "Video",
-      this.isSerial});
+      this.title,
+      this.isSerial,
+      this.serialChange});
 
   final String url;
 
@@ -828,8 +839,10 @@ class VideoDetailRouteArgs {
 
   final bool? isSerial;
 
+  final dynamic Function(int)? serialChange;
+
   @override
   String toString() {
-    return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial}';
+    return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange}';
   }
 }

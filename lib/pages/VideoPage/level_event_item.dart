@@ -21,11 +21,12 @@ class LevelEventItem extends HookWidget {
       onTap: () async {
         List<Movie> movies =
             await VideoRepository().getContentDetail(contentId: event!.eventId);
-        AutoRouter.of(context).push(VideoDetailRoute(
-            movies: movies,
-            url: movies[0].hostUrl,
-            title: movies[0].contentName,
-            isSerial: event!.isSerial == "true" ? true : false));
+          AutoRouter.of(context).push(VideoDetailRoute(
+              movies: movies,
+              url: movies[0].hostUrl,
+              title: movies[0].contentName,
+              isSerial: event!.isSerial == "1" ? true : false));
+      
       },
       child: Container(
         margin:

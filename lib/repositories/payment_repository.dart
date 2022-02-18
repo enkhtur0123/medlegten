@@ -7,8 +7,7 @@ class CoursePaymentRepository {
   Future<dynamic> checkCouponCode(
       {CourseInfo? courseInfo, String? couponCode}) async {
     try {
-      var res = await HttpHelper()
-          .getUrl(url: 'Course/Coupon/${courseInfo!.courseId}/$couponCode');
+      var res = await HttpHelper().getUrl(url: 'Course/Coupon/${courseInfo!.courseId}/$couponCode');
       if (res['isSuccess']) {
         return res;
       } else {
