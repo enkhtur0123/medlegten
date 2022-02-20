@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:medlegten/models/Landing/article_info.dart';
+import 'package:medlegten/models/Landing/article_info_detail.dart';
 import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/utils/global.dart';
@@ -11,13 +10,13 @@ class ArticleHelper {
 
   double width = GlobalValues.screenWidth - 80;
 
-  static List<CParagraph> convert(ArticleInfo articleInfo) {
+  static List<CParagraph> convert(ArticleInfoDetail articleInfo) {
     List<CParagraph> retList = [];
 
     for (var cue in articleInfo.cues) {
       if (cue.words.isNotEmpty) {
         retList.add(CParagraph(cue.cueId, int.parse(cue.ordering),
-            cue.toLangTranslation, cue.fromLangTranslation,
+            cue.toLangTranslation ?? '', cue.fromLangTranslation ?? '',
             words: convertWords(cue.words)));
       }
     }

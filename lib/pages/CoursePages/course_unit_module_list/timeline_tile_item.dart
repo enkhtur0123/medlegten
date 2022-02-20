@@ -184,9 +184,7 @@ class TimeLineTileItemWidget extends HookWidget {
                       }
                       break;
                     case "8":
-                    case "9":
                       {
-                        // Conversation video
                         AutoRouter.of(context).push(
                           UnitTestRoute(
                               moduleTypeId: data!.moduleTypeId,
@@ -194,7 +192,16 @@ class TimeLineTileItemWidget extends HookWidget {
                         );
                       }
                       break;
-
+                    case "9":
+                      {
+                        UnitRepository()
+                            .getArticleInfoDetail('70143')
+                            .then((value) {
+                          AutoRouter.of(context)
+                              .push(ArticleDetailRoute(articleInfo: value!));
+                        });
+                      }
+                      break;
                     default:
                       {
                         print('no module');

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:medlegten/models/Landing/article_info.dart';
+import 'package:medlegten/models/Landing/article_info_detail.dart';
 import 'package:medlegten/models/Landing/unit_complete_percent.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
@@ -281,12 +281,12 @@ class UnitRepository {
     }
   }
 
-  Future<ArticleInfo?> getArticleInfo(String articleId) async {
+  Future<ArticleInfoDetail?> getArticleInfoDetail(String articleId) async {
     try {
       final res =
-          await HttpHelper().getUrl(url: 'Article/ArticleDetail/$articleId');
+          await HttpHelper().getUrl(url: 'Article/ArticleDetial/$articleId');
       if (res['isSuccess']) {
-        return ArticleInfo.fromJson(res['articleInfo']);
+        return ArticleInfoDetail.fromJson(res['articleInfo']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;

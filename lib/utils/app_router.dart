@@ -37,6 +37,9 @@ import 'package:medlegten/pages/VideoPage/video_detail.dart';
 import 'package:medlegten/pages/VideoPage/vocabulary_list.dart';
 import 'package:medlegten/pages/home.dart';
 
+import '../models/Landing/article_info_detail.dart';
+import '../pages/BlogPage/ArticleDetail/article_detail_page.dart';
+
 part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
@@ -66,6 +69,7 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/video/detail', page: VideoDetailPage),
     AutoRoute(path: '/video/vocabulary_list', page: VideoVocabularyListPage),
     AutoRoute(path: '/unit_test_page', page: UnitTestPage),
+    AutoRoute(path: '/article_detail_page', page: ArticleDetailPage),
     // QpayPage
   ],
 )

@@ -22,7 +22,7 @@ SlideImage _$SlideImageFromJson(Map<String, dynamic> json) {
 class _$SlideImageTearOff {
   const _$SlideImageTearOff();
 
-  _SlideImage call(String title, String slideImageUrl, String ordering) {
+  _SlideImage call(String? title, String? slideImageUrl, String? ordering) {
     return _SlideImage(
       title,
       slideImageUrl,
@@ -40,9 +40,9 @@ const $SlideImage = _$SlideImageTearOff();
 
 /// @nodoc
 mixin _$SlideImage {
-  String get title => throw _privateConstructorUsedError;
-  String get slideImageUrl => throw _privateConstructorUsedError;
-  String get ordering => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get slideImageUrl => throw _privateConstructorUsedError;
+  String? get ordering => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +55,7 @@ abstract class $SlideImageCopyWith<$Res> {
   factory $SlideImageCopyWith(
           SlideImage value, $Res Function(SlideImage) then) =
       _$SlideImageCopyWithImpl<$Res>;
-  $Res call({String title, String slideImageUrl, String ordering});
+  $Res call({String? title, String? slideImageUrl, String? ordering});
 }
 
 /// @nodoc
@@ -76,15 +76,15 @@ class _$SlideImageCopyWithImpl<$Res> implements $SlideImageCopyWith<$Res> {
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       slideImageUrl: slideImageUrl == freezed
           ? _value.slideImageUrl
           : slideImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -95,7 +95,7 @@ abstract class _$SlideImageCopyWith<$Res> implements $SlideImageCopyWith<$Res> {
           _SlideImage value, $Res Function(_SlideImage) then) =
       __$SlideImageCopyWithImpl<$Res>;
   @override
-  $Res call({String title, String slideImageUrl, String ordering});
+  $Res call({String? title, String? slideImageUrl, String? ordering});
 }
 
 /// @nodoc
@@ -118,15 +118,15 @@ class __$SlideImageCopyWithImpl<$Res> extends _$SlideImageCopyWithImpl<$Res>
       title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       slideImageUrl == freezed
           ? _value.slideImageUrl
           : slideImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -140,11 +140,11 @@ class _$_SlideImage implements _SlideImage {
       _$$_SlideImageFromJson(json);
 
   @override
-  final String title;
+  final String? title;
   @override
-  final String slideImageUrl;
+  final String? slideImageUrl;
   @override
-  final String ordering;
+  final String? ordering;
 
   @override
   String toString() {
@@ -181,18 +181,18 @@ class _$_SlideImage implements _SlideImage {
 }
 
 abstract class _SlideImage implements SlideImage {
-  factory _SlideImage(String title, String slideImageUrl, String ordering) =
+  factory _SlideImage(String? title, String? slideImageUrl, String? ordering) =
       _$_SlideImage;
 
   factory _SlideImage.fromJson(Map<String, dynamic> json) =
       _$_SlideImage.fromJson;
 
   @override
-  String get title;
+  String? get title;
   @override
-  String get slideImageUrl;
+  String? get slideImageUrl;
   @override
-  String get ordering;
+  String? get ordering;
   @override
   @JsonKey(ignore: true)
   _$SlideImageCopyWith<_SlideImage> get copyWith =>

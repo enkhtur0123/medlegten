@@ -198,6 +198,12 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: UnitTestPage(args.moduleTypeId, args.moduleId, key: args.key));
+    },
+    ArticleDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<ArticleDetailRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: ArticleDetailPage(args.articleInfo, key: args.key));
     }
   };
 
@@ -232,7 +238,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(VideoDetailRoute.name, path: '/video/detail'),
         RouteConfig(VideoVocabularyListRoute.name,
             path: '/video/vocabulary_list'),
-        RouteConfig(UnitTestRoute.name, path: '/unit_test_page')
+        RouteConfig(UnitTestRoute.name, path: '/unit_test_page'),
+        RouteConfig(ArticleDetailRoute.name, path: '/article_detail_page')
       ];
 }
 
@@ -952,5 +959,29 @@ class UnitTestRouteArgs {
   @override
   String toString() {
     return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, key: $key}';
+  }
+}
+
+/// generated route for
+/// [ArticleDetailPage]
+class ArticleDetailRoute extends PageRouteInfo<ArticleDetailRouteArgs> {
+  ArticleDetailRoute({required ArticleInfoDetail articleInfo, Key? key})
+      : super(ArticleDetailRoute.name,
+            path: '/article_detail_page',
+            args: ArticleDetailRouteArgs(articleInfo: articleInfo, key: key));
+
+  static const String name = 'ArticleDetailRoute';
+}
+
+class ArticleDetailRouteArgs {
+  const ArticleDetailRouteArgs({required this.articleInfo, this.key});
+
+  final ArticleInfoDetail articleInfo;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ArticleDetailRouteArgs{articleInfo: $articleInfo, key: $key}';
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/models/Landing/article_info.dart';
+import 'package:medlegten/models/Landing/article_info_detail.dart';
 
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
@@ -16,23 +16,23 @@ import 'dart:math' as math;
 import 'article_helper.dart';
 import 'article_translate.dart';
 
-class ArticlePage extends StatefulWidget {
-  const ArticlePage(
+class ArticleDetailPage extends StatefulWidget {
+  const ArticleDetailPage(
     this.articleInfo, {
     Key? key,
   }) : super(key: key);
 
-  final ArticleInfo articleInfo;
+  final ArticleInfoDetail articleInfo;
   @override
-  _ArticlePageState createState() => _ArticlePageState();
+  _ArticleDetailPageState createState() => _ArticleDetailPageState();
 }
 
-class _ArticlePageState extends State<ArticlePage> {
+class _ArticleDetailPageState extends State<ArticleDetailPage> {
   late ArticleHelper helper;
   CParagraph? selectedParagraph;
   late bool isShowGrammar;
   late bool isWidgetIsShown;
-  int currentCarouselIndex = 0;
+  String? currentCarouselIndex;
   late final refreshView = ValueNotifier<bool>(false)
     ..addListener(() {
       setState(() {});
@@ -40,6 +40,14 @@ class _ArticlePageState extends State<ArticlePage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      for (var imageSlide in widget.articleInfo.slideImages) {
+        precacheImage(NetworkImage(imageSlide.slideImageUrl!), context);
+      }
+    });
+    if (widget.articleInfo.slideImages.isNotEmpty) {
+      currentCarouselIndex = widget.articleInfo.slideImages[0].ordering;
+    }
     isShowGrammar = false;
     isWidgetIsShown = false;
     helper = ArticleHelper();
@@ -100,60 +108,92 @@ class _ArticlePageState extends State<ArticlePage> {
 
     return Column(
       children: [
-        CarouselSlider.builder(
-          itemCount: widget.articleInfo.slideImages.length,
-          itemBuilder: (ctx, index, realIdx) {
-            //var inner = onboardingList[currentCarouselIndex.value];
-            //return createChildren(inner, currentCarouselIndex);
-            return Container();
-          },
-          options: CarouselOptions(
-              autoPlay: false,
-              enlargeCenterPage: false,
-              height: 200,
-              viewportFraction: 1.0,
-              onPageChanged: (index, reason) {
-                currentCarouselIndex = index;
-              }),
+        AspectRatio(
+          aspectRatio: 16 / 9,
+          child: SizedBox(
+            width: double.infinity,
+            child: Stack(
+              children: [
+                CarouselSlider.builder(
+                  itemCount: widget.articleInfo.slideImages.length,
+                  itemBuilder: (ctx, index, realIdx) {
+                    return Image.network(
+                      widget.articleInfo.slideImages[index].slideImageUrl!,
+                      fit: BoxFit.fill,
+                    );
+                  },
+                  options: CarouselOptions(
+                      autoPlay: false,
+                      enlargeCenterPage: false,
+                      viewportFraction: 1.0,
+                      onPageChanged: (index, reason) {
+                        currentCarouselIndex =
+                            widget.articleInfo.slideImages[index].ordering;
+                        setState(() {});
+                      }),
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  const Spacer(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: widget.articleInfo.slideImages.map((entry) {
+                      return Container(
+                        width: 12.0,
+                        height: 12.0,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 4.0),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(
+                                currentCarouselIndex == entry.ordering
+                                    ? 1
+                                    : 0.5)),
+                      );
+                    }).toList(),
+                  ),
+                  addVerticalSpace(5)
+                ]),
+              ],
+            ),
+          ),
         ),
-        ListView.builder(
+        Expanded(
+          child: ListView.builder(
+            addAutomaticKeepAlives: true,
             itemCount: widgetList.length,
             itemBuilder: (context, index) {
               return widgetList[index];
-            })
+            },
+          ),
+        ),
       ],
     );
   }
 
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SizedBox(
-        height: BaseCueHelper().getMaxHeight(
-            [paragraph],
-            true,
-            const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            helper.width),
-        child: ReadingParagraph(
-            paragraph,
-            (word, position) {
-              wordCallBack(word, position);
-              if (helper.lastIndex > -1 && helper.lastIndex != index) {
-                helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
-                    helper.valueKeys[helper.paragraphs[helper.lastIndex]]! + 1;
-              }
-              helper.lastIndex = index;
-              refreshView.value = !refreshView.value;
-            },
-            (paragraph) {
-              selectedParagraph = paragraph;
-            },
-            tailWidget(selectParagraph),
-            (paragraph) {
-              callBackParagraph(paragraph);
-            },
-            selectParagraph,
-            key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: ReadingParagraph(
+        paragraph,
+        (word, position) {
+          wordCallBack(word, position);
+          if (helper.lastIndex > -1 && helper.lastIndex != index) {
+            helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
+                helper.valueKeys[helper.paragraphs[helper.lastIndex]]! + 1;
+          }
+          helper.lastIndex = index;
+          refreshView.value = !refreshView.value;
+        },
+        (paragraph) {
+          selectedParagraph = paragraph;
+        },
+        tailWidget(selectParagraph),
+        (paragraph) {
+          callBackParagraph(paragraph);
+        },
+        selectParagraph,
+        key: ValueKey<int>(helper.valueKeys[paragraph]!), //
       ),
     );
   }

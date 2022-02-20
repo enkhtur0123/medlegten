@@ -1,21 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'article_info.dart';
+part of 'article_info_detail.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ArticleInfo _$$_ArticleInfoFromJson(Map<String, dynamic> json) =>
-    _$_ArticleInfo(
+_$_ArticleInfoDetail _$$_ArticleInfoDetailFromJson(Map<String, dynamic> json) =>
+    _$_ArticleInfoDetail(
       json['articleId'] as String,
-      json['articleTitle'] as String,
-      json['createdDate'] as String,
-      json['categoryName'] as String,
-      json['categoryIcon'] as String,
-      json['viewCount'] as String,
-      json['likeCount'] as String,
-      json['isLiked'] as String,
+      json['articleTitle'] as String?,
+      json['createdDate'] as String?,
+      json['categoryName'] as String?,
+      json['categoryIcon'] as String?,
+      json['viewCount'] as String?,
+      json['likeCount'] as String?,
+      json['isLiked'] as bool,
       (json['slideImages'] as List<dynamic>)
           .map((e) => SlideImage.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,7 +24,8 @@ _$_ArticleInfo _$$_ArticleInfoFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_ArticleInfoToJson(_$_ArticleInfo instance) =>
+Map<String, dynamic> _$$_ArticleInfoDetailToJson(
+        _$_ArticleInfoDetail instance) =>
     <String, dynamic>{
       'articleId': instance.articleId,
       'articleTitle': instance.articleTitle,

@@ -11,11 +11,11 @@ _$_ArticleCueParagraph _$$_ArticleCueParagraphFromJson(
     _$_ArticleCueParagraph(
       json['cueId'] as String,
       json['ordering'] as String,
-      json['fromLangId'] as String,
-      json['fromLangTranslation'] as String,
-      json['fromLangIsDefault'] as String,
-      json['toLangId'] as String,
-      json['toLangTranslation'] as String,
+      json['fromLangId'] as String?,
+      json['fromLangTranslation'] as String?,
+      json['fromLangIsDefault'] as String?,
+      json['toLangId'] as String?,
+      json['toLangTranslation'] as String?,
       (json['words'] as List<dynamic>)
           .map((e) => UnitIntroCueWord.fromJson(e as Map<String, dynamic>))
           .toList(),
