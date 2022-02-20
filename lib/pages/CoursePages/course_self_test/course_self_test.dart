@@ -21,7 +21,7 @@ class CourseSelfTestPage extends HookWidget {
     var result = await LandingRepository().getSelfQuiz();
     quizId?.value = result!.quizId;
     var _sortedList = result!.questions
-      ..sort((a, b) => int.parse(b.ordering).compareTo(int.parse(a.ordering)));
+      ..sort((a, b) => int.parse(a.ordering).compareTo(int.parse(b.ordering)));
     for (var e in _sortedList) {
       sortedList.add(QuizQuestionEx(e));
     }
@@ -129,11 +129,12 @@ class CourseSelfTestPage extends HookWidget {
                 isSuccess: true);
           });
     } else {
-      showDialog(context: context!, builder: (context) {
-       return  const CustomPopUpDialog(
-          title: "Амжилтгүй", body: "", isError: true);
-      });
-     
+      showDialog(
+          context: context!,
+          builder: (context) {
+            return const CustomPopUpDialog(
+                title: "Амжилтгүй", body: "", isError: true);
+          });
     }
   }
 }

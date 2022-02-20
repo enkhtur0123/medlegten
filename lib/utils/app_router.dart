@@ -18,6 +18,7 @@ import 'package:medlegten/pages/CoursePages/Unit_listening/module_listening.dart
 import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_progressExam/module_progress_exam.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_page.dart';
+import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_vocabolary/vocabulary_list.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/writing_video_page.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.dart';
@@ -62,6 +63,7 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/vocabulary_list', page: VocabularyListPage),
     AutoRoute(path: '/level/event/list', page: LevelVideoListPage),
     AutoRoute(path: '/video/detail', page: VideoDetailPage),
+    AutoRoute(path: '/unit_test_page', page: UnitTestPage),
     // QpayPage
   ],
 )

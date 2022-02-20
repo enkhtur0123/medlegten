@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/components/wide_button.dart';
@@ -24,8 +25,8 @@ class WritingVideoSubPage extends StatefulWidget {
 
 class _WritingVideoSubPageState extends State<WritingVideoSubPage> {
   late VideoPlayerController videoPlayerController;
-  Map<UnitWritingCueWord, bool> answers = {};
-
+  Map<UnitWritingCueWord, bool?> answers = {};
+  int counter = 3;
   @override
   void initState() {
     super.initState();
@@ -55,12 +56,12 @@ class _WritingVideoSubPageState extends State<WritingVideoSubPage> {
           aspectRatio: 16 / 9,
           child: SizedBox(width: double.infinity, child: Loading())));
     }
-    ////list.add(indicator(widget.index[4], widget.index[1]));
-    ////list.add(addVerticalSpace(20));
+    list.add(indicator(widget.index[4], widget.index[1]));
+    list.add(addVerticalSpace(20));
     list.add(
       Container(
-        height: GlobalValues.screenHeight /
-            2, // - 100 - GlobalValues.screenWidth * 9 / 16,
+        height: GlobalValues.screenHeight / 2 -
+            40, // - 100 - GlobalValues.screenWidth * 9 / 16,
         padding: const EdgeInsets.all(20),
         child: Align(
           alignment: Alignment.topCenter,
@@ -99,13 +100,14 @@ class _WritingVideoSubPageState extends State<WritingVideoSubPage> {
       listWidget.add(Flexible(
           flex: 1,
           child: WideButton(
-            'Дараах >',
+            'Дараах ${counter < 3 ? '($counter)' : ''}>',
             colorSecondary,
             colorWhite,
             () {
-              if (!checkAnswer()) {
+              if (!checkWrongAnswerExists()) {
                 widget.callBack.call(widget.index[1], true);
               } else {
+                counter--;
                 setState(() {});
               }
             },
@@ -121,11 +123,12 @@ class _WritingVideoSubPageState extends State<WritingVideoSubPage> {
             children: listWidget));
   }
 
-  bool checkAnswer() {
+  bool checkWrongAnswerExists() {
+    if (counter == 1) return false;
     if (answers.isEmpty) {
       return true;
     }
-    return answers.values.any((element) => element == false);
+    return answers.values.any((element) => element == null || element == false);
   }
 
   Widget indicator(int length, int current) {

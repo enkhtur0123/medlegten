@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:medlegten/models/Landing/article_info.dart';
 import 'package:medlegten/models/Landing/unit_complete_percent.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
@@ -7,6 +8,7 @@ import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
 import 'package:medlegten/models/Unit/unit_mixed_video.dart';
+import 'package:medlegten/models/Unit/unit_test_model.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
@@ -223,6 +225,68 @@ class UnitRepository {
         };
         map.addEntries(json.entries);
         return UnitWriting.fromJson(map);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return null;
+    }
+  }
+
+  Future<UnitTestModel?> getProgressExam(String moduleId) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/8');
+      if (res['isSuccess']) {
+        return UnitTestModel.fromJson(res['progressExam']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return null;
+    }
+  }
+
+  Future<UnitTestModel?> getFinalExam(String moduleId) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/9');
+      if (res['isSuccess']) {
+        return UnitTestModel.fromJson(res['finalExam']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      return null;
+    }
+  }
+
+  Future<String> setExam(Map<String, dynamic>? body) async {
+    try {
+      var res = await HttpHelper()
+          .postUrl(url: 'Course/ProgressExam/SetResult', body: body);
+      if (res['isSuccess']) {
+        return 'success';
+      } else {
+        return res['resultMessage'];
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
+    }
+  }
+
+  Future<ArticleInfo?> getArticleInfo(String articleId) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'Article/ArticleDetail/$articleId');
+      if (res['isSuccess']) {
+        return ArticleInfo.fromJson(res['articleInfo']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         return null;

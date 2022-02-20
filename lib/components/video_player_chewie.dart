@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 class VideoPlayerChewie extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final double aspectRatio;
+
   const VideoPlayerChewie(
     this.videoPlayerController, {
     this.aspectRatio = 16 / 9,

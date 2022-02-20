@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Unit/unit_writing_cue.dart';
 import 'package:medlegten/models/Unit/unit_writing_cueword.dart';
@@ -9,21 +10,24 @@ class WritingParagraph extends StatefulWidget {
   const WritingParagraph(
     this.paragraph,
     this.isSelected,
-    this.answers, {
+    this.answers,
+    this.callBack, {
     Key? key,
   }) : super(key: key);
 
   final UnitWritingCueParagraph paragraph;
   final bool isSelected;
-  final Map<UnitWritingCueWord, bool> answers;
-
+  final Map<UnitWritingCueWord, bool?> answers;
+  final Function() callBack;
   @override
   _WritingParagraphState createState() => _WritingParagraphState();
 }
 
 class _WritingParagraphState extends State<WritingParagraph> {
-  Map<UnitWritingCueWord, Tuple3<int, TextEditingController, FocusNode>>
+  Map<UnitWritingCueWord,
+          Tuple4<int, TextEditingController, FocusNode, UnitWritingCueWord>>
       missingList = {};
+
   @override
   void initState() {
     super.initState();
@@ -34,8 +38,26 @@ class _WritingParagraphState extends State<WritingParagraph> {
     for (var element in missingList.entries) {
       element.value.item2.dispose();
       element.value.item3.dispose();
+      element.value.item3.removeListener(() => _onFocusChange);
     }
     super.dispose();
+  }
+
+  void _onFocusChange(FocusNode focusNode) {
+    if (focusNode.hasFocus) {
+      var currentElement = missingList.entries
+          .firstWhereOrNull((element) => element.value.item3 == focusNode);
+
+      if (currentElement != null) {
+        widget.callBack();
+        if (currentElement.value.item2.value.text !=
+            currentElement.value.item4.mainText) {
+          currentElement.value.item2.clear();
+        }
+      }
+    } else {
+      setState(() {});
+    }
   }
 
   @override
@@ -53,11 +75,12 @@ class _WritingParagraphState extends State<WritingParagraph> {
         if (!missingList.containsKey(word)) {
           var _controller = TextEditingController();
           var _focusNode = FocusNode();
-          missingList[word] = Tuple3(i2++, _controller, _focusNode);
+          _focusNode.addListener(() => _onFocusChange(_focusNode));
+
+          missingList[word] = Tuple4(i2++, _controller, _focusNode, word);
           _controller.addListener(() {
+            this.widget.answers[word] = _controller.value.text == word.mainText;
             if (_controller.value.text.length == word.mainText.length) {
-              this.widget.answers[word] =
-                  _controller.value.text == word.mainText;
               var nextId = missingList[word]!.item1 + 1;
               for (var element in missingList.values) {
                 if (element.item1 == nextId) {
@@ -73,9 +96,10 @@ class _WritingParagraphState extends State<WritingParagraph> {
             missingList[word]!.item2,
             missingList[word]!.item3,
             this.widget.isSelected,
-            missingList[word]!.item2.value.text.length == word.mainText.length
-                ? this.widget.answers[word]
-                : null);
+            this.widget.answers[word]);
+        // missingList[word]!.item2.value.text.length == word.mainText.length
+        //     ? this.widget.answers[word]
+        //     : null);
 
         listWidget.add(widget);
       }
@@ -93,6 +117,7 @@ class _WritingParagraphState extends State<WritingParagraph> {
     return Text(
       text,
       style: TextStyle(
+          height: 2,
           fontFamily: 'Roboto',
           color: isSelected ? colorBlack : Colors.black45,
           fontSize: 14,
@@ -104,7 +129,7 @@ class _WritingParagraphState extends State<WritingParagraph> {
       FocusNode focusNode, bool isSelected, bool? isRight) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 3),
-      height: 25,
+      height: 30,
       width: textWidth(word.mainText),
       child: TextField(
         focusNode: focusNode,
@@ -112,8 +137,8 @@ class _WritingParagraphState extends State<WritingParagraph> {
         textAlignVertical: TextAlignVertical.bottom,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-          counter: const Offstage(),
-          contentPadding: const EdgeInsets.only(top: 30, bottom: 1),
+          counterText: '',
+          contentPadding: const EdgeInsets.only(bottom: 14),
           enabledBorder: UnderlineInputBorder(
             borderSide:
                 BorderSide(color: getColor(isSelected, isRight), width: 1),

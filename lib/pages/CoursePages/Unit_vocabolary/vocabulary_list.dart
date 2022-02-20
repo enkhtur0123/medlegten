@@ -89,7 +89,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
         Positioned(
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
-          child: UnitAppBar(widget.unitTitle,isCompleted: false),
+          child: UnitAppBar(widget.unitTitle, isCompleted: false),
         ),
       ]),
     );
@@ -125,7 +125,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
   }
 
   Widget getButton(
-      String caption, bool isSelected, ValueNotifier<bool> onSelected) {
+      String caption, bool isSelected, ValueNotifier<bool> isBookmarked) {
     return isSelected
         ? SizedBox(
             width: GlobalValues.getWidthRelativeToScreen(
@@ -150,7 +150,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
           )
         : InkWell(
             onTap: () {
-              onSelected.value = !onSelected.value;
+              isBookmarked.value = !isBookmarked.value;
             },
             child: SizedBox(
               width: GlobalValues.getWidthRelativeToScreen(20),

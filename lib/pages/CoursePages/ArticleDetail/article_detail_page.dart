@@ -1,12 +1,12 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/models/Unit/reading.dart';
-import 'package:medlegten/pages/CoursePages/Unit_reading/reading_grammar.dart';
-import 'package:medlegten/pages/CoursePages/Unit_reading/reading_helper.dart';
+import 'package:medlegten/models/Landing/article_info.dart';
+import 'package:medlegten/pages/CoursePages/ArticleDetail/article_helper.dart';
+import 'package:medlegten/pages/CoursePages/ArticleDetail/article_translate.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
-import 'package:medlegten/pages/CoursePages/Unit_reading/sliver_header.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
@@ -14,25 +14,23 @@ import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 import 'dart:math' as math;
 
-class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading,
-      {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
-      : super(key: key);
+class ArticlePage extends StatefulWidget {
+  const ArticlePage(
+    this.articleInfo, {
+    Key? key,
+  }) : super(key: key);
 
-  final Reading reading;
-  final String? moduleId;
-  final String? unitTitle;
-  final bool? isCompleted;
+  final ArticleInfo articleInfo;
   @override
-  _ReadingPageState createState() => _ReadingPageState();
+  _ArticlePageState createState() => _ArticlePageState();
 }
 
-class _ReadingPageState extends State<ReadingPage> {
-  late ReadingHelper helper;
+class _ArticlePageState extends State<ArticlePage> {
+  late ArticleHelper helper;
   CParagraph? selectedParagraph;
   late bool isShowGrammar;
   late bool isWidgetIsShown;
-
+  int currentCarouselIndex = 0;
   late final refreshView = ValueNotifier<bool>(false)
     ..addListener(() {
       setState(() {});
@@ -42,8 +40,8 @@ class _ReadingPageState extends State<ReadingPage> {
   void initState() {
     isShowGrammar = false;
     isWidgetIsShown = false;
-    helper = ReadingHelper();
-    helper.paragraphs = ReadingHelper.convert(widget.reading);
+    helper = ArticleHelper();
+    helper.paragraphs = ArticleHelper.convert(widget.articleInfo);
     super.initState();
   }
 
@@ -62,9 +60,8 @@ class _ReadingPageState extends State<ReadingPage> {
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
           child: UnitAppBar(
-            widget.unitTitle!,
-            moduleId: widget.moduleId,
-            isCompleted: widget.isCompleted,
+            'MEDLEGTEN',
+            isCompleted: null,
           ),
         ),
       ]),
@@ -85,7 +82,7 @@ class _ReadingPageState extends State<ReadingPage> {
           selectedParagraph != null &&
           paragraph.ordering == selectedParagraph!.ordering) {
         widgetList.add(childWidget(paragraph, i, true));
-        widgetList.add(ReadingGrammar(paragraph));
+        widgetList.add(ArticleTranslate(paragraph));
         isShowGrammar = false;
         isWidgetIsShown = true;
       } else {
@@ -99,20 +96,31 @@ class _ReadingPageState extends State<ReadingPage> {
       ));
     }
 
-    return CustomScrollView(slivers: [
-      SliverPersistentHeader(
-        pinned: true,
-        delegate: MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
-      ),
-      SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return widgetList[index];
+    return Column(
+      children: [
+        CarouselSlider.builder(
+          itemCount: widget.articleInfo.slideImages.length,
+          itemBuilder: (ctx, index, realIdx) {
+            //var inner = onboardingList[currentCarouselIndex.value];
+            //return createChildren(inner, currentCarouselIndex);
+            return Container();
           },
-          childCount: widgetList.length,
+          options: CarouselOptions(
+              autoPlay: false,
+              enlargeCenterPage: false,
+              height: 200,
+              viewportFraction: 1.0,
+              onPageChanged: (index, reason) {
+                currentCarouselIndex = index;
+              }),
         ),
-      )
-    ]);
+        ListView.builder(
+            itemCount: widgetList.length,
+            itemBuilder: (context, index) {
+              return widgetList[index];
+            })
+      ],
+    );
   }
 
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {

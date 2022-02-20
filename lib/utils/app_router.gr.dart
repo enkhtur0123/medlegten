@@ -180,6 +180,12 @@ class _$AppRouter extends RootStackRouter {
               title: args.title,
               isSerial: args.isSerial,
               serialChange: args.serialChange));
+    },
+    UnitTestRoute.name: (routeData) {
+      final args = routeData.argsAs<UnitTestRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: UnitTestPage(args.moduleTypeId, args.moduleId, key: args.key));
     }
   };
 
@@ -211,7 +217,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(QpayRoute.name, path: '/qpay'),
         RouteConfig(VocabularyListRoute.name, path: '/vocabulary_list'),
         RouteConfig(LevelVideoListRoute.name, path: '/level/event/list'),
-        RouteConfig(VideoDetailRoute.name, path: '/video/detail')
+        RouteConfig(VideoDetailRoute.name, path: '/video/detail'),
+        RouteConfig(UnitTestRoute.name, path: '/unit_test_page')
       ];
 }
 
@@ -852,5 +859,34 @@ class VideoDetailRouteArgs {
   @override
   String toString() {
     return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange}';
+  }
+}
+
+/// generated route for
+/// [UnitTestPage]
+class UnitTestRoute extends PageRouteInfo<UnitTestRouteArgs> {
+  UnitTestRoute(
+      {required String moduleTypeId, required String moduleId, Key? key})
+      : super(UnitTestRoute.name,
+            path: '/unit_test_page',
+            args: UnitTestRouteArgs(
+                moduleTypeId: moduleTypeId, moduleId: moduleId, key: key));
+
+  static const String name = 'UnitTestRoute';
+}
+
+class UnitTestRouteArgs {
+  const UnitTestRouteArgs(
+      {required this.moduleTypeId, required this.moduleId, this.key});
+
+  final String moduleTypeId;
+
+  final String moduleId;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, key: $key}';
   }
 }

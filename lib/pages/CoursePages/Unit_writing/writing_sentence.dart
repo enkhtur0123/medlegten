@@ -9,13 +9,13 @@ import 'package:video_player/video_player.dart';
 
 class WritingSentencePage extends StatefulWidget {
   const WritingSentencePage(
-      this.unitWritingVideo, this.videoPlayerController, this.answerList,
+      this.unitWritingVideo, this.videoPlayerController, this.answers,
       {Key? key})
       : super(key: key);
 
   final UnitWritingVideo unitWritingVideo;
   final VideoPlayerController videoPlayerController;
-  final Map<UnitWritingCueWord, bool> answerList;
+  final Map<UnitWritingCueWord, bool?> answers;
   @override
   _WritingSentencePageState createState() => _WritingSentencePageState();
 }
@@ -23,6 +23,7 @@ class WritingSentencePage extends StatefulWidget {
 class _WritingSentencePageState extends State<WritingSentencePage> {
   int currentIndex = -1;
   int prevCueId = -1;
+  int isUser = -1;
   late ScrollController _scrollController;
 
   @override
@@ -40,21 +41,23 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
 
   videoPlayerListener() {
     if (widget.videoPlayerController.value.isPlaying) {
-      var _duration = widget.videoPlayerController.value.position;
-      var idx = widget.unitWritingVideo.cue.firstWhereOrNull((element) =>
-          getDuration(element.startTime) <= _duration &&
-          getDuration(element.endTime) > _duration);
+      if (isUser == -1) {
+        var _duration = widget.videoPlayerController.value.position;
+        var idx = widget.unitWritingVideo.cue.firstWhereOrNull((element) =>
+            getDuration(element.startTime) <= _duration &&
+            getDuration(element.endTime) > _duration);
 
-      if (idx != null && prevCueId != int.parse(idx.ordering) - 1) {
-        currentIndex = int.parse(idx.ordering) - 1;
-        // _scrollController.animateTo(int.parse(idx.ordering) * 100,
-        //     duration: const Duration(milliseconds: 300),
-        //     curve: Curves.linear);
-        setState(
-          () {},
-        );
+        if (idx != null && prevCueId != int.parse(idx.ordering) - 1) {
+          currentIndex = int.parse(idx.ordering) - 1;
+          // _scrollController.animateTo(int.parse(idx.ordering) * 100,
+          //     duration: const Duration(milliseconds: 300),
+          //     curve: Curves.linear);
+          setState(
+            () {},
+          );
 
-        prevCueId = int.parse(idx.ordering) - 1;
+          prevCueId = int.parse(idx.ordering) - 1;
+        }
       }
     }
   }
@@ -72,7 +75,6 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemExtent: 100,
       controller: _scrollController,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -88,8 +90,8 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
         } else {
           for (var e in currentCue.missWords
               .where((element) => element.isVisible == '1')) {
-            if (!widget.answerList.containsKey(e)) {
-              widget.answerList[e] = false;
+            if (!widget.answers.containsKey(e)) {
+              widget.answers[e] = null;
             }
           }
           return sentence(
@@ -97,7 +99,12 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
               widget.unitWritingVideo.cue.length,
               index == currentIndex,
               WritingParagraph(
-                  currentCue, index == currentIndex, widget.answerList));
+                  currentCue, index == currentIndex, widget.answers, () {
+                if (currentIndex != index) {
+                  currentIndex = index;
+                  setState(() {});
+                }
+              }));
         }
       },
     );

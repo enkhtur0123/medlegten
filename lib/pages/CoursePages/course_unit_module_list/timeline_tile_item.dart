@@ -183,6 +183,17 @@ class TimeLineTileItemWidget extends HookWidget {
                         });
                       }
                       break;
+                    case "8":
+                    case "9":
+                      {
+                        // Conversation video
+                        AutoRouter.of(context).push(
+                          UnitTestRoute(
+                              moduleTypeId: data!.moduleTypeId,
+                              moduleId: data!.moduleId),
+                        );
+                      }
+                      break;
 
                     default:
                       {
