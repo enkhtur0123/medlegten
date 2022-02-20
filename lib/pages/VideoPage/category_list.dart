@@ -13,7 +13,7 @@ class CategoryPage extends HookWidget {
   Widget build(BuildContext context) {
     var selectedId = useState("");
     return Container(
-      margin: const EdgeInsets.only(left: 5,right: 0, top: 20),
+      margin: const EdgeInsets.only(left: 5, right: 0, top: 20),
       child: Wrap(
         alignment: WrapAlignment.start,
         runSpacing: 10,

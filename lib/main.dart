@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+
   ///Алдаа гарах үед дуудагдана
   ErrorWidget.builder = (FlutterErrorDetails details) {
     if (kDebugMode) {
@@ -54,6 +56,7 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
       statusBarColor: Colors.black,
     ));
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -63,10 +66,11 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
           return const MaterialApp(
               debugShowCheckedModeBanner: false, home: InitializationPage());
         } else {
-          return MaterialApp.router(
+          var app = MaterialApp.router(
             color: Colors.white,
             key: GlobalKeys.navigatorKey,
-            routerDelegate: _appRouter.delegate(),
+            routerDelegate: _appRouter.delegate(
+                navigatorObservers: () => [AutoRouteObserver()]),
             routeInformationParser: _appRouter.defaultRouteParser(),
             routeInformationProvider: PlatformRouteInformationProvider(
               initialRouteInformation: const RouteInformation(
@@ -78,6 +82,7 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
             theme: appTheme,
             builder: FlutterSmartDialog.init(),
           );
+          return app;
         }
       },
     );

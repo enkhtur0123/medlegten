@@ -60,7 +60,7 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/qpay', page: QpayPage),
     AutoRoute(path: '/vocabulary_list', page: VocabularyListPage),
     AutoRoute(path: '/level/event/list', page: LevelVideoListPage),
-     AutoRoute(path: '/video/detail', page: VideoDetailPage),
+    AutoRoute(path: '/video/detail', page: VideoDetailPage),
 
     // QpayPage
   ],

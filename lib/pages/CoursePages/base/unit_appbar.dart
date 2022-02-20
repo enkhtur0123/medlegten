@@ -7,7 +7,7 @@ import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart'
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/themes/style.dart';
 
-const double unitHeaderHeight = 72;
+const double unitHeaderHeight = 74;
 const TextStyle titleStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
@@ -28,7 +28,8 @@ class UnitAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   Widget? tailWidget;
   String? moduleId;
   bool? isCompleted;
-  UnitAppBar(this.title, {Key? key, this.tailWidget, this.moduleId,required this.isCompleted})
+  UnitAppBar(this.title,
+      {Key? key, this.tailWidget, this.moduleId, required this.isCompleted})
       : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -73,25 +74,30 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
       height: unitHeaderHeight + 8,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 5, top: 20, right: 20),
-      child: Row(children: [
-        Flexible(
-          fit: FlexFit.tight,
-          flex: 6,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: list),
-        ),
-        widget.moduleId!=null?
-        Flexible(
-          fit: FlexFit.tight,
-          flex: 2,
-          child: UnitModuleCompletedBtn(
-              moduleId: widget.moduleId,
-              completeBtn: () {},
-              unCompleteBtn: () {},isCompleted: widget.isCompleted,),
-        ):Container()
-      ]),
+      child: Row(
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 6,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: list),
+          ),
+          widget.moduleId != null
+              ? Flexible(
+                  fit: FlexFit.tight,
+                  flex: 2,
+                  child: UnitModuleCompletedBtn(
+                    moduleId: widget.moduleId,
+                    completeBtn: () {},
+                    unCompleteBtn: () {},
+                    isCompleted: widget.isCompleted,
+                  ),
+                )
+              : Container()
+        ],
+      ),
     );
   }
 }

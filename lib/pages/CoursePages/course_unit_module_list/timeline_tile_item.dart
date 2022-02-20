@@ -7,6 +7,7 @@ import 'package:medlegten/models/Landing/course_unit_module_list.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+
 // ignore: must_be_immutable
 class TimeLineTileItemWidget extends HookWidget {
   TimeLineTileItemWidget(
@@ -31,7 +32,8 @@ class TimeLineTileItemWidget extends HookWidget {
               thickness: 3),
           afterLineStyle: LineStyle(
               thickness: 3,
-              color: data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5)),
+              color:
+                  data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5)),
           axis: TimelineAxis.vertical,
           hasIndicator: true,
           isFirst: isLast == 0,
@@ -45,7 +47,8 @@ class TimeLineTileItemWidget extends HookWidget {
                         data!.isCompleted ? colorPrimary : Colors.transparent,
                   ),
                 ),
-                color:data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5),
+                color:
+                    data!.isCompleted ? colorPrimary : const Color(0xffA8AFE5),
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -152,6 +155,8 @@ class TimeLineTileItemWidget extends HookWidget {
                                 WritingVideoRoute(
                                     isCompleted: data!.isCompleted,
                                     unitWriting: value!,
+                                    unitTitle:
+                                        'UNIT ${unitInfo!.unitNumber}-Writing',
                                     moduleId: data!.moduleId),
                               ),
                             );

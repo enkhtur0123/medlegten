@@ -118,7 +118,7 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<WritingVideoRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: WritingVideoPage(args.unitWriting,
+          child: WritingVideoPage(args.unitWriting, args.unitTitle,
               key: args.key,
               moduleId: args.moduleId,
               isCompleted: args.isCompleted));
@@ -588,6 +588,7 @@ class ModuleListenRouteArgs {
 class WritingVideoRoute extends PageRouteInfo<WritingVideoRouteArgs> {
   WritingVideoRoute(
       {required UnitWriting unitWriting,
+      required String unitTitle,
       Key? key,
       String? moduleId,
       bool? isCompleted})
@@ -595,6 +596,7 @@ class WritingVideoRoute extends PageRouteInfo<WritingVideoRouteArgs> {
             path: '/writing_video_page',
             args: WritingVideoRouteArgs(
                 unitWriting: unitWriting,
+                unitTitle: unitTitle,
                 key: key,
                 moduleId: moduleId,
                 isCompleted: isCompleted));
@@ -604,9 +606,15 @@ class WritingVideoRoute extends PageRouteInfo<WritingVideoRouteArgs> {
 
 class WritingVideoRouteArgs {
   const WritingVideoRouteArgs(
-      {required this.unitWriting, this.key, this.moduleId, this.isCompleted});
+      {required this.unitWriting,
+      required this.unitTitle,
+      this.key,
+      this.moduleId,
+      this.isCompleted});
 
   final UnitWriting unitWriting;
+
+  final String unitTitle;
 
   final Key? key;
 
@@ -616,7 +624,7 @@ class WritingVideoRouteArgs {
 
   @override
   String toString() {
-    return 'WritingVideoRouteArgs{unitWriting: $unitWriting, key: $key, moduleId: $moduleId, isCompleted: $isCompleted}';
+    return 'WritingVideoRouteArgs{unitWriting: $unitWriting, unitTitle: $unitTitle, key: $key, moduleId: $moduleId, isCompleted: $isCompleted}';
   }
 }
 
@@ -796,7 +804,7 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
       {required String url,
       Key? key,
       List<Movie>? movies,
-      String? title = "Video",
+      String? title,
       bool? isSerial})
       : super(VideoDetailRoute.name,
             path: '/video/detail',
@@ -812,11 +820,7 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
 
 class VideoDetailRouteArgs {
   const VideoDetailRouteArgs(
-      {required this.url,
-      this.key,
-      this.movies,
-      this.title = "Video",
-      this.isSerial});
+      {required this.url, this.key, this.movies, this.title, this.isSerial});
 
   final String url;
 

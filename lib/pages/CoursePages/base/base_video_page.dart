@@ -54,17 +54,30 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   Widget build(BuildContext context) {
     List<Widget> list = [];
     if (videoPlayerController.value.isInitialized) {
-      list.add(VideoPlayerChewie(videoPlayerController));
-      list.add(addVerticalSpace(10));
-      list.add(subtitleWidget());
+      list.add(
+        VideoPlayerChewie(videoPlayerController),
+      );
     } else {
       list.add(
-        SizedBox(
-          height: GlobalValues.screenHeight - 100,
-          child: const Loading(),
+        const AspectRatio(
+          aspectRatio: 16 / 9,
+          child: SizedBox(
+            width: double.infinity,
+            child: Loading(),
+          ),
         ),
       );
+      // list.add(
+      //   SizedBox(
+      //     height: GlobalValues.screenHeight - 100,
+      //     child: const Loading(),
+      //   ),
+      // );
     }
+
+    list.add(addVerticalSpace(10));
+    list.add(subtitleWidget());
+
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Stack(children: [
@@ -114,4 +127,3 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
     return const SizedBox(height: 1);
   }
 }
-

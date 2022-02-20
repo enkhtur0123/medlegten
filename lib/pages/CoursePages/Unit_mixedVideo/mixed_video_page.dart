@@ -6,12 +6,11 @@ import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_subtitle
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
-import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 
 class MixedVideoPage extends BaseVideoPage {
   const MixedVideoPage(this.unitMixedVideo, this.url,
-      {Key? key, this.moduleId, this.unitTitle,this.isCompleted})
+      {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
       : super(url, key: key);
 
   final UnitMixedVideo unitMixedVideo;
