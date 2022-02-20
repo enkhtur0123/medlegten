@@ -341,24 +341,34 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                     : const Color.fromRGBO(199, 201, 217, .5)),
             borderRadius: const BorderRadius.all(Radius.circular(20.0))),
         child: isLight
-            ? BlinkWidget([
-                Text(
-                  partLabel,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(0, 0, 0, 1),
-                      fontFamily: 'Roboto',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800),
-                ),
-                Text(
-                  partLabel,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(0, 0, 0, 1),
-                      fontFamily: 'Roboto',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500),
-                )
-              ])
+            ? AnimatedDefaultTextStyle(
+                child: Text(partLabel, textAlign: TextAlign.center),
+                curve: Curves.bounceInOut,
+                style: const TextStyle(
+                    color: Color.fromRGBO(0, 0, 0, 1),
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
+                duration: const Duration(milliseconds: 500),
+              )
+            // ? BlinkWidget([
+            //     Text(
+            //       partLabel,
+            //       style: const TextStyle(
+            //           color: Color.fromRGBO(0, 0, 0, 1),
+            //           fontFamily: 'Roboto',
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.w800),
+            //     ),
+            //     Text(
+            //       partLabel,
+            //       style: const TextStyle(
+            //           color: Color.fromRGBO(0, 0, 0, 1),
+            //           fontFamily: 'Roboto',
+            //           fontSize: 16,
+            //           fontWeight: FontWeight.w500),
+            //     )
+            //   ])
             : Text(
                 partLabel,
                 style: const TextStyle(
