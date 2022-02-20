@@ -16,6 +16,7 @@ _$_Event _$$_EventFromJson(Map<String, dynamic> json) => _$_Event(
       json['imgUrl'] as String,
       json['intro'] as String,
       json['isSerial'] as String,
+      json['runTime'] as String,
     );
 
 Map<String, dynamic> _$$_EventToJson(_$_Event instance) => <String, dynamic>{
@@ -28,4 +29,5 @@ Map<String, dynamic> _$$_EventToJson(_$_Event instance) => <String, dynamic>{
       'imgUrl': instance.imgUrl,
       'intro': instance.intro,
       'isSerial': instance.isSerial,
+      'runTime': instance.runTime,
     };

@@ -169,19 +169,21 @@ courseBgImg(context, CourseInfo courseInfo) {
                 onTap: () async {
                   if (!courseInfo.isCreatedPlan) {
                     await CourseRepository()
-                        .setCoursePlan(id: courseInfo.courseId).then((value){
-                          if(value!=null){
-                             AutoRouter.of(context)
+                        .setCoursePlan(id: courseInfo.courseId)
+                        .then((value) {
+                      if (value != null) {
+                        AutoRouter.of(context)
                             .push(CourseDetailRoute(courseInfo: courseInfo));
-                          }
-                        });
-                  }
-                  if (courseInfo.isPurchased) {
+                      }
+                    }).catchError((onError) {
+                      // print(onError);
+                    });
+                  } else if (courseInfo.isPurchased) {
                     AutoRouter.of(context)
                         .push(CourseDetailRoute(courseInfo: courseInfo));
                   } else {
-                    AutoRouter.of(context)
-                        .push(CoursePaymentRoute(courseInfo: courseInfo));
+                    AutoRouter.of(context).push(PaymentRoute(
+                        courseInfo: courseInfo, paymentType: "1001"));
                   }
                 },
                 text: courseInfo.isPurchased ? "Эхлэх" : "Худалдаж авах",

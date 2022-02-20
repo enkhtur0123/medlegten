@@ -137,12 +137,16 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const ModuleProgressExamPage());
     },
-    CoursePaymentRoute.name: (routeData) {
-      final args = routeData.argsAs<CoursePaymentRouteArgs>(
-          orElse: () => const CoursePaymentRouteArgs());
+    PaymentRoute.name: (routeData) {
+      final args = routeData.argsAs<PaymentRouteArgs>(
+          orElse: () => const PaymentRouteArgs());
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: CoursePaymentPage(key: args.key, courseInfo: args.courseInfo));
+          child: PaymentPage(
+              key: args.key,
+              courseInfo: args.courseInfo,
+              paymentType: args.paymentType,
+              contendId: args.contendId));
     },
     QpayRoute.name: (routeData) {
       final args =
@@ -153,7 +157,8 @@ class _$AppRouter extends RootStackRouter {
               key: args.key,
               courseInfo: args.courseInfo,
               couponCode: args.couponCode,
-              price: args.price));
+              price: args.price,
+              paymentType: args.paymentType));
     },
     VocabularyListRoute.name: (routeData) {
       final args = routeData.argsAs<VocabularyListRouteArgs>();
@@ -180,6 +185,13 @@ class _$AppRouter extends RootStackRouter {
               title: args.title,
               isSerial: args.isSerial,
               serialChange: args.serialChange));
+    },
+    VideoVocabularyListRoute.name: (routeData) {
+      final args = routeData.argsAs<VideoVocabularyListRouteArgs>(
+          orElse: () => const VideoVocabularyListRouteArgs());
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: VideoVocabularyListPage(key: args.key, movieId: args.movieId));
     }
   };
 
@@ -207,11 +219,13 @@ class _$AppRouter extends RootStackRouter {
             path: '/conversation_video_page'),
         RouteConfig(ModuleProgressExamRoute.name,
             path: '/unit_module_progressexam'),
-        RouteConfig(CoursePaymentRoute.name, path: '/payment'),
+        RouteConfig(PaymentRoute.name, path: '/payment'),
         RouteConfig(QpayRoute.name, path: '/qpay'),
         RouteConfig(VocabularyListRoute.name, path: '/vocabulary_list'),
         RouteConfig(LevelVideoListRoute.name, path: '/level/event/list'),
-        RouteConfig(VideoDetailRoute.name, path: '/video/detail')
+        RouteConfig(VideoDetailRoute.name, path: '/video/detail'),
+        RouteConfig(VideoVocabularyListRoute.name,
+            path: '/video/vocabulary_list')
       ];
 }
 
@@ -691,26 +705,39 @@ class ModuleProgressExamRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [CoursePaymentPage]
-class CoursePaymentRoute extends PageRouteInfo<CoursePaymentRouteArgs> {
-  CoursePaymentRoute({Key? key, CourseInfo? courseInfo})
-      : super(CoursePaymentRoute.name,
+/// [PaymentPage]
+class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
+  PaymentRoute(
+      {Key? key,
+      CourseInfo? courseInfo,
+      String? paymentType,
+      String? contendId})
+      : super(PaymentRoute.name,
             path: '/payment',
-            args: CoursePaymentRouteArgs(key: key, courseInfo: courseInfo));
+            args: PaymentRouteArgs(
+                key: key,
+                courseInfo: courseInfo,
+                paymentType: paymentType,
+                contendId: contendId));
 
-  static const String name = 'CoursePaymentRoute';
+  static const String name = 'PaymentRoute';
 }
 
-class CoursePaymentRouteArgs {
-  const CoursePaymentRouteArgs({this.key, this.courseInfo});
+class PaymentRouteArgs {
+  const PaymentRouteArgs(
+      {this.key, this.courseInfo, this.paymentType, this.contendId});
 
   final Key? key;
 
   final CourseInfo? courseInfo;
 
+  final String? paymentType;
+
+  final String? contendId;
+
   @override
   String toString() {
-    return 'CoursePaymentRouteArgs{key: $key, courseInfo: $courseInfo}';
+    return 'PaymentRouteArgs{key: $key, courseInfo: $courseInfo, paymentType: $paymentType, contendId: $contendId}';
   }
 }
 
@@ -718,20 +745,30 @@ class CoursePaymentRouteArgs {
 /// [QpayPage]
 class QpayRoute extends PageRouteInfo<QpayRouteArgs> {
   QpayRoute(
-      {Key? key, CourseInfo? courseInfo, String? couponCode, String? price})
+      {Key? key,
+      CourseInfo? courseInfo,
+      String? couponCode,
+      String? price,
+      String? paymentType = ""})
       : super(QpayRoute.name,
             path: '/qpay',
             args: QpayRouteArgs(
                 key: key,
                 courseInfo: courseInfo,
                 couponCode: couponCode,
-                price: price));
+                price: price,
+                paymentType: paymentType));
 
   static const String name = 'QpayRoute';
 }
 
 class QpayRouteArgs {
-  const QpayRouteArgs({this.key, this.courseInfo, this.couponCode, this.price});
+  const QpayRouteArgs(
+      {this.key,
+      this.courseInfo,
+      this.couponCode,
+      this.price,
+      this.paymentType = ""});
 
   final Key? key;
 
@@ -741,9 +778,11 @@ class QpayRouteArgs {
 
   final String? price;
 
+  final String? paymentType;
+
   @override
   String toString() {
-    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price}';
+    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price, paymentType: $paymentType}';
   }
 }
 
@@ -852,5 +891,30 @@ class VideoDetailRouteArgs {
   @override
   String toString() {
     return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange}';
+  }
+}
+
+/// generated route for
+/// [VideoVocabularyListPage]
+class VideoVocabularyListRoute
+    extends PageRouteInfo<VideoVocabularyListRouteArgs> {
+  VideoVocabularyListRoute({Key? key, String? movieId})
+      : super(VideoVocabularyListRoute.name,
+            path: '/video/vocabulary_list',
+            args: VideoVocabularyListRouteArgs(key: key, movieId: movieId));
+
+  static const String name = 'VideoVocabularyListRoute';
+}
+
+class VideoVocabularyListRouteArgs {
+  const VideoVocabularyListRouteArgs({this.key, this.movieId});
+
+  final Key? key;
+
+  final String? movieId;
+
+  @override
+  String toString() {
+    return 'VideoVocabularyListRouteArgs{key: $key, movieId: $movieId}';
   }
 }

@@ -8,37 +8,44 @@ import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/pages/CoursePages/payment/buy_course_intro_bsheet.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 import 'unit_progress_status.dart';
 
 class UnitCart extends HookWidget {
   const UnitCart({Key? key, this.courseInfo, this.unitInfo}) : super(key: key);
   final CourseUnit? unitInfo;
   final CourseInfo? courseInfo;
-
+  
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        if (unitInfo!.hasTrial == "0" || courseInfo!.isPurchased) {
-          AutoRouter.of(context)
-              .push(CourseUnitModuleListRoute(unitInfo: unitInfo!));
+        if (unitInfo!.openUnit) {
+          if (unitInfo!.hasTrial == "0" || courseInfo!.isPurchased) {
+            AutoRouter.of(context)
+                .push(CourseUnitModuleListRoute(unitInfo: unitInfo!));
+          } else {
+            await showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(26),
+                      topRight: Radius.circular(26)),
+                ),
+                elevation: 10,
+                isDismissible: true,
+                backgroundColor: Colors.white.withOpacity(0.69),
+                enableDrag: true,
+                builder: (context) {
+                  return BuyCourseIntroWidget(
+                    courseInfo: courseInfo,
+                  );
+                }).then((value) {
+              Navigator.pop(context);
+            });
+          }
         } else {
-          await showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(26),
-                    topRight: Radius.circular(26)),
-              ),
-              elevation: 10,
-              isDismissible: true,
-              backgroundColor: Colors.white.withOpacity(0.69),
-              enableDrag: true,
-              builder: (context) {
-                return BuyCourseIntroWidget(courseInfo: courseInfo);
-              }).then((value) {
-            Navigator.pop(context);
-          });
+          ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Таны Өнөөдрийн эрх дууссан байна",));
         }
       },
       child: Card(
@@ -86,7 +93,10 @@ class UnitCart extends HookWidget {
                   ],
                 ),
               ),
-              Flexible(    fit: FlexFit.loose,flex: 2, child: Container(child: getUnitStatusWidget())),
+              Flexible(
+                  fit: FlexFit.loose,
+                  flex: 2,
+                  child: Container(child: getUnitStatusWidget())),
             ],
           ),
         ),

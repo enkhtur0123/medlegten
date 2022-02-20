@@ -7,6 +7,7 @@ import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/utils/time_convert_helper.dart';
 
 class LevelEventItem extends HookWidget {
   const LevelEventItem({Key? key, this.event, this.edgeInsets})
@@ -19,14 +20,18 @@ class LevelEventItem extends HookWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        List<Movie> movies =
-            await VideoRepository().getContentDetail(contentId: event!.eventId);
+        if (!event!.isPurchased) {
+          List<Movie> movies = await VideoRepository()
+              .getContentDetail(contentId: event!.eventId);
           AutoRouter.of(context).push(VideoDetailRoute(
               movies: movies,
               url: movies[0].hostUrl,
               title: movies[0].contentName,
               isSerial: event!.isSerial == "1" ? true : false));
-      
+        } else {
+          AutoRouter.of(context)
+              .push(PaymentRoute(courseInfo: null, paymentType: "1004"));
+        }
       },
       child: Container(
         margin:
@@ -55,7 +60,7 @@ class LevelEventItem extends HookWidget {
                 child: getEventImageWidget(context: context, event: event),
               ),
               const SizedBox(height: 10),
-              Flexible(flex: 3, child: getEventInfo(event: event))
+              Flexible(flex: 3, child: getEventInfo(event: event!))
             ],
           ),
         ),
@@ -88,7 +93,7 @@ class LevelEventItem extends HookWidget {
   }
 }
 
-Widget getEventInfo({Event? event}) {
+Widget getEventInfo({required Event event}) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +102,7 @@ Widget getEventInfo({Event? event}) {
       Flexible(
         flex: 4,
         child: Text(
-          event!.eventName,
+          event.eventName,
           style: const TextStyle(
               color: Color(0xff333333),
               fontSize: 14,
@@ -114,20 +119,24 @@ Widget getEventInfo({Event? event}) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              fit: FlexFit.loose,
-              flex: 4,
+              fit: FlexFit.tight,
+              flex: 7,
               child: InfoItemWidget(
-                  iconData: Icons.access_time_sharp, text: "3m 8sec"),
+                  iconData: Icons.access_time_sharp,
+                  text: TimeConvertHelper().timeConvert(
+                      time: int.parse(
+                          event.runTime != "" ? event.runTime : "0"))),
             ),
             const SizedBox(width: 15),
             Flexible(
-                fit: FlexFit.loose,
+                fit: FlexFit.tight,
                 flex: 3,
                 child:
                     InfoItemWidget(isSvg: true, text: event.vocabularyCount)),
+            const SizedBox(width: 3),
             Flexible(
-              fit: FlexFit.loose,
-              flex: 6,
+              fit: FlexFit.tight,
+              flex: 8,
               child: InfoItemWidget(
                   iconData: Icons.category_outlined, text: event.categoryName),
             ),
@@ -154,6 +163,7 @@ Widget InfoItemWidget({IconData? iconData, String? text, bool? isSvg = false}) {
       ),
       Text(
         text!,
+        maxLines: 2,
         style: const TextStyle(
             color: Color(0xff828282),
             fontSize: 10,

@@ -31,7 +31,8 @@ class _$EventTearOff {
       String vocabularyCount,
       String imgUrl,
       String intro,
-      String isSerial) {
+      String isSerial,
+      String runTime) {
     return _Event(
       eventId,
       eventName,
@@ -42,6 +43,7 @@ class _$EventTearOff {
       imgUrl,
       intro,
       isSerial,
+      runTime,
     );
   }
 
@@ -64,6 +66,7 @@ mixin _$Event {
   String get imgUrl => throw _privateConstructorUsedError;
   String get intro => throw _privateConstructorUsedError;
   String get isSerial => throw _privateConstructorUsedError;
+  String get runTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -83,7 +86,8 @@ abstract class $EventCopyWith<$Res> {
       String vocabularyCount,
       String imgUrl,
       String intro,
-      String isSerial});
+      String isSerial,
+      String runTime});
 }
 
 /// @nodoc
@@ -105,6 +109,7 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
     Object? imgUrl = freezed,
     Object? intro = freezed,
     Object? isSerial = freezed,
+    Object? runTime = freezed,
   }) {
     return _then(_value.copyWith(
       eventId: eventId == freezed
@@ -143,6 +148,10 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
               as String,
+      runTime: runTime == freezed
+          ? _value.runTime
+          : runTime // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -161,7 +170,8 @@ abstract class _$EventCopyWith<$Res> implements $EventCopyWith<$Res> {
       String vocabularyCount,
       String imgUrl,
       String intro,
-      String isSerial});
+      String isSerial,
+      String runTime});
 }
 
 /// @nodoc
@@ -184,6 +194,7 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
     Object? imgUrl = freezed,
     Object? intro = freezed,
     Object? isSerial = freezed,
+    Object? runTime = freezed,
   }) {
     return _then(_Event(
       eventId == freezed
@@ -222,6 +233,10 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
               as String,
+      runTime == freezed
+          ? _value.runTime
+          : runTime // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -238,7 +253,8 @@ class _$_Event implements _Event {
       this.vocabularyCount,
       this.imgUrl,
       this.intro,
-      this.isSerial);
+      this.isSerial,
+      this.runTime);
 
   factory _$_Event.fromJson(Map<String, dynamic> json) =>
       _$$_EventFromJson(json);
@@ -261,10 +277,12 @@ class _$_Event implements _Event {
   final String intro;
   @override
   final String isSerial;
+  @override
+  final String runTime;
 
   @override
   String toString() {
-    return 'Event(eventId: $eventId, eventName: $eventName, categoryName: $categoryName, isPurchased: $isPurchased, levelId: $levelId, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial)';
+    return 'Event(eventId: $eventId, eventName: $eventName, categoryName: $categoryName, isPurchased: $isPurchased, levelId: $levelId, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, runTime: $runTime)';
   }
 
   @override
@@ -283,7 +301,8 @@ class _$_Event implements _Event {
                 .equals(other.vocabularyCount, vocabularyCount) &&
             const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
             const DeepCollectionEquality().equals(other.intro, intro) &&
-            const DeepCollectionEquality().equals(other.isSerial, isSerial));
+            const DeepCollectionEquality().equals(other.isSerial, isSerial) &&
+            const DeepCollectionEquality().equals(other.runTime, runTime));
   }
 
   @override
@@ -297,7 +316,8 @@ class _$_Event implements _Event {
       const DeepCollectionEquality().hash(vocabularyCount),
       const DeepCollectionEquality().hash(imgUrl),
       const DeepCollectionEquality().hash(intro),
-      const DeepCollectionEquality().hash(isSerial));
+      const DeepCollectionEquality().hash(isSerial),
+      const DeepCollectionEquality().hash(runTime));
 
   @JsonKey(ignore: true)
   @override
@@ -320,7 +340,8 @@ abstract class _Event implements Event {
       String vocabularyCount,
       String imgUrl,
       String intro,
-      String isSerial) = _$_Event;
+      String isSerial,
+      String runTime) = _$_Event;
 
   factory _Event.fromJson(Map<String, dynamic> json) = _$_Event.fromJson;
 
@@ -342,6 +363,8 @@ abstract class _Event implements Event {
   String get intro;
   @override
   String get isSerial;
+  @override
+  String get runTime;
   @override
   @JsonKey(ignore: true)
   _$EventCopyWith<_Event> get copyWith => throw _privateConstructorUsedError;

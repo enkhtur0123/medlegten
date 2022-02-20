@@ -33,6 +33,7 @@ import 'package:medlegten/pages/StartPages/start.dart';
 import 'package:medlegten/pages/VideoPage/level_video_list.dart';
 
 import 'package:medlegten/pages/VideoPage/video_detail.dart';
+import 'package:medlegten/pages/VideoPage/vocabulary_list.dart';
 import 'package:medlegten/pages/home.dart';
 
 part 'app_router.gr.dart';
@@ -57,11 +58,12 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/writing_video_page', page: WritingVideoPage),
     AutoRoute(path: '/conversation_video_page', page: ConversationVideoPage),
     AutoRoute(path: '/unit_module_progressexam', page: ModuleProgressExamPage),
-    AutoRoute(path: '/payment', page: CoursePaymentPage),
+    AutoRoute(path: '/payment', page: PaymentPage),
     AutoRoute(path: '/qpay', page: QpayPage),
     AutoRoute(path: '/vocabulary_list', page: VocabularyListPage),
     AutoRoute(path: '/level/event/list', page: LevelVideoListPage),
     AutoRoute(path: '/video/detail', page: VideoDetailPage),
+    AutoRoute(path: '/video/vocabulary_list', page: VideoVocabularyListPage),
     // QpayPage
   ],
 )

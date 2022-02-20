@@ -8,19 +8,23 @@ import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/my_textfield.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
-class CoursePaymentPage extends StatefulWidget {
+class PaymentPage extends StatefulWidget {
   final CourseInfo? courseInfo;
+  final String? paymentType;
+  final String? contendId;
+  
 
   // ignore: prefer_const_constructors_in_immutables
-  CoursePaymentPage({Key? key, this.courseInfo}) : super(key: key);
+  PaymentPage({Key? key, this.courseInfo, this.paymentType,this.contendId})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return CoursePaymentState();
+    return PaymentState();
   }
 }
 
-class CoursePaymentState extends State<CoursePaymentPage> {
+class PaymentState extends State<PaymentPage> {
   TextEditingController controller =
       TextEditingController(text: "924161ED12DA");
   FocusNode couponNode = FocusNode();
@@ -96,8 +100,8 @@ class CoursePaymentState extends State<CoursePaymentPage> {
                                   .showSnackBar(MySnackBar(
                                 text: "Амжилттай",
                               ));
-                            }else{
-                               ScaffoldMessenger.of(context)
+                            } else {
+                              ScaffoldMessenger.of(context)
                                   .showSnackBar(MySnackBar(
                                 text: "Купон кодоо шалгана уу",
                               ));
@@ -119,12 +123,14 @@ class CoursePaymentState extends State<CoursePaymentPage> {
                   AutoRouter.of(context).push(QpayRoute(
                       courseInfo: widget.courseInfo,
                       couponCode: couponCode,
-                      price: price ?? widget.courseInfo!.price));
+                      price: price ?? widget.courseInfo!.price,
+                      paymentType: widget.paymentType));
                 },
                 child: getPaymentFunction(
-                    title: "Qpay",
-                    body: "QPay-р төлбөр төлөх",
-                    icon: "assets/img/payment/qpay.svg"),
+                  title: "Qpay",
+                  body: "QPay-р төлбөр төлөх",
+                  icon: "assets/img/payment/qpay.svg",
+                ),
               ),
               GestureDetector(
                 onTap: () {},

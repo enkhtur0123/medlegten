@@ -47,7 +47,8 @@ class UnitModuleHeader extends HookWidget {
                                 percentSnapshot.data!.unCompletedCount),
                             completedCount:
                                 percentSnapshot.data!.completedCount,
-                                unCompletedCount: percentSnapshot.data!.unCompletedCount,
+                            unCompletedCount:
+                                percentSnapshot.data!.unCompletedCount,
                             fixed: 3)
                         .toDouble()
                     : 0,
@@ -60,7 +61,8 @@ class UnitModuleHeader extends HookWidget {
                                                 .data!.unCompletedCount),
                                         completedCount: percentSnapshot
                                             .data!.completedCount,
-                                            unCompletedCount: percentSnapshot.data!.unCompletedCount,
+                                        unCompletedCount: percentSnapshot
+                                            .data!.unCompletedCount,
                                         fixed: 1) *
                                     100)
                                 .toStringAsFixed(0) +
@@ -89,13 +91,21 @@ class UnitModuleHeader extends HookWidget {
 
 ////Хувь тооцох
   double calculatePercent(
-      {int? totalCount, int? completedCount, int? unCompletedCount,int? fixed = 3}) {
-    double percent = ((100 * completedCount!) / totalCount!);
+      {int? totalCount,
+      int? completedCount,
+      int? unCompletedCount,
+      int? fixed = 3}) {
+    int? percent;
+    if (totalCount! > 0) {
+      percent = (100 * completedCount!) ~/ totalCount;
+    } else {
+      percent = 0;
+    }
     if (percent > 0) {
-      percent = percent / 100;
+      percent = percent ~/ 100;
     } else {
       return 0;
     }
-    return double.parse(percent.toStringAsFixed(fixed!));
+    return double.parse(percent.toString());
   }
 }

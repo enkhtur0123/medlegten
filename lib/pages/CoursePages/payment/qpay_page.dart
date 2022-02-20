@@ -10,18 +10,19 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class QpayPage extends HookWidget {
-  QpayPage({Key? key, this.courseInfo, this.couponCode, this.price})
+  QpayPage({Key? key, this.courseInfo, this.couponCode, this.price,this.paymentType=""})
       : super(key: key);
 
   CourseInfo? courseInfo;
   String? couponCode;
   String? price;
   String? invoice_id;
+  String? paymentType;
   ValueNotifier isCall = ValueNotifier(false);
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> body = {
-      "paymentType": "1001",
+      "paymentType": paymentType,
       "productId": courseInfo!.courseId,
       "price": price,
       "couponCode": couponCode,
@@ -32,11 +33,18 @@ class QpayPage extends HookWidget {
     if (appLifecycleState == AppLifecycleState.resumed && isCall.value) {
       CoursePaymentRepository()
           .checkPaymentStatus(invoice_id: invoice_id)
-          .then((value) async{
+          .then((value) async {
         if (value != null) {
-          await modalBottomSheetMenu(context: context,isSuccess: true,body: "Төлбөр амжилттай төлөгдлөө. Танд сурлагын өндөр амжилт хүсье!");
-        }else{
-           await modalBottomSheetMenu(context: context, isError: true,body: "Төлбөр төлөлт амжилтгүй боллоо");
+          await modalBottomSheetMenu(
+              context: context,
+              isSuccess: true,
+              body:
+                  "Төлбөр амжилттай төлөгдлөө. Танд сурлагын өндөр амжилт хүсье!");
+        } else {
+          await modalBottomSheetMenu(
+              context: context,
+              isError: true,
+              body: "Төлбөр төлөлт амжилтгүй боллоо");
         }
       });
     }
@@ -103,8 +111,9 @@ class QpayPage extends HookWidget {
                     shrinkWrap: true,
                     children: (snapshot.data![0] as List)
                         .map((e) => GestureDetector(
-                              onTap: () async{
-                                await launchApp(context: context, link: e["link"]);
+                              onTap: () async {
+                                await launchApp(
+                                    context: context, link: e["link"]);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -164,7 +173,11 @@ class QpayPage extends HookWidget {
     }
   }
 
-  modalBottomSheetMenu({BuildContext? context,bool? isSuccess=false,bool? isError=false,String? body}) {
+  modalBottomSheetMenu(
+      {BuildContext? context,
+      bool? isSuccess = false,
+      bool? isError = false,
+      String? body}) {
     showModalBottomSheet(
         context: context!,
         shape: const RoundedRectangleBorder(
@@ -173,7 +186,8 @@ class QpayPage extends HookWidget {
         ),
         backgroundColor: Colors.white,
         builder: (context) {
-          return CustomBottomSheetDialog(isError: isError,isSuccess: isSuccess,body: body);
+          return CustomBottomSheetDialog(
+              isError: isError, isSuccess: isSuccess, body: body);
         });
   }
 }

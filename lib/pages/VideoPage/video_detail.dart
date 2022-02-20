@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/movie.dart';
@@ -7,6 +8,7 @@ import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/video_subtitle.dart';
 import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/utils/app_router.dart';
 
 import 'video_helper.dart';
 
@@ -66,7 +68,11 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
                   refreshNotifier.value = !refreshNotifier.value;
                 }
               },
-              bookMark: () {},
+              bookMark: () {
+                AutoRouter.of(context).push(
+                 VideoVocabularyListRoute(movieId: movieId),
+                );
+              },
               isBookMark: true,
             );
           } else {

@@ -13,7 +13,7 @@ class Event with _$Event {
           String vocabularyCount,
           String imgUrl,
           String intro,
-          String isSerial) = _Event;
+          String isSerial,String runTime,) = _Event;
 
   factory Event.fromJson(Map<String, dynamic> json) =>
       _$EventFromJson(json);

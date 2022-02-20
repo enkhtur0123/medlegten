@@ -1,8 +1,12 @@
+import 'package:medlegten/models/Unit/unit_vocabulary.dart';
+import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
 import 'package:medlegten/models/video/category.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/level_event.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/video_cue.dart';
+import 'package:medlegten/models/video/video_vocabulary.dart';
+import 'package:medlegten/models/video/video_vocabulary_word.dart';
 import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
@@ -86,6 +90,26 @@ class VideoRepository {
       }
     } catch (e) {
       print(e.toString());
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future getVideoVocabulary(
+      {int? pageNumber, int? pageSize, int? mode, String? movieId}) async {
+    try {
+      final res = await HttpHelper().getUrl(
+          url:
+              'ppv/Movie/Vocabulary/$movieId/$mode?pageNumber=$pageNumber&pageSize=$pageSize');
+      if (res['isSuccess']) {
+        var list = res['words'] as List;
+        var words = list.map((i) => VideoVocabularyWord.fromJson(i)).toList();
+        return VideoVocabulary(res['wordCount'], words);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
