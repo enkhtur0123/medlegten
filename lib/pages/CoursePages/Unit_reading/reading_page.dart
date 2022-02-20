@@ -12,9 +12,11 @@ import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
+import 'dart:math' as math;
 
 class ReadingPage extends StatefulWidget {
-  const ReadingPage(this.reading, {Key? key, this.moduleId, this.unitTitle,this.isCompleted})
+  const ReadingPage(this.reading,
+      {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
       : super(key: key);
 
   final Reading reading;
@@ -90,22 +92,20 @@ class _ReadingPageState extends State<ReadingPage> {
         widgetList.add(childWidget(paragraph, i, false));
       }
     }
-    return CustomScrollView(
-      slivers: [
-        SliverPersistentHeader(
-          pinned: true,
-          delegate:
-              MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
+    return CustomScrollView(slivers: [
+      SliverPersistentHeader(
+        pinned: true,
+        delegate: MyDynamicHeader(widget.reading.imgUrl, widget.reading.title),
+      ),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return widgetList[index];
+          },
+          childCount: widgetList.length,
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return widgetList[index];
-            },
-            childCount: widgetList.length,
-          ),
-          
-    )]);
+      )
+    ]);
   }
 
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
@@ -133,14 +133,7 @@ class _ReadingPageState extends State<ReadingPage> {
             },
             tailWidget(selectParagraph),
             (paragraph) {
-              if (isWidgetIsShown) {
-                isShowGrammar = false;
-              } else {
-                isShowGrammar = true;
-                selectedParagraph = paragraph;
-              }
-              helper.valueKeys[paragraph]! + 1;
-              refreshView.value = !refreshView.value;
+              callBackParagraph(paragraph);
             },
             selectParagraph,
             key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
@@ -148,14 +141,43 @@ class _ReadingPageState extends State<ReadingPage> {
     );
   }
 
+  callBackParagraph(CParagraph? _paragraph) {
+    CParagraph? paragraph;
+    if (_paragraph == null) {
+      if (selectedParagraph != null) {
+        paragraph = selectedParagraph!;
+      }
+    } else {
+      paragraph = _paragraph;
+    }
+    if (paragraph != null) {
+      if (isWidgetIsShown) {
+        if (selectedParagraph == paragraph) {
+          isShowGrammar = false;
+        } else {
+          isShowGrammar = true;
+          helper.valueKeys[selectedParagraph]! + 1;
+          selectedParagraph = paragraph;
+        }
+      } else {
+        isShowGrammar = true;
+        selectedParagraph = paragraph;
+      }
+      helper.valueKeys[paragraph]! + 1;
+      refreshView.value = !refreshView.value;
+    }
+  }
+
   Widget tailWidget(bool selected) {
-    return Text(
-      ' ..... ',
-      style: TextStyle(
-          color: selected ? colorBlack : Colors.black45,
-          fontWeight: FontWeight.w700,
-          fontSize: 16),
-      //key: UniqueKey(),
+    return SizedBox(
+      height: 20,
+      width: 20,
+      child: Transform.rotate(
+        angle: 90 * math.pi / 180,
+        child: Icon(Icons.call_made,
+            size: 20, color: selected ? colorBlack : Colors.black38),
+        //key: UniqueKey(),
+      ),
     );
   }
 
@@ -187,48 +209,5 @@ class _ReadingPageState extends State<ReadingPage> {
       //       return ReadingPopUpDialog(word, position);
       //     });
     }
-  }
-
-  Widget maxExtentProtoType() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(
-          width: double.infinity,
-          height: 80,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    'Squid Game Facts That Make You Appreciate The Show Even More',
-                    style: TextStyle(
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: () => {},
-                icon: const Icon(
-                  Icons.bookmark_outline_sharp,
-                  color: Color.fromRGBO(48, 53, 159, 1),
-                  size: 28.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Image.asset(
-          'assets/SliverImage.png',
-          fit: BoxFit.cover,
-        ),
-        addVerticalSpace(10),
-        const Divider(thickness: 1, color: Colors.black12),
-      ],
-    );
   }
 }

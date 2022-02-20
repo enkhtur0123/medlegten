@@ -8,7 +8,7 @@ import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart'
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/themes/style.dart';
 
-const double unitHeaderHeight = 72;
+const double unitHeaderHeight = 74;
 const TextStyle titleStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
@@ -84,29 +84,30 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
       height: unitHeaderHeight + 8,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 5, top: 20, right: 20),
-      child: Row(mainAxisSize: MainAxisSize.max, children: [
-        Flexible(
-          fit: FlexFit.tight,
-          flex: 6,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: list),
-        ),
-        widget.moduleId != null
-            ? Flexible(
-                fit: FlexFit.tight,
-                flex: 2,
-                child: UnitModuleCompletedBtn(
-                  moduleId: widget.moduleId,
-                  completeBtn: () {},
-                  unCompleteBtn: () {},
-                  isCompleted: widget.isCompleted,
-                ),
-              )
-            : Container()
-      ]),
+      child: Row(
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 6,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: list),
+          ),
+          widget.moduleId != null
+              ? Flexible(
+                  fit: FlexFit.tight,
+                  flex: 2,
+                  child: UnitModuleCompletedBtn(
+                    moduleId: widget.moduleId,
+                    completeBtn: () {},
+                    unCompleteBtn: () {},
+                    isCompleted: widget.isCompleted,
+                  ),
+                )
+              : Container()
+        ],
+      ),
     );
   }
 }

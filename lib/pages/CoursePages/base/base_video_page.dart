@@ -93,12 +93,25 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       list.add(subtitleWidget());
     } else {
       list.add(
-        SizedBox(
-          height: GlobalValues.screenHeight - 100,
-          child: const Loading(),
+        const AspectRatio(
+          aspectRatio: 16 / 9,
+          child: SizedBox(
+            width: double.infinity,
+            child: Loading(),
+          ),
         ),
       );
+      // list.add(
+      //   SizedBox(
+      //     height: GlobalValues.screenHeight - 100,
+      //     child: const Loading(),
+      //   ),
+      // );
     }
+
+    list.add(addVerticalSpace(10));
+    list.add(subtitleWidget());
+
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Stack(children: [
