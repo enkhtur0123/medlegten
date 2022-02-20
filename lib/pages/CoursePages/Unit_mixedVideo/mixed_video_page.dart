@@ -40,8 +40,8 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   @override
   void initState() {
     super.initState();
-    videoPlayerController.addListener(() {
-      if (videoPlayerController.value.isPlaying && bottomIsVisible) {
+    videoPlayerController!.addListener(() {
+      if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
         bottomIsVisible = false;
         word = null;
         refreshNotifier.value = !refreshNotifier.value;
@@ -64,7 +64,7 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   @override
   Widget subtitleWidget() {
     return MixedVideoSubtitle(
-        videoPlayerController, MixedVideohelper.convert(widget.unitMixedVideo),
+        videoPlayerController!, MixedVideohelper.convert(widget.unitMixedVideo),
         (val) {
       paragraph = val;
       word = null;

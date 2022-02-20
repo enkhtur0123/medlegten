@@ -6,13 +6,15 @@ import 'package:medlegten/repositories/video_repository.dart';
 
 // ignore: must_be_immutable
 class LevelVideoListPage extends HookWidget {
-  LevelVideoListPage({Key? key, this.levelId}) : super(key: key);
+  LevelVideoListPage({Key? key, this.levelId,required this.categoryName}) : super(key: key);
 
   String? levelId;
+  String? categoryName;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text(categoryName!),),
       body: FutureBuilder<List<Event>>(
         future: VideoRepository().getLevelAllEvent(level_id: levelId),
         builder: (context, AsyncSnapshot<List<Event>?> snapshot) {

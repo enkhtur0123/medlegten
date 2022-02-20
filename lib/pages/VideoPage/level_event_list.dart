@@ -13,7 +13,6 @@ class LevelEventPage extends HookWidget {
 
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.68);
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -44,7 +43,7 @@ class LevelEventPage extends HookWidget {
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.normal,
                       onTap: () {
-                          AutoRouter.of(context).push(LevelVideoListRoute(levelId: e.levelId));
+                          AutoRouter.of(context).push(LevelVideoListRoute(levelId: e.levelId,categoryName: e.events[0].categoryName));
                       },
                     ),
                   ),
@@ -63,7 +62,7 @@ class LevelEventPage extends HookWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: e.events.length,
                 itemBuilder: (context, index) {
-                  return LevelEventItem(event: levelEvents![index].events[index],);
+                  return LevelEventItem(event: e.events[index]);
                 },
               ),
             ),

@@ -33,8 +33,8 @@ class _CourseUnitIntroVideoPageState
   @override
   void initState() {
     super.initState();
-    videoPlayerController.addListener(() {
-      if (videoPlayerController.value.isPlaying && bottomIsVisible) {
+    videoPlayerController!.addListener(() {
+      if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
         bottomIsVisible = false;
         word = null;
         refreshNotifier.value = !refreshNotifier.value;
@@ -51,7 +51,7 @@ class _CourseUnitIntroVideoPageState
   @override
   Widget subtitleWidget() {
     return IntroVideoSubtitle(
-        videoPlayerController, IntroVideohelper.convert(widget.unitIntroVideo),
+        videoPlayerController!, IntroVideohelper.convert(widget.unitIntroVideo),
         (cword, pposition) {
       if (cword != null) {
         word = cword;

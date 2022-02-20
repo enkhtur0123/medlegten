@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
@@ -44,7 +45,8 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
   @override
   Widget build(BuildContext context) {
     List<Widget> list = [];
-    list.add(IconButton(
+    list.add(
+      IconButton(
         onPressed: () {
           AutoRouter.of(context).pop();
         },
@@ -52,12 +54,20 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
           Icons.arrow_back,
           color: colorWhite,
           size: 23,
-        )));
+        ),
+      ),
+    );
 
-    list.add(Text(
-      widget.title,
-      style: titleStyle,
-    ));
+    list.add(
+      Flexible(
+        fit: FlexFit.tight,
+        child: AutoSizeText(
+          widget.title,
+          style: titleStyle,
+          maxLines: 2,
+        ),
+      ),
+    );
 
     list.add(const Spacer());
     if (widget.tailWidget != null) {
@@ -74,6 +84,7 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
       height: unitHeaderHeight + 8,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 5, top: 20, right: 20),
+<<<<<<< HEAD
       child: Row(
         children: [
           Flexible(
@@ -98,6 +109,31 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
               : Container()
         ],
       ),
+=======
+      child: Row(mainAxisSize: MainAxisSize.max, children: [
+        Flexible(
+          fit: FlexFit.tight,
+          flex: 6,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: list),
+        ),
+        widget.moduleId != null
+            ? Flexible(
+                fit: FlexFit.tight,
+                flex: 2,
+                child: UnitModuleCompletedBtn(
+                  moduleId: widget.moduleId,
+                  completeBtn: () {},
+                  unCompleteBtn: () {},
+                  isCompleted: widget.isCompleted,
+                ),
+              )
+            : Container()
+      ]),
+>>>>>>> b88c3d9b8754c2ff6e2b2cbe3a411d9f8cbf7f39
     );
   }
 }

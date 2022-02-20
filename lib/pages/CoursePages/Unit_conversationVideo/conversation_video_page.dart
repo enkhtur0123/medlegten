@@ -49,6 +49,7 @@ class _ConversationVideoPageState
 
   @override
   Widget subtitleWidget() {
+<<<<<<< HEAD
     return ConversationVideoSubtitle(videoPlayerController,
         ConversationVideohelper.convert(widget.unitConversationVideo),
         (cword, pposition) {
@@ -84,5 +85,9 @@ class _ConversationVideoPageState
       },
       onClosing: () {},
     );
+=======
+    return ConversationVideoSubtitle(videoPlayerController!,
+        ConversationVideohelper.convert(widget.unitConversationVideo));
+>>>>>>> b88c3d9b8754c2ff6e2b2cbe3a411d9f8cbf7f39
   }
 }

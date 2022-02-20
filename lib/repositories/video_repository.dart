@@ -61,7 +61,6 @@ class VideoRepository {
     try {
       final res =
           await HttpHelper().getUrl(url: 'ppv/ContentDetial/$contentId');
-      // print(res);
       if (res['isSuccess']) {
         var list = res['movies'] as List;
         return list.map((i) => Movie.fromJson(i)).toList();
