@@ -4,8 +4,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/article_info.dart';
-import 'package:medlegten/pages/CoursePages/ArticleDetail/article_helper.dart';
-import 'package:medlegten/pages/CoursePages/ArticleDetail/article_translate.dart';
+
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
@@ -13,6 +12,9 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 import 'dart:math' as math;
+
+import 'article_helper.dart';
+import 'article_translate.dart';
 
 class ArticlePage extends StatefulWidget {
   const ArticlePage(

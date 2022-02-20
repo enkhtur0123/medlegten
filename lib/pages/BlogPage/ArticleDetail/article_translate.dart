@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/pages/CoursePages/base/clip_shadow.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/message.dart';
-import '../base/clip_shadow.dart';
 
 class ArticleTranslate extends StatefulWidget {
   const ArticleTranslate(this.paragraph, {Key? key}) : super(key: key);
