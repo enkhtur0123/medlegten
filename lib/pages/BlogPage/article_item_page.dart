@@ -28,7 +28,6 @@ class ArticleItemPage extends HookWidget {
           ),
         ],
       ),
-      width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
@@ -39,13 +38,13 @@ class ArticleItemPage extends HookWidget {
             fit: FlexFit.tight,
             child: Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.35,
+              height: MediaQuery.of(context).size.width * 0.35,
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
-                          articleItem!.slideImageUrl))),
+                          articleItem!.slideImageUrl),)),
             ),
           ),
           Flexible(
@@ -56,6 +55,7 @@ class ArticleItemPage extends HookWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   getTitleWidget(
                       categoryName: articleItem!.categoryName,
@@ -73,6 +73,7 @@ class ArticleItemPage extends HookWidget {
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.normal,
                           fontSize: 12),
+                          textAlign: TextAlign.start,
                     ),
                   ),
                   const SizedBox(

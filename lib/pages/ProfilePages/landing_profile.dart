@@ -60,14 +60,14 @@ class LandingProfile extends ConsumerWidget {
                   return getReportItemWidget(e: e);
                 }).toList(),
               ),
-              // WideButton(
-              //   "Log off",
-              //   ColorTable.color120_100_254,
-              //   ColorTable.color255_255_255,
-              //   () {
-              //     ref.read(authProvider.notifier).logoff();
-              //   },
-              // ),
+              WideButton(
+                "Log off",
+                ColorTable.color120_100_254,
+                ColorTable.color255_255_255,
+                () {
+                  ref.read(authProvider.notifier).logoff();
+                },
+              ),
               Text(
                 "Сүүлд үзсэн",
                 style: TextStyle(
