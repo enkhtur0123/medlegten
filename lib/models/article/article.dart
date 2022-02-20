@@ -7,7 +7,7 @@ part 'article.g.dart';
 @freezed
 class Article with _$Article {
   factory Article(
-   String typeId,
+    String typeId,
     String typeName,
     List<ArticleItem> articles) = _Article;
 

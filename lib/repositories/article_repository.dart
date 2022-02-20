@@ -18,7 +18,7 @@ class ArticleRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-     throw CustomException(errorMsg: e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 }

@@ -20,7 +20,7 @@ class LevelEventItem extends HookWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (!event!.isPurchased) {
+        // if (!event!.isPurchased) {
           List<Movie> movies = await VideoRepository()
               .getContentDetail(contentId: event!.eventId);
           AutoRouter.of(context).push(VideoDetailRoute(
@@ -28,10 +28,10 @@ class LevelEventItem extends HookWidget {
               url: movies[0].hostUrl,
               title: movies[0].contentName,
               isSerial: event!.isSerial == "1" ? true : false));
-        } else {
-          AutoRouter.of(context)
-              .push(PaymentRoute(courseInfo: null, paymentType: "1004"));
-        }
+        // } else {
+        //   AutoRouter.of(context)
+        //       .push(PaymentRoute(courseInfo: null, paymentType: "1004"));
+        // }
       },
       child: Container(
         margin:

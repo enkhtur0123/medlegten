@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/pages/BlogPage/index.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
 import 'package:medlegten/pages/VideoPage/index.dart';
@@ -28,9 +29,7 @@ class LandingPageState extends ConsumerState<LandingPage>
         const LandingHome(),
         const LandingCourse(),
         const VideoPage(),
-        const Center(
-          child: Text("Index 3", style: TextStyle(color: Colors.black)),
-        ),
+         BlogPage(),
         LandingProfile(),
       ];
 

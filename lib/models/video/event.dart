@@ -8,7 +8,7 @@ class Event with _$Event {
   factory Event(String eventId,
           String eventName,
           String categoryName,
-          bool isPurchased,
+          // bool isPurchased,
           String levelId,
           String vocabularyCount,
           String imgUrl,

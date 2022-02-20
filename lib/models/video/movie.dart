@@ -6,7 +6,7 @@ part 'movie.g.dart';
 @freezed
 class Movie with _$Movie {
   factory Movie(
-    String  contentId,
+      String  contentId,
       String contentName,
       String categoryId,
       String categoryName,
@@ -20,7 +20,7 @@ class Movie with _$Movie {
       String hostType,
       String runTime,
       String movieId,
-     bool isPurchased,
+    //  bool isPurchased,
       // String segmentId,
       // String segmentName,
       ) = _Movie;
