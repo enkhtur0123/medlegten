@@ -90,7 +90,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       if (widget.isSerial!) {
         list.add(getSerialWidget());
       }
-      list.add(subtitleWidget());
+      // list.add(subtitleWidget());
     } else {
       list.add(
         const AspectRatio(
