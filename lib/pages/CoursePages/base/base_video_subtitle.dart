@@ -210,7 +210,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                     for (var entry in cueWidgets[cue]!.entries) {
                       var rect = entry.value.item1.globalPaintBounds!;
                       if (rect.contains(position) &&
-                          entry.key.wordValue != '') {
+                          (entry.key.wordValue != '')) {
                         selectedWord = entry.key;
                         selectedWordParagraphIndex = currentIndex;
                         selectedRect = rect;

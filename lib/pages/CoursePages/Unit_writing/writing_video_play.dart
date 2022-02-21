@@ -32,7 +32,6 @@ class _WritingVideoSubPageState extends State<WritingVideoSubPage> {
     super.initState();
     videoPlayerController =
         VideoPlayerController.network(widget.unitWritingVideo.hostUrl)
-          //VideoPlayerController.asset('assets/A1-U1-INTRO.mp4')
           ..setLooping(false)
           ..initialize().then((value) => setState(() {}));
   }
