@@ -21,7 +21,6 @@ _$_Movie _$$_MovieFromJson(Map<String, dynamic> json) => _$_Movie(
       json['hostType'] as String,
       json['runTime'] as String,
       json['movieId'] as String,
-      json['isPurchased'] as bool,
     );
 
 Map<String, dynamic> _$$_MovieToJson(_$_Movie instance) => <String, dynamic>{
@@ -39,5 +38,4 @@ Map<String, dynamic> _$$_MovieToJson(_$_Movie instance) => <String, dynamic>{
       'hostType': instance.hostType,
       'runTime': instance.runTime,
       'movieId': instance.movieId,
-      'isPurchased': instance.isPurchased,
     };

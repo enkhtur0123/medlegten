@@ -26,7 +26,6 @@ class _$EventTearOff {
       String eventId,
       String eventName,
       String categoryName,
-      bool isPurchased,
       String levelId,
       String vocabularyCount,
       String imgUrl,
@@ -37,7 +36,6 @@ class _$EventTearOff {
       eventId,
       eventName,
       categoryName,
-      isPurchased,
       levelId,
       vocabularyCount,
       imgUrl,
@@ -59,8 +57,8 @@ const $Event = _$EventTearOff();
 mixin _$Event {
   String get eventId => throw _privateConstructorUsedError;
   String get eventName => throw _privateConstructorUsedError;
-  String get categoryName => throw _privateConstructorUsedError;
-  bool get isPurchased => throw _privateConstructorUsedError;
+  String get categoryName =>
+      throw _privateConstructorUsedError; // bool isPurchased,
   String get levelId => throw _privateConstructorUsedError;
   String get vocabularyCount => throw _privateConstructorUsedError;
   String get imgUrl => throw _privateConstructorUsedError;
@@ -81,7 +79,6 @@ abstract class $EventCopyWith<$Res> {
       {String eventId,
       String eventName,
       String categoryName,
-      bool isPurchased,
       String levelId,
       String vocabularyCount,
       String imgUrl,
@@ -103,7 +100,6 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
     Object? eventId = freezed,
     Object? eventName = freezed,
     Object? categoryName = freezed,
-    Object? isPurchased = freezed,
     Object? levelId = freezed,
     Object? vocabularyCount = freezed,
     Object? imgUrl = freezed,
@@ -124,10 +120,6 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
-      isPurchased: isPurchased == freezed
-          ? _value.isPurchased
-          : isPurchased // ignore: cast_nullable_to_non_nullable
-              as bool,
       levelId: levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
@@ -165,7 +157,6 @@ abstract class _$EventCopyWith<$Res> implements $EventCopyWith<$Res> {
       {String eventId,
       String eventName,
       String categoryName,
-      bool isPurchased,
       String levelId,
       String vocabularyCount,
       String imgUrl,
@@ -188,7 +179,6 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
     Object? eventId = freezed,
     Object? eventName = freezed,
     Object? categoryName = freezed,
-    Object? isPurchased = freezed,
     Object? levelId = freezed,
     Object? vocabularyCount = freezed,
     Object? imgUrl = freezed,
@@ -209,10 +199,6 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
-      isPurchased == freezed
-          ? _value.isPurchased
-          : isPurchased // ignore: cast_nullable_to_non_nullable
-              as bool,
       levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
@@ -248,7 +234,6 @@ class _$_Event implements _Event {
       this.eventId,
       this.eventName,
       this.categoryName,
-      this.isPurchased,
       this.levelId,
       this.vocabularyCount,
       this.imgUrl,
@@ -265,9 +250,7 @@ class _$_Event implements _Event {
   final String eventName;
   @override
   final String categoryName;
-  @override
-  final bool isPurchased;
-  @override
+  @override // bool isPurchased,
   final String levelId;
   @override
   final String vocabularyCount;
@@ -282,7 +265,7 @@ class _$_Event implements _Event {
 
   @override
   String toString() {
-    return 'Event(eventId: $eventId, eventName: $eventName, categoryName: $categoryName, isPurchased: $isPurchased, levelId: $levelId, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, runTime: $runTime)';
+    return 'Event(eventId: $eventId, eventName: $eventName, categoryName: $categoryName, levelId: $levelId, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, runTime: $runTime)';
   }
 
   @override
@@ -294,8 +277,6 @@ class _$_Event implements _Event {
             const DeepCollectionEquality().equals(other.eventName, eventName) &&
             const DeepCollectionEquality()
                 .equals(other.categoryName, categoryName) &&
-            const DeepCollectionEquality()
-                .equals(other.isPurchased, isPurchased) &&
             const DeepCollectionEquality().equals(other.levelId, levelId) &&
             const DeepCollectionEquality()
                 .equals(other.vocabularyCount, vocabularyCount) &&
@@ -311,7 +292,6 @@ class _$_Event implements _Event {
       const DeepCollectionEquality().hash(eventId),
       const DeepCollectionEquality().hash(eventName),
       const DeepCollectionEquality().hash(categoryName),
-      const DeepCollectionEquality().hash(isPurchased),
       const DeepCollectionEquality().hash(levelId),
       const DeepCollectionEquality().hash(vocabularyCount),
       const DeepCollectionEquality().hash(imgUrl),
@@ -335,7 +315,6 @@ abstract class _Event implements Event {
       String eventId,
       String eventName,
       String categoryName,
-      bool isPurchased,
       String levelId,
       String vocabularyCount,
       String imgUrl,
@@ -351,9 +330,7 @@ abstract class _Event implements Event {
   String get eventName;
   @override
   String get categoryName;
-  @override
-  bool get isPurchased;
-  @override
+  @override // bool isPurchased,
   String get levelId;
   @override
   String get vocabularyCount;

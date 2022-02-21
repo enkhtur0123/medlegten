@@ -18,7 +18,25 @@ class ArticleRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-     throw CustomException(errorMsg: e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+
+  Future<List<ArticleItem>> getAllArticle({String? typeId,int? pageNumber,int? pageSize}) async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'Article/All/$typeId?pageNumber=$pageNumber&pageSize=$pageSize');
+      if (res['isSuccess']) {
+        var list = res['articles'] as List;
+        var articles = list.map((i) => ArticleItem.fromJson(i)).toList();
+        return articles;
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: (res['resultMessage']));
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 }

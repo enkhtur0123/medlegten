@@ -198,6 +198,14 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: UnitTestPage(args.moduleTypeId, args.moduleId, key: args.key));
+    },
+    ArticleVerticalRoute.name: (routeData) {
+      final args = routeData.argsAs<ArticleVerticalRouteArgs>(
+          orElse: () => const ArticleVerticalRouteArgs());
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: ArticleVerticalPage(
+              key: args.key, title: args.title, typeId: args.typeId));
     }
   };
 
@@ -232,7 +240,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(VideoDetailRoute.name, path: '/video/detail'),
         RouteConfig(VideoVocabularyListRoute.name,
             path: '/video/vocabulary_list'),
-        RouteConfig(UnitTestRoute.name, path: '/unit_test_page')
+        RouteConfig(UnitTestRoute.name, path: '/unit_test_page'),
+        RouteConfig(ArticleVerticalRoute.name, path: '/blog/all')
       ];
 }
 
@@ -952,5 +961,32 @@ class UnitTestRouteArgs {
   @override
   String toString() {
     return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, key: $key}';
+  }
+}
+
+/// generated route for
+/// [ArticleVerticalPage]
+class ArticleVerticalRoute extends PageRouteInfo<ArticleVerticalRouteArgs> {
+  ArticleVerticalRoute({Key? key, String? title, String? typeId})
+      : super(ArticleVerticalRoute.name,
+            path: '/blog/all',
+            args: ArticleVerticalRouteArgs(
+                key: key, title: title, typeId: typeId));
+
+  static const String name = 'ArticleVerticalRoute';
+}
+
+class ArticleVerticalRouteArgs {
+  const ArticleVerticalRouteArgs({this.key, this.title, this.typeId});
+
+  final Key? key;
+
+  final String? title;
+
+  final String? typeId;
+
+  @override
+  String toString() {
+    return 'ArticleVerticalRouteArgs{key: $key, title: $title, typeId: $typeId}';
   }
 }
