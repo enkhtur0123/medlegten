@@ -69,7 +69,21 @@ class TimeLineTileItemWidget extends HookWidget {
             padding: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
-                if (data!.isUpcoming || data!.isCompleted) {
+                if (data!.isUpcoming && !data!.isCompleted) {
+                  switch (data!.moduleTypeId) {
+                    case "8":
+                    case "9":
+                      {
+                        // Conversation video
+                        AutoRouter.of(context).push(
+                          UnitTestRoute(
+                              unitTitle: data!.moduleTypeName,
+                              moduleTypeId: data!.moduleTypeId,
+                              moduleId: data!.moduleId),
+                        );
+                      }
+                  }
+                } else if (data!.isUpcoming || data!.isCompleted) {
                   switch (data!.moduleTypeId) {
                     case "1":
                       {
@@ -177,19 +191,6 @@ class TimeLineTileItemWidget extends HookWidget {
                         });
                       }
                       break;
-                    case "8":
-                    case "9":
-                      {
-                        // Conversation video
-                        AutoRouter.of(context).push(
-                          UnitTestRoute(
-                              unitTitle: data!.moduleTypeName,
-                              moduleTypeId: data!.moduleTypeId,
-                              moduleId: data!.moduleId),
-                        );
-                      }
-                      break;
-
                     default:
                       {
                         print('no module');

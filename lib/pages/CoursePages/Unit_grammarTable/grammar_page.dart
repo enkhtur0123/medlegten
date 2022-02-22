@@ -37,7 +37,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   final selectedIndex = [0, 1, 0];
   late TabController _controller;
   late VideoPlayerController _videoPlayerController;
-
+  double _fontSize = 16;
   @override
   void initState() {
     _controller =
@@ -80,6 +80,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       if (blink <= _duration) {
         helper.selectedLabelId = selectedIndex[1];
         selectedIndex[1] = selectedIndex[1] + 1;
+        _fontSize = refreshView.value ? 18 : 16;
         //dioRepository.snackBar('At seconds: $blink');
         refreshView.value = !refreshView.value;
       } else if (helper.selectedLabelId > 0) {
@@ -341,35 +342,34 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                 ),
             borderRadius: const BorderRadius.all(Radius.circular(20.0))),
         child: isLight
-            ?
-            // AnimatedDefaultTextStyle(
-            //     child: Text(partLabel, textAlign: TextAlign.center),
-            //     curve: Curves.bounceOut,
-            //     style: TextStyle(
-            //         color: const Color.fromRGBO(0, 0, 0, 1),
-            //         fontFamily: 'Roboto',
-            //         fontSize: helper.fontSize,
-            //         fontWeight: FontWeight.w500),
-            //     duration: const Duration(milliseconds: 500),
-            //   )
-            BlinkWidget([
-                Text(
-                  partLabel,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(0, 0, 0, 1),
-                      fontFamily: 'Roboto',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800),
-                ),
-                Text(
-                  partLabel,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(0, 0, 0, 1),
-                      fontFamily: 'Roboto',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500),
-                )
-              ])
+            ? AnimatedDefaultTextStyle(
+                child: Text(partLabel, textAlign: TextAlign.center),
+                curve: Curves.bounceOut,
+                style: TextStyle(
+                    color: const Color.fromRGBO(0, 0, 0, 1),
+                    fontFamily: 'Roboto',
+                    fontSize: _fontSize,
+                    fontWeight: FontWeight.w500),
+                duration: const Duration(milliseconds: 500),
+              )
+            // BlinkWidget([
+            //     Text(
+            //       partLabel,
+            //       style: const TextStyle(
+            //           color: Color.fromRGBO(0, 0, 0, 1),
+            //           fontFamily: 'Roboto',
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.w800),
+            //     ),
+            //     Text(
+            //       partLabel,
+            //       style: const TextStyle(
+            //           color: Color.fromRGBO(0, 0, 0, 1),
+            //           fontFamily: 'Roboto',
+            //           fontSize: 16,
+            //           fontWeight: FontWeight.w500),
+            //     )
+            //   ])
             : Text(
                 partLabel,
                 style: const TextStyle(

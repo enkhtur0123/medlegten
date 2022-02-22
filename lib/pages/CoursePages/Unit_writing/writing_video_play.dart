@@ -26,6 +26,7 @@ class WritingVideoSubPage extends StatefulWidget {
 class WritingVideoSubPageState extends State<WritingVideoSubPage> {
   late VideoPlayerController videoPlayerController;
   Map<UnitWritingCueWord, bool?> answers = {};
+
   int counter = 3;
   @override
   void initState() {
@@ -48,11 +49,20 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
     }
   }
 
+  void pauseVideo() {
+    if (videoPlayerController.value.isPlaying) {
+      videoPlayerController.pause();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> list = [];
     if (videoPlayerController.value.isInitialized) {
       list.add(VideoPlayerChewie(videoPlayerController));
+      if (widget.index[1] == widget.index[4]) {
+        playVideo();
+      }
     } else {
       list.add(const AspectRatio(
           aspectRatio: 16 / 9,
