@@ -5,7 +5,6 @@ import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
-import 'package:medlegten/utils/global.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
@@ -87,7 +86,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
     if (videoPlayerController!.value.isInitialized) {
       list.add(getVideoPlayerWidget());
       list.add(addVerticalSpace(10));
-      if (widget.isSerial!) {
+      if (widget.isSerial ?? false) {
         list.add(getSerialWidget());
       }
       // list.add(subtitleWidget());
@@ -109,9 +108,12 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       // );
     }
 
-    list.add(addVerticalSpace(10));
     list.add(subtitleWidget());
-
+    list.add(Divider(
+      color: Colors.grey.shade300,
+      thickness: 1,
+    ));
+    list.add(addVerticalSpace(10));
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Stack(children: [
@@ -129,7 +131,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
           child: UnitAppBar(
-            widget.title ?? "",
+            widget.title ?? "Undefined",
             moduleId: moduleId,
             isCompleted: widget.isCompleted,
           ),
@@ -166,18 +168,20 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
               child: Container(
                 margin: const EdgeInsets.only(
                     left: 10, bottom: 15, top: 15, right: 0),
-                padding: const EdgeInsets.only(left: 12,right: 12),
+                padding: const EdgeInsets.only(left: 12, right: 12),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(
                     Radius.circular(8),
                   ),
-                  border: Border.all(color: currentIndex==index?Colors.transparent: const Color(0xffA8AFE5)),
-                  color: currentIndex == index
-                      ? colorPrimary
-                      : Colors.white,
+                  border: Border.all(
+                      color: currentIndex == index
+                          ? Colors.transparent
+                          : const Color(0xffA8AFE5)),
+                  color: currentIndex == index ? colorPrimary : Colors.white,
                 ),
-                child: Center(child: Text(
-                  (index+1).toString(),
+                child: Center(
+                    child: Text(
+                  (index + 1).toString(),
                   style: TextStyle(
                       color: currentIndex == index
                           ? Colors.white
@@ -185,7 +189,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
                       fontSize: 15,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
+                  textAlign: TextAlign.center,
                 )),
               ),
             );

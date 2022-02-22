@@ -153,6 +153,7 @@ class _ArticlePageState extends State<ArticlePage> {
               callBackParagraph(paragraph);
             },
             selectParagraph,
+            const Color.fromRGBO(51, 5, 51, 1),
             key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
       ),
     );
@@ -192,7 +193,9 @@ class _ArticlePageState extends State<ArticlePage> {
       child: Transform.rotate(
         angle: 90 * math.pi / 180,
         child: Icon(Icons.call_made,
-            size: 20, color: selected ? colorBlack : Colors.black38),
+            size: 20,
+            color:
+                selected ? colorPrimary : const Color.fromRGBO(51, 5, 51, 1)),
         //key: UniqueKey(),
       ),
     );

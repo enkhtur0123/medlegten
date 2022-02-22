@@ -10,7 +10,7 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 class ConversationVideoPage extends BaseVideoPage {
   const ConversationVideoPage(this.unitConversationVideo, this.url,
       {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
-      : super(url, key: key);
+      : super(url, key: key, title: unitTitle, isCompleted: isCompleted);
 
   final UnitConversationVideo unitConversationVideo;
   final String url;

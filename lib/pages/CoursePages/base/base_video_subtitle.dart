@@ -3,7 +3,6 @@ import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
@@ -20,6 +19,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       SubtitleWordCallback? pwordCallback,
       SubtitleParagraphCallback? pparagraphCallback,
       Function? bookMark,
+      this.defaultColor,
       this.isBookMark = false})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
@@ -32,6 +32,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final SubtitleParagraphCallback? paragraphCallback;
   final bool isBookMark;
   final Function? bookMark;
+  final Color? defaultColor;
 }
 
 TextStyle subtitleTextStyle = const TextStyle(
@@ -41,7 +42,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     extends State<Page> {
   int currentIndex = -1;
   int isUser = -1;
-
+  late Color defaultColor;
   Map<CParagraph, Map<CWord, Tuple2<GlobalKey, Widget>>> cueWidgets = {};
 
   late FixedExtentScrollController _fixedExtentScrollController;
@@ -72,6 +73,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   @override
   void initState() {
+    defaultColor = widget.defaultColor ?? Colors.grey.shade400;
     _fixedExtentScrollController = FixedExtentScrollController();
 
     widget.videoPlayerController.addListener(videoPlayerListener);
@@ -210,7 +212,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                     for (var entry in cueWidgets[cue]!.entries) {
                       var rect = entry.value.item1.globalPaintBounds!;
                       if (rect.contains(position) &&
-                          entry.key.wordValue != '') {
+                          (entry.key.wordValue != '')) {
                         selectedWord = entry.key;
                         selectedWordParagraphIndex = currentIndex;
                         selectedRect = rect;
@@ -330,6 +332,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
             ? SubtitleParagraph(
                 paragraph,
                 currentIndex,
+                defaultColor: defaultColor,
                 key: ValueKey<int>(valueKeyList[paragraph]!),
                 currentWord: isSelectedIndex ? selectedWord : null,
                 alignment: Alignment.center,
@@ -348,10 +351,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
         caption,
         style: isSelected
             ? subtitleTextStyle
-            : const TextStyle(
-                color: Colors.black54,
-                fontSize: 18,
-                fontWeight: FontWeight.w400),
+            : TextStyle(
+                color: defaultColor, fontSize: 18, fontWeight: FontWeight.w400),
         textAlign: TextAlign.center,
       ),
     );

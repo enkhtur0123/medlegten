@@ -50,8 +50,8 @@ class _WritingParagraphState extends State<WritingParagraph> {
 
       if (currentElement != null) {
         widget.callBack();
-        if (currentElement.value.item2.value.text !=
-            currentElement.value.item4.mainText) {
+        if (currentElement.value.item2.value.text.toLowerCase() !=
+            currentElement.value.item4.mainText.toLowerCase()) {
           currentElement.value.item2.clear();
         }
       }
@@ -79,7 +79,8 @@ class _WritingParagraphState extends State<WritingParagraph> {
 
           missingList[word] = Tuple4(i2++, _controller, _focusNode, word);
           _controller.addListener(() {
-            this.widget.answers[word] = _controller.value.text == word.mainText;
+            this.widget.answers[word] = _controller.value.text.toLowerCase() ==
+                word.mainText.toLowerCase();
             if (_controller.value.text.length == word.mainText.length) {
               var nextId = missingList[word]!.item1 + 1;
               for (var element in missingList.values) {

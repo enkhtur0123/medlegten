@@ -11,7 +11,7 @@ import 'package:medlegten/utils/global.dart';
 class MixedVideoPage extends BaseVideoPage {
   const MixedVideoPage(this.unitMixedVideo, this.url,
       {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
-      : super(url, key: key);
+      : super(url, key: key, title: unitTitle, isCompleted: isCompleted);
 
   final UnitMixedVideo unitMixedVideo;
   final String url;
@@ -151,7 +151,7 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
     );
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
       child: ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) => list[index],

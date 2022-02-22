@@ -8,18 +8,21 @@ typedef SubtitleWordCallback = void Function(CWord? word, Rect position);
 typedef SubtitleParagraphCallback = void Function(CParagraph? paragraph);
 
 abstract class BaseSubtitlePage extends StatefulWidget {
-  const BaseSubtitlePage(this.paragraph,
-      {Key? key,
-      SubtitleWordCallback? pwordCallback,
-      SubtitleParagraphCallback? pparagraphCallback,
-      Widget? ptailWidget,
-      SubtitleParagraphCallback? ptailCallback,
-      bool? pselectedParagraph})
-      : wordCallback = pwordCallback,
+  const BaseSubtitlePage(
+    this.paragraph, {
+    Key? key,
+    SubtitleWordCallback? pwordCallback,
+    SubtitleParagraphCallback? pparagraphCallback,
+    Widget? ptailWidget,
+    SubtitleParagraphCallback? ptailCallback,
+    bool? pselectedParagraph,
+    Color? pdefaultColor,
+  })  : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
         tailWidget = ptailWidget,
         tailCallback = ptailCallback,
         selectedParagraph = pselectedParagraph,
+        defaultColor = pdefaultColor ?? Colors.grey,
         super(key: key);
 
   final CParagraph paragraph;
@@ -28,6 +31,7 @@ abstract class BaseSubtitlePage extends StatefulWidget {
   final Widget? tailWidget;
   final SubtitleParagraphCallback? tailCallback;
   final bool? selectedParagraph;
+  final Color defaultColor;
 }
 
 abstract class BaseSubtitleState<Page extends BaseSubtitlePage>
@@ -79,6 +83,7 @@ mixin BaseSubtitleMixin<Page extends BaseSubtitlePage>
   Widget buildParagraph(context, CParagraph paragraph, CWord? selectedWord,
       Widget? tailWidget, bool? selectParagraph) {
     var widget = SubtitleParagraph(paragraph, currentIndex,
+        defaultColor: this.widget.defaultColor,
         currentWord: selectedWord,
         alignment: Alignment.centerLeft,
         tailWidget: tailWidget,
