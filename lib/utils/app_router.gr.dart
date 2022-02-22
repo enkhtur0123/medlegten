@@ -197,7 +197,8 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<UnitTestRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: UnitTestPage(args.moduleTypeId, args.moduleId, key: args.key));
+          child: UnitTestPage(args.moduleTypeId, args.moduleId, args.unitTitle,
+              key: args.key));
     },
     ArticleVerticalRoute.name: (routeData) {
       final args = routeData.argsAs<ArticleVerticalRouteArgs>(
@@ -939,28 +940,39 @@ class VideoVocabularyListRouteArgs {
 /// [UnitTestPage]
 class UnitTestRoute extends PageRouteInfo<UnitTestRouteArgs> {
   UnitTestRoute(
-      {required String moduleTypeId, required String moduleId, Key? key})
+      {required String moduleTypeId,
+      required String moduleId,
+      required String unitTitle,
+      Key? key})
       : super(UnitTestRoute.name,
             path: '/unit_test_page',
             args: UnitTestRouteArgs(
-                moduleTypeId: moduleTypeId, moduleId: moduleId, key: key));
+                moduleTypeId: moduleTypeId,
+                moduleId: moduleId,
+                unitTitle: unitTitle,
+                key: key));
 
   static const String name = 'UnitTestRoute';
 }
 
 class UnitTestRouteArgs {
   const UnitTestRouteArgs(
-      {required this.moduleTypeId, required this.moduleId, this.key});
+      {required this.moduleTypeId,
+      required this.moduleId,
+      required this.unitTitle,
+      this.key});
 
   final String moduleTypeId;
 
   final String moduleId;
 
+  final String unitTitle;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, key: $key}';
+    return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, unitTitle: $unitTitle, key: $key}';
   }
 }
 

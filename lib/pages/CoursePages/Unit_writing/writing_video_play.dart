@@ -20,10 +20,10 @@ class WritingVideoSubPage extends StatefulWidget {
   final SubVideoCallback callBack;
   final List<int> index;
   @override
-  _WritingVideoSubPageState createState() => _WritingVideoSubPageState();
+  WritingVideoSubPageState createState() => WritingVideoSubPageState();
 }
 
-class _WritingVideoSubPageState extends State<WritingVideoSubPage> {
+class WritingVideoSubPageState extends State<WritingVideoSubPage> {
   late VideoPlayerController videoPlayerController;
   Map<UnitWritingCueWord, bool?> answers = {};
   int counter = 3;
@@ -42,20 +42,23 @@ class _WritingVideoSubPageState extends State<WritingVideoSubPage> {
     super.dispose();
   }
 
+  void playVideo() {
+    if (videoPlayerController.value.isInitialized) {
+      videoPlayerController.play();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> list = [];
     if (videoPlayerController.value.isInitialized) {
-      if (widget.index[3] == 0) {
-        videoPlayerController.play();
-      }
       list.add(VideoPlayerChewie(videoPlayerController));
     } else {
       list.add(const AspectRatio(
           aspectRatio: 16 / 9,
           child: SizedBox(width: double.infinity, child: Loading())));
     }
-    list.add(indicator(widget.index[4], widget.index[1]));
+    list.add(indicator(widget.index[3], widget.index[1]));
     list.add(addVerticalSpace(20));
     list.add(
       Container(

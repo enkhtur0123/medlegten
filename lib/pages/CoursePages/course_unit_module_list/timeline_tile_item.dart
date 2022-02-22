@@ -76,8 +76,7 @@ class TimeLineTileItemWidget extends HookWidget {
                         UnitRepository().getUnitIntroVideo(data!.moduleId).then(
                             (value) => AutoRouter.of(context)
                                     .push(CourseUnitIntroVideoRoute(
-                                  unitTitle:
-                                      'UNIT ${unitInfo!.unitNumber}-Introduction',
+                                  unitTitle: data!.moduleTypeName,
                                   unitIntroVideo: value!,
                                   url: value.url,
                                   moduleId: data!.moduleId,
@@ -91,8 +90,7 @@ class TimeLineTileItemWidget extends HookWidget {
                               (value) => AutoRouter.of(context).push(
                                 GrammarTableRoute(
                                     isCompleted: data!.isCompleted,
-                                    unitTitle:
-                                        'UNIT ${unitInfo!.unitNumber}-Grammar',
+                                    unitTitle: data!.moduleTypeName,
                                     unitGrammar: value!,
                                     moduleId: data!.moduleId),
                               ),
@@ -106,8 +104,7 @@ class TimeLineTileItemWidget extends HookWidget {
                               (value) => AutoRouter.of(context).push(
                                 MixedVideoRoute(
                                     isCompleted: data!.isCompleted,
-                                    unitTitle:
-                                        'UNIT ${unitInfo!.unitNumber}-Mixed Video',
+                                    unitTitle: data!.moduleTypeName,
                                     unitMixedVideo: value!,
                                     url: value.url,
                                     moduleId: data!.moduleId),
@@ -121,8 +118,7 @@ class TimeLineTileItemWidget extends HookWidget {
                               (value) => AutoRouter.of(context).push(
                                 ReadingRoute(
                                     isCompleted: data!.isCompleted,
-                                    unitTitle:
-                                        'UNIT ${unitInfo!.unitNumber}-Reading',
+                                    unitTitle: data!.moduleTypeName,
                                     reading: value!,
                                     moduleId: data!.moduleId),
                               ),
@@ -155,8 +151,7 @@ class TimeLineTileItemWidget extends HookWidget {
                                 WritingVideoRoute(
                                     isCompleted: data!.isCompleted,
                                     unitWriting: value!,
-                                    unitTitle:
-                                        'UNIT ${unitInfo!.unitNumber}-Writing',
+                                    unitTitle: data!.moduleTypeName,
                                     moduleId: data!.moduleId),
                               ),
                             );
@@ -173,8 +168,7 @@ class TimeLineTileItemWidget extends HookWidget {
                             AutoRouter.of(context).push(
                               ConversationVideoRoute(
                                   isCompleted: data!.isCompleted,
-                                  unitTitle:
-                                      'UNIT ${unitInfo!.unitNumber}-Writing',
+                                  unitTitle: data!.moduleTypeName,
                                   unitConversationVideo: value,
                                   url: value.url,
                                   moduleId: data!.moduleId),
@@ -189,6 +183,7 @@ class TimeLineTileItemWidget extends HookWidget {
                         // Conversation video
                         AutoRouter.of(context).push(
                           UnitTestRoute(
+                              unitTitle: data!.moduleTypeName,
                               moduleTypeId: data!.moduleTypeId,
                               moduleId: data!.moduleId),
                         );

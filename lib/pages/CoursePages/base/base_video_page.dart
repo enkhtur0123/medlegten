@@ -5,7 +5,6 @@ import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
-import 'package:medlegten/utils/global.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
@@ -109,9 +108,12 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       // );
     }
 
-    list.add(addVerticalSpace(10));
     list.add(subtitleWidget());
-
+    list.add(Divider(
+      color: Colors.grey.shade300,
+      thickness: 1,
+    ));
+    list.add(addVerticalSpace(10));
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Stack(children: [
@@ -129,7 +131,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
           child: UnitAppBar(
-            widget.title ?? "",
+            widget.title ?? "Undefined",
             moduleId: moduleId,
             isCompleted: widget.isCompleted,
           ),

@@ -4,6 +4,8 @@ import 'package:medlegten/models/Unit/unit_writing.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/writing_video_play.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 
+import '../unit/unit_module_completed_btn.dart';
+
 typedef SubVideoCallback = void Function(int callIndex, bool next);
 
 class WritingVideoPage extends StatefulWidget {
@@ -24,10 +26,22 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
   final PageController controller =
       PageController(initialPage: 0, keepPage: true);
   int currentIndex = 0;
+  Map<Widget, GlobalKey<WritingVideoSubPageState>> keys = {};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(widget.unitTitle),
+        actions: [
+          UnitModuleCompletedBtn(
+            moduleId: widget.moduleId,
+            completeBtn: () {},
+            unCompleteBtn: () {},
+            isCompleted: widget.isCompleted,
+          ),
+        ],
+      ),
       backgroundColor: ColorTable.color255_255_255,
       resizeToAvoidBottomInset: true,
       body: body(),
@@ -54,23 +68,33 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
   Widget body() {
     List<Widget> listWidget = [];
     for (int i = 0; i < widget.unitWriting.videos.length; i++) {
-      listWidget.add(WritingVideoSubPage(widget.unitWriting.videos[i], [
+      final GlobalKey<WritingVideoSubPageState> subPageStateKey =
+          GlobalKey<WritingVideoSubPageState>();
+
+      var myWidget = WritingVideoSubPage(widget.unitWriting.videos[i], [
         i - 1, //if -1 then no prev button
         i, //current index
         i - (widget.unitWriting.videos.length - 1), // if 0 then no next button
-        i - currentIndex, //if 0 then is selected
         widget.unitWriting.videos.length
       ], (callBackIndex, next) {
         //setState(() {
         currentIndex = next ? callBackIndex + 1 : callBackIndex - 1;
         controller.animateToPage(currentIndex,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeInOut);
+            duration: const Duration(milliseconds: 100), curve: Curves.ease);
         //});
-      }));
+      }, key: subPageStateKey);
+
+      listWidget.add(myWidget);
+
+      keys[myWidget] = subPageStateKey;
     }
     return PageView.builder(
       physics: const NeverScrollableScrollPhysics(),
+      onPageChanged: (index) {
+        if (keys.containsKey(listWidget[index])) {
+          keys[listWidget[index]]!.currentState!.playVideo();
+        }
+      },
       itemCount: listWidget.length,
       controller: controller,
       itemBuilder: (context, position) {

@@ -16,7 +16,9 @@ import 'package:medlegten/repositories/unit_repository.dart';
 class UnitTestPage extends HookWidget {
   final String moduleTypeId;
   final String moduleId;
-  UnitTestPage(this.moduleTypeId, this.moduleId, {Key? key}) : super(key: key);
+  final String unitTitle;
+  UnitTestPage(this.moduleTypeId, this.moduleId, this.unitTitle, {Key? key})
+      : super(key: key);
 
   late UnitTestModel unitTestModel;
 
@@ -43,7 +45,9 @@ class UnitTestPage extends HookWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(unitTitle),
+      ),
       body: Column(
         children: [
           addVerticalSpace(20),

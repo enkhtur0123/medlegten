@@ -11,6 +11,7 @@ class SubtitleParagraph extends StatefulWidget {
   final Alignment? alignment;
   final Widget? tailWidget;
   final bool? selectParagraph;
+  final Color defaultColor;
   Map<CWord, Tuple2<GlobalKey, Widget>> wordWidgets = {};
 
   SubtitleParagraph(this.paragraph, this.currentIndex,
@@ -18,7 +19,8 @@ class SubtitleParagraph extends StatefulWidget {
       this.currentWord,
       this.alignment,
       this.tailWidget,
-      this.selectParagraph})
+      this.selectParagraph,
+      required this.defaultColor})
       : super(key: key);
 
   @override
@@ -136,8 +138,8 @@ class _CueTexteState extends State<SubtitleParagraph> {
           color: widget.currentIndex == widget.paragraph.ordering
               ? colorBlack
               : (selectWord != null
-                  ? (selectWord ? colorBlack : Colors.black54)
-                  : Colors.black54),
+                  ? (selectWord ? colorBlack : widget.defaultColor)
+                  : widget.defaultColor),
           fontSize: 18,
           fontWeight: FontWeight.w400),
     );

@@ -335,40 +335,41 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
         decoration: BoxDecoration(
-            border: Border.all(
-                color: isLight
-                    ? const Color.fromRGBO(51, 51, 51, 1)
-                    : const Color.fromRGBO(199, 201, 217, .5)),
+            border: Border.all(color: const Color.fromRGBO(199, 201, 217, .5)
+                //   isLight
+                //     ? const Color.fromRGBO(51, 51, 51, 1) :
+                ),
             borderRadius: const BorderRadius.all(Radius.circular(20.0))),
         child: isLight
-            ? AnimatedDefaultTextStyle(
-                child: Text(partLabel, textAlign: TextAlign.center),
-                curve: Curves.bounceInOut,
-                style: const TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    fontFamily: 'Roboto',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500),
-                duration: const Duration(milliseconds: 500),
-              )
-            // ? BlinkWidget([
-            //     Text(
-            //       partLabel,
-            //       style: const TextStyle(
-            //           color: Color.fromRGBO(0, 0, 0, 1),
-            //           fontFamily: 'Roboto',
-            //           fontSize: 18,
-            //           fontWeight: FontWeight.w800),
-            //     ),
-            //     Text(
-            //       partLabel,
-            //       style: const TextStyle(
-            //           color: Color.fromRGBO(0, 0, 0, 1),
-            //           fontFamily: 'Roboto',
-            //           fontSize: 16,
-            //           fontWeight: FontWeight.w500),
-            //     )
-            //   ])
+            ?
+            // AnimatedDefaultTextStyle(
+            //     child: Text(partLabel, textAlign: TextAlign.center),
+            //     curve: Curves.bounceOut,
+            //     style: TextStyle(
+            //         color: const Color.fromRGBO(0, 0, 0, 1),
+            //         fontFamily: 'Roboto',
+            //         fontSize: helper.fontSize,
+            //         fontWeight: FontWeight.w500),
+            //     duration: const Duration(milliseconds: 500),
+            //   )
+            BlinkWidget([
+                Text(
+                  partLabel,
+                  style: const TextStyle(
+                      color: Color.fromRGBO(0, 0, 0, 1),
+                      fontFamily: 'Roboto',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800),
+                ),
+                Text(
+                  partLabel,
+                  style: const TextStyle(
+                      color: Color.fromRGBO(0, 0, 0, 1),
+                      fontFamily: 'Roboto',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500),
+                )
+              ])
             : Text(
                 partLabel,
                 style: const TextStyle(

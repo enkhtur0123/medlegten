@@ -10,6 +10,7 @@ class ReadingParagraph extends BaseSubtitlePage {
       Widget tailWidget,
       SubtitleParagraphCallback tailcallback,
       bool selectParagraph,
+      Color defaultColor,
       {Key? key})
       : super(paragraph,
             pwordCallback: callback,
@@ -17,7 +18,8 @@ class ReadingParagraph extends BaseSubtitlePage {
             key: key,
             ptailWidget: tailWidget,
             ptailCallback: tailcallback,
-            pselectedParagraph: selectParagraph);
+            pselectedParagraph: selectParagraph,
+            pdefaultColor: defaultColor);
 
   @override
   _ReadingParagraphState createState() => _ReadingParagraphState();

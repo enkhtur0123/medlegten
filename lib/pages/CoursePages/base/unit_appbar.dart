@@ -59,8 +59,7 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
     );
 
     list.add(
-      Flexible(
-        fit: FlexFit.tight,
+      Expanded(
         child: AutoSizeText(
           widget.title,
           style: titleStyle,
@@ -69,7 +68,7 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
       ),
     );
 
-    list.add(const Spacer());
+    //list.add(const Spacer());
     if (widget.tailWidget != null) {
       list.add(widget.tailWidget!);
     }

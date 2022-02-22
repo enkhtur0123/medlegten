@@ -115,7 +115,7 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
     list.add(Align(
       alignment: Alignment.topLeft,
       child: Text(
-        'Sentence ${index + 1}',
+        'Sentence ${index + 1}:',
         style: TextStyle(
             color: Color.fromRGBO(48, 53, 159, isSelected ? 1 : 0.5),
             fontWeight: FontWeight.w500,

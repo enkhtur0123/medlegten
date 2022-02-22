@@ -41,12 +41,13 @@ class _ReadingGrammarState extends State<ReadingGrammar> {
         clipShadows: [ClipShadow(color: Colors.grey.withOpacity(0.8))],
         isTop: true,
         isShadow: false,
-        child: Expanded(
-          //key: _textKey,
-          //height: textSize.height,
-          //width: textSize.width,
-          child: innerWidget(),
-        ),
+        child: innerWidget(),
+        //Expanded(
+        //key: _textKey,
+        //height: textSize.height,
+        //width: textSize.width,
+        //child: innerWidget(),
+        //),
       ),
     );
   }
@@ -62,7 +63,7 @@ class _ReadingGrammarState extends State<ReadingGrammar> {
           fontSize: 14,
           fontWeight: FontWeight.w500),
     ));
-    list.add(addVerticalSpace(3));
+    list.add(addVerticalSpace(8));
     list.add(Text(
       widget.paragraph.monText,
       style: const TextStyle(
@@ -71,7 +72,7 @@ class _ReadingGrammarState extends State<ReadingGrammar> {
           fontSize: 12,
           fontWeight: FontWeight.w400),
     ));
-    list.add(addVerticalSpace(10));
+    list.add(addVerticalSpace(20));
     if (widget.paragraph.grammarIsHighLighted == '1') {
       list.add(const Text(
         'Дүрмийн тайлбар',
@@ -81,7 +82,7 @@ class _ReadingGrammarState extends State<ReadingGrammar> {
             fontSize: 14,
             fontWeight: FontWeight.w500),
       ));
-      list.add(addVerticalSpace(3));
+      list.add(addVerticalSpace(8));
       list.add(Text(
         widget.paragraph.grammarDescription!,
         style: const TextStyle(
