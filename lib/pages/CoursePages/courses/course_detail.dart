@@ -65,17 +65,17 @@ class _CourseDetailState extends State<CourseDetailPage> with AutoRouteAware {
 
   @override
   void didPopNext() {
+    isPushNext = false;
     if (_controller.value.position != _controller.value.duration) {
       _controller.play();
-      isPushNext = true;
     }
   }
 
   @override
   void didPushNext() {
+    isPushNext = true;
     if (_controller.value.isPlaying) {
       _controller.pause();
-      isPushNext = false;
     }
   }
 

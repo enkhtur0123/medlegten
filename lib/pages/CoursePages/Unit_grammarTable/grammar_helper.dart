@@ -32,7 +32,7 @@ class Grammarhelper {
       };
   String get avatarUrl => unitGrammar.grammar[0].avatar;
   int getNextAvatarPart(int id) {
-    return avatarParts[id]!;
+    return avatarParts[id] ?? -1;
   }
 
   List<String> get getPartNames {

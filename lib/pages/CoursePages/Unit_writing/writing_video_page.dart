@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/writing_video_play.dart';
-import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 
 import '../unit/unit_module_completed_btn.dart';
 
@@ -23,8 +22,6 @@ class WritingVideoPage extends StatefulWidget {
 }
 
 class _WritingVideoPageState extends State<WritingVideoPage> {
-  final PageController controller =
-      PageController(initialPage: 0, keepPage: true);
   int currentIndex = 0;
   Map<Widget, GlobalKey<WritingVideoSubPageState>> keys = {};
 
@@ -68,38 +65,36 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
   Widget body() {
     List<Widget> listWidget = [];
     for (int i = 0; i < widget.unitWriting.videos.length; i++) {
-      final GlobalKey<WritingVideoSubPageState> subPageStateKey =
-          GlobalKey<WritingVideoSubPageState>();
+      GlobalObjectKey<WritingVideoSubPageState> subPageStateKey =
+          GlobalObjectKey<WritingVideoSubPageState>(i);
 
       var myWidget = WritingVideoSubPage(widget.unitWriting.videos[i], [
         i - 1, //if -1 then no prev button
         i, //current index
         i - (widget.unitWriting.videos.length - 1), // if 0 then no next button
-        widget.unitWriting.videos.length
+        widget.unitWriting.videos.length,
+        currentIndex,
       ], (callBackIndex, next) {
-        //setState(() {
+        if (keys.containsKey(listWidget[callBackIndex])) {
+          if (keys[listWidget[callBackIndex]]!.currentState != null) {
+            keys[listWidget[callBackIndex]]!.currentState!.pauseVideo();
+          }
+        }
         currentIndex = next ? callBackIndex + 1 : callBackIndex - 1;
-        controller.animateToPage(currentIndex,
-            duration: const Duration(milliseconds: 100), curve: Curves.ease);
-        //});
+        if (keys.containsKey(listWidget[currentIndex])) {
+          if (keys[listWidget[currentIndex]]!.currentState != null) {
+            keys[listWidget[currentIndex]]!.currentState!.playVideo();
+          }
+        }
+        setState(() {});
       }, key: subPageStateKey);
 
       listWidget.add(myWidget);
 
       keys[myWidget] = subPageStateKey;
     }
-    return PageView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      onPageChanged: (index) {
-        if (keys.containsKey(listWidget[index])) {
-          keys[listWidget[index]]!.currentState!.playVideo();
-        }
-      },
-      itemCount: listWidget.length,
-      controller: controller,
-      itemBuilder: (context, position) {
-        return listWidget[position];
-      },
-    );
+
+    return IndexedStack(
+        sizing: StackFit.expand, index: currentIndex, children: listWidget);
   }
 }
