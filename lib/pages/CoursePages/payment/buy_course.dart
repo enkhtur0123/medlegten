@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/repositories/payment_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
@@ -12,10 +13,17 @@ class PaymentPage extends StatefulWidget {
   final CourseInfo? courseInfo;
   final String? paymentType;
   final String? contendId;
-  
+  final PaymentInfo? paymentInfo;
+  final bool? isCourse;
 
   // ignore: prefer_const_constructors_in_immutables
-  PaymentPage({Key? key, this.courseInfo, this.paymentType,this.contendId})
+  PaymentPage(
+      {Key? key,
+      this.courseInfo,
+      this.paymentType,
+      this.contendId,
+      this.paymentInfo,
+      required this.isCourse})
       : super(key: key);
 
   @override
@@ -87,31 +95,7 @@ class PaymentState extends State<PaymentPage> {
                         height: 50,
                         text: "шалгах",
                         onTap: () async {
-                          ///Coupom check code  924161ED12DA   A2-344161ED12DB
-                          CoursePaymentRepository()
-                              .checkCouponCode(
-                                  courseInfo: widget.courseInfo,
-                                  couponCode: controller.text.toString())
-                              .then((value) {
-                            if (value != null) {
-                              couponCode = value["coupon"]["couponCode"];
-                              price = value["coupon"]["price"];
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(MySnackBar(
-                                text: "Амжилттай",
-                              ));
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(MySnackBar(
-                                text: "Купон кодоо шалгана уу",
-                              ));
-                            }
-                          }).catchError((onError) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(MySnackBar(
-                              text: "Купон кодоо шалгана уу",
-                            ));
-                          });
+                          checkCouponCode();
                         },
                       ),
                     ),
@@ -120,11 +104,18 @@ class PaymentState extends State<PaymentPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  AutoRouter.of(context).push(QpayRoute(
-                      courseInfo: widget.courseInfo,
-                      couponCode: couponCode,
-                      price: price ?? widget.courseInfo!.price,
-                      paymentType: widget.paymentType));
+                  AutoRouter.of(context).push(
+                    QpayRoute(
+                        isCourse: widget.isCourse,
+                        courseInfo: widget.courseInfo,
+                        couponCode: couponCode,
+                        price: price ??
+                            (widget.isCourse!
+                                ? widget.courseInfo!.price
+                                : widget.paymentInfo!.price),
+                        paymentType: widget.paymentType,
+                        paymentInfo: widget.paymentInfo),
+                  );
                 },
                 child: getPaymentFunction(
                   title: "Qpay",
@@ -160,6 +151,36 @@ class PaymentState extends State<PaymentPage> {
         },
       ),
     );
+  }
+
+  void checkCouponCode() {
+    CoursePaymentRepository()
+        .checkCouponCode(
+            courseInfo: widget.courseInfo,
+            couponCode: controller.text.toString(),
+            paymentInfo: widget.paymentInfo,
+            isCourse: widget.isCourse)
+        .then((value) {
+      if (value != null) {
+        couponCode = value["coupon"]["couponCode"];
+        price = value["coupon"]["price"];
+        ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+          text: "Амжилттай",
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          MySnackBar(
+            text: "Купон кодоо шалгана уу",
+          ),
+        );
+      }
+    }).catchError((onError) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        MySnackBar(
+          text: "Купон кодоо шалгана уу",
+        ),
+      );
+    });
   }
 
   Widget getPaymentFunction({String? icon, String? title, String? body}) {

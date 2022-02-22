@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:medlegten/models/video/payment_info.dart';
 
 part 'movie.freezed.dart';
 part 'movie.g.dart';
@@ -19,7 +20,7 @@ class Movie with _$Movie {
       String hostUrl,
       String hostType,
       String runTime,
-      String movieId,
+      String movieId
     //  bool isPurchased,
       // String segmentId,
       // String segmentName,

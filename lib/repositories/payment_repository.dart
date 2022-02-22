@@ -1,13 +1,19 @@
 import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 /// Харах
 class CoursePaymentRepository {
   Future<dynamic> checkCouponCode(
-      {CourseInfo? courseInfo, String? couponCode}) async {
+      {CourseInfo? courseInfo,
+      String? couponCode,
+      PaymentInfo? paymentInfo,
+      bool? isCourse}) async {
     try {
-      var res = await HttpHelper().getUrl(url: 'Course/Coupon/${courseInfo!.courseId}/$couponCode');
+      var res = await HttpHelper().getUrl(
+          url:
+              'Course/Coupon/${isCourse! ? courseInfo!.courseId : paymentInfo!.productId}/$couponCode');
       if (res['isSuccess']) {
         return res;
       } else {

@@ -11,6 +11,7 @@ import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
 import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
 import 'package:medlegten/models/video/movie.dart';
+import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/pages/BlogPage/article_vertical_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_video_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_page.dart';

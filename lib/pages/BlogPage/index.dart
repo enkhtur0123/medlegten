@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/article/article.dart';
 import 'package:medlegten/pages/BlogPage/article_horizontal_page.dart';
 import 'package:medlegten/repositories/article_repository.dart';
@@ -21,6 +22,7 @@ class BlogPage extends HookWidget {
       future: ArticleRepository().getArticle(),
       builder: (context, AsyncSnapshot<List<Article>> snapshot) {
         if (snapshot.hasData) {
+          
           return ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,

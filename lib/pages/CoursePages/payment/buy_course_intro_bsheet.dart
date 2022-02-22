@@ -96,7 +96,7 @@ class BuyCourseIntroWidget extends StatelessWidget {
                 height: 50,
                 onTap: () {
                   AutoRouter.of(context)
-                      .push(PaymentRoute(courseInfo: courseInfo,paymentType: "1001"));
+                      .push(PaymentRoute(courseInfo: courseInfo,paymentType: "1001",isCourse: true));
                 },
               ))
         ],

@@ -183,7 +183,7 @@ courseBgImg(context, CourseInfo courseInfo) {
                         .push(CourseDetailRoute(courseInfo: courseInfo));
                   } else {
                     AutoRouter.of(context).push(PaymentRoute(
-                        courseInfo: courseInfo, paymentType: "1001"));
+                        courseInfo: courseInfo, paymentType: "1001",isCourse: true));
                   }
                 },
                 text: courseInfo.isPurchased ? "Эхлэх" : "Худалдаж авах",

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:medlegten/common/widget_functions.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:medlegten/common/colors.dart';
 
 class Loading extends StatelessWidget {
   const Loading({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
+    return Container(
+      color: Colors.white.withOpacity(0.9),
+      height: MediaQuery.of(context).size.height,
       width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CircularProgressIndicator(),
-          addVerticalSpace(10),
-          const Text('Түр хүлээнэ үү', style: TextStyle(color: Colors.black))
-        ],
+      child: Container(
+        alignment: Alignment.center,
+        child: const SpinKitCircle(
+          color: colorPrimary,
+          size: 50.0,
+        ),
       ),
     );
   }

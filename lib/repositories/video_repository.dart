@@ -1,9 +1,9 @@
-import 'package:medlegten/models/Unit/unit_vocabulary.dart';
-import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
+
 import 'package:medlegten/models/video/category.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/level_event.dart';
 import 'package:medlegten/models/video/movie.dart';
+import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/models/video/video_vocabulary.dart';
 import 'package:medlegten/models/video/video_vocabulary_word.dart';
@@ -61,18 +61,20 @@ class VideoRepository {
     }
   }
 
-  Future<List<Movie>> getContentDetail({String? contentId}) async {
+  Future<List<dynamic>> getContentDetail({String? contentId}) async {
     try {
       final res =
           await HttpHelper().getUrl(url: 'ppv/ContentDetial/$contentId');
+      PaymentInfo paymentInfo = PaymentInfo.fromJson(res['paymentInfo']);
       if (res['isSuccess']) {
         var list = res['movies'] as List;
-        return list.map((i) => Movie.fromJson(i)).toList();
+        return [list.map((i) => Movie.fromJson(i)).toList(),paymentInfo];
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
+      print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
