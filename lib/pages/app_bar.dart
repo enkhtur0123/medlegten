@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
 
@@ -38,9 +40,12 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          color: secondaryColor,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8),),),
+        color: secondaryColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(8),
+          bottomRight: Radius.circular(8),
+        ),
+      ),
       height: ref.read(appbarProvider.notifier).appBarState.height,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 25, top: 40),
@@ -78,7 +83,30 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                     const SizedBox(
                       width: 15,
                     ),
-                    const Icon(Icons.notifications_active)
+                    GestureDetector(
+                        onTap: () {
+                        // showDialog(
+                        //       useSafeArea: true,
+                        //       barrierDismissible: true,
+                        //       context: context,
+                        //       builder: (context) {
+                        //         return Dialog(
+                        //           elevation: 0,
+                        //           backgroundColor: Colors.transparent,
+                        //           child: Container(
+                        //             width: double.infinity,
+                        //             height: MediaQuery.of(context).size.height,
+                        //             alignment: Alignment.center,
+                        //             child: const SpinKitCircle(
+                        //               color: colorPrimary,
+                        //               size: 50.0,
+                        //             ),
+                        //           ),
+                                  
+                        //         );
+                        //       });
+                        },
+                        child: const Icon(Icons.notifications_active))
                   ],
                 ),
               )
