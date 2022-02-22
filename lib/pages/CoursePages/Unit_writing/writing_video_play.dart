@@ -26,13 +26,16 @@ class WritingVideoSubPage extends StatefulWidget {
 class WritingVideoSubPageState extends State<WritingVideoSubPage> {
   late VideoPlayerController videoPlayerController;
   Map<UnitWritingCueWord, bool?> answers = {};
-
+  bool showCorrectAnswer = false;
   int counter = 3;
   @override
   void initState() {
     super.initState();
+    print('SSSSSSS: HERE ${widget.index[1] + 1}');
     videoPlayerController =
-        VideoPlayerController.network(widget.unitWritingVideo.hostUrl)
+        //VideoPlayerController.network(widget.unitWritingVideo.hostUrl)
+        VideoPlayerController.asset(
+            'assets/A${widget.index[1] + 1}-U1-INTRO.mp4')
           ..setLooping(false)
           ..initialize().then((value) => setState(() {}));
   }
@@ -77,8 +80,9 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
         padding: const EdgeInsets.all(20),
         child: Align(
           alignment: Alignment.topCenter,
-          child: WritingSentencePage(
-              widget.unitWritingVideo, videoPlayerController, answers),
+          child: WritingSentencePage(widget.unitWritingVideo,
+              videoPlayerController, answers, showCorrectAnswer,
+              key: ValueKey<bool>(showCorrectAnswer)),
         ),
       ),
     );
@@ -125,6 +129,21 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
             },
             horizontalEdge: 6,
           )));
+    } else {
+      listWidget.add(Flexible(
+          flex: 1,
+          child: WideButton(
+            'Дуусгах ${counter < 3 ? '($counter)' : ''}>',
+            colorSecondary,
+            colorWhite,
+            () {
+              if (checkWrongAnswerExists()) {
+                counter--;
+                setState(() {});
+              }
+            },
+            horizontalEdge: 6,
+          )));
     }
     return Container(
         width: double.infinity,
@@ -136,7 +155,18 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
   }
 
   bool checkWrongAnswerExists() {
-    if (counter == 1) return false;
+    if (counter == 1) {
+      if (answers.values
+          .any((element) => element == null || element == false)) {
+        showCorrectAnswer = true;
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (counter == 0) {
+      return false;
+    }
     if (answers.isEmpty) {
       return true;
     }

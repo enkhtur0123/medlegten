@@ -23,7 +23,41 @@ class WritingVideoPage extends StatefulWidget {
 
 class _WritingVideoPageState extends State<WritingVideoPage> {
   int currentIndex = 0;
-  Map<Widget, GlobalKey<WritingVideoSubPageState>> keys = {};
+  Map<Widget, GlobalObjectKey<WritingVideoSubPageState>> keys = {};
+  List<Widget> listWidget = [];
+
+  @override
+  void initState() {
+    for (int i = 0; i < widget.unitWriting.videos.length; i++) {
+      GlobalObjectKey<WritingVideoSubPageState> subPageStateKey =
+          GlobalObjectKey<WritingVideoSubPageState>(i);
+      var myWidget = WritingVideoSubPage(widget.unitWriting.videos[i], [
+        i - 1, //if -1 then no prev button
+        i, //current index
+        i - (widget.unitWriting.videos.length - 1), // if 0 then no next button
+        widget.unitWriting.videos.length,
+        currentIndex,
+      ], (callBackIndex, next) {
+        if (keys.containsKey(listWidget[callBackIndex])) {
+          if (keys[listWidget[callBackIndex]]!.currentState != null) {
+            keys[listWidget[callBackIndex]]!.currentState!.pauseVideo();
+          }
+        }
+        currentIndex = next ? callBackIndex + 1 : callBackIndex - 1;
+        if (keys.containsKey(listWidget[currentIndex])) {
+          if (keys[listWidget[currentIndex]]!.currentState != null) {
+            keys[listWidget[currentIndex]]!.currentState!.playVideo();
+          }
+        }
+        setState(() {});
+      }, key: subPageStateKey);
+
+      listWidget.add(myWidget);
+
+      keys[myWidget] = subPageStateKey;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,37 +97,6 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
   }
 
   Widget body() {
-    List<Widget> listWidget = [];
-    for (int i = 0; i < widget.unitWriting.videos.length; i++) {
-      GlobalObjectKey<WritingVideoSubPageState> subPageStateKey =
-          GlobalObjectKey<WritingVideoSubPageState>(i);
-
-      var myWidget = WritingVideoSubPage(widget.unitWriting.videos[i], [
-        i - 1, //if -1 then no prev button
-        i, //current index
-        i - (widget.unitWriting.videos.length - 1), // if 0 then no next button
-        widget.unitWriting.videos.length,
-        currentIndex,
-      ], (callBackIndex, next) {
-        if (keys.containsKey(listWidget[callBackIndex])) {
-          if (keys[listWidget[callBackIndex]]!.currentState != null) {
-            keys[listWidget[callBackIndex]]!.currentState!.pauseVideo();
-          }
-        }
-        currentIndex = next ? callBackIndex + 1 : callBackIndex - 1;
-        if (keys.containsKey(listWidget[currentIndex])) {
-          if (keys[listWidget[currentIndex]]!.currentState != null) {
-            keys[listWidget[currentIndex]]!.currentState!.playVideo();
-          }
-        }
-        setState(() {});
-      }, key: subPageStateKey);
-
-      listWidget.add(myWidget);
-
-      keys[myWidget] = subPageStateKey;
-    }
-
     return IndexedStack(
         sizing: StackFit.expand, index: currentIndex, children: listWidget);
   }
