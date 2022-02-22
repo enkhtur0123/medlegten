@@ -138,19 +138,19 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const ModuleProgressExamPage());
     },
     PaymentRoute.name: (routeData) {
-      final args = routeData.argsAs<PaymentRouteArgs>(
-          orElse: () => const PaymentRouteArgs());
+      final args = routeData.argsAs<PaymentRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: PaymentPage(
               key: args.key,
               courseInfo: args.courseInfo,
               paymentType: args.paymentType,
-              contendId: args.contendId));
+              contendId: args.contendId,
+              paymentInfo: args.paymentInfo,
+              isCourse: args.isCourse));
     },
     QpayRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<QpayRouteArgs>(orElse: () => const QpayRouteArgs());
+      final args = routeData.argsAs<QpayRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: QpayPage(
@@ -158,7 +158,9 @@ class _$AppRouter extends RootStackRouter {
               courseInfo: args.courseInfo,
               couponCode: args.couponCode,
               price: args.price,
-              paymentType: args.paymentType));
+              paymentType: args.paymentType,
+              paymentInfo: args.paymentInfo,
+              isCourse: args.isCourse));
     },
     VocabularyListRoute.name: (routeData) {
       final args = routeData.argsAs<VocabularyListRouteArgs>();
@@ -727,21 +729,30 @@ class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
       {Key? key,
       CourseInfo? courseInfo,
       String? paymentType,
-      String? contendId})
+      String? contendId,
+      PaymentInfo? paymentInfo,
+      required bool? isCourse})
       : super(PaymentRoute.name,
             path: '/payment',
             args: PaymentRouteArgs(
                 key: key,
                 courseInfo: courseInfo,
                 paymentType: paymentType,
-                contendId: contendId));
+                contendId: contendId,
+                paymentInfo: paymentInfo,
+                isCourse: isCourse));
 
   static const String name = 'PaymentRoute';
 }
 
 class PaymentRouteArgs {
   const PaymentRouteArgs(
-      {this.key, this.courseInfo, this.paymentType, this.contendId});
+      {this.key,
+      this.courseInfo,
+      this.paymentType,
+      this.contendId,
+      this.paymentInfo,
+      required this.isCourse});
 
   final Key? key;
 
@@ -751,9 +762,13 @@ class PaymentRouteArgs {
 
   final String? contendId;
 
+  final PaymentInfo? paymentInfo;
+
+  final bool? isCourse;
+
   @override
   String toString() {
-    return 'PaymentRouteArgs{key: $key, courseInfo: $courseInfo, paymentType: $paymentType, contendId: $contendId}';
+    return 'PaymentRouteArgs{key: $key, courseInfo: $courseInfo, paymentType: $paymentType, contendId: $contendId, paymentInfo: $paymentInfo, isCourse: $isCourse}';
   }
 }
 
@@ -765,7 +780,9 @@ class QpayRoute extends PageRouteInfo<QpayRouteArgs> {
       CourseInfo? courseInfo,
       String? couponCode,
       String? price,
-      String? paymentType = ""})
+      String? paymentType = "",
+      PaymentInfo? paymentInfo,
+      required bool? isCourse})
       : super(QpayRoute.name,
             path: '/qpay',
             args: QpayRouteArgs(
@@ -773,7 +790,9 @@ class QpayRoute extends PageRouteInfo<QpayRouteArgs> {
                 courseInfo: courseInfo,
                 couponCode: couponCode,
                 price: price,
-                paymentType: paymentType));
+                paymentType: paymentType,
+                paymentInfo: paymentInfo,
+                isCourse: isCourse));
 
   static const String name = 'QpayRoute';
 }
@@ -784,7 +803,9 @@ class QpayRouteArgs {
       this.courseInfo,
       this.couponCode,
       this.price,
-      this.paymentType = ""});
+      this.paymentType = "",
+      this.paymentInfo,
+      required this.isCourse});
 
   final Key? key;
 
@@ -796,9 +817,13 @@ class QpayRouteArgs {
 
   final String? paymentType;
 
+  final PaymentInfo? paymentInfo;
+
+  final bool? isCourse;
+
   @override
   String toString() {
-    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price, paymentType: $paymentType}';
+    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price, paymentType: $paymentType, paymentInfo: $paymentInfo, isCourse: $isCourse}';
   }
 }
 

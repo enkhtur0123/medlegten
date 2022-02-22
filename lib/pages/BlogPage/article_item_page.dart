@@ -93,6 +93,7 @@ class ArticleItemPage extends HookWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         viewWithLikeWidget(
                             iconData: Icons.remove_red_eye,
@@ -140,9 +141,13 @@ class ArticleItemPage extends HookWidget {
   }
 
   viewWithLikeWidget({IconData? iconData, String? text}) {
-    return Row(
+    return Flexible(
+      fit: FlexFit.tight,
+      flex: 3,
+      child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Icon(
           iconData,
@@ -162,6 +167,6 @@ class ArticleItemPage extends HookWidget {
           textAlign: TextAlign.center,
         )
       ],
-    );
+    ));
   }
 }

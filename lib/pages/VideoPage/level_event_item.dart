@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/movie.dart';
+import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/utils/time_convert_helper.dart';
@@ -20,18 +21,24 @@ class LevelEventItem extends HookWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        // if (!event!.isPurchased) {
-          List<Movie> movies = await VideoRepository()
-              .getContentDetail(contentId: event!.eventId);
+        var data =
+            await VideoRepository().getContentDetail(contentId: event!.eventId);
+        List<Movie> movies = data[0];
+        PaymentInfo paymentInfo = data[1];
+        if (paymentInfo.isPurchased!) {
           AutoRouter.of(context).push(VideoDetailRoute(
               movies: movies,
               url: movies[0].hostUrl,
               title: movies[0].contentName,
               isSerial: event!.isSerial == "1" ? true : false));
-        // } else {
-        //   AutoRouter.of(context)
-        //       .push(PaymentRoute(courseInfo: null, paymentType: "1004"));
-        // }
+        } else {
+          AutoRouter.of(context).push(PaymentRoute(
+              courseInfo: null,
+              paymentType: "1004",
+              contendId: paymentInfo.productId,
+              isCourse: false,
+              paymentInfo: paymentInfo));
+        }
       },
       child: Container(
         margin:
