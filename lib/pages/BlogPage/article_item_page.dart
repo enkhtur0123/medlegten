@@ -40,11 +40,12 @@ class ArticleItemPage extends HookWidget {
               width: double.infinity,
               height: MediaQuery.of(context).size.width * 0.35,
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                          articleItem!.slideImageUrl),)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: CachedNetworkImageProvider(articleItem!.slideImageUrl),
+                ),
+              ),
             ),
           ),
           Flexible(
@@ -64,18 +65,21 @@ class ArticleItemPage extends HookWidget {
                     height: 20,
                   ),
                   Flexible(
+                    flex: 3,
                     fit: FlexFit.tight,
-                    flex: 5,
-                    child: Text(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Text(
                       articleItem!.articleTitle,
                       style: const TextStyle(
                           color: Color(0xff333333),
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.normal,
                           fontSize: 12),
-                          textAlign: TextAlign.start,
+                      textAlign: TextAlign.start,
                     ),
                   ),
+                ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -87,26 +91,22 @@ class ArticleItemPage extends HookWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Flexible(
-                    flex: 3,
-                    fit: FlexFit.tight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        viewWithLikeWidget(
-                            iconData: Icons.remove_red_eye,
-                            text: articleItem!.viewCount.toString() + " views"),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        viewWithLikeWidget(
-                            iconData: Icons.favorite_outline_outlined,
-                            text: articleItem!.likeCount.toString() + " likes")
-                      ],
-                    ),
-                  )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      viewWithLikeWidget(
+                          iconData: Icons.remove_red_eye,
+                          text: articleItem!.viewCount.toString() + " views"),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      viewWithLikeWidget(
+                          iconData: Icons.favorite_outline_outlined,
+                          text: articleItem!.likeCount.toString() + " likes")
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -115,28 +115,27 @@ class ArticleItemPage extends HookWidget {
       ),
     );
   }
+
   getTitleWidget({String? categoryName, String? createdDate}) {
-    return Flexible(
-      flex: 2,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            categoryName!,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Text(
+          categoryName!,
+          style: TextStyle(
+              fontSize: 10,
+              color: const Color(0xff4F4F4F).withOpacity(0.5),
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.normal),
+        ),
+        Text(createdDate!,
             style: TextStyle(
                 fontSize: 10,
                 color: const Color(0xff4F4F4F).withOpacity(0.5),
                 fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.normal),
-          ),
-          Text(createdDate!,
-              style: TextStyle(
-                  fontSize: 10,
-                  color: const Color(0xff4F4F4F).withOpacity(0.5),
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.normal))
-        ],
-      ),
+                fontWeight: FontWeight.normal))
+      ],
     );
   }
 
@@ -145,28 +144,29 @@ class ArticleItemPage extends HookWidget {
       fit: FlexFit.tight,
       flex: 3,
       child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Icon(
-          iconData,
-          color: const Color(0xff4F4F4F),
-          size: 18,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Text(
-          text!,
-          style: const TextStyle(
-              color: Color(0xff4F4F4F),
-              fontSize: 10,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.normal),
-          textAlign: TextAlign.center,
-        )
-      ],
-    ));
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Icon(
+            iconData,
+            color: const Color(0xff4F4F4F),
+            size: 18,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            text!,
+            style: const TextStyle(
+                color: Color(0xff4F4F4F),
+                fontSize: 10,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.normal),
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
+    );
   }
 }

@@ -52,13 +52,22 @@ class TimeLineTileItemWidget extends HookWidget {
                 shape: BoxShape.circle,
               ),
               child: Center(
-                child: Text(
-                  '${idx! + 1}',
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: ColorTable.color255_255_255,
-                      fontWeight: FontWeight.w400),
-                ),
+                child: data!.isCompleted
+                    ? const SizedBox(
+                        child: Center(
+                          child: Icon(
+                            Icons.check,
+                            size: 20,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        '${idx! + 1}',
+                        style: TextStyle(
+                            fontFamily: 'Roboto',
+                            color: ColorTable.color255_255_255,
+                            fontWeight: FontWeight.w400),
+                      ),
               ),
             ),
             color: colorPrimary,

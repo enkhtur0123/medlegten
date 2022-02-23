@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
 
@@ -48,108 +46,84 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
       ),
       height: ref.read(appbarProvider.notifier).appBarState.height,
       alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.only(left: 25, top: 40),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
+      padding: const EdgeInsets.only(left: 25, top: 50),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset("assets/svg/logo.svg"),
-                  const SizedBox(
-                    width: 8,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SvgPicture.asset("assets/svg/logo.svg"),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      const Text(
+                        "МЭДЛЭГТЭН",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    ],
                   ),
-                  const Text(
-                    "МЭДЛЭГТЭН",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: Icon(Icons.notifications_active),
                   ),
                 ],
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.search),
-                    const SizedBox(
-                      width: 15,
+              ref.read(appbarProvider.notifier).appBarState.isRichText!
+                  ? RichText(
+                      maxLines: 2,
+                      text: TextSpan(
+                        text:
+                            ref.read(appbarProvider.notifier).appBarState.text1,
+                        style: const TextStyle(
+                            color: Color(0xffC7C9D9),
+                            fontSize: 14,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.normal),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: ref
+                                .read(appbarProvider.notifier)
+                                .appBarState
+                                .text2,
+                          ),
+                          TextSpan(
+                              text: ref
+                                  .read(appbarProvider.notifier)
+                                  .appBarState
+                                  .text3,
+                              style: const TextStyle(
+                                  color: Color(0xff1AE5EF),
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    )
+                  : Text(
+                      ref.read(appbarProvider.notifier).appBarState.text1!,
+                      style: const TextStyle(
+                          color: Color(0xffC7C9D9),
+                          fontSize: 14,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.normal),
                     ),
-                    GestureDetector(
-                        onTap: () {
-                        // showDialog(
-                        //       useSafeArea: true,
-                        //       barrierDismissible: true,
-                        //       context: context,
-                        //       builder: (context) {
-                        //         return Dialog(
-                        //           elevation: 0,
-                        //           backgroundColor: Colors.transparent,
-                        //           child: Container(
-                        //             width: double.infinity,
-                        //             height: MediaQuery.of(context).size.height,
-                        //             alignment: Alignment.center,
-                        //             child: const SpinKitCircle(
-                        //               color: colorPrimary,
-                        //               size: 50.0,
-                        //             ),
-                        //           ),
-                                  
-                        //         );
-                        //       });
-                        },
-                        child: const Icon(Icons.notifications_active))
-                  ],
-                ),
-              )
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          ref.read(appbarProvider.notifier).appBarState.isRichText!
-              ? RichText(
-                  maxLines: 2,
-                  text: TextSpan(
-                    text: ref.read(appbarProvider.notifier).appBarState.text1,
-                    style: const TextStyle(
-                        color: Color(0xffC7C9D9),
-                        fontSize: 14,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text:
-                            ref.read(appbarProvider.notifier).appBarState.text2,
-                      ),
-                      TextSpan(
-                          text: ref
-                              .read(appbarProvider.notifier)
-                              .appBarState
-                              .text3,
-                          style: const TextStyle(
-                              color: Color(0xff1AE5EF),
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                )
-              : Text(
-                  ref.read(appbarProvider.notifier).appBarState.text1!,
-                  style: const TextStyle(
-                      color: Color(0xffC7C9D9),
-                      fontSize: 14,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.normal),
-                ),
         ],
       ),
     );

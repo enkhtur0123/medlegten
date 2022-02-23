@@ -110,24 +110,21 @@ class LoginRepository implements ILoginRepository {
           url: 'Login',
           body: json.encode({
             'userId': user.providerData.first.uid,
-            'firstName':  isGoogle!
-                ? googleSignInAccount!.displayName
-                : fUser!["name"],
-            'lastName': isGoogle
-                ? googleSignInAccount!.displayName
-                : fUser!["name"],
-            'profileUrl':  isGoogle
+            'firstName':
+                isGoogle! ? googleSignInAccount!.displayName : fUser!["name"],
+            'lastName':
+                isGoogle ? googleSignInAccount!.displayName : fUser!["name"],
+            'profileUrl': isGoogle
                 ? googleSignInAccount!.photoUrl
                 : fUser!["picture"]["data"]["url"],
             'socialType': isGoogle ? 'google' : 'facebook',
             'deviceInfo': Platform.operatingSystem, //DO IT
             'channel': 'app',
-            'email':isGoogle
-                ? googleSignInAccount!.email
-                : fUser!["email"],
+            'email': isGoogle ? googleSignInAccount!.email : fUser!["email"],
             'birthDate': ''
           }),
         );
+        print(res);
         if (res['isSuccess']) {
           GetStorage().write('token', res['token']);
           // print(res['token']);

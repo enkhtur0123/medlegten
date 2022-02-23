@@ -11,6 +11,7 @@ class HttpHelper {
     dio.options.headers['content-Type'] = 'application/json; charset=utf-8';
     dio.options.connectTimeout = 40000;
     dio.options.receiveTimeout = 40000;
+
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       // Do something before request is sent
       return handler.next(options); //continue
@@ -19,6 +20,9 @@ class HttpHelper {
       // If you want to reject the request with a error message,
       // you can reject a `DioError` object eg: `handler.reject(dioError)`
     }, onResponse: (response, handler) {
+      // if (response.data != null && response.data["errorCode"]=="401") {
+        // GetStorage().remove("token");
+      // }
       // Do something with response data
       return handler.next(response); // continue
       // If you want to reject the request with a error message,

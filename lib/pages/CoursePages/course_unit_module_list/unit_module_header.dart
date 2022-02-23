@@ -39,7 +39,7 @@ class UnitModuleHeader extends HookWidget {
             ),
             addHorizontalSpace(20),
             CircularPercentIndicator(
-                radius: 40.0,
+                radius: 45.0,
                 lineWidth: 3.0,
                 percent: percentSnapshot.hasData
                     ? calculatePercent(
@@ -95,14 +95,14 @@ class UnitModuleHeader extends HookWidget {
       int? completedCount,
       int? unCompletedCount,
       int? fixed = 3}) {
-    int? percent;
+    var percent;
     if (totalCount! > 0) {
       percent = (100 * completedCount!) ~/ totalCount;
     } else {
       percent = 0;
     }
-    if (percent > 0) {
-      percent = percent ~/ 100;
+    if (percent > 0) {  
+      percent = percent / 100;
     } else {
       return 0;
     }

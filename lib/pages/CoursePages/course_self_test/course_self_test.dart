@@ -9,6 +9,7 @@ import 'package:medlegten/models/Landing/quiz_question.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test_question.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/widgets/dialog/custom_popup.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 // ignore: must_be_immutable
 class CourseSelfTestPage extends HookWidget {
@@ -118,7 +119,15 @@ class CourseSelfTestPage extends HookWidget {
       "correctCount": correctCnt.toString(),
       "incorrectCount": (snapshot!.data!.length - correctCnt!).toString()
     };
-    var result = await LandingRepository().setCourseSelfTestHistory(body: data);
+    var result;
+    try {
+      LoadingIndicator(context: context).showLoadingIndicator();
+       result = await LandingRepository().setCourseSelfTestHistory(body: data);
+       LoadingIndicator(context: context).hideLoadingIndicator();
+    } catch (ex) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+    }
+
     if (result != null) {
       showDialog(
           context: context!,

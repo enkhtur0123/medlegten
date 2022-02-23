@@ -32,12 +32,14 @@ class LevelEventItem extends HookWidget {
               title: movies[0].contentName,
               isSerial: event!.isSerial == "1" ? true : false));
         } else {
-          AutoRouter.of(context).push(PaymentRoute(
-              courseInfo: null,
-              paymentType: "1004",
-              contendId: paymentInfo.productId,
-              isCourse: false,
-              paymentInfo: paymentInfo));
+          AutoRouter.of(context).push(
+            PaymentRoute(
+                courseInfo: null,
+                paymentType: "1002",
+                contendId: paymentInfo.productId,
+                isCourse: false,
+                paymentInfo: paymentInfo),
+          );
         }
       },
       child: Container(
@@ -134,13 +136,11 @@ Widget getEventInfo({required Event event}) {
                       time: int.parse(
                           event.runTime != "" ? event.runTime : "0"))),
             ),
-            const SizedBox(width: 15),
             Flexible(
                 fit: FlexFit.tight,
                 flex: 3,
                 child:
                     InfoItemWidget(isSvg: true, text: event.vocabularyCount)),
-            const SizedBox(width: 3),
             Flexible(
               fit: FlexFit.tight,
               flex: 8,

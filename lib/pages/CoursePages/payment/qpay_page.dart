@@ -29,8 +29,9 @@ class QpayPage extends HookWidget {
   PaymentInfo? paymentInfo;
   bool? isCourse;
   ValueNotifier isCall = ValueNotifier(false);
-  @override
-  Widget build(BuildContext context) {
+
+  Future<List<dynamic>> createInvoice() async {
+    print("create invoice");
     Map<String, dynamic> body = {
       "paymentType": paymentType,
       "productId": isCourse! ? courseInfo!.courseId : paymentInfo!.productId,
@@ -38,22 +39,26 @@ class QpayPage extends HookWidget {
       "couponCode": couponCode,
       "promoId": ""
     };
+    List<dynamic> list =
+        await CoursePaymentRepository().createInvoice(body: body);
+    invoice_id = list[1];
+    return list;
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final future = useMemoized(createInvoice);
+    final snapshot = useFuture(future);
     AppLifecycleState? appLifecycleState = useAppLifecycleState();
     checkPaymentStatus(appLifecycleState: appLifecycleState, context: context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Qpay Payment"),
-        centerTitle: false,
-      ),
-      body: FutureBuilder(
-        future: CoursePaymentRepository().createInvoice(body: body),
-        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.isNotEmpty) {
-              invoice_id = snapshot.data![1];
-              return Container(
+        appBar: AppBar(
+          title: const Text("Qpay Payment"),
+          centerTitle: false,
+        ),
+        body: snapshot.hasData && snapshot.data!.isNotEmpty
+            ? Container(
                 color: Colors.white,
                 margin: const EdgeInsets.all(20),
                 padding: const EdgeInsets.all(10),
@@ -81,7 +86,6 @@ class QpayPage extends HookWidget {
                         )
                       ],
                     ),
-                    const SizedBox(height: 30),
                     const Text(
                       "Банкны апп-аар",
                       textAlign: TextAlign.start,
@@ -106,60 +110,62 @@ class QpayPage extends HookWidget {
                       crossAxisCount: 3,
                       shrinkWrap: true,
                       children: (snapshot.data![0] as List)
-                          .map((e) => GestureDetector(
-                                onTap: () async {
-                                  await launchApp(
-                                      context: context, link: e["link"]);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 1,
-                                        blurRadius: 1,
-                                        offset: const Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
+                          .map(
+                            (e) => GestureDetector(
+                              onTap: () async {
+                                await launchApp(
+                                    context: context, link: e["link"]);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 1,
+                                      offset: const Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: SizedBox(
                                   child: Column(
-                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(15)),
-                                        child: Image.network(
-                                          e["logo"],
-                                          width: 50,
+                                      Flexible(
+                                        fit: FlexFit.tight,
+                                        flex: 5,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(15)),
+                                          child: Image.network(
+                                            e["logo"],
+                                            width: 50,
+                                          ),
                                         ),
                                       ),
-                                      Text(e["name"],
-                                          textAlign: TextAlign.center)
+                                      Flexible(
+                                          fit: FlexFit.tight,
+                                          flex: 3,
+                                          child: Text(e["name"],
+                                              textAlign: TextAlign.center))
                                     ],
                                   ),
                                 ),
-                              ))
+                              ),
+                            ),
+                          )
                           .toList(),
                     ),
                   ],
                 ),
-              );
-            } else {
-              return Container();
-            }
-          } else if (snapshot.hasError) {
-            return const Loading();
-          } else {
-            return const Loading();
-          }
-        },
-      ),
-    );
+              )
+            : const Loading());
   }
 
   checkPaymentStatus(
@@ -187,12 +193,14 @@ class QpayPage extends HookWidget {
   /// Банкны аппаа дуудах
   Future launchApp({BuildContext? context, String? link}) async {
     if (await canLaunch(link!)) {
-      await launch(link);
       isCall.value = true;
+      await launch(link);
     } else {
-      ScaffoldMessenger.of(context!).showSnackBar(MySnackBar(
-        text: "Апп суулгана уу",
-      ));
+      ScaffoldMessenger.of(context!).showSnackBar(
+        MySnackBar(
+          text: "Апп суулгана уу",
+        ),
+      );
     }
   }
 
