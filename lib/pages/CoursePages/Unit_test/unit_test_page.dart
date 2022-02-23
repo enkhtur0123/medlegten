@@ -11,6 +11,7 @@ import 'package:medlegten/models/Unit/unit_test_model.dart';
 import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_question.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
+import 'package:medlegten/widgets/dialog/confirm_dialog.dart';
 
 // ignore: must_be_immutable
 class UnitTestPage extends HookWidget {
@@ -88,10 +89,21 @@ class UnitTestPage extends HookWidget {
           AbsorbPointer(
               absorbing: !snapshot.hasData,
               child: WideButton(duussan.value == 0 ? 'Дуусгах' : 'Буцах',
-                  colorSecondary, colorWhite, () {
+                  colorSecondary, colorWhite, () async {
                 if (duussan.value == 0) {
-                  duussan.value = 1;
-                  saveExamValue(snapshot.data!);
+                  await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return ConfirmDialog(
+                          text: "Энэ шалгалтийг дуусгахдаа итгэлтэй байна уу?",
+                          isAlert: true,
+                        );
+                      }).then((value) async {
+                    if (value != null && value) {
+                      duussan.value = 1;
+                      saveExamValue(snapshot.data!);
+                    }
+                  });
                 } else {
                   AutoRouter.of(context).pop();
                 }

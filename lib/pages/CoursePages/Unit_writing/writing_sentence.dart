@@ -8,14 +8,15 @@ import 'package:medlegten/pages/CoursePages/Unit_writing/writing_paragraph.dart'
 import 'package:video_player/video_player.dart';
 
 class WritingSentencePage extends StatefulWidget {
-  const WritingSentencePage(
-      this.unitWritingVideo, this.videoPlayerController, this.answers,
+  const WritingSentencePage(this.unitWritingVideo, this.videoPlayerController,
+      this.answers, this.showCorrectAnswer,
       {Key? key})
       : super(key: key);
 
   final UnitWritingVideo unitWritingVideo;
   final VideoPlayerController videoPlayerController;
   final Map<UnitWritingCueWord, bool?> answers;
+  final bool showCorrectAnswer;
   @override
   _WritingSentencePageState createState() => _WritingSentencePageState();
 }
@@ -104,7 +105,7 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
                   currentIndex = index;
                   setState(() {});
                 }
-              }));
+              }, widget.showCorrectAnswer));
         }
       },
     );

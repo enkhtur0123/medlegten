@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
+import 'package:medlegten/repositories/unit_repository.dart';
 
 class VocabularyCart extends HookWidget {
   const VocabularyCart(this.wordInfo, {Key? key}) : super(key: key);
@@ -88,13 +89,29 @@ class VocabularyCart extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    getMedneMedehgui(toggleMedneMedehgui.value, true, () {
-                      toggleMedneMedehgui.value = !toggleMedneMedehgui.value;
+                    getMedneMedehgui(toggleMedneMedehgui.value, true, () async {
+                      //MEDNE
+                      UnitRepository()
+                          .setWordKnow(wordInfo.wordId, 0)
+                          .then((value) {
+                        if (value == 'success') {
+                          toggleMedneMedehgui.value =
+                              !toggleMedneMedehgui.value;
+                        }
+                      });
                     }),
                     addVerticalSpace(15),
                     getMedneMedehgui(toggleMedneMedehgui.value == false, false,
-                        () {
-                      toggleMedneMedehgui.value = !toggleMedneMedehgui.value;
+                        () async {
+                      //MEDEHGUI
+                      UnitRepository()
+                          .setWordKnow(wordInfo.wordId, 1)
+                          .then((value) {
+                        if (value == 'success') {
+                          toggleMedneMedehgui.value =
+                              !toggleMedneMedehgui.value;
+                        }
+                      });
                     }),
                   ],
                 ),

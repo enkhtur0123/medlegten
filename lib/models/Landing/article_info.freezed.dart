@@ -30,7 +30,7 @@ class _$ArticleInfoTearOff {
       String categoryIcon,
       String viewCount,
       String likeCount,
-      String isLiked,
+      bool isLiked,
       List<SlideImage> slideImages,
       List<ArticleCueParagraph> cues) {
     return _ArticleInfo(
@@ -64,7 +64,7 @@ mixin _$ArticleInfo {
   String get categoryIcon => throw _privateConstructorUsedError;
   String get viewCount => throw _privateConstructorUsedError;
   String get likeCount => throw _privateConstructorUsedError;
-  String get isLiked => throw _privateConstructorUsedError;
+  bool get isLiked => throw _privateConstructorUsedError;
   List<SlideImage> get slideImages => throw _privateConstructorUsedError;
   List<ArticleCueParagraph> get cues => throw _privateConstructorUsedError;
 
@@ -87,7 +87,7 @@ abstract class $ArticleInfoCopyWith<$Res> {
       String categoryIcon,
       String viewCount,
       String likeCount,
-      String isLiked,
+      bool isLiked,
       List<SlideImage> slideImages,
       List<ArticleCueParagraph> cues});
 }
@@ -145,7 +145,7 @@ class _$ArticleInfoCopyWithImpl<$Res> implements $ArticleInfoCopyWith<$Res> {
       isLiked: isLiked == freezed
           ? _value.isLiked
           : isLiked // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       slideImages: slideImages == freezed
           ? _value.slideImages
           : slideImages // ignore: cast_nullable_to_non_nullable
@@ -173,7 +173,7 @@ abstract class _$ArticleInfoCopyWith<$Res>
       String categoryIcon,
       String viewCount,
       String likeCount,
-      String isLiked,
+      bool isLiked,
       List<SlideImage> slideImages,
       List<ArticleCueParagraph> cues});
 }
@@ -233,7 +233,7 @@ class __$ArticleInfoCopyWithImpl<$Res> extends _$ArticleInfoCopyWithImpl<$Res>
       isLiked == freezed
           ? _value.isLiked
           : isLiked // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       slideImages == freezed
           ? _value.slideImages
           : slideImages // ignore: cast_nullable_to_non_nullable
@@ -279,7 +279,7 @@ class _$_ArticleInfo implements _ArticleInfo {
   @override
   final String likeCount;
   @override
-  final String isLiked;
+  final bool isLiked;
   @override
   final List<SlideImage> slideImages;
   @override
@@ -346,7 +346,7 @@ abstract class _ArticleInfo implements ArticleInfo {
       String categoryIcon,
       String viewCount,
       String likeCount,
-      String isLiked,
+      bool isLiked,
       List<SlideImage> slideImages,
       List<ArticleCueParagraph> cues) = _$_ArticleInfo;
 
@@ -368,7 +368,7 @@ abstract class _ArticleInfo implements ArticleInfo {
   @override
   String get likeCount;
   @override
-  String get isLiked;
+  bool get isLiked;
   @override
   List<SlideImage> get slideImages;
   @override

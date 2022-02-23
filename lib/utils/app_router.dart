@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:medlegten/models/Landing/article_info.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Starting/onboarding.dart';
@@ -12,13 +13,13 @@ import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
+import 'package:medlegten/pages/BlogPage/ArticleDetail/article_detail_page.dart';
 import 'package:medlegten/pages/BlogPage/article_vertical_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_video_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_introVideo/intro_video_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/module_listening.dart';
 import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_page.dart';
-import 'package:medlegten/pages/CoursePages/Unit_progressExam/module_progress_exam.dart';
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_vocabolary/vocabulary_list.dart';
@@ -60,7 +61,6 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/unit_module_listening', page: ModuleListenPage),
     AutoRoute(path: '/writing_video_page', page: WritingVideoPage),
     AutoRoute(path: '/conversation_video_page', page: ConversationVideoPage),
-    AutoRoute(path: '/unit_module_progressexam', page: ModuleProgressExamPage),
     AutoRoute(path: '/payment', page: PaymentPage),
     AutoRoute(path: '/qpay', page: QpayPage),
     AutoRoute(path: '/vocabulary_list', page: VocabularyListPage),
@@ -69,6 +69,8 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/video/vocabulary_list', page: VideoVocabularyListPage),
     AutoRoute(path: '/unit_test_page', page: UnitTestPage),
     AutoRoute(path: '/blog/all', page: ArticleVerticalPage),
+    AutoRoute(
+        path: '/blog/articledetail/article_detail_page', page: ArticlePage),
     // QpayPage
   ],
 )

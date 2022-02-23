@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/article/article_item.dart';
+import 'package:medlegten/repositories/unit_repository.dart';
+import 'package:medlegten/utils/app_router.dart';
 
 // ignore: must_be_immutable
 class ArticleItemPage extends HookWidget {
@@ -11,23 +14,20 @@ class ArticleItemPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(8),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(2.0, 2.0), // changes position of shadow
-          ),
-        ],
-      ),
+    return GestureDetector(
+      onTap: () async {
+        UnitRepository().getArticleInfo(articleItem!.articleId).then((value) {
+          AutoRouter.of(context).push(ArticleRoute(articleInfo: value!));
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(8),
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
@@ -110,10 +110,10 @@ class ArticleItemPage extends HookWidget {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
+        
+        ),
+          ],
+      )));
   }
 
   getTitleWidget({String? categoryName, String? createdDate}) {

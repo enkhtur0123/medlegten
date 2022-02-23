@@ -15,7 +15,7 @@ class ArticleInfo with _$ArticleInfo {
       String categoryIcon,
       String viewCount,
       String likeCount,
-      String isLiked,
+      bool isLiked,
       List<SlideImage> slideImages,
       List<ArticleCueParagraph> cues) = _ArticleInfo;
 

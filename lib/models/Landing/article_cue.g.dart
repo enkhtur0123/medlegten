@@ -13,7 +13,6 @@ _$_ArticleCueParagraph _$$_ArticleCueParagraphFromJson(
       json['ordering'] as String,
       json['fromLangId'] as String,
       json['fromLangTranslation'] as String,
-      json['fromLangIsDefault'] as String,
       json['toLangId'] as String,
       json['toLangTranslation'] as String,
       (json['words'] as List<dynamic>)
@@ -28,7 +27,6 @@ Map<String, dynamic> _$$_ArticleCueParagraphToJson(
       'ordering': instance.ordering,
       'fromLangId': instance.fromLangId,
       'fromLangTranslation': instance.fromLangTranslation,
-      'fromLangIsDefault': instance.fromLangIsDefault,
       'toLangId': instance.toLangId,
       'toLangTranslation': instance.toLangTranslation,
       'words': instance.words,

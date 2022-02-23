@@ -11,7 +11,8 @@ class WritingParagraph extends StatefulWidget {
     this.paragraph,
     this.isSelected,
     this.answers,
-    this.callBack, {
+    this.callBack,
+    this.showCorrectAnswer, {
     Key? key,
   }) : super(key: key);
 
@@ -19,6 +20,7 @@ class WritingParagraph extends StatefulWidget {
   final bool isSelected;
   final Map<UnitWritingCueWord, bool?> answers;
   final Function() callBack;
+  final bool showCorrectAnswer;
   @override
   _WritingParagraphState createState() => _WritingParagraphState();
 }
@@ -78,6 +80,9 @@ class _WritingParagraphState extends State<WritingParagraph> {
           _focusNode.addListener(() => _onFocusChange(_focusNode));
 
           missingList[word] = Tuple4(i2++, _controller, _focusNode, word);
+          if (this.widget.showCorrectAnswer) {
+            _controller.text = word.mainText;
+          }
           _controller.addListener(() {
             this.widget.answers[word] = _controller.value.text.toLowerCase() ==
                 word.mainText.toLowerCase();

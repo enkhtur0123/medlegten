@@ -15,7 +15,7 @@ _$_ArticleInfo _$$_ArticleInfoFromJson(Map<String, dynamic> json) =>
       json['categoryIcon'] as String,
       json['viewCount'] as String,
       json['likeCount'] as String,
-      json['isLiked'] as String,
+      json['isLiked'] as bool,
       (json['slideImages'] as List<dynamic>)
           .map((e) => SlideImage.fromJson(e as Map<String, dynamic>))
           .toList(),
