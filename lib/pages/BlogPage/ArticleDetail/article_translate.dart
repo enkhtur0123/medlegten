@@ -32,12 +32,7 @@ class _ArticleTranslateState extends State<ArticleTranslate> {
         clipShadows: [ClipShadow(color: Colors.grey.withOpacity(0.8))],
         isTop: true,
         isShadow: false,
-        child: Expanded(
-          //key: _textKey,
-          //height: textSize.height,
-          //width: textSize.width,
-          child: innerWidget(),
-        ),
+        child: innerWidget(),
       ),
     );
   }

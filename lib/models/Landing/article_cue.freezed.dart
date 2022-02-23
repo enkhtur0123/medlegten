@@ -27,7 +27,6 @@ class _$ArticleCueParagraphTearOff {
       String ordering,
       String fromLangId,
       String fromLangTranslation,
-      String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       List<UnitIntroCueWord> words) {
@@ -36,7 +35,6 @@ class _$ArticleCueParagraphTearOff {
       ordering,
       fromLangId,
       fromLangTranslation,
-      fromLangIsDefault,
       toLangId,
       toLangTranslation,
       words,
@@ -57,7 +55,6 @@ mixin _$ArticleCueParagraph {
   String get ordering => throw _privateConstructorUsedError;
   String get fromLangId => throw _privateConstructorUsedError;
   String get fromLangTranslation => throw _privateConstructorUsedError;
-  String get fromLangIsDefault => throw _privateConstructorUsedError;
   String get toLangId => throw _privateConstructorUsedError;
   String get toLangTranslation => throw _privateConstructorUsedError;
   List<UnitIntroCueWord> get words => throw _privateConstructorUsedError;
@@ -78,7 +75,6 @@ abstract class $ArticleCueParagraphCopyWith<$Res> {
       String ordering,
       String fromLangId,
       String fromLangTranslation,
-      String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       List<UnitIntroCueWord> words});
@@ -99,7 +95,6 @@ class _$ArticleCueParagraphCopyWithImpl<$Res>
     Object? ordering = freezed,
     Object? fromLangId = freezed,
     Object? fromLangTranslation = freezed,
-    Object? fromLangIsDefault = freezed,
     Object? toLangId = freezed,
     Object? toLangTranslation = freezed,
     Object? words = freezed,
@@ -120,10 +115,6 @@ class _$ArticleCueParagraphCopyWithImpl<$Res>
       fromLangTranslation: fromLangTranslation == freezed
           ? _value.fromLangTranslation
           : fromLangTranslation // ignore: cast_nullable_to_non_nullable
-              as String,
-      fromLangIsDefault: fromLangIsDefault == freezed
-          ? _value.fromLangIsDefault
-          : fromLangIsDefault // ignore: cast_nullable_to_non_nullable
               as String,
       toLangId: toLangId == freezed
           ? _value.toLangId
@@ -153,7 +144,6 @@ abstract class _$ArticleCueParagraphCopyWith<$Res>
       String ordering,
       String fromLangId,
       String fromLangTranslation,
-      String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       List<UnitIntroCueWord> words});
@@ -176,7 +166,6 @@ class __$ArticleCueParagraphCopyWithImpl<$Res>
     Object? ordering = freezed,
     Object? fromLangId = freezed,
     Object? fromLangTranslation = freezed,
-    Object? fromLangIsDefault = freezed,
     Object? toLangId = freezed,
     Object? toLangTranslation = freezed,
     Object? words = freezed,
@@ -197,10 +186,6 @@ class __$ArticleCueParagraphCopyWithImpl<$Res>
       fromLangTranslation == freezed
           ? _value.fromLangTranslation
           : fromLangTranslation // ignore: cast_nullable_to_non_nullable
-              as String,
-      fromLangIsDefault == freezed
-          ? _value.fromLangIsDefault
-          : fromLangIsDefault // ignore: cast_nullable_to_non_nullable
               as String,
       toLangId == freezed
           ? _value.toLangId
@@ -226,7 +211,6 @@ class _$_ArticleCueParagraph implements _ArticleCueParagraph {
       this.ordering,
       this.fromLangId,
       this.fromLangTranslation,
-      this.fromLangIsDefault,
       this.toLangId,
       this.toLangTranslation,
       this.words);
@@ -243,8 +227,6 @@ class _$_ArticleCueParagraph implements _ArticleCueParagraph {
   @override
   final String fromLangTranslation;
   @override
-  final String fromLangIsDefault;
-  @override
   final String toLangId;
   @override
   final String toLangTranslation;
@@ -253,7 +235,7 @@ class _$_ArticleCueParagraph implements _ArticleCueParagraph {
 
   @override
   String toString() {
-    return 'ArticleCueParagraph(cueId: $cueId, ordering: $ordering, fromLangId: $fromLangId, fromLangTranslation: $fromLangTranslation, fromLangIsDefault: $fromLangIsDefault, toLangId: $toLangId, toLangTranslation: $toLangTranslation, words: $words)';
+    return 'ArticleCueParagraph(cueId: $cueId, ordering: $ordering, fromLangId: $fromLangId, fromLangTranslation: $fromLangTranslation, toLangId: $toLangId, toLangTranslation: $toLangTranslation, words: $words)';
   }
 
   @override
@@ -267,8 +249,6 @@ class _$_ArticleCueParagraph implements _ArticleCueParagraph {
                 .equals(other.fromLangId, fromLangId) &&
             const DeepCollectionEquality()
                 .equals(other.fromLangTranslation, fromLangTranslation) &&
-            const DeepCollectionEquality()
-                .equals(other.fromLangIsDefault, fromLangIsDefault) &&
             const DeepCollectionEquality().equals(other.toLangId, toLangId) &&
             const DeepCollectionEquality()
                 .equals(other.toLangTranslation, toLangTranslation) &&
@@ -282,7 +262,6 @@ class _$_ArticleCueParagraph implements _ArticleCueParagraph {
       const DeepCollectionEquality().hash(ordering),
       const DeepCollectionEquality().hash(fromLangId),
       const DeepCollectionEquality().hash(fromLangTranslation),
-      const DeepCollectionEquality().hash(fromLangIsDefault),
       const DeepCollectionEquality().hash(toLangId),
       const DeepCollectionEquality().hash(toLangTranslation),
       const DeepCollectionEquality().hash(words));
@@ -305,7 +284,6 @@ abstract class _ArticleCueParagraph implements ArticleCueParagraph {
       String ordering,
       String fromLangId,
       String fromLangTranslation,
-      String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       List<UnitIntroCueWord> words) = _$_ArticleCueParagraph;
@@ -321,8 +299,6 @@ abstract class _ArticleCueParagraph implements ArticleCueParagraph {
   String get fromLangId;
   @override
   String get fromLangTranslation;
-  @override
-  String get fromLangIsDefault;
   @override
   String get toLangId;
   @override

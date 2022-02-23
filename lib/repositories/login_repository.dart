@@ -10,6 +10,7 @@ import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/repositories/rep_state.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 final loginNotifierProvider = StateNotifierProvider<LoginNotifier, RepState>(
@@ -79,7 +80,7 @@ class LoginRepository implements ILoginRepository {
         return null;
       }
     } catch (e) {
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -95,7 +96,7 @@ class LoginRepository implements ILoginRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -110,21 +111,17 @@ class LoginRepository implements ILoginRepository {
           url: 'Login',
           body: json.encode({
             'userId': user.providerData.first.uid,
-            'firstName':  isGoogle!
-                ? googleSignInAccount!.displayName
-                : fUser!["name"],
-            'lastName': isGoogle
-                ? googleSignInAccount!.displayName
-                : fUser!["name"],
-            'profileUrl':  isGoogle
+            'firstName':
+                isGoogle! ? googleSignInAccount!.displayName : fUser!["name"],
+            'lastName':
+                isGoogle ? googleSignInAccount!.displayName : fUser!["name"],
+            'profileUrl': isGoogle
                 ? googleSignInAccount!.photoUrl
                 : fUser!["picture"]["data"]["url"],
             'socialType': isGoogle ? 'google' : 'facebook',
             'deviceInfo': Platform.operatingSystem, //DO IT
             'channel': 'app',
-            'email':isGoogle
-                ? googleSignInAccount!.email
-                : fUser!["email"],
+            'email': isGoogle ? googleSignInAccount!.email : fUser!["email"],
             'birthDate': ''
           }),
         );
@@ -135,6 +132,7 @@ class LoginRepository implements ILoginRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -148,7 +146,7 @@ class LoginRepository implements ILoginRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -158,7 +156,7 @@ class LoginRepository implements ILoginRepository {
       return res['errorCode'] == '200';
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return false;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 

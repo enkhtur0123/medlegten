@@ -11,7 +11,6 @@ class ArticleCueParagraph with _$ArticleCueParagraph {
       String ordering,
       String fromLangId,
       String fromLangTranslation,
-      String fromLangIsDefault,
       String toLangId,
       String toLangTranslation,
       List<UnitIntroCueWord> words) = _ArticleCueParagraph;

@@ -133,10 +133,6 @@ class _$AppRouter extends RootStackRouter {
               unitTitle: args.unitTitle,
               isCompleted: args.isCompleted));
     },
-    ModuleProgressExamRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const ModuleProgressExamPage());
-    },
     PaymentRoute.name: (routeData) {
       final args = routeData.argsAs<PaymentRouteArgs>();
       return MaterialPageX<dynamic>(
@@ -209,6 +205,12 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData,
           child: ArticleVerticalPage(
               key: args.key, title: args.title, typeId: args.typeId));
+    },
+    ArticleRoute.name: (routeData) {
+      final args = routeData.argsAs<ArticleRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: ArticlePage(args.articleInfo, key: args.key));
     }
   };
 
@@ -234,8 +236,6 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(WritingVideoRoute.name, path: '/writing_video_page'),
         RouteConfig(ConversationVideoRoute.name,
             path: '/conversation_video_page'),
-        RouteConfig(ModuleProgressExamRoute.name,
-            path: '/unit_module_progressexam'),
         RouteConfig(PaymentRoute.name, path: '/payment'),
         RouteConfig(QpayRoute.name, path: '/qpay'),
         RouteConfig(VocabularyListRoute.name, path: '/vocabulary_list'),
@@ -244,7 +244,9 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(VideoVocabularyListRoute.name,
             path: '/video/vocabulary_list'),
         RouteConfig(UnitTestRoute.name, path: '/unit_test_page'),
-        RouteConfig(ArticleVerticalRoute.name, path: '/blog/all')
+        RouteConfig(ArticleVerticalRoute.name, path: '/blog/all'),
+        RouteConfig(ArticleRoute.name,
+            path: '/blog/articledetail/article_detail_page')
       ];
 }
 
@@ -715,15 +717,6 @@ class ConversationVideoRouteArgs {
 }
 
 /// generated route for
-/// [ModuleProgressExamPage]
-class ModuleProgressExamRoute extends PageRouteInfo<void> {
-  const ModuleProgressExamRoute()
-      : super(ModuleProgressExamRoute.name, path: '/unit_module_progressexam');
-
-  static const String name = 'ModuleProgressExamRoute';
-}
-
-/// generated route for
 /// [PaymentPage]
 class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
   PaymentRoute(
@@ -1025,5 +1018,29 @@ class ArticleVerticalRouteArgs {
   @override
   String toString() {
     return 'ArticleVerticalRouteArgs{key: $key, title: $title, typeId: $typeId}';
+  }
+}
+
+/// generated route for
+/// [ArticlePage]
+class ArticleRoute extends PageRouteInfo<ArticleRouteArgs> {
+  ArticleRoute({required ArticleInfo articleInfo, Key? key})
+      : super(ArticleRoute.name,
+            path: '/blog/articledetail/article_detail_page',
+            args: ArticleRouteArgs(articleInfo: articleInfo, key: key));
+
+  static const String name = 'ArticleRoute';
+}
+
+class ArticleRouteArgs {
+  const ArticleRouteArgs({required this.articleInfo, this.key});
+
+  final ArticleInfo articleInfo;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ArticleRouteArgs{articleInfo: $articleInfo, key: $key}';
   }
 }

@@ -74,7 +74,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -90,9 +90,8 @@ class UnitRepository {
         return null;
       }
     } catch (e) {
-      print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -113,7 +112,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -134,7 +133,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -155,7 +154,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -188,7 +187,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -210,7 +209,7 @@ class UnitRepository {
     } catch (e) {
       print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -231,7 +230,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -247,7 +246,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -263,7 +262,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -284,7 +283,7 @@ class UnitRepository {
   Future<ArticleInfo?> getArticleInfo(String articleId) async {
     try {
       final res =
-          await HttpHelper().getUrl(url: 'Article/ArticleDetail/$articleId');
+          await HttpHelper().getUrl(url: 'Article/ArticleDetial/$articleId');
       if (res['isSuccess']) {
         return ArticleInfo.fromJson(res['articleInfo']);
       } else {
@@ -293,7 +292,35 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  //0 is set vocabulary, 1 is un vocabulary
+  Future<String> setWordKnow(String wordId, int set) async {
+    try {
+      var res = await HttpHelper().getUrl(url: 'Word/vocabulary/$wordId/$set');
+      if (res['isSuccess']) {
+        return 'success';
+      } else {
+        return res['resultMessage'];
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
+    }
+  }
+
+  //0 is Like, 1 is unlike
+  Future<String> setArticleLike(String articleId, int set) async {
+    try {
+      var res = await HttpHelper().getUrl(url: 'Article/Like/$articleId/$set');
+      if (res['isSuccess']) {
+        return 'success';
+      } else {
+        return res['resultMessage'];
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
     }
   }
 }

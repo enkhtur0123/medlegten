@@ -6,10 +6,10 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/article_info.dart';
 
 import 'package:medlegten/pages/CoursePages/Unit_reading/reading_paragraph.dart';
-import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
+import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/global.dart';
 import 'dart:math' as math;
 
@@ -33,6 +33,8 @@ class _ArticlePageState extends State<ArticlePage> {
   late bool isShowGrammar;
   late bool isWidgetIsShown;
   int currentCarouselIndex = 0;
+  bool isLiked = false;
+  int likeAdd = 0;
   late final refreshView = ValueNotifier<bool>(false)
     ..addListener(() {
       setState(() {});
@@ -40,6 +42,10 @@ class _ArticlePageState extends State<ArticlePage> {
 
   @override
   void initState() {
+    isLiked = widget.articleInfo.isLiked;
+    if (isLiked) {
+      likeAdd = 0;
+    }
     isShowGrammar = false;
     isWidgetIsShown = false;
     helper = ArticleHelper();
@@ -73,7 +79,6 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget body() {
     List<Widget> widgetList = [];
     isWidgetIsShown = false;
-    widgetList.add(addVerticalSpace(20));
     for (int i = 0; i < helper.paragraphs.length; i++) {
       var paragraph = helper.paragraphs[i];
       if (!helper.valueKeys.containsKey(paragraph)) {
@@ -99,63 +104,257 @@ class _ArticlePageState extends State<ArticlePage> {
     }
 
     return Column(
+      mainAxisSize: MainAxisSize.max,
       children: [
-        CarouselSlider.builder(
-          itemCount: widget.articleInfo.slideImages.length,
-          itemBuilder: (ctx, index, realIdx) {
-            //var inner = onboardingList[currentCarouselIndex.value];
-            //return createChildren(inner, currentCarouselIndex);
-            return Container();
-          },
-          options: CarouselOptions(
-              autoPlay: false,
-              enlargeCenterPage: false,
-              height: 200,
-              viewportFraction: 1.0,
-              onPageChanged: (index, reason) {
-                currentCarouselIndex = index;
-              }),
+        AspectRatio(
+          aspectRatio: 3 / 2,
+          child: SizedBox(
+            width: double.infinity,
+            child: Stack(
+              children: [
+                CarouselSlider.builder(
+                  itemCount: widget.articleInfo.slideImages.length,
+                  itemBuilder: (ctx, index, realIdx) {
+                    return FittedBox(
+                      fit: BoxFit.fill,
+                      child: Image.network(
+                        widget.articleInfo.slideImages[index].slideImageUrl,
+                      ),
+                    );
+                  },
+                  options: CarouselOptions(
+                      autoPlay: false,
+                      enlargeCenterPage: false,
+                      aspectRatio: 3 / 2,
+                      viewportFraction: 1.0,
+                      onPageChanged: (index, reason) {
+                        currentCarouselIndex = int.parse(widget
+                                .articleInfo.slideImages[index].ordering) -
+                            1;
+                        setState(() {});
+                      }),
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  const Spacer(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: widget.articleInfo.slideImages.map((entry) {
+                      return Container(
+                        width: 12.0,
+                        height: 12.0,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 4.0),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(
+                                currentCarouselIndex ==
+                                        int.parse(entry.ordering) - 1
+                                    ? 1
+                                    : 0.5)),
+                      );
+                    }).toList(),
+                  ),
+                  addVerticalSpace(5)
+                ]),
+              ],
+            ),
+          ),
         ),
-        ListView.builder(
-            itemCount: widgetList.length,
-            itemBuilder: (context, index) {
-              return widgetList[index];
-            })
+        statistikWidget(),
+        const Divider(thickness: 1, color: Color.fromRGBO(199, 201, 217, 1)),
+        articleTitle(),
+        Expanded(
+            child: ListView.builder(
+          shrinkWrap: true,
+          addAutomaticKeepAlives: true,
+          itemCount: widgetList.length,
+          itemBuilder: (context, index) {
+            return widgetList[index];
+          },
+        )),
+        bottomLike()
       ],
     );
   }
 
+  Widget bottomLike() {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.white,
+        ),
+        color: Colors.white,
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(40),
+          topLeft: Radius.circular(40),
+        ),
+      ),
+      child: Center(
+        child: SizedBox(
+          height: 52,
+          width: 180, // <-- match_parent
+          child: ElevatedButton(
+            style: TextButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(101, 115, 219, 1),
+              primary: Colors.black87,
+              splashFactory: InkRipple.splashFactory,
+              elevation: 5,
+              minimumSize: const Size(88, 36),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              ),
+            ),
+            onPressed: () {
+              UnitRepository()
+                  .setArticleLike(widget.articleInfo.articleId, isLiked ? 1 : 0)
+                  .then((value) {
+                if (value == 'success') {
+                  isLiked = !isLiked;
+                  if (widget.articleInfo.isLiked) {
+                    likeAdd = isLiked ? 0 : -1;
+                  } else {
+                    likeAdd = isLiked ? 1 : 0;
+                  }
+                  setState(() {});
+                }
+              });
+            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.favorite_border,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                const SizedBox(width: 20),
+                const Text(
+                  'Хадгалах',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Roboto',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget articleTitle() {
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Center(
+            child: Text(widget.articleInfo.articleTitle,
+                style: const TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: colorPrimary))));
+  }
+
+  Widget statistikWidget() {
+    print(widget.articleInfo.categoryIcon);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // CachedNetworkImage(
+          //   imageUrl: widget.articleInfo.categoryIcon,
+          //   imageBuilder: (context, imageProvider) => Container(
+          //     decoration: BoxDecoration(
+          //       image: DecorationImage(
+          //         image: imageProvider,
+          //         fit: BoxFit.fill,
+          //       ),
+          //     ),
+          //   ),
+          //   placeholder: (context, url) => const CircularProgressIndicator(),
+          //   errorWidget: (context, url, error) => const Icon(
+          //     Icons.error,
+          //     color: Color(0xff4F4F4F),
+          //     size: 20,
+          //   ),
+          //   width: 20,
+          //   height: 20,
+          // ),
+          const Icon(
+            Icons.folder_open,
+            color: Color(0xff4F4F4F),
+            size: 20,
+          ),
+          addHorizontalSpace(8),
+          Text(
+            widget.articleInfo.categoryName,
+            style: textStyle,
+          ),
+          addHorizontalSpace(16),
+          const Icon(
+            Icons.remove_red_eye,
+            color: Color(0xff4F4F4F),
+            size: 20,
+          ),
+          addHorizontalSpace(8),
+          Text(
+            '${widget.articleInfo.viewCount} views',
+            style: textStyle,
+          ),
+          addHorizontalSpace(16),
+          const Icon(
+            Icons.favorite_outline_outlined,
+            color: Color(0xff4F4F4F),
+            size: 20,
+          ),
+          addHorizontalSpace(8),
+          Text(
+            '${int.parse(widget.articleInfo.likeCount) + likeAdd} likes',
+            style: textStyle,
+          )
+        ],
+      ),
+    );
+  }
+
+  var textStyle = const TextStyle(
+      color: Color(0xff4F4F4F),
+      fontSize: 15,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.normal);
+
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SizedBox(
-        height: BaseCueHelper().getMaxHeight(
-            [paragraph],
-            true,
-            const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            helper.width),
-        child: ReadingParagraph(
-            paragraph,
-            (word, position) {
-              wordCallBack(word, position);
-              if (helper.lastIndex > -1 && helper.lastIndex != index) {
-                helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
-                    helper.valueKeys[helper.paragraphs[helper.lastIndex]]! + 1;
-              }
-              helper.lastIndex = index;
-              refreshView.value = !refreshView.value;
-            },
-            (paragraph) {
-              selectedParagraph = paragraph;
-            },
-            tailWidget(selectParagraph),
-            (paragraph) {
-              callBackParagraph(paragraph);
-            },
-            selectParagraph,
-            const Color.fromRGBO(51, 5, 51, 1),
-            key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
-      ),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+      child: ReadingParagraph(
+          paragraph,
+          (word, position) {
+            wordCallBack(word, position);
+            if (helper.lastIndex > -1 && helper.lastIndex != index) {
+              helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
+                  helper.valueKeys[helper.paragraphs[helper.lastIndex]]! + 1;
+            }
+            helper.lastIndex = index;
+            refreshView.value = !refreshView.value;
+          },
+          (paragraph) {
+            selectedParagraph = paragraph;
+          },
+          tailWidget(selectParagraph),
+          (paragraph) {
+            callBackParagraph(paragraph);
+          },
+          selectParagraph,
+          const Color.fromRGBO(51, 5, 51, 1),
+          key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
     );
   }
 

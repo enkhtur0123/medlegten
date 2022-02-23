@@ -4,6 +4,7 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/animatedtext.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
@@ -37,13 +38,12 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   final selectedIndex = [0, 1, 0];
   late TabController _controller;
   late VideoPlayerController _videoPlayerController;
-  double _fontSize = 16;
   @override
   void initState() {
     _controller =
         TabController(length: widget.unitGrammar.grammar.length, vsync: this);
     _videoPlayerController = VideoPlayerController.network(helper.avatarUrl);
-
+    //qVideoPlayerController.asset('assets/A1-U1-INTRO.mp4');
     _videoPlayerController
       ..setLooping(false)
       ..initialize().then((value) {
@@ -80,9 +80,9 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       if (blink <= _duration) {
         helper.selectedLabelId = selectedIndex[1];
         selectedIndex[1] = selectedIndex[1] + 1;
-        _fontSize = refreshView.value ? 18 : 16;
         //dioRepository.snackBar('At seconds: $blink');
         refreshView.value = !refreshView.value;
+        //} else if (blink <= _duration + 2) {
       } else if (helper.selectedLabelId > 0) {
         helper.selectedLabelId = -1;
         refreshView.value = !refreshView.value;
@@ -333,44 +333,40 @@ class _GrammarTablePageState extends State<GrammarTablePage>
     var widget = Align(
       key: globalKey,
       alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
-        decoration: BoxDecoration(
-            border: Border.all(color: const Color.fromRGBO(199, 201, 217, .5)
-                //   isLight
-                //     ? const Color.fromRGBO(51, 51, 51, 1) :
-                ),
-            borderRadius: const BorderRadius.all(Radius.circular(20.0))),
-        child: isLight
-            ? AnimatedDefaultTextStyle(
-                child: Text(partLabel, textAlign: TextAlign.center),
-                curve: Curves.bounceOut,
-                style: TextStyle(
-                    color: const Color.fromRGBO(0, 0, 0, 1),
-                    fontFamily: 'Roboto',
-                    fontSize: _fontSize,
-                    fontWeight: FontWeight.w500),
-                duration: const Duration(milliseconds: 500),
+      child: isLight
+          ? Container(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+              decoration: BoxDecoration(
+                  border:
+                      Border.all(color: const Color.fromRGBO(120, 100, 254, 1)),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+              child: AnimatedTextWidget(partLabel)
+              // BlinkWidget([
+              //     Text(
+              //       partLabel,
+              //       style: const TextStyle(
+              //           color: Color.fromRGBO(0, 0, 0, 1),
+              //           fontFamily: 'Roboto',
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.w800),
+              //     ),
+              //     Text(
+              //       partLabel,
+              //       style: const TextStyle(
+              //           color: Color.fromRGBO(0, 0, 0, 1),
+              //           fontFamily: 'Roboto',
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.w500),
+              //     )
+              //   ])
               )
-            // BlinkWidget([
-            //     Text(
-            //       partLabel,
-            //       style: const TextStyle(
-            //           color: Color.fromRGBO(0, 0, 0, 1),
-            //           fontFamily: 'Roboto',
-            //           fontSize: 18,
-            //           fontWeight: FontWeight.w800),
-            //     ),
-            //     Text(
-            //       partLabel,
-            //       style: const TextStyle(
-            //           color: Color.fromRGBO(0, 0, 0, 1),
-            //           fontFamily: 'Roboto',
-            //           fontSize: 16,
-            //           fontWeight: FontWeight.w500),
-            //     )
-            //   ])
-            : Text(
+          : Container(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromRGBO(199, 201, 217, .5)),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+              child: Text(
                 partLabel,
                 style: const TextStyle(
                     color: Color.fromRGBO(0, 0, 0, 1),
@@ -378,7 +374,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                     fontSize: 16,
                     fontWeight: FontWeight.w500),
               ),
-      ),
+            ),
     );
     helper.labelWidgets[Tuple2<Grammar, int>(grammar, labelIndex)] = globalKey;
     return widget;
