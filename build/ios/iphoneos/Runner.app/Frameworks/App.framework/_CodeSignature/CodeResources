@@ -18,7 +18,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		GsGifEbwe7kI5Bm86kczrF+0R7g=
+		v9m62E5bVTVVWji3sUeBBhAsRWs=
 		</data>
 		<key>flutter_assets/assets/.DS_Store</key>
 		<data>
@@ -216,14 +216,6 @@
 		<data>
 		33xe6rFwPlxRnZOgZWsODADpUI4=
 		</data>
-		<key>flutter_assets/isolate_snapshot_data</key>
-		<data>
-		7Jt1VzUkTmBMIqzT8+Exp0F3vXU=
-		</data>
-		<key>flutter_assets/kernel_blob.bin</key>
-		<data>
-		MVZPXx1A7D8ESagYidYJn1ZeKSg=
-		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
 		P7bb/oR3EhwqCIH1M6LyTuBIWYU=
@@ -288,10 +280,6 @@
 		<data>
 		4X7PZ95hkgUE15GU2+5c1VKgHP0=
 		</data>
-		<key>flutter_assets/vm_snapshot_data</key>
-		<data>
-		cuieaQ9j+9gCTKYPRhW1tc4y4co=
-		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -321,11 +309,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			GsGifEbwe7kI5Bm86kczrF+0R7g=
+			v9m62E5bVTVVWji3sUeBBhAsRWs=
 			</data>
 			<key>hash2</key>
 			<data>
-			KGXj7viyeaUAJuuvradpX7WegAjZMMv8pDDK9MryYmE=
+			OZjKInD2TPrnFSkun3m7gYLMMzVkCVMHrLjW1yMnoVQ=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/Poppins-Light.ttf</key>
@@ -812,28 +800,6 @@
 			0E0I/gLatnGI9y4elyWPSg2LWYJSPgLt6hMvgJD5+rQ=
 			</data>
 		</dict>
-		<key>flutter_assets/isolate_snapshot_data</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			7Jt1VzUkTmBMIqzT8+Exp0F3vXU=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZFODmTeagWrvsG4zM70kE2pUuv9LC65LEG0iTLSZR8s=
-			</data>
-		</dict>
-		<key>flutter_assets/kernel_blob.bin</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			MVZPXx1A7D8ESagYidYJn1ZeKSg=
-			</data>
-			<key>hash2</key>
-			<data>
-			qLXvCtFxzvwUGxRVXbGajO926aTT+LqwpsXKZHE5kjI=
-			</data>
-		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<dict>
 			<key>hash</key>
@@ -1008,17 +974,6 @@
 			<key>hash2</key>
 			<data>
 			3OTu8LGXtkCtaqqyIo7h7n3M+L1ta13lSE3RvRZDCng=
-			</data>
-		</dict>
-		<key>flutter_assets/vm_snapshot_data</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			cuieaQ9j+9gCTKYPRhW1tc4y4co=
-			</data>
-			<key>hash2</key>
-			<data>
-			nc7zSGd5LPg51+X2B4gM/FLTg8moyL55+ErAW3mTHI0=
 			</data>
 		</dict>
 	</dict>

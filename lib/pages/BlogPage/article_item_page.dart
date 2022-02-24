@@ -23,11 +23,20 @@ class ArticleItemPage extends HookWidget {
       child: Container(
         padding: const EdgeInsets.all(15),
         margin: const EdgeInsets.all(15),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(
             Radius.circular(8),
-          )),
+          ),
+          boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(2, 2), // changes position of shadow
+                ),
+              ],
+          ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
@@ -104,7 +113,8 @@ class ArticleItemPage extends HookWidget {
                       ),
                       viewWithLikeWidget(
                           iconData: Icons.favorite_outline_outlined,
-                          text: articleItem!.likeCount.toString() + " likes")
+                          text: articleItem!.likeCount.toString() + " likes"),
+                         
                     ],
                   ),
                 ],

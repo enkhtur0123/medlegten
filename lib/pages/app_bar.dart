@@ -55,34 +55,47 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset("assets/svg/logo.svg"),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      const Text(
-                        "МЭДЛЭГТЭН",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(Icons.notifications_active),
-                  ),
-                ],
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SvgPicture.asset("assets/svg/logo.svg"),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        const Text(
+                          "МЭДЛЭГТЭН",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    Stack(children: [
+                     const Icon(Icons.notifications),
+                      Positioned.fill(
+                          child: Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                // margin: EdgeInsets.only(bottom: 10),
+                                  // decoration: BoxDecoration(
+                                  //     color: Colors.red,
+                                  //     shape: BoxShape.circle),
+                                  // child: Text("+9")
+                                  ),),
+                                  )
+                    ])
+                  ],
+                ),
               ),
               ref.read(appbarProvider.notifier).appBarState.isRichText!
                   ? RichText(

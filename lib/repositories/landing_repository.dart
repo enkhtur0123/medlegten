@@ -2,6 +2,7 @@ import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Landing/course_unit_module_list.dart';
 import 'package:medlegten/models/Landing/customer_review.dart';
+import 'package:medlegten/models/Landing/last_seen.dart';
 import 'package:medlegten/models/Landing/quiz_history.dart';
 import 'package:medlegten/models/Landing/self_quiz.dart';
 import 'package:medlegten/repositories/repository.dart';
@@ -9,6 +10,21 @@ import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class LandingRepository {
+  Future<LastSeen> getLastSeen() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'UserInfo/LastSeen');
+      if (res['isSuccess']) {
+        return LastSeen.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
   Future<List<CourseUnitModuleList>?> getCourseUnitModuleList(String id) async {
     try {
       final res = await HttpHelper().getUrl(url: 'Course/UnitModule/$id');

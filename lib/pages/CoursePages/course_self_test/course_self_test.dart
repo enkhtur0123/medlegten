@@ -134,7 +134,7 @@ class CourseSelfTestPage extends HookWidget {
           builder: (BuildContext context) {
             return const CustomPopUpDialog(
                 title: "Амжилттай",
-                body: "Шалгалтаа амжилттай гүйцэтгэлээ",
+                body: "Хүсэлт амжилттай илгээгдлээ",
                 isSuccess: true);
           });
     } else {

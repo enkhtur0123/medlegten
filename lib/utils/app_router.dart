@@ -30,6 +30,7 @@ import 'package:medlegten/pages/CoursePages/courses/course_detail.dart';
 import 'package:medlegten/pages/CoursePages/payment/buy_course.dart';
 import 'package:medlegten/pages/CoursePages/payment/qpay_page.dart';
 import 'package:medlegten/pages/LandingPages/landing_page.dart';
+import 'package:medlegten/pages/LandingPages/promotion_detail.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/login.dart';
 import 'package:medlegten/pages/StartPages/onboarding_page.dart';
@@ -71,6 +72,8 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/blog/all', page: ArticleVerticalPage),
     AutoRoute(
         path: '/blog/articledetail/article_detail_page', page: ArticlePage),
+        AutoRoute(
+        path: '/promotion/detail', page: PromotionDetailPage),
     // QpayPage
   ],
 )

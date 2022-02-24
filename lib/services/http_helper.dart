@@ -1,7 +1,12 @@
 // ignore_for_file: empty_catches
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+
+
 import 'package:get_storage/get_storage.dart';
+import 'package:medlegten/navigator/navigator_key.dart';
+
 import 'package:medlegten/services/custom_exception.dart';
 
 class HttpHelper {
@@ -20,8 +25,9 @@ class HttpHelper {
       // If you want to reject the request with a error message,
       // you can reject a `DioError` object eg: `handler.reject(dioError)`
     }, onResponse: (response, handler) {
-      // if (response.data != null && response.data["errorCode"]=="401") {
-        // GetStorage().remove("token");
+      // if (response.data != null && response.data["errorCode"] == "401") {
+      //   GetStorage().remove("token");
+      
       // }
       // Do something with response data
       return handler.next(response); // continue
