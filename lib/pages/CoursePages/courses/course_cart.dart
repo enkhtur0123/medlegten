@@ -172,8 +172,10 @@ courseBgImg(context, CourseInfo courseInfo) {
                         .setCoursePlan(id: courseInfo.courseId)
                         .then((value) {
                       if (value != null) {
-                        AutoRouter.of(context)
-                            .push(CourseDetailRoute(courseInfo: courseInfo));
+                       AutoRouter.of(context).push(PaymentRoute(
+                            courseInfo: courseInfo,
+                            paymentType: "1001",
+                            isCourse: true));
                       }
                     }).catchError((onError) {
                       // print(onError);

@@ -19,13 +19,13 @@ class LevelVideoListPage extends HookWidget {
         future: VideoRepository().getLevelAllEvent(level_id: levelId),
         builder: (context, AsyncSnapshot<List<Event>?> snapshot) {
           if (snapshot.hasData) {
-            return Container(
-              margin: const EdgeInsets.only(top: 20),
+            return SizedBox(
               child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    return SizedBox(
+                    return Container(
+                      margin: const EdgeInsets.only(left: 20,right: 20,top: 15),
                       width: double.infinity,
                       height: MediaQuery.of(context).size.width * 0.58,
                       child: LevelEventItem(

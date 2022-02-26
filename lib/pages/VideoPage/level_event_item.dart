@@ -32,12 +32,14 @@ class LevelEventItem extends HookWidget {
               title: movies[0].contentName,
               isSerial: event!.isSerial == "1" ? true : false));
         } else {
-          AutoRouter.of(context).push(PaymentRoute(
-              courseInfo: null,
-              paymentType: "1004",
-              contendId: paymentInfo.productId,
-              isCourse: false,
-              paymentInfo: paymentInfo));
+          AutoRouter.of(context).push(
+            PaymentRoute(
+                courseInfo: null,
+                paymentType: "1002",
+                contendId: paymentInfo.productId,
+                isCourse: false,
+                paymentInfo: paymentInfo),
+          );
         }
       },
       child: Container(
@@ -129,18 +131,17 @@ Widget getEventInfo({required Event event}) {
               fit: FlexFit.tight,
               flex: 7,
               child: InfoItemWidget(
-                  iconData: Icons.access_time_sharp,
-                  text: TimeConvertHelper().timeConvert(
-                      time: int.parse(
-                          event.runTime != "" ? event.runTime : "0"))),
+                iconData: Icons.access_time_sharp,
+                text: TimeConvertHelper().timeConvert(
+                  time: int.parse(event.runTime != "" ? event.runTime : "0"),
+                ),
+              ),
             ),
-            const SizedBox(width: 15),
             Flexible(
-                fit: FlexFit.tight,
-                flex: 3,
-                child:
-                    InfoItemWidget(isSvg: true, text: event.vocabularyCount)),
-            const SizedBox(width: 3),
+              fit: FlexFit.tight,
+              flex: 3,
+              child: InfoItemWidget(isSvg: true, text: event.vocabularyCount),
+            ),
             Flexible(
               fit: FlexFit.tight,
               flex: 8,
@@ -157,6 +158,7 @@ Widget getEventInfo({required Event event}) {
 // ignore: non_constant_identifier_names
 Widget InfoItemWidget({IconData? iconData, String? text, bool? isSvg = false}) {
   return Row(
+    mainAxisSize: MainAxisSize.min,
     children: [
       !isSvg!
           ? Icon(

@@ -17,7 +17,7 @@ class CourseIntroWidget extends StatelessWidget {
       child: ExpandablePanel(
         header: Text(
           courseInfo!.courseName,
-          style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w500),
+          style: const TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w500),
         ),
         collapsed: Column(
           children: [
@@ -45,8 +45,6 @@ class CourseIntroWidget extends StatelessWidget {
     return Row(
       children: [
         const IconText(Icons.remove_red_eye_outlined, '1233 views'),
-        addHorizontalSpace(20),
-        const IconText(CupertinoIcons.heart, '456 Likes'),
         addHorizontalSpace(20),
         IconText(Icons.timer, courseInfo!.hours + " цаг"),
       ],

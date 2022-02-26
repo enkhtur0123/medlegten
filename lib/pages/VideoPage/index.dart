@@ -32,7 +32,7 @@ class VideoPageState extends State<VideoPage> {
               } else {
                 return Container();
               }
-            }),
+        }),
         FutureBuilder(
             future: VideoRepository().getLevelEvent(),
             builder: (context, snapshot) {
@@ -42,7 +42,7 @@ class VideoPageState extends State<VideoPage> {
               } else {
                 return Container();
               }
-            }),
+        }),
       ],
     );
   }

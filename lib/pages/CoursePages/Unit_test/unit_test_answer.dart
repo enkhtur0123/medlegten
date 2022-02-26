@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/Landing/quiz_answer.dart';
 import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_helper.dart';
 
+// ignore: must_be_immutable
 class UnitTestAnswerItem extends HookWidget {
   UnitTestAnswerItem(this.callBack,
       {Key? key, this.answer, this.quizQuestionEx, this.duussan})
@@ -21,7 +22,6 @@ class UnitTestAnswerItem extends HookWidget {
   Widget build(BuildContext context) {
     var state = useState(-1);
     var isSelected = useState(false);
-    // print(quizQuestionEx!.selectedAnswerId);
     useEffect(() {
       isSelected.value = int.parse(answer!.ordering) == state.value ||
           quizQuestionEx!.selectedAnswerId == answer!.answerId;

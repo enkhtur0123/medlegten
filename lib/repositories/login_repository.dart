@@ -125,6 +125,7 @@ class LoginRepository implements ILoginRepository {
             'birthDate': ''
           }),
         );
+        // print(res);
         if (res['isSuccess']) {
           GetStorage().write('token', res['token']);
           // print(res['token']);
@@ -153,6 +154,9 @@ class LoginRepository implements ILoginRepository {
   Future<bool> checkValid() async {
     try {
       final res = await HttpHelper().getUrl(url: 'UserInfo');
+      if (res['errorCode'] == 401) {
+       await GetStorage().remove("token");
+      }
       return res['errorCode'] == '200';
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());

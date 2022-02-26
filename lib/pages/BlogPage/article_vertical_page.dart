@@ -26,7 +26,6 @@ class ArticleVerticalPage extends HookWidget {
             if (snapshot.hasData) {
               return Container(
                 margin: const EdgeInsets.all(20),
-                width: double.infinity - 300,
                 child: ListView(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,

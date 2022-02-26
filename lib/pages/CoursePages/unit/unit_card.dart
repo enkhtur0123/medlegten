@@ -15,13 +15,13 @@ class UnitCart extends HookWidget {
   const UnitCart({Key? key, this.courseInfo, this.unitInfo}) : super(key: key);
   final CourseUnit? unitInfo;
   final CourseInfo? courseInfo;
-  
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
         if (unitInfo!.openUnit) {
-          if (unitInfo!.hasTrial == "0" || courseInfo!.isPurchased) {
+          if (unitInfo!.hasTrial == "1" || courseInfo!.isPurchased) {
             AutoRouter.of(context)
                 .push(CourseUnitModuleListRoute(unitInfo: unitInfo!));
           } else {
@@ -45,7 +45,9 @@ class UnitCart extends HookWidget {
             });
           }
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Таны Өнөөдрийн эрх дууссан байна",));
+          ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+            text: "Таны Өнөөдрийн эрх дууссан байна",
+          ));
         }
       },
       child: Card(
@@ -107,14 +109,14 @@ class UnitCart extends HookWidget {
   ///Unit Status
   getUnitStatusWidget() {
     if (courseInfo!.isPurchased) {
-      if (unitInfo!.isCompleted) {
+     if (unitInfo!.isCompleted) {
         return iconCompleted();
       } else {
         return iconLocked();
       }
     } else {
-      if (unitInfo!.hasTrial == '0') {
-        return iconFree();
+      if (unitInfo!.hasTrial == '1') {
+        return iconCompleted();
       } else {
         return iconLocked();
       }

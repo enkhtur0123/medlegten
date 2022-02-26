@@ -43,7 +43,7 @@ class CoursePaymentRepository {
     try {
       var res = await HttpHelper().postUrl(url: 'Payments', body: body);
       if (res['isSuccess']) {
-        return [res["qpay"]["urls"], res["qpay"]["invoice_id"]];
+        return [res["qpay"]["urls"], res["invoiceNo"]];
       } else {
         return [];
       }

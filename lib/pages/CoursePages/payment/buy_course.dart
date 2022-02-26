@@ -6,6 +6,7 @@ import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/repositories/payment_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/loader.dart';
 import 'package:medlegten/widgets/my_textfield.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
@@ -154,6 +155,7 @@ class PaymentState extends State<PaymentPage> {
   }
 
   void checkCouponCode() {
+    LoadingIndicator(context: context).showLoadingIndicator();
     CoursePaymentRepository()
         .checkCouponCode(
             courseInfo: widget.courseInfo,
@@ -161,6 +163,7 @@ class PaymentState extends State<PaymentPage> {
             paymentInfo: widget.paymentInfo,
             isCourse: widget.isCourse)
         .then((value) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
       if (value != null) {
         couponCode = value["coupon"]["couponCode"];
         price = value["coupon"]["price"];
@@ -175,6 +178,7 @@ class PaymentState extends State<PaymentPage> {
         );
       }
     }).catchError((onError) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
       ScaffoldMessenger.of(context).showSnackBar(
         MySnackBar(
           text: "Купон кодоо шалгана уу",
