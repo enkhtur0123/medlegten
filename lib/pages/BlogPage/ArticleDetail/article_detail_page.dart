@@ -12,7 +12,7 @@ import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/global.dart';
 import 'dart:math' as math;
-
+import 'dart:ui';
 import 'article_helper.dart';
 import 'article_translate.dart';
 
@@ -179,7 +179,10 @@ class _ArticlePageState extends State<ArticlePage> {
   }
 
   Widget bottomLike() {
-    return Container(
+    return //BackdropFilter(
+        //filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        //child:
+        Container(
       padding: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         border: Border.all(
@@ -245,6 +248,7 @@ class _ArticlePageState extends State<ArticlePage> {
             ),
           ),
         ),
+        //),
       ),
     );
   }
