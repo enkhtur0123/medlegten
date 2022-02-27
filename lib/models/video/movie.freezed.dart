@@ -23,20 +23,20 @@ class _$MovieTearOff {
   const _$MovieTearOff();
 
   _Movie call(
-      String contentId,
-      String contentName,
-      String categoryId,
-      String categoryName,
-      String levelId,
-      String levelName,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String hostUrl,
-      String hostType,
-      String runTime,
-      String movieId) {
+      String? contentId,
+      String? contentName,
+      String? categoryId,
+      String? categoryName,
+      String? levelId,
+      String? levelName,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? hostUrl,
+      String? hostType,
+      String? runTime,
+      String? movieId) {
     return _Movie(
       contentId,
       contentName,
@@ -65,20 +65,20 @@ const $Movie = _$MovieTearOff();
 
 /// @nodoc
 mixin _$Movie {
-  String get contentId => throw _privateConstructorUsedError;
-  String get contentName => throw _privateConstructorUsedError;
-  String get categoryId => throw _privateConstructorUsedError;
-  String get categoryName => throw _privateConstructorUsedError;
-  String get levelId => throw _privateConstructorUsedError;
-  String get levelName => throw _privateConstructorUsedError;
-  String get vocabularyCount => throw _privateConstructorUsedError;
-  String get imgUrl => throw _privateConstructorUsedError;
-  String get intro => throw _privateConstructorUsedError;
-  String get isSerial => throw _privateConstructorUsedError;
-  String get hostUrl => throw _privateConstructorUsedError;
-  String get hostType => throw _privateConstructorUsedError;
-  String get runTime => throw _privateConstructorUsedError;
-  String get movieId => throw _privateConstructorUsedError;
+  String? get contentId => throw _privateConstructorUsedError;
+  String? get contentName => throw _privateConstructorUsedError;
+  String? get categoryId => throw _privateConstructorUsedError;
+  String? get categoryName => throw _privateConstructorUsedError;
+  String? get levelId => throw _privateConstructorUsedError;
+  String? get levelName => throw _privateConstructorUsedError;
+  String? get vocabularyCount => throw _privateConstructorUsedError;
+  String? get imgUrl => throw _privateConstructorUsedError;
+  String? get intro => throw _privateConstructorUsedError;
+  String? get isSerial => throw _privateConstructorUsedError;
+  String? get hostUrl => throw _privateConstructorUsedError;
+  String? get hostType => throw _privateConstructorUsedError;
+  String? get runTime => throw _privateConstructorUsedError;
+  String? get movieId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -90,20 +90,20 @@ abstract class $MovieCopyWith<$Res> {
   factory $MovieCopyWith(Movie value, $Res Function(Movie) then) =
       _$MovieCopyWithImpl<$Res>;
   $Res call(
-      {String contentId,
-      String contentName,
-      String categoryId,
-      String categoryName,
-      String levelId,
-      String levelName,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String hostUrl,
-      String hostType,
-      String runTime,
-      String movieId});
+      {String? contentId,
+      String? contentName,
+      String? categoryId,
+      String? categoryName,
+      String? levelId,
+      String? levelName,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? hostUrl,
+      String? hostType,
+      String? runTime,
+      String? movieId});
 }
 
 /// @nodoc
@@ -135,59 +135,59 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
       contentId: contentId == freezed
           ? _value.contentId
           : contentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       contentName: contentName == freezed
           ? _value.contentName
           : contentName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryId: categoryId == freezed
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryName: categoryName == freezed
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelId: levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelName: levelName == freezed
           ? _value.levelName
           : levelName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       vocabularyCount: vocabularyCount == freezed
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl: imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       intro: intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isSerial: isSerial == freezed
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       hostUrl: hostUrl == freezed
           ? _value.hostUrl
           : hostUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       hostType: hostType == freezed
           ? _value.hostType
           : hostType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       runTime: runTime == freezed
           ? _value.runTime
           : runTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       movieId: movieId == freezed
           ? _value.movieId
           : movieId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -198,20 +198,20 @@ abstract class _$MovieCopyWith<$Res> implements $MovieCopyWith<$Res> {
       __$MovieCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String contentId,
-      String contentName,
-      String categoryId,
-      String categoryName,
-      String levelId,
-      String levelName,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String hostUrl,
-      String hostType,
-      String runTime,
-      String movieId});
+      {String? contentId,
+      String? contentName,
+      String? categoryId,
+      String? categoryName,
+      String? levelId,
+      String? levelName,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? hostUrl,
+      String? hostType,
+      String? runTime,
+      String? movieId});
 }
 
 /// @nodoc
@@ -244,59 +244,59 @@ class __$MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res>
       contentId == freezed
           ? _value.contentId
           : contentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       contentName == freezed
           ? _value.contentName
           : contentName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryId == freezed
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryName == freezed
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelName == freezed
           ? _value.levelName
           : levelName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       vocabularyCount == freezed
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isSerial == freezed
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       hostUrl == freezed
           ? _value.hostUrl
           : hostUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       hostType == freezed
           ? _value.hostType
           : hostType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       runTime == freezed
           ? _value.runTime
           : runTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       movieId == freezed
           ? _value.movieId
           : movieId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -324,33 +324,33 @@ class _$_Movie implements _Movie {
       _$$_MovieFromJson(json);
 
   @override
-  final String contentId;
+  final String? contentId;
   @override
-  final String contentName;
+  final String? contentName;
   @override
-  final String categoryId;
+  final String? categoryId;
   @override
-  final String categoryName;
+  final String? categoryName;
   @override
-  final String levelId;
+  final String? levelId;
   @override
-  final String levelName;
+  final String? levelName;
   @override
-  final String vocabularyCount;
+  final String? vocabularyCount;
   @override
-  final String imgUrl;
+  final String? imgUrl;
   @override
-  final String intro;
+  final String? intro;
   @override
-  final String isSerial;
+  final String? isSerial;
   @override
-  final String hostUrl;
+  final String? hostUrl;
   @override
-  final String hostType;
+  final String? hostType;
   @override
-  final String runTime;
+  final String? runTime;
   @override
-  final String movieId;
+  final String? movieId;
 
   @override
   String toString() {
@@ -413,51 +413,51 @@ class _$_Movie implements _Movie {
 
 abstract class _Movie implements Movie {
   factory _Movie(
-      String contentId,
-      String contentName,
-      String categoryId,
-      String categoryName,
-      String levelId,
-      String levelName,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String hostUrl,
-      String hostType,
-      String runTime,
-      String movieId) = _$_Movie;
+      String? contentId,
+      String? contentName,
+      String? categoryId,
+      String? categoryName,
+      String? levelId,
+      String? levelName,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? hostUrl,
+      String? hostType,
+      String? runTime,
+      String? movieId) = _$_Movie;
 
   factory _Movie.fromJson(Map<String, dynamic> json) = _$_Movie.fromJson;
 
   @override
-  String get contentId;
+  String? get contentId;
   @override
-  String get contentName;
+  String? get contentName;
   @override
-  String get categoryId;
+  String? get categoryId;
   @override
-  String get categoryName;
+  String? get categoryName;
   @override
-  String get levelId;
+  String? get levelId;
   @override
-  String get levelName;
+  String? get levelName;
   @override
-  String get vocabularyCount;
+  String? get vocabularyCount;
   @override
-  String get imgUrl;
+  String? get imgUrl;
   @override
-  String get intro;
+  String? get intro;
   @override
-  String get isSerial;
+  String? get isSerial;
   @override
-  String get hostUrl;
+  String? get hostUrl;
   @override
-  String get hostType;
+  String? get hostType;
   @override
-  String get runTime;
+  String? get runTime;
   @override
-  String get movieId;
+  String? get movieId;
   @override
   @JsonKey(ignore: true)
   _$MovieCopyWith<_Movie> get copyWith => throw _privateConstructorUsedError;

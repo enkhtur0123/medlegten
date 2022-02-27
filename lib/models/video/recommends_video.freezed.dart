@@ -23,15 +23,15 @@ class _$RecommendVideoTearOff {
   const _$RecommendVideoTearOff();
 
   _RecommendVideo call(
-      String contentId,
-      String contentName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime) {
+      String? contentId,
+      String? contentName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime) {
     return _RecommendVideo(
       contentId,
       contentName,
@@ -55,15 +55,15 @@ const $RecommendVideo = _$RecommendVideoTearOff();
 
 /// @nodoc
 mixin _$RecommendVideo {
-  String get contentId => throw _privateConstructorUsedError;
-  String get contentName => throw _privateConstructorUsedError;
-  String get categoryName => throw _privateConstructorUsedError;
-  String get levelId => throw _privateConstructorUsedError;
-  String get vocabularyCount => throw _privateConstructorUsedError;
-  String get imgUrl => throw _privateConstructorUsedError;
-  String get intro => throw _privateConstructorUsedError;
-  String get isSerial => throw _privateConstructorUsedError;
-  String get runTime => throw _privateConstructorUsedError;
+  String? get contentId => throw _privateConstructorUsedError;
+  String? get contentName => throw _privateConstructorUsedError;
+  String? get categoryName => throw _privateConstructorUsedError;
+  String? get levelId => throw _privateConstructorUsedError;
+  String? get vocabularyCount => throw _privateConstructorUsedError;
+  String? get imgUrl => throw _privateConstructorUsedError;
+  String? get intro => throw _privateConstructorUsedError;
+  String? get isSerial => throw _privateConstructorUsedError;
+  String? get runTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -77,15 +77,15 @@ abstract class $RecommendVideoCopyWith<$Res> {
           RecommendVideo value, $Res Function(RecommendVideo) then) =
       _$RecommendVideoCopyWithImpl<$Res>;
   $Res call(
-      {String contentId,
-      String contentName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime});
+      {String? contentId,
+      String? contentName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime});
 }
 
 /// @nodoc
@@ -113,39 +113,39 @@ class _$RecommendVideoCopyWithImpl<$Res>
       contentId: contentId == freezed
           ? _value.contentId
           : contentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       contentName: contentName == freezed
           ? _value.contentName
           : contentName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryName: categoryName == freezed
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelId: levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       vocabularyCount: vocabularyCount == freezed
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl: imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       intro: intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isSerial: isSerial == freezed
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       runTime: runTime == freezed
           ? _value.runTime
           : runTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -158,15 +158,15 @@ abstract class _$RecommendVideoCopyWith<$Res>
       __$RecommendVideoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String contentId,
-      String contentName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime});
+      {String? contentId,
+      String? contentName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime});
 }
 
 /// @nodoc
@@ -196,39 +196,39 @@ class __$RecommendVideoCopyWithImpl<$Res>
       contentId == freezed
           ? _value.contentId
           : contentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       contentName == freezed
           ? _value.contentName
           : contentName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryName == freezed
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       vocabularyCount == freezed
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isSerial == freezed
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       runTime == freezed
           ? _value.runTime
           : runTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -251,23 +251,23 @@ class _$_RecommendVideo implements _RecommendVideo {
       _$$_RecommendVideoFromJson(json);
 
   @override
-  final String contentId;
+  final String? contentId;
   @override
-  final String contentName;
+  final String? contentName;
   @override
-  final String categoryName;
+  final String? categoryName;
   @override
-  final String levelId;
+  final String? levelId;
   @override
-  final String vocabularyCount;
+  final String? vocabularyCount;
   @override
-  final String imgUrl;
+  final String? imgUrl;
   @override
-  final String intro;
+  final String? intro;
   @override
-  final String isSerial;
+  final String? isSerial;
   @override
-  final String runTime;
+  final String? runTime;
 
   @override
   String toString() {
@@ -319,37 +319,37 @@ class _$_RecommendVideo implements _RecommendVideo {
 
 abstract class _RecommendVideo implements RecommendVideo {
   factory _RecommendVideo(
-      String contentId,
-      String contentName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime) = _$_RecommendVideo;
+      String? contentId,
+      String? contentName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime) = _$_RecommendVideo;
 
   factory _RecommendVideo.fromJson(Map<String, dynamic> json) =
       _$_RecommendVideo.fromJson;
 
   @override
-  String get contentId;
+  String? get contentId;
   @override
-  String get contentName;
+  String? get contentName;
   @override
-  String get categoryName;
+  String? get categoryName;
   @override
-  String get levelId;
+  String? get levelId;
   @override
-  String get vocabularyCount;
+  String? get vocabularyCount;
   @override
-  String get imgUrl;
+  String? get imgUrl;
   @override
-  String get intro;
+  String? get intro;
   @override
-  String get isSerial;
+  String? get isSerial;
   @override
-  String get runTime;
+  String? get runTime;
   @override
   @JsonKey(ignore: true)
   _$RecommendVideoCopyWith<_RecommendVideo> get copyWith =>

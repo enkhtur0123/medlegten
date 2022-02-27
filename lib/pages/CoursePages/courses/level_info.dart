@@ -15,7 +15,7 @@ class LevelInfoWidget extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: const Color(0xff0D18F9).withOpacity(0.15),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(0, 3), // changes position of shadow

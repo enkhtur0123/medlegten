@@ -8,9 +8,9 @@ part of 'last_seen_video.dart';
 
 _$_LastSeenVideo _$$_LastSeenVideoFromJson(Map<String, dynamic> json) =>
     _$_LastSeenVideo(
-      json['contentId'] as String,
-      json['contentName'] as String,
-      json['imgUrl'] as String,
+      json['contentId'] as String?,
+      json['contentName'] as String?,
+      json['imgUrl'] as String?,
     );
 
 Map<String, dynamic> _$$_LastSeenVideoToJson(_$_LastSeenVideo instance) =>

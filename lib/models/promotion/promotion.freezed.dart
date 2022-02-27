@@ -23,7 +23,7 @@ class _$PromotionTearOff {
   const _$PromotionTearOff();
 
   _Promotion call(
-      String promoId, String promoName, String imageUrl, String webUrl) {
+      String? promoId, String? promoName, String? imageUrl, String? webUrl) {
     return _Promotion(
       promoId,
       promoName,
@@ -42,10 +42,10 @@ const $Promotion = _$PromotionTearOff();
 
 /// @nodoc
 mixin _$Promotion {
-  String get promoId => throw _privateConstructorUsedError;
-  String get promoName => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
-  String get webUrl => throw _privateConstructorUsedError;
+  String? get promoId => throw _privateConstructorUsedError;
+  String? get promoName => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
+  String? get webUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,7 +57,8 @@ mixin _$Promotion {
 abstract class $PromotionCopyWith<$Res> {
   factory $PromotionCopyWith(Promotion value, $Res Function(Promotion) then) =
       _$PromotionCopyWithImpl<$Res>;
-  $Res call({String promoId, String promoName, String imageUrl, String webUrl});
+  $Res call(
+      {String? promoId, String? promoName, String? imageUrl, String? webUrl});
 }
 
 /// @nodoc
@@ -79,19 +80,19 @@ class _$PromotionCopyWithImpl<$Res> implements $PromotionCopyWith<$Res> {
       promoId: promoId == freezed
           ? _value.promoId
           : promoId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       promoName: promoName == freezed
           ? _value.promoName
           : promoName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       webUrl: webUrl == freezed
           ? _value.webUrl
           : webUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -102,7 +103,8 @@ abstract class _$PromotionCopyWith<$Res> implements $PromotionCopyWith<$Res> {
           _Promotion value, $Res Function(_Promotion) then) =
       __$PromotionCopyWithImpl<$Res>;
   @override
-  $Res call({String promoId, String promoName, String imageUrl, String webUrl});
+  $Res call(
+      {String? promoId, String? promoName, String? imageUrl, String? webUrl});
 }
 
 /// @nodoc
@@ -125,19 +127,19 @@ class __$PromotionCopyWithImpl<$Res> extends _$PromotionCopyWithImpl<$Res>
       promoId == freezed
           ? _value.promoId
           : promoId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       promoName == freezed
           ? _value.promoName
           : promoName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       webUrl == freezed
           ? _value.webUrl
           : webUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -151,13 +153,13 @@ class _$_Promotion implements _Promotion {
       _$$_PromotionFromJson(json);
 
   @override
-  final String promoId;
+  final String? promoId;
   @override
-  final String promoName;
+  final String? promoName;
   @override
-  final String imageUrl;
+  final String? imageUrl;
   @override
-  final String webUrl;
+  final String? webUrl;
 
   @override
   String toString() {
@@ -195,21 +197,20 @@ class _$_Promotion implements _Promotion {
 }
 
 abstract class _Promotion implements Promotion {
-  factory _Promotion(
-          String promoId, String promoName, String imageUrl, String webUrl) =
-      _$_Promotion;
+  factory _Promotion(String? promoId, String? promoName, String? imageUrl,
+      String? webUrl) = _$_Promotion;
 
   factory _Promotion.fromJson(Map<String, dynamic> json) =
       _$_Promotion.fromJson;
 
   @override
-  String get promoId;
+  String? get promoId;
   @override
-  String get promoName;
+  String? get promoName;
   @override
-  String get imageUrl;
+  String? get imageUrl;
   @override
-  String get webUrl;
+  String? get webUrl;
   @override
   @JsonKey(ignore: true)
   _$PromotionCopyWith<_Promotion> get copyWith =>

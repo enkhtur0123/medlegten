@@ -38,7 +38,7 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
   @override
   void initState() {
     super.initState();
-    movieId = widget.movies![0].movieId;
+    movieId = widget.movies![0].movieId!;
     videoPlayerController!.addListener(() {
       if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
         bottomIsVisible = false;
@@ -83,7 +83,7 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
 
   @override
   onTapIndex(int index) {
-    movieId = widget.movies![index].movieId;
+    movieId = widget.movies![index].movieId!;
     super.initVideoPlayer(changedUrl: widget.movies![index].hostUrl);
     super.subtitleWidget();
   }

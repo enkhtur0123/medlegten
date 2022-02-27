@@ -9,26 +9,37 @@ import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/utils/time_convert_helper.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 class LevelEventItem extends HookWidget {
-  const LevelEventItem({Key? key, this.event, this.edgeInsets})
+  const LevelEventItem(
+      {Key? key, this.event, this.edgeInsets, this.isHome = false})
       : super(key: key);
 
   final Event? event;
   final EdgeInsets? edgeInsets;
+  final bool? isHome;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        var data =
-            await VideoRepository().getContentDetail(contentId: event!.eventId);
+        List data=[];
+        LoadingIndicator(context: context).showLoadingIndicator();
+        try {
+          data = await VideoRepository()
+              .getContentDetail(contentId: !isHome!?event!.eventId:event!.contentId);
+          LoadingIndicator(context: context).hideLoadingIndicator();
+        } catch (ex) {
+          LoadingIndicator(context: context).hideLoadingIndicator();
+        }
+
         List<Movie> movies = data[0];
         PaymentInfo paymentInfo = data[1];
         if (paymentInfo.isPurchased!) {
           AutoRouter.of(context).push(VideoDetailRoute(
               movies: movies,
-              url: movies[0].hostUrl,
+              url: movies[0].hostUrl!,
               title: movies[0].contentName,
               isSerial: event!.isSerial == "1" ? true : false));
         } else {
@@ -84,7 +95,7 @@ class LevelEventItem extends HookWidget {
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
             child: CachedNetworkImage(
-              imageUrl: event!.imgUrl,
+              imageUrl: event?.imgUrl ?? "",
               fit: BoxFit.cover,
               width: double.infinity,
               height: MediaQuery.of(context!).size.width * 0.3,
@@ -100,85 +111,89 @@ class LevelEventItem extends HookWidget {
       ],
     );
   }
-}
 
-Widget getEventInfo({required Event event}) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisSize: MainAxisSize.max,
-    children: [
-      Flexible(
-        flex: 4,
-        child: Text(
-          event.eventName,
-          style: const TextStyle(
-              color: Color(0xff333333),
-              fontSize: 14,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.normal),
-          textAlign: TextAlign.start,
+  Widget getEventInfo({required Event event}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Flexible(
+          flex: 4,
+          child: Text(
+           !isHome!?event.eventName??"":event.contentName??"",
+            style: const TextStyle(
+                color: Color(0xff333333),
+                fontSize: 14,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.normal),
+            textAlign: TextAlign.start,
+          ),
         ),
-      ),
-      const SizedBox(height: 10),
-      Flexible(
-        flex: 4,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 7,
-              child: InfoItemWidget(
-                iconData: Icons.access_time_sharp,
-                text: TimeConvertHelper().timeConvert(
-                  time: int.parse(event.runTime != "" ? event.runTime : "0"),
+        const SizedBox(height: 10),
+        Flexible(
+          flex: 4,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 7,
+                child: InfoItemWidget(
+                  iconData: Icons.access_time_sharp,
+                  text: event.runTime != null && event.runTime != ""
+                      ? TimeConvertHelper().timeConvert(
+                          time: int.parse(event.runTime!),
+                        )
+                      : "",
                 ),
               ),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 3,
-              child: InfoItemWidget(isSvg: true, text: event.vocabularyCount),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 8,
-              child: InfoItemWidget(
-                  iconData: Icons.category_outlined, text: event.categoryName),
-            ),
-          ],
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 3,
+                child: InfoItemWidget(isSvg: true, text: event.vocabularyCount),
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 8,
+                child: InfoItemWidget(
+                    iconData: Icons.category_outlined,
+                    text: event.categoryName),
+              ),
+            ],
+          ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
 // ignore: non_constant_identifier_names
-Widget InfoItemWidget({IconData? iconData, String? text, bool? isSvg = false}) {
-  return Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      !isSvg!
-          ? Icon(
-              iconData!,
-              color: const Color(0xff828282),
-              size: 15,
-            )
-          : SvgPicture.asset("assets/svg/layers.svg"),
-      const SizedBox(
-        width: 5,
-      ),
-      Text(
-        text!,
-        maxLines: 2,
-        style: const TextStyle(
-            color: Color(0xff828282),
-            fontSize: 10,
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.normal),
-      )
-    ],
-  );
+  Widget InfoItemWidget(
+      {IconData? iconData, String? text, bool? isSvg = false}) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        !isSvg!
+            ? Icon(
+                iconData!,
+                color: const Color(0xff828282),
+                size: 15,
+              )
+            : SvgPicture.asset("assets/svg/layers.svg"),
+        const SizedBox(
+          width: 5,
+        ),
+        Text(
+          text!,
+          maxLines: 2,
+          style: const TextStyle(
+              color: Color(0xff828282),
+              fontSize: 10,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.normal),
+        )
+      ],
+    );
+  }
 }

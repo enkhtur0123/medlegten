@@ -6,15 +6,15 @@ part 'recommends_video.g.dart';
 @freezed
 class RecommendVideo with _$RecommendVideo {
   factory RecommendVideo(
-    String contentId,
-      String contentName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime) =
+    String? contentId,
+      String? contentName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime) =
       _RecommendVideo;
 
   factory RecommendVideo.fromJson(Map<String, dynamic> json) =>
