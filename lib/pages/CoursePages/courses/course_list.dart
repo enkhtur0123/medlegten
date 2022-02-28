@@ -10,6 +10,7 @@ import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/TextButton.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 class CourseList extends HookWidget {
   CourseList({Key? key}) : super(key: key);
@@ -40,13 +41,20 @@ class CourseList extends HookWidget {
                           courseInfo,
                           onTap: (String id) async {
                             if (!courseInfo.isCreatedPlan) {
+                              LoadingIndicator(context: context)
+                                  .showLoadingIndicator();
                               await CourseRepository()
                                   .setCoursePlan(id: courseInfo.courseId)
                                   .then((value) {
+                                LoadingIndicator(context: context)
+                                    .hideLoadingIndicator();
                                 if (value != null) {
-                                   AutoRouter.of(context).push(CourseDetailRoute(
+                                  AutoRouter.of(context).push(CourseDetailRoute(
                                       courseInfo: courseInfo));
                                 }
+                              }).catchError((onError) {
+                                LoadingIndicator(context: context)
+                                    .hideLoadingIndicator();
                               });
                             } else {
                               AutoRouter.of(context).push(

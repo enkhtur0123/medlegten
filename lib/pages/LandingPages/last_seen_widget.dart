@@ -62,7 +62,7 @@ class LastSeenWidget extends HookWidget {
           children: [
             shadowContainer(),
             Container(
-              margin: const EdgeInsets.all(15),
+              margin: const EdgeInsets.only(left: 15, bottom: 10, top: 10,right: 20),
               child: getLastSeenItemWidget(
                   title: "Сүүлд уншсан",
                   imgUrl: lastSeen!.lastSeenArticle!.slideImageUrl,
@@ -71,7 +71,7 @@ class LastSeenWidget extends HookWidget {
                   isArticle: true),
             ),
             Container(
-              margin: const EdgeInsets.all(15),
+              margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10,right: 20),
               child: getLastSeenItemWidget(
                   title: "Сүүлд үзсэн",
                   imgUrl: lastSeen!.lastSeenPPV!.imgUrl,
@@ -160,19 +160,20 @@ class LastSeenWidget extends HookWidget {
               PaymentInfo paymentInfo = data[1];
               if (paymentInfo.isPurchased!) {
                 AutoRouter.of(context!).push(VideoDetailRoute(
-                    movies: movies,
-                    url: movies[0].hostUrl!,
-                    title: movies[0].contentName,
-                    // isSerial: lastSeen.lastSeenPPV!.isSerial == "1" ? true : false
-                    ));
+                  movies: movies,
+                  url: movies[0].hostUrl!,
+                  title: movies[0].contentName,
+                  // isSerial: lastSeen.lastSeenPPV!.isSerial == "1" ? true : false
+                ));
               } else {
                 AutoRouter.of(context!).push(
                   PaymentRoute(
-                      courseInfo: null,
-                      paymentType: "1002",
-                      contendId: paymentInfo.productId,
-                      isCourse: false,
-                      paymentInfo: paymentInfo),
+                    courseInfo: null,
+                    paymentType: "1002",
+                    contendId: paymentInfo.productId,
+                    isCourse: false,
+                    paymentInfo: paymentInfo,
+                  ),
                 );
               }
             }
