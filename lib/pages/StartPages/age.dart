@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/wide_button.dart';
+import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
 class AgePage extends HookWidget {
   //DateTime selectedDate = DateTime.now();
@@ -13,6 +14,7 @@ class AgePage extends HookWidget {
   Widget build(BuildContext context) {
     const double paddingTop = 80.0;
     const double paddingRight = 30.0;
+    final textController = useTextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -35,10 +37,13 @@ class AgePage extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     addHorizontalSpace(10),
-                    Text(
-                      'алгасах',
-                      style: TEXT_THEME_DEFAULT.headline1,
-                    )
+                    InkWell(
+                      onTap: () {},
+                      child: Text(
+                        'Алгасах',
+                        style: TEXT_THEME_DEFAULT.headline1,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -55,6 +60,7 @@ class AgePage extends HookWidget {
                 height: 52,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: TextField(
+                  controller: textController,
                   style: const TextStyle(color: colorPrimary),
                   decoration: InputDecoration(
                       hintText: 'Он сар өдөр',
@@ -78,7 +84,15 @@ class AgePage extends HookWidget {
                 ),
               ),
               addVerticalSpace(250),
-              WideButton('Үргэлжлүүлэх', colorSecondary, colorWhite, () {}),
+              WideButton('Үргэлжлүүлэх', colorSecondary, colorWhite, () {
+                if (textController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    MySnackBar(
+                      text: "Огноо оруулна уу!",
+                    ),
+                  );
+                }
+              }),
               addVerticalSpace(20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),

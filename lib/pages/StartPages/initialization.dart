@@ -24,8 +24,8 @@ class InitializationPage extends HookWidget {
     GlobalValues.screenScaleFactor = MediaQuery.of(context).textScaleFactor;
     //final loginState = ref.watch(loginNotifierProvider);
 
-    var str = 'Medlegten app v1.0';
-    //loginState.whenOrNull(
+    var str = 'Medlegten app v0.0';
+    // loginState.whenOrNull(
     //   data: (data) {
     //     if (data is Version) {
     //       str = 'Medlegten app ${data.appVersion}';
@@ -86,8 +86,9 @@ class Init {
     // This is where you can initialize the resources needed by your app while
     // the splash screen is displayed.  Remove the following example because
     // delaying the user experience is a bad design practice!
-    ref.read(loginNotifierProvider.notifier).getAppVersion();
+    //ref.read(loginNotifierProvider.notifier).getAppVersion();
 
     ref.read(authProvider.notifier).login();
+    //Future.delayed(const Duration(milliseconds: 10));
   }
 }

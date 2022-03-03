@@ -35,6 +35,7 @@ import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/login.dart';
 import 'package:medlegten/pages/StartPages/onboarding_page.dart';
 import 'package:medlegten/pages/StartPages/start.dart';
+import 'package:medlegten/pages/StartPages/web_view.dart';
 import 'package:medlegten/pages/VideoPage/level_video_list.dart';
 
 import 'package:medlegten/pages/VideoPage/video_detail.dart';
@@ -72,8 +73,8 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/blog/all', page: ArticleVerticalPage),
     AutoRoute(
         path: '/blog/articledetail/article_detail_page', page: ArticlePage),
-        AutoRoute(
-        path: '/promotion/detail', page: PromotionDetailPage),
+    AutoRoute(path: '/promotion/detail', page: PromotionDetailPage),
+    AutoRoute(path: '/web_view', page: WebViewPage),
     // QpayPage
   ],
 )

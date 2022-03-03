@@ -4,6 +4,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 import 'medlegten_vertical.dart';
 
@@ -45,7 +46,7 @@ class StartPage extends StatelessWidget {
                       height: 5,
                     ),
                     const Text(
-                      'by Entertaining Way',
+                      'in Entertaining Way',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color.fromRGBO(48, 53, 159, 1),
@@ -76,9 +77,7 @@ class StartPage extends StatelessWidget {
                       const Spacer(
                         flex: 2,
                       ),
-                      WideButton(
-                          "Нэвтрэх",
-                          ColorTable.color120_100_254,
+                      WideButton("Нэвтрэх", ColorTable.color120_100_254,
                           ColorTable.color255_255_255, () {
                         AutoRouter.of(context).push(const LoginRoute());
                       }),
@@ -89,12 +88,14 @@ class StartPage extends StatelessWidget {
                           "Мэдлэгтэн гэж юу вэ?",
                           ColorTable.color255_255_255,
                           ColorTable.color120_100_254, () async {
-                        final onboardingList =
-                            await LoginRepository().getOnboardingInfo();
-                        if (onboardingList != null) {
-                          AutoRouter.of(context).push(
-                              OnboardingRoute(onboardingList: onboardingList));
-                        }
+                        showLoading(context: context, isLoad: true);
+                        LoginRepository().getOnboardingInfo().then((value) {
+                          showLoading(context: context, isLoad: false);
+                          AutoRouter.of(context)
+                              .push(OnboardingRoute(onboardingList: value!));
+                        }).catchError((onError) {
+                          showLoading(context: context, isLoad: false);
+                        });
                       }),
                       const Spacer(
                         flex: 2,
@@ -108,5 +109,13 @@ class StartPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  showLoading({bool? isLoad, BuildContext? context}) {
+    if (isLoad!) {
+      LoadingIndicator(context: context).showLoadingIndicator();
+    } else {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+    }
   }
 }
