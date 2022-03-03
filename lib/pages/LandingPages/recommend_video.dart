@@ -20,12 +20,15 @@ class RecommendVideos extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Recommend videos",
-            style: TextStyle(
-                fontSize: 14,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w600),
+          Container(
+            margin: const EdgeInsets.only(left: 10),
+            child: const Text(
+              "Санал болгох видеонууд",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w600),
+            ),
           ),
           Container(
             alignment: Alignment.topLeft,
@@ -39,7 +42,7 @@ class RecommendVideos extends HookWidget {
               scrollDirection: Axis.horizontal,
               itemCount: events!.length,
               itemBuilder: (context, index) {
-                return LevelEventItem(event: events![index],isHome: true);
+                return LevelEventItem(event: events![index], isHome: true);
               },
             ),
           ),

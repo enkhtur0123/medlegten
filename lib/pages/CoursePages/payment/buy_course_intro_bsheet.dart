@@ -8,9 +8,9 @@ import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 // ignore: must_be_immutable
 class BuyCourseIntroWidget extends StatelessWidget {
-  BuyCourseIntroWidget({Key? key,this.courseInfo}) : super(key: key);
+  BuyCourseIntroWidget({Key? key, this.courseInfo}) : super(key: key);
   CourseInfo? courseInfo;
-   List<Color> colors = [];
+  List<Color> colors = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,9 @@ class BuyCourseIntroWidget extends StatelessWidget {
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.normal),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               AmountWidget(
                 amount: double.parse(
                   courseInfo!.price.replaceAll(",", ""),
@@ -74,39 +76,37 @@ class BuyCourseIntroWidget extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(top: 30, right: 60),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    label(text: "• 500 new words"),
-                    label(text: "• Grammar Explanation"),
-                    label(text: "• Writing features"),
-                    label(text: "• Listening features"),
-                    label(text: "• Progress tests features"),
-                    label(text: "• Interactive grammar table"),
-                  ],
-                ),
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: courseInfo!.purchaseDesc.map((e) {
+                      return label(text: "• ${e.toString()}");
+                    }).toList()),
               )
             ],
           ),
           Container(
-              margin: const EdgeInsets.all(25),
-              child: CustomOutlinedButton(
-                color: secondaryColor,
-                text: "Худалдаж авах",
-                height: 50,
-                onTap: () {
-                  AutoRouter.of(context)
-                      .push(PaymentRoute(courseInfo: courseInfo,paymentType: "1001",isCourse: true));
-                },
-              ))
+            margin: const EdgeInsets.all(25),
+            child: CustomOutlinedButton(
+              color: secondaryColor,
+              text: "Худалдаж авах",
+              height: 50,
+              onTap: () {
+                AutoRouter.of(context).push(
+                  PaymentRoute(
+                      courseInfo: courseInfo,
+                      paymentType: "1001",
+                      isCourse: true),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
   }
 
   Widget label({String? text}) {
-    return Container(
-      // alignment: Alignment.c,
+    return SizedBox(
       child: Text(
         text!,
         style: const TextStyle(

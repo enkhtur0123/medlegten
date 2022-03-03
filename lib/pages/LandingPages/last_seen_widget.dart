@@ -43,7 +43,7 @@ class LastSeenWidget extends HookWidget {
             useInkWell: true,
             iconSize: 35,
             iconColor: colorPrimary,
-            iconPadding: EdgeInsets.all(0),
+            iconPadding: EdgeInsets.only(right: 10),
             tapHeaderToExpand: true),
         header: SizedBox(
           child: Container(
@@ -62,22 +62,26 @@ class LastSeenWidget extends HookWidget {
           children: [
             shadowContainer(),
             Container(
-              margin: const EdgeInsets.only(left: 15, bottom: 10, top: 10,right: 20),
+              margin: const EdgeInsets.only(
+                  left: 15, bottom: 8, top: 10, right: 20),
               child: getLastSeenItemWidget(
                   title: "Сүүлд уншсан",
                   imgUrl: lastSeen!.lastSeenArticle!.slideImageUrl,
                   text: lastSeen!.lastSeenArticle!.articleTitle,
                   context: context,
-                  isArticle: true),
+                  isArticle: true,
+                  data: lastSeen!.lastSeenArticle),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10,right: 20),
+              margin: const EdgeInsets.only(
+                  left: 15, top: 0, bottom: 10, right: 20),
               child: getLastSeenItemWidget(
                   title: "Сүүлд үзсэн",
                   imgUrl: lastSeen!.lastSeenPPV!.imgUrl,
                   text: lastSeen!.lastSeenPPV!.contentName,
                   context: context,
-                  isArticle: false),
+                  isArticle: false,
+                  data: lastSeen!.lastSeenPPV),
             )
           ],
         ),
@@ -110,7 +114,8 @@ class LastSeenWidget extends HookWidget {
       String? imgUrl,
       String? text,
       BuildContext? context,
-      bool? isArticle}) {
+      bool? isArticle,
+      dynamic data}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,91 +138,102 @@ class LastSeenWidget extends HookWidget {
         const SizedBox(
           height: 5,
         ),
-        GestureDetector(
-          onTap: () async {
-            if (isArticle!) {
-              LoadingIndicator(context: context).showLoadingIndicator();
-              UnitRepository()
-                  .getArticleInfo(lastSeen?.lastSeenArticle?.articleId ?? "")
-                  .then((value) {
-                LoadingIndicator(context: context).hideLoadingIndicator();
-                AutoRouter.of(context!).push(ArticleRoute(articleInfo: value!));
-              }).catchError((onError) {
-                LoadingIndicator(context: context).hideLoadingIndicator();
-              });
-            } else {
-              List data = [];
-              LoadingIndicator(context: context).showLoadingIndicator();
-              try {
-                data = await VideoRepository().getContentDetail(
-                    contentId: lastSeen!.lastSeenPPV!.contentId);
-                LoadingIndicator(context: context).hideLoadingIndicator();
-              } catch (ex) {
-                LoadingIndicator(context: context).hideLoadingIndicator();
-              }
+        data != null
+            ? GestureDetector(
+                onTap: () async {
+                  if (isArticle!) {
+                    LoadingIndicator(context: context).showLoadingIndicator();
+                    UnitRepository()
+                        .getArticleInfo(
+                            lastSeen?.lastSeenArticle?.articleId ?? "")
+                        .then((value) {
+                      LoadingIndicator(context: context).hideLoadingIndicator();
+                      AutoRouter.of(context!)
+                          .push(ArticleRoute(articleInfo: value!));
+                    }).catchError((onError) {
+                      LoadingIndicator(context: context).hideLoadingIndicator();
+                    });
+                  } else {
+                    List data = [];
+                    LoadingIndicator(context: context).showLoadingIndicator();
+                    try {
+                      data = await VideoRepository().getContentDetail(
+                          contentId: lastSeen!.lastSeenPPV!.contentId);
+                      LoadingIndicator(context: context).hideLoadingIndicator();
+                    } catch (ex) {
+                      LoadingIndicator(context: context).hideLoadingIndicator();
+                    }
 
-              List<Movie> movies = data[0];
-              PaymentInfo paymentInfo = data[1];
-              if (paymentInfo.isPurchased!) {
-                AutoRouter.of(context!).push(VideoDetailRoute(
-                  movies: movies,
-                  url: movies[0].hostUrl!,
-                  title: movies[0].contentName,
-                  // isSerial: lastSeen.lastSeenPPV!.isSerial == "1" ? true : false
-                ));
-              } else {
-                AutoRouter.of(context!).push(
-                  PaymentRoute(
-                    courseInfo: null,
-                    paymentType: "1002",
-                    contendId: paymentInfo.productId,
-                    isCourse: false,
-                    paymentInfo: paymentInfo,
-                  ),
-                );
-              }
-            }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Flexible(
-                flex: 1,
-                fit: FlexFit.loose,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                        imgUrl ?? "",
+                    List<Movie> movies = data[0];
+                    PaymentInfo paymentInfo = data[1];
+                    if (paymentInfo.isPurchased!) {
+                      AutoRouter.of(context!).push(VideoDetailRoute(
+                        movies: movies,
+                        url: movies[0].hostUrl!,
+                        title: movies[0].contentName,
+                        // isSerial: lastSeen.lastSeenPPV!.isSerial == "1" ? true : false
+                      ));
+                    } else {
+                      AutoRouter.of(context!).push(
+                        PaymentRoute(
+                          courseInfo: null,
+                          paymentType: "1002",
+                          contendId: paymentInfo.productId,
+                          isCourse: false,
+                          paymentInfo: paymentInfo,
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.loose,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                              imgUrl ?? "",
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Flexible(
-                fit: FlexFit.tight,
-                flex: 5,
-                child: Text(
-                  text ?? "",
-                  textAlign: TextAlign.justify,
-                  style: const TextStyle(
-                      color: Color(0xff333333),
-                      fontSize: 14,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.normal),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Flexible(
+                      fit: FlexFit.tight,
+                      flex: 5,
+                      child: Text(
+                        text ?? "",
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: 14,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.normal),
+                      ),
+                    )
+                  ],
                 ),
               )
-            ],
-          ),
-        )
+            : Center(
+                child: Container(
+                  margin: const EdgeInsets.all(15),
+                  alignment: Alignment.center,
+                  child: const Text("Мэдээлэл байхгүй байна",style:TextStyle(color: Colors.grey),),
+                ),
+              )
       ],
     );
   }

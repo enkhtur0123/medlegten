@@ -28,17 +28,21 @@ class LandingHomeState extends ConsumerState<LandingHome> {
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
-                // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  PromotionList(
-                    promoList: snapShot.data!.promotions,
-                  ),
+                  snapShot.data!.promotions!.isNotEmpty
+                      ? PromotionList(
+                          promoList: snapShot.data!.promotions,
+                        )
+                      : const SizedBox(),
                   const SizedBox(
                     height: 20,
                   ),
-                  LastSeenWidget(lastSeen: snapShot.data,),
-                  RecommendVideos(events: snapShot.data!.recommends)
-                  
+                  LastSeenWidget(
+                    lastSeen: snapShot.data,
+                  ),
+                  snapShot.data!.recommends!.isNotEmpty
+                      ? RecommendVideos(events: snapShot.data!.recommends)
+                      : const SizedBox()
                 ],
               ),
             );
@@ -47,6 +51,4 @@ class LandingHomeState extends ConsumerState<LandingHome> {
           }
         });
   }
-
-  
 }

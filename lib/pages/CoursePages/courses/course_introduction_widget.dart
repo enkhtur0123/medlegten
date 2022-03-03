@@ -31,7 +31,7 @@ class CourseIntroWidget extends StatelessWidget {
             addVerticalSpace(20),
             Text(
               courseInfo!.shortDesc,
-              style: TextStyle(color: colorBlack, height: 1.5),
+              style: const TextStyle(color: colorBlack, height: 1.5),
               textAlign: TextAlign.start,
               softWrap: true,
             )

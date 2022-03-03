@@ -4,15 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/article/article.dart';
 import 'package:medlegten/pages/BlogPage/article_horizontal_page.dart';
 import 'package:medlegten/repositories/article_repository.dart';
-import 'package:medlegten/utils/app_router.dart';
-import 'package:medlegten/widgets/TextButton.dart';
 
 // ignore: must_be_immutable
 class BlogPage extends HookWidget {
   BlogPage({Key? key}) : super(key: key);
 
-  TextStyle typeStyle = const TextStyle(
-      fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -22,50 +19,29 @@ class BlogPage extends HookWidget {
       builder: (context, AsyncSnapshot<List<Article>> snapshot) {
         if (snapshot.hasData) {
           
-          return ListView(
+          return Container(
+            margin: const EdgeInsets.only(top: 15),
+            child: ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             children: snapshot.data!.map((e) {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, top: 10, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          e.typeName,
-                          textAlign: TextAlign.start,
-                          style: typeStyle,
-                        ),
-                        TextButtonWidget(
-                          onTap: () {
-                            AutoRouter.of(context).push(
-                              ArticleVerticalRoute(
-                                  title: e.typeName,
-                                  typeId: e.typeId),
-                            );
-                          },
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.normal,
-                          text: "Бүгд",
-                        ),
-                      ],
-                    ),
-                  ),
+                children: [              
                   Container(
                     margin: const EdgeInsets.all(5),
-                    child: ArticleHorizontalPage(
+                    child: ArticleHorizontalPage(             
                       articles: e.articles,
+                      typeId: e.typeId,
+                      typeName: e.typeName,
                     ),
                   ),
                 ],
-              );
+             );
             }).toList(),
-          );
+          ),);
         } else {
           return Container();
         }

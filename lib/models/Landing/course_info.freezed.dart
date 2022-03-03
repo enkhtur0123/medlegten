@@ -38,7 +38,8 @@ class _$CourseInfoTearOff {
       String minToWatch,
       bool isPurchased,
       String purchaseExpireDate,
-      bool isCreatedPlan) {
+      bool isCreatedPlan,
+      List<String> purchaseDesc) {
     return _CourseInfo(
       courseId,
       courseName,
@@ -56,6 +57,7 @@ class _$CourseInfoTearOff {
       isPurchased,
       purchaseExpireDate,
       isCreatedPlan,
+      purchaseDesc,
     );
   }
 
@@ -85,6 +87,7 @@ mixin _$CourseInfo {
   bool get isPurchased => throw _privateConstructorUsedError;
   String get purchaseExpireDate => throw _privateConstructorUsedError;
   bool get isCreatedPlan => throw _privateConstructorUsedError;
+  List<String> get purchaseDesc => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -113,7 +116,8 @@ abstract class $CourseInfoCopyWith<$Res> {
       String minToWatch,
       bool isPurchased,
       String purchaseExpireDate,
-      bool isCreatedPlan});
+      bool isCreatedPlan,
+      List<String> purchaseDesc});
 }
 
 /// @nodoc
@@ -142,6 +146,7 @@ class _$CourseInfoCopyWithImpl<$Res> implements $CourseInfoCopyWith<$Res> {
     Object? isPurchased = freezed,
     Object? purchaseExpireDate = freezed,
     Object? isCreatedPlan = freezed,
+    Object? purchaseDesc = freezed,
   }) {
     return _then(_value.copyWith(
       courseId: courseId == freezed
@@ -208,6 +213,10 @@ class _$CourseInfoCopyWithImpl<$Res> implements $CourseInfoCopyWith<$Res> {
           ? _value.isCreatedPlan
           : isCreatedPlan // ignore: cast_nullable_to_non_nullable
               as bool,
+      purchaseDesc: purchaseDesc == freezed
+          ? _value.purchaseDesc
+          : purchaseDesc // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -234,7 +243,8 @@ abstract class _$CourseInfoCopyWith<$Res> implements $CourseInfoCopyWith<$Res> {
       String minToWatch,
       bool isPurchased,
       String purchaseExpireDate,
-      bool isCreatedPlan});
+      bool isCreatedPlan,
+      List<String> purchaseDesc});
 }
 
 /// @nodoc
@@ -265,6 +275,7 @@ class __$CourseInfoCopyWithImpl<$Res> extends _$CourseInfoCopyWithImpl<$Res>
     Object? isPurchased = freezed,
     Object? purchaseExpireDate = freezed,
     Object? isCreatedPlan = freezed,
+    Object? purchaseDesc = freezed,
   }) {
     return _then(_CourseInfo(
       courseId == freezed
@@ -331,6 +342,10 @@ class __$CourseInfoCopyWithImpl<$Res> extends _$CourseInfoCopyWithImpl<$Res>
           ? _value.isCreatedPlan
           : isCreatedPlan // ignore: cast_nullable_to_non_nullable
               as bool,
+      purchaseDesc == freezed
+          ? _value.purchaseDesc
+          : purchaseDesc // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -354,7 +369,8 @@ class _$_CourseInfo implements _CourseInfo {
       this.minToWatch,
       this.isPurchased,
       this.purchaseExpireDate,
-      this.isCreatedPlan);
+      this.isCreatedPlan,
+      this.purchaseDesc);
 
   factory _$_CourseInfo.fromJson(Map<String, dynamic> json) =>
       _$$_CourseInfoFromJson(json);
@@ -391,10 +407,12 @@ class _$_CourseInfo implements _CourseInfo {
   final String purchaseExpireDate;
   @override
   final bool isCreatedPlan;
+  @override
+  final List<String> purchaseDesc;
 
   @override
   String toString() {
-    return 'CourseInfo(courseId: $courseId, courseName: $courseName, price: $price, introVideo: $introVideo, ordering: $ordering, shortDesc: $shortDesc, levelName: $levelName, hours: $hours, units: $units, vocCount: $vocCount, introVideoHostType: $introVideoHostType, introVideoUrl: $introVideoUrl, minToWatch: $minToWatch, isPurchased: $isPurchased, purchaseExpireDate: $purchaseExpireDate, isCreatedPlan: $isCreatedPlan)';
+    return 'CourseInfo(courseId: $courseId, courseName: $courseName, price: $price, introVideo: $introVideo, ordering: $ordering, shortDesc: $shortDesc, levelName: $levelName, hours: $hours, units: $units, vocCount: $vocCount, introVideoHostType: $introVideoHostType, introVideoUrl: $introVideoUrl, minToWatch: $minToWatch, isPurchased: $isPurchased, purchaseExpireDate: $purchaseExpireDate, isCreatedPlan: $isCreatedPlan, purchaseDesc: $purchaseDesc)';
   }
 
   @override
@@ -425,7 +443,9 @@ class _$_CourseInfo implements _CourseInfo {
             const DeepCollectionEquality()
                 .equals(other.purchaseExpireDate, purchaseExpireDate) &&
             const DeepCollectionEquality()
-                .equals(other.isCreatedPlan, isCreatedPlan));
+                .equals(other.isCreatedPlan, isCreatedPlan) &&
+            const DeepCollectionEquality()
+                .equals(other.purchaseDesc, purchaseDesc));
   }
 
   @override
@@ -446,7 +466,8 @@ class _$_CourseInfo implements _CourseInfo {
       const DeepCollectionEquality().hash(minToWatch),
       const DeepCollectionEquality().hash(isPurchased),
       const DeepCollectionEquality().hash(purchaseExpireDate),
-      const DeepCollectionEquality().hash(isCreatedPlan));
+      const DeepCollectionEquality().hash(isCreatedPlan),
+      const DeepCollectionEquality().hash(purchaseDesc));
 
   @JsonKey(ignore: true)
   @override
@@ -476,7 +497,8 @@ abstract class _CourseInfo implements CourseInfo {
       String minToWatch,
       bool isPurchased,
       String purchaseExpireDate,
-      bool isCreatedPlan) = _$_CourseInfo;
+      bool isCreatedPlan,
+      List<String> purchaseDesc) = _$_CourseInfo;
 
   factory _CourseInfo.fromJson(Map<String, dynamic> json) =
       _$_CourseInfo.fromJson;
@@ -513,6 +535,8 @@ abstract class _CourseInfo implements CourseInfo {
   String get purchaseExpireDate;
   @override
   bool get isCreatedPlan;
+  @override
+  List<String> get purchaseDesc;
   @override
   @JsonKey(ignore: true)
   _$CourseInfoCopyWith<_CourseInfo> get copyWith =>

@@ -1,3 +1,4 @@
+import 'package:medlegten/models/Landing/app_bar_data.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Landing/course_unit_module_list.dart';
@@ -154,6 +155,23 @@ class LandingRepository {
       final res = await HttpHelper().getUrl(url: 'Course/SelfQuiz/History');
       if (res['isSuccess']) {
         return res;
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString());
+    }
+  }
+
+  //// Шалгалтын мэдээлэл авах
+  Future<AppBarData> getAppbarData() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'UserInfo/AppBar');
+      AppBarData appBarData = AppBarData.fromJson(res['appBarText']);
+      if (res['isSuccess']) {
+        return appBarData;
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);
