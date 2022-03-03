@@ -12,7 +12,6 @@ import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/global.dart';
 import 'dart:math' as math;
-import 'dart:ui';
 import 'article_helper.dart';
 import 'article_translate.dart';
 
