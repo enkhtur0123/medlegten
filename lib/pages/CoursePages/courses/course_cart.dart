@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
@@ -153,8 +154,9 @@ courseBgImg(context, CourseInfo courseInfo) {
             Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Text(
-                courseInfo.levelName + ' level'.toUpperCase(),
+              child: AutoSizeText(
+                courseInfo.levelName + ' Түвшин'.toUpperCase(),
+                maxLines: 1,
                 style: const TextStyle(
                     color: colorWhite,
                     fontWeight: FontWeight.w700,

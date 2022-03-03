@@ -66,8 +66,8 @@ class LastSeenWidget extends HookWidget {
                   left: 15, bottom: 8, top: 10, right: 20),
               child: getLastSeenItemWidget(
                   title: "Сүүлд уншсан",
-                  imgUrl: lastSeen!.lastSeenArticle!.slideImageUrl,
-                  text: lastSeen!.lastSeenArticle!.articleTitle,
+                  imgUrl: lastSeen?.lastSeenArticle?.slideImageUrl ?? "",
+                  text: lastSeen?.lastSeenArticle?.articleTitle ?? "",
                   context: context,
                   isArticle: true,
                   data: lastSeen!.lastSeenArticle),
@@ -77,8 +77,8 @@ class LastSeenWidget extends HookWidget {
                   left: 15, top: 0, bottom: 10, right: 20),
               child: getLastSeenItemWidget(
                   title: "Сүүлд үзсэн",
-                  imgUrl: lastSeen!.lastSeenPPV!.imgUrl,
-                  text: lastSeen!.lastSeenPPV!.contentName,
+                  imgUrl: lastSeen?.lastSeenPPV?.imgUrl ?? "",
+                  text: lastSeen?.lastSeenPPV?.contentName ?? "",
                   context: context,
                   isArticle: false,
                   data: lastSeen!.lastSeenPPV),
@@ -116,6 +116,7 @@ class LastSeenWidget extends HookWidget {
       BuildContext? context,
       bool? isArticle,
       dynamic data}) {
+    print(data);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +232,10 @@ class LastSeenWidget extends HookWidget {
                 child: Container(
                   margin: const EdgeInsets.all(15),
                   alignment: Alignment.center,
-                  child: const Text("Мэдээлэл байхгүй байна",style:TextStyle(color: Colors.grey),),
+                  child: const Text(
+                    "Мэдээлэл байхгүй байна",
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ),
               )
       ],

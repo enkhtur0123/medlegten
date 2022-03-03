@@ -172,9 +172,10 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
               fit: FlexFit.loose,
               flex: 2,
               child: Container(
+                
                 margin: const EdgeInsets.only(top: 50),
                 child: const Text(
-                  "Listen. Then Answer The Question.",
+                  "Анхааралтай сонсоод\nасуултанд хариулаарай.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 17,

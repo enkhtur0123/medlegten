@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/article/article_item.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/TextButton.dart';
@@ -18,7 +17,6 @@ class ArticleHorizontalPage extends HookWidget {
   final String? typeId;
   TextStyle typeStyle = const TextStyle(
       fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold);
-
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.88);
 
@@ -32,11 +30,12 @@ class ArticleHorizontalPage extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Flexible(
-             fit: FlexFit.tight,
+          Flexible(
+            fit: FlexFit.tight,
             flex: 1,
             child: Container(
-              margin: const EdgeInsets.only(left: 20, top: 0, right: 20,bottom: 0),
+              margin:
+                  const EdgeInsets.only(left: 20, top: 0, right: 40, bottom: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
@@ -46,17 +45,17 @@ class ArticleHorizontalPage extends HookWidget {
                     textAlign: TextAlign.start,
                     style: typeStyle,
                   ),
-                  TextButtonWidget(   
-                    color: colorPrimary,
-                    onTap: () {
-                      AutoRouter.of(context).push(
-                        ArticleVerticalRoute(
-                            title: typeName, typeId: typeId),
-                      );
-                    },
-                    fontWeight: FontWeight.bold,      
-                    fontStyle: FontStyle.normal,
-                    text: "Бүгд",
+                  Container(
+                    child: TextButtonWidget(
+                      onTap: () {
+                        AutoRouter.of(context).push(
+                          ArticleVerticalRoute(title: typeName, typeId: typeId),
+                        );
+                      },
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                      text: "Бүгд",
+                    ),
                   ),
                 ],
               ),
@@ -65,25 +64,17 @@ class ArticleHorizontalPage extends HookWidget {
           Flexible(
             flex: 12,
             child: PageView.builder(
-            padEnds: false,
-            controller: pageController,
-            scrollDirection: Axis.horizontal,
-            itemCount: articles!.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    flex: 12,
-                    child: ArticleItemPage(
-                      articleItem: articles![index],
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),)
-          ,
+              padEnds: false,
+              controller: pageController,
+              scrollDirection: Axis.horizontal,
+              itemCount: articles!.length,
+              itemBuilder: (context, index) {
+                return ArticleItemPage(
+                  articleItem: articles![index],
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

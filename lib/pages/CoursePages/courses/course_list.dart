@@ -25,7 +25,7 @@ class CourseList extends HookWidget {
         addVerticalSpace(10),
         Align(
             alignment: Alignment.topLeft,
-            child: TextButtonWidget(text: 'Courses', onTap: () {})),
+            child: TextButtonWidget(text: 'Хөтөлбөрүүд', onTap: () {})),
         addVerticalSpace(5),
         FutureBuilder<List<CourseInfo>?>(
           future: LandingRepository().getCourseList(),

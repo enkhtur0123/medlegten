@@ -8,7 +8,8 @@ class TextButtonWidget extends StatelessWidget {
       this.text,
       required this.onTap,
       this.fontWeight,
-      this.fontStyle,this.color})
+      this.fontStyle,
+      this.color})
       : super(key: key);
   final String? text;
   final Function onTap;
@@ -26,7 +27,8 @@ class TextButtonWidget extends StatelessWidget {
         fontFamily: 'Roboto');
     return TextButton(
       style: TextButton.styleFrom(
-        primary: color??colorPrimary,
+        primary: color ?? colorPrimary,
+        textStyle: const TextStyle(color: colorPrimary)
       ),
       onPressed: () {
         onTap();

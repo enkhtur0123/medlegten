@@ -7,6 +7,7 @@ import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/widgets/TextButton.dart';
+import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'report_items.dart';
 
 // ignore: must_be_immutable
@@ -41,7 +42,7 @@ class LandingProfile extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  "My reports",
+                  "Статистик",
                   style: TextStyle(
                       fontSize: 14,
                       fontStyle: FontStyle.normal,
@@ -60,22 +61,15 @@ class LandingProfile extends ConsumerWidget {
                   return getReportItemWidget(e: e);
                 }).toList(),
               ),
-              WideButton(
-                "Log off",
-                ColorTable.color120_100_254,
-                ColorTable.color255_255_255,
-                () {
-                  ref.read(authProvider.notifier).logoff();
-                },
-              ),
-              Text(
-                "Сүүлд үзсэн",
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 14,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold),
-              )
+              Container(
+                margin: const EdgeInsets.only(top: 20,left: 10,right: 10),
+                child: CustomOutlinedButton(
+                height: 50,    
+                color: Color(0xff7864FE),
+                text:"Гарах" ,onTap: (){
+                 ref.read(authProvider.notifier).logoff();
+              },))
+            
             ],
           ),
         ),
@@ -174,7 +168,7 @@ class LandingProfile extends ConsumerWidget {
             )
           ],
         ),
-        TextButtonWidget(text: "Change profile", onTap: () {})
+        // TextButtonWidget(text: "Change profile", onTap: () {})
       ],
     );
   }
