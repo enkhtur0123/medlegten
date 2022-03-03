@@ -23,7 +23,7 @@ class _$LastSeenArticleTearOff {
   const _$LastSeenArticleTearOff();
 
   _LastSeenArticle call(
-      String articleId, String articleTitle, String slideImageUrl) {
+      String? articleId, String? articleTitle, String? slideImageUrl) {
     return _LastSeenArticle(
       articleId,
       articleTitle,
@@ -41,9 +41,9 @@ const $LastSeenArticle = _$LastSeenArticleTearOff();
 
 /// @nodoc
 mixin _$LastSeenArticle {
-  String get articleId => throw _privateConstructorUsedError;
-  String get articleTitle => throw _privateConstructorUsedError;
-  String get slideImageUrl => throw _privateConstructorUsedError;
+  String? get articleId => throw _privateConstructorUsedError;
+  String? get articleTitle => throw _privateConstructorUsedError;
+  String? get slideImageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +56,7 @@ abstract class $LastSeenArticleCopyWith<$Res> {
   factory $LastSeenArticleCopyWith(
           LastSeenArticle value, $Res Function(LastSeenArticle) then) =
       _$LastSeenArticleCopyWithImpl<$Res>;
-  $Res call({String articleId, String articleTitle, String slideImageUrl});
+  $Res call({String? articleId, String? articleTitle, String? slideImageUrl});
 }
 
 /// @nodoc
@@ -78,15 +78,15 @@ class _$LastSeenArticleCopyWithImpl<$Res>
       articleId: articleId == freezed
           ? _value.articleId
           : articleId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       articleTitle: articleTitle == freezed
           ? _value.articleTitle
           : articleTitle // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       slideImageUrl: slideImageUrl == freezed
           ? _value.slideImageUrl
           : slideImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -98,7 +98,7 @@ abstract class _$LastSeenArticleCopyWith<$Res>
           _LastSeenArticle value, $Res Function(_LastSeenArticle) then) =
       __$LastSeenArticleCopyWithImpl<$Res>;
   @override
-  $Res call({String articleId, String articleTitle, String slideImageUrl});
+  $Res call({String? articleId, String? articleTitle, String? slideImageUrl});
 }
 
 /// @nodoc
@@ -122,15 +122,15 @@ class __$LastSeenArticleCopyWithImpl<$Res>
       articleId == freezed
           ? _value.articleId
           : articleId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       articleTitle == freezed
           ? _value.articleTitle
           : articleTitle // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       slideImageUrl == freezed
           ? _value.slideImageUrl
           : slideImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -144,11 +144,11 @@ class _$_LastSeenArticle implements _LastSeenArticle {
       _$$_LastSeenArticleFromJson(json);
 
   @override
-  final String articleId;
+  final String? articleId;
   @override
-  final String articleTitle;
+  final String? articleTitle;
   @override
-  final String slideImageUrl;
+  final String? slideImageUrl;
 
   @override
   String toString() {
@@ -187,18 +187,18 @@ class _$_LastSeenArticle implements _LastSeenArticle {
 
 abstract class _LastSeenArticle implements LastSeenArticle {
   factory _LastSeenArticle(
-          String articleId, String articleTitle, String slideImageUrl) =
+          String? articleId, String? articleTitle, String? slideImageUrl) =
       _$_LastSeenArticle;
 
   factory _LastSeenArticle.fromJson(Map<String, dynamic> json) =
       _$_LastSeenArticle.fromJson;
 
   @override
-  String get articleId;
+  String? get articleId;
   @override
-  String get articleTitle;
+  String? get articleTitle;
   @override
-  String get slideImageUrl;
+  String? get slideImageUrl;
   @override
   @JsonKey(ignore: true)
   _$LastSeenArticleCopyWith<_LastSeenArticle> get copyWith =>

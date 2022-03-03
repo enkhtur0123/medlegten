@@ -23,16 +23,20 @@ class _$EventTearOff {
   const _$EventTearOff();
 
   _Event call(
-      String eventId,
-      String eventName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime) {
+      String? contentId,
+      String? contentName,
+      String? eventId,
+      String? eventName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime) {
     return _Event(
+      contentId,
+      contentName,
       eventId,
       eventName,
       categoryName,
@@ -55,16 +59,18 @@ const $Event = _$EventTearOff();
 
 /// @nodoc
 mixin _$Event {
-  String get eventId => throw _privateConstructorUsedError;
-  String get eventName => throw _privateConstructorUsedError;
-  String get categoryName =>
+  String? get contentId => throw _privateConstructorUsedError;
+  String? get contentName => throw _privateConstructorUsedError;
+  String? get eventId => throw _privateConstructorUsedError;
+  String? get eventName => throw _privateConstructorUsedError;
+  String? get categoryName =>
       throw _privateConstructorUsedError; // bool isPurchased,
-  String get levelId => throw _privateConstructorUsedError;
-  String get vocabularyCount => throw _privateConstructorUsedError;
-  String get imgUrl => throw _privateConstructorUsedError;
-  String get intro => throw _privateConstructorUsedError;
-  String get isSerial => throw _privateConstructorUsedError;
-  String get runTime => throw _privateConstructorUsedError;
+  String? get levelId => throw _privateConstructorUsedError;
+  String? get vocabularyCount => throw _privateConstructorUsedError;
+  String? get imgUrl => throw _privateConstructorUsedError;
+  String? get intro => throw _privateConstructorUsedError;
+  String? get isSerial => throw _privateConstructorUsedError;
+  String? get runTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -76,15 +82,17 @@ abstract class $EventCopyWith<$Res> {
   factory $EventCopyWith(Event value, $Res Function(Event) then) =
       _$EventCopyWithImpl<$Res>;
   $Res call(
-      {String eventId,
-      String eventName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime});
+      {String? contentId,
+      String? contentName,
+      String? eventId,
+      String? eventName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime});
 }
 
 /// @nodoc
@@ -97,6 +105,8 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? contentId = freezed,
+    Object? contentName = freezed,
     Object? eventId = freezed,
     Object? eventName = freezed,
     Object? categoryName = freezed,
@@ -108,42 +118,50 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
     Object? runTime = freezed,
   }) {
     return _then(_value.copyWith(
+      contentId: contentId == freezed
+          ? _value.contentId
+          : contentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contentName: contentName == freezed
+          ? _value.contentName
+          : contentName // ignore: cast_nullable_to_non_nullable
+              as String?,
       eventId: eventId == freezed
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       eventName: eventName == freezed
           ? _value.eventName
           : eventName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryName: categoryName == freezed
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelId: levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       vocabularyCount: vocabularyCount == freezed
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl: imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       intro: intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isSerial: isSerial == freezed
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       runTime: runTime == freezed
           ? _value.runTime
           : runTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -154,15 +172,17 @@ abstract class _$EventCopyWith<$Res> implements $EventCopyWith<$Res> {
       __$EventCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String eventId,
-      String eventName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime});
+      {String? contentId,
+      String? contentName,
+      String? eventId,
+      String? eventName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime});
 }
 
 /// @nodoc
@@ -176,6 +196,8 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? contentId = freezed,
+    Object? contentName = freezed,
     Object? eventId = freezed,
     Object? eventName = freezed,
     Object? categoryName = freezed,
@@ -187,42 +209,50 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
     Object? runTime = freezed,
   }) {
     return _then(_Event(
+      contentId == freezed
+          ? _value.contentId
+          : contentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contentName == freezed
+          ? _value.contentName
+          : contentName // ignore: cast_nullable_to_non_nullable
+              as String?,
       eventId == freezed
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       eventName == freezed
           ? _value.eventName
           : eventName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       categoryName == freezed
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       levelId == freezed
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       vocabularyCount == freezed
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isSerial == freezed
           ? _value.isSerial
           : isSerial // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       runTime == freezed
           ? _value.runTime
           : runTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -231,6 +261,8 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Event implements _Event {
   _$_Event(
+      this.contentId,
+      this.contentName,
       this.eventId,
       this.eventName,
       this.categoryName,
@@ -245,27 +277,31 @@ class _$_Event implements _Event {
       _$$_EventFromJson(json);
 
   @override
-  final String eventId;
+  final String? contentId;
   @override
-  final String eventName;
+  final String? contentName;
   @override
-  final String categoryName;
+  final String? eventId;
+  @override
+  final String? eventName;
+  @override
+  final String? categoryName;
   @override // bool isPurchased,
-  final String levelId;
+  final String? levelId;
   @override
-  final String vocabularyCount;
+  final String? vocabularyCount;
   @override
-  final String imgUrl;
+  final String? imgUrl;
   @override
-  final String intro;
+  final String? intro;
   @override
-  final String isSerial;
+  final String? isSerial;
   @override
-  final String runTime;
+  final String? runTime;
 
   @override
   String toString() {
-    return 'Event(eventId: $eventId, eventName: $eventName, categoryName: $categoryName, levelId: $levelId, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, runTime: $runTime)';
+    return 'Event(contentId: $contentId, contentName: $contentName, eventId: $eventId, eventName: $eventName, categoryName: $categoryName, levelId: $levelId, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, runTime: $runTime)';
   }
 
   @override
@@ -273,6 +309,9 @@ class _$_Event implements _Event {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Event &&
+            const DeepCollectionEquality().equals(other.contentId, contentId) &&
+            const DeepCollectionEquality()
+                .equals(other.contentName, contentName) &&
             const DeepCollectionEquality().equals(other.eventId, eventId) &&
             const DeepCollectionEquality().equals(other.eventName, eventName) &&
             const DeepCollectionEquality()
@@ -289,6 +328,8 @@ class _$_Event implements _Event {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(contentId),
+      const DeepCollectionEquality().hash(contentName),
       const DeepCollectionEquality().hash(eventId),
       const DeepCollectionEquality().hash(eventName),
       const DeepCollectionEquality().hash(categoryName),
@@ -312,36 +353,42 @@ class _$_Event implements _Event {
 
 abstract class _Event implements Event {
   factory _Event(
-      String eventId,
-      String eventName,
-      String categoryName,
-      String levelId,
-      String vocabularyCount,
-      String imgUrl,
-      String intro,
-      String isSerial,
-      String runTime) = _$_Event;
+      String? contentId,
+      String? contentName,
+      String? eventId,
+      String? eventName,
+      String? categoryName,
+      String? levelId,
+      String? vocabularyCount,
+      String? imgUrl,
+      String? intro,
+      String? isSerial,
+      String? runTime) = _$_Event;
 
   factory _Event.fromJson(Map<String, dynamic> json) = _$_Event.fromJson;
 
   @override
-  String get eventId;
+  String? get contentId;
   @override
-  String get eventName;
+  String? get contentName;
   @override
-  String get categoryName;
+  String? get eventId;
+  @override
+  String? get eventName;
+  @override
+  String? get categoryName;
   @override // bool isPurchased,
-  String get levelId;
+  String? get levelId;
   @override
-  String get vocabularyCount;
+  String? get vocabularyCount;
   @override
-  String get imgUrl;
+  String? get imgUrl;
   @override
-  String get intro;
+  String? get intro;
   @override
-  String get isSerial;
+  String? get isSerial;
   @override
-  String get runTime;
+  String? get runTime;
   @override
   @JsonKey(ignore: true)
   _$EventCopyWith<_Event> get copyWith => throw _privateConstructorUsedError;

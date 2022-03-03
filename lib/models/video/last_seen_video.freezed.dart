@@ -22,7 +22,7 @@ LastSeenVideo _$LastSeenVideoFromJson(Map<String, dynamic> json) {
 class _$LastSeenVideoTearOff {
   const _$LastSeenVideoTearOff();
 
-  _LastSeenVideo call(String contentId, String contentName, String imgUrl) {
+  _LastSeenVideo call(String? contentId, String? contentName, String? imgUrl) {
     return _LastSeenVideo(
       contentId,
       contentName,
@@ -40,9 +40,9 @@ const $LastSeenVideo = _$LastSeenVideoTearOff();
 
 /// @nodoc
 mixin _$LastSeenVideo {
-  String get contentId => throw _privateConstructorUsedError;
-  String get contentName => throw _privateConstructorUsedError;
-  String get imgUrl => throw _privateConstructorUsedError;
+  String? get contentId => throw _privateConstructorUsedError;
+  String? get contentName => throw _privateConstructorUsedError;
+  String? get imgUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +55,7 @@ abstract class $LastSeenVideoCopyWith<$Res> {
   factory $LastSeenVideoCopyWith(
           LastSeenVideo value, $Res Function(LastSeenVideo) then) =
       _$LastSeenVideoCopyWithImpl<$Res>;
-  $Res call({String contentId, String contentName, String imgUrl});
+  $Res call({String? contentId, String? contentName, String? imgUrl});
 }
 
 /// @nodoc
@@ -77,15 +77,15 @@ class _$LastSeenVideoCopyWithImpl<$Res>
       contentId: contentId == freezed
           ? _value.contentId
           : contentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       contentName: contentName == freezed
           ? _value.contentName
           : contentName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl: imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -97,7 +97,7 @@ abstract class _$LastSeenVideoCopyWith<$Res>
           _LastSeenVideo value, $Res Function(_LastSeenVideo) then) =
       __$LastSeenVideoCopyWithImpl<$Res>;
   @override
-  $Res call({String contentId, String contentName, String imgUrl});
+  $Res call({String? contentId, String? contentName, String? imgUrl});
 }
 
 /// @nodoc
@@ -121,15 +121,15 @@ class __$LastSeenVideoCopyWithImpl<$Res>
       contentId == freezed
           ? _value.contentId
           : contentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       contentName == freezed
           ? _value.contentName
           : contentName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -143,11 +143,11 @@ class _$_LastSeenVideo implements _LastSeenVideo {
       _$$_LastSeenVideoFromJson(json);
 
   @override
-  final String contentId;
+  final String? contentId;
   @override
-  final String contentName;
+  final String? contentName;
   @override
-  final String imgUrl;
+  final String? imgUrl;
 
   @override
   String toString() {
@@ -184,18 +184,19 @@ class _$_LastSeenVideo implements _LastSeenVideo {
 }
 
 abstract class _LastSeenVideo implements LastSeenVideo {
-  factory _LastSeenVideo(String contentId, String contentName, String imgUrl) =
+  factory _LastSeenVideo(
+          String? contentId, String? contentName, String? imgUrl) =
       _$_LastSeenVideo;
 
   factory _LastSeenVideo.fromJson(Map<String, dynamic> json) =
       _$_LastSeenVideo.fromJson;
 
   @override
-  String get contentId;
+  String? get contentId;
   @override
-  String get contentName;
+  String? get contentName;
   @override
-  String get imgUrl;
+  String? get imgUrl;
   @override
   @JsonKey(ignore: true)
   _$LastSeenVideoCopyWith<_LastSeenVideo> get copyWith =>

@@ -6,9 +6,9 @@ part 'last_seen_video.g.dart';
 @freezed
 class LastSeenVideo with _$LastSeenVideo {
   factory LastSeenVideo( 
-    String contentId,
-    String contentName,
-   String imgUrl) = _LastSeenVideo;
+    String? contentId,
+    String? contentName,
+   String? imgUrl) = _LastSeenVideo;
 
   factory LastSeenVideo.fromJson(Map<String, dynamic> json) =>
       _$LastSeenVideoFromJson(json);

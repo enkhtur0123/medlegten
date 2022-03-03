@@ -6,10 +6,10 @@ part 'promotion.g.dart';
 @freezed
 class Promotion with _$Promotion {
   factory Promotion(
-     String promoId,
-      String promoName,
-      String imageUrl,
-      String webUrl) =
+     String? promoId,
+      String? promoName,
+      String? imageUrl,
+      String? webUrl) =
       _Promotion;
 
   factory Promotion.fromJson(Map<String, dynamic> json) =>

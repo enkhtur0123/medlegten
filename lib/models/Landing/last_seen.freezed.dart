@@ -23,13 +23,13 @@ class _$LastSeenTearOff {
   const _$LastSeenTearOff();
 
   _LastSeen call(
-      bool isSuccess,
-      String errorCode,
-      String resultMessage,
-      LastSeenArticle lastSeenArticle,
-      LastSeenVideo lastSeenPPV,
-      List<RecommendVideo> recommends,
-      List<Promotion> promotions) {
+      bool? isSuccess,
+      String? errorCode,
+      String? resultMessage,
+      LastSeenArticle? lastSeenArticle,
+      LastSeenVideo? lastSeenPPV,
+      List<Event>? recommends,
+      List<Promotion>? promotions) {
     return _LastSeen(
       isSuccess,
       errorCode,
@@ -51,13 +51,13 @@ const $LastSeen = _$LastSeenTearOff();
 
 /// @nodoc
 mixin _$LastSeen {
-  bool get isSuccess => throw _privateConstructorUsedError;
-  String get errorCode => throw _privateConstructorUsedError;
-  String get resultMessage => throw _privateConstructorUsedError;
-  LastSeenArticle get lastSeenArticle => throw _privateConstructorUsedError;
-  LastSeenVideo get lastSeenPPV => throw _privateConstructorUsedError;
-  List<RecommendVideo> get recommends => throw _privateConstructorUsedError;
-  List<Promotion> get promotions => throw _privateConstructorUsedError;
+  bool? get isSuccess => throw _privateConstructorUsedError;
+  String? get errorCode => throw _privateConstructorUsedError;
+  String? get resultMessage => throw _privateConstructorUsedError;
+  LastSeenArticle? get lastSeenArticle => throw _privateConstructorUsedError;
+  LastSeenVideo? get lastSeenPPV => throw _privateConstructorUsedError;
+  List<Event>? get recommends => throw _privateConstructorUsedError;
+  List<Promotion>? get promotions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -70,16 +70,16 @@ abstract class $LastSeenCopyWith<$Res> {
   factory $LastSeenCopyWith(LastSeen value, $Res Function(LastSeen) then) =
       _$LastSeenCopyWithImpl<$Res>;
   $Res call(
-      {bool isSuccess,
-      String errorCode,
-      String resultMessage,
-      LastSeenArticle lastSeenArticle,
-      LastSeenVideo lastSeenPPV,
-      List<RecommendVideo> recommends,
-      List<Promotion> promotions});
+      {bool? isSuccess,
+      String? errorCode,
+      String? resultMessage,
+      LastSeenArticle? lastSeenArticle,
+      LastSeenVideo? lastSeenPPV,
+      List<Event>? recommends,
+      List<Promotion>? promotions});
 
-  $LastSeenArticleCopyWith<$Res> get lastSeenArticle;
-  $LastSeenVideoCopyWith<$Res> get lastSeenPPV;
+  $LastSeenArticleCopyWith<$Res>? get lastSeenArticle;
+  $LastSeenVideoCopyWith<$Res>? get lastSeenPPV;
 }
 
 /// @nodoc
@@ -104,44 +104,52 @@ class _$LastSeenCopyWithImpl<$Res> implements $LastSeenCopyWith<$Res> {
       isSuccess: isSuccess == freezed
           ? _value.isSuccess
           : isSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       errorCode: errorCode == freezed
           ? _value.errorCode
           : errorCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       resultMessage: resultMessage == freezed
           ? _value.resultMessage
           : resultMessage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       lastSeenArticle: lastSeenArticle == freezed
           ? _value.lastSeenArticle
           : lastSeenArticle // ignore: cast_nullable_to_non_nullable
-              as LastSeenArticle,
+              as LastSeenArticle?,
       lastSeenPPV: lastSeenPPV == freezed
           ? _value.lastSeenPPV
           : lastSeenPPV // ignore: cast_nullable_to_non_nullable
-              as LastSeenVideo,
+              as LastSeenVideo?,
       recommends: recommends == freezed
           ? _value.recommends
           : recommends // ignore: cast_nullable_to_non_nullable
-              as List<RecommendVideo>,
+              as List<Event>?,
       promotions: promotions == freezed
           ? _value.promotions
           : promotions // ignore: cast_nullable_to_non_nullable
-              as List<Promotion>,
+              as List<Promotion>?,
     ));
   }
 
   @override
-  $LastSeenArticleCopyWith<$Res> get lastSeenArticle {
-    return $LastSeenArticleCopyWith<$Res>(_value.lastSeenArticle, (value) {
+  $LastSeenArticleCopyWith<$Res>? get lastSeenArticle {
+    if (_value.lastSeenArticle == null) {
+      return null;
+    }
+
+    return $LastSeenArticleCopyWith<$Res>(_value.lastSeenArticle!, (value) {
       return _then(_value.copyWith(lastSeenArticle: value));
     });
   }
 
   @override
-  $LastSeenVideoCopyWith<$Res> get lastSeenPPV {
-    return $LastSeenVideoCopyWith<$Res>(_value.lastSeenPPV, (value) {
+  $LastSeenVideoCopyWith<$Res>? get lastSeenPPV {
+    if (_value.lastSeenPPV == null) {
+      return null;
+    }
+
+    return $LastSeenVideoCopyWith<$Res>(_value.lastSeenPPV!, (value) {
       return _then(_value.copyWith(lastSeenPPV: value));
     });
   }
@@ -153,18 +161,18 @@ abstract class _$LastSeenCopyWith<$Res> implements $LastSeenCopyWith<$Res> {
       __$LastSeenCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool isSuccess,
-      String errorCode,
-      String resultMessage,
-      LastSeenArticle lastSeenArticle,
-      LastSeenVideo lastSeenPPV,
-      List<RecommendVideo> recommends,
-      List<Promotion> promotions});
+      {bool? isSuccess,
+      String? errorCode,
+      String? resultMessage,
+      LastSeenArticle? lastSeenArticle,
+      LastSeenVideo? lastSeenPPV,
+      List<Event>? recommends,
+      List<Promotion>? promotions});
 
   @override
-  $LastSeenArticleCopyWith<$Res> get lastSeenArticle;
+  $LastSeenArticleCopyWith<$Res>? get lastSeenArticle;
   @override
-  $LastSeenVideoCopyWith<$Res> get lastSeenPPV;
+  $LastSeenVideoCopyWith<$Res>? get lastSeenPPV;
 }
 
 /// @nodoc
@@ -190,31 +198,31 @@ class __$LastSeenCopyWithImpl<$Res> extends _$LastSeenCopyWithImpl<$Res>
       isSuccess == freezed
           ? _value.isSuccess
           : isSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       errorCode == freezed
           ? _value.errorCode
           : errorCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       resultMessage == freezed
           ? _value.resultMessage
           : resultMessage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       lastSeenArticle == freezed
           ? _value.lastSeenArticle
           : lastSeenArticle // ignore: cast_nullable_to_non_nullable
-              as LastSeenArticle,
+              as LastSeenArticle?,
       lastSeenPPV == freezed
           ? _value.lastSeenPPV
           : lastSeenPPV // ignore: cast_nullable_to_non_nullable
-              as LastSeenVideo,
+              as LastSeenVideo?,
       recommends == freezed
           ? _value.recommends
           : recommends // ignore: cast_nullable_to_non_nullable
-              as List<RecommendVideo>,
+              as List<Event>?,
       promotions == freezed
           ? _value.promotions
           : promotions // ignore: cast_nullable_to_non_nullable
-              as List<Promotion>,
+              as List<Promotion>?,
     ));
   }
 }
@@ -229,19 +237,19 @@ class _$_LastSeen implements _LastSeen {
       _$$_LastSeenFromJson(json);
 
   @override
-  final bool isSuccess;
+  final bool? isSuccess;
   @override
-  final String errorCode;
+  final String? errorCode;
   @override
-  final String resultMessage;
+  final String? resultMessage;
   @override
-  final LastSeenArticle lastSeenArticle;
+  final LastSeenArticle? lastSeenArticle;
   @override
-  final LastSeenVideo lastSeenPPV;
+  final LastSeenVideo? lastSeenPPV;
   @override
-  final List<RecommendVideo> recommends;
+  final List<Event>? recommends;
   @override
-  final List<Promotion> promotions;
+  final List<Promotion>? promotions;
 
   @override
   String toString() {
@@ -291,30 +299,30 @@ class _$_LastSeen implements _LastSeen {
 
 abstract class _LastSeen implements LastSeen {
   factory _LastSeen(
-      bool isSuccess,
-      String errorCode,
-      String resultMessage,
-      LastSeenArticle lastSeenArticle,
-      LastSeenVideo lastSeenPPV,
-      List<RecommendVideo> recommends,
-      List<Promotion> promotions) = _$_LastSeen;
+      bool? isSuccess,
+      String? errorCode,
+      String? resultMessage,
+      LastSeenArticle? lastSeenArticle,
+      LastSeenVideo? lastSeenPPV,
+      List<Event>? recommends,
+      List<Promotion>? promotions) = _$_LastSeen;
 
   factory _LastSeen.fromJson(Map<String, dynamic> json) = _$_LastSeen.fromJson;
 
   @override
-  bool get isSuccess;
+  bool? get isSuccess;
   @override
-  String get errorCode;
+  String? get errorCode;
   @override
-  String get resultMessage;
+  String? get resultMessage;
   @override
-  LastSeenArticle get lastSeenArticle;
+  LastSeenArticle? get lastSeenArticle;
   @override
-  LastSeenVideo get lastSeenPPV;
+  LastSeenVideo? get lastSeenPPV;
   @override
-  List<RecommendVideo> get recommends;
+  List<Event>? get recommends;
   @override
-  List<Promotion> get promotions;
+  List<Promotion>? get promotions;
   @override
   @JsonKey(ignore: true)
   _$LastSeenCopyWith<_LastSeen> get copyWith =>
