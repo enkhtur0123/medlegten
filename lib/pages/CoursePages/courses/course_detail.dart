@@ -94,7 +94,7 @@ class _CourseDetailState extends State<CourseDetailPage> with AutoRouteAware {
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
           child: UnitAppBar(
-            widget.courseInfo.courseName,
+            '${widget.courseInfo.courseName} - ${widget.courseInfo.levelName}',
             moduleId: null,
             isCompleted: null,
           ),
@@ -127,17 +127,17 @@ class _CourseDetailState extends State<CourseDetailPage> with AutoRouteAware {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      ' Units',
-                      style: TextStyle(
-                          color: colorPrimary,
-                          fontFamily: 'Roboto',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
+                  // const Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Text(
+                  //     ' Units',
+                  //     style: TextStyle(
+                  //         color: colorPrimary,
+                  //         fontFamily: 'Roboto',
+                  //         fontSize: 18,
+                  //         fontWeight: FontWeight.w500),
+                  //   ),
+                  // ),
                   FutureBuilder<List<CourseUnit>?>(
                     future: LandingRepository()
                         .getCourseUnitList(widget.courseInfo.courseId),

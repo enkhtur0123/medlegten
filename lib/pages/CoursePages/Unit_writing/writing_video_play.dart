@@ -4,6 +4,7 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Unit/unit_writing_cueword.dart';
 import 'package:medlegten/models/Unit/unit_writing_video.dart';
+import 'package:medlegten/pages/CoursePages/Unit_writing/writing_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/writing_sentence.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/writing_video_page.dart';
 import 'package:medlegten/utils/global.dart';
@@ -30,7 +31,6 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
   // @override
   // void initState() {
   //   super.initState();
-
   // }
 
   // @override
@@ -53,6 +53,14 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (WritingHelper().counter.containsKey(widget.index[1]) == false) {
+      WritingHelper().counter[widget.index[1]] = 3;
+      WritingHelper().showCorrectAnswer[widget.index[1]] = false;
+    }
+    counter = WritingHelper().counter.values.elementAt(widget.index[1]);
+    showCorrectAnswer =
+        WritingHelper().showCorrectAnswer.values.elementAt(widget.index[1]);
+
     List<Widget> list = [];
 
     list.add(indicator(widget.index[3], widget.index[1]));
@@ -106,7 +114,8 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
               if (!checkWrongAnswerExists()) {
                 widget.callBack.call(widget.index[1], true);
               } else {
-                counter--;
+                WritingHelper().counter[widget.index[1]] =
+                    WritingHelper().counter[widget.index[1]]! - 1;
                 setState(() {});
               }
             },
@@ -121,7 +130,8 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
             colorWhite,
             () {
               if (checkWrongAnswerExists()) {
-                counter--;
+                WritingHelper().counter[widget.index[1]] =
+                    WritingHelper().counter[widget.index[1]]! - 1;
                 setState(() {});
               }
             },

@@ -39,11 +39,13 @@ class LevelEventPage extends HookWidget {
                   Container(
                     margin: const EdgeInsets.only(right: 15),
                     child: TextButtonWidget(
-                      text: "Бүгдийг харах",
+                      text: "Бүгд",
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.normal,
                       onTap: () {
-                          AutoRouter.of(context).push(LevelVideoListRoute(levelId: e.levelId,categoryName: e.events[0].categoryName));
+                        AutoRouter.of(context).push(LevelVideoListRoute(
+                            levelId: e.levelId,
+                            categoryName: e.events[0].categoryName));
                       },
                     ),
                   ),
@@ -71,7 +73,4 @@ class LevelEventPage extends HookWidget {
       }).toList(),
     );
   }
-
-
-
 }

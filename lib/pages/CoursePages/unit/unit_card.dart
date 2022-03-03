@@ -67,11 +67,16 @@ class UnitCart extends HookWidget {
               Flexible(
                 fit: FlexFit.loose,
                 flex: 6,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+                //child: Column(
+                //  mainAxisAlignment: MainAxisAlignment.start,
+                //  crossAxisAlignment: CrossAxisAlignment.start,
+                //  children: [
+                child: SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
                       'Unit ' +
                           unitInfo!.unitNumber +
                           ': ' +
@@ -82,18 +87,20 @@ class UnitCart extends HookWidget {
                           fontWeight: FontWeight.w700,
                           fontSize: 20),
                     ),
-                    addVerticalSpace(5),
-                    Row(
-                      children: [
-                        const IconText(
-                            Icons.person_outline_outlined, 'Beginner'),
-                        addHorizontalSpace(20),
-                        IconText(
-                            Icons.timer, unitInfo!.minToWatch + ' minutes'),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
+                // addVerticalSpace(5),
+                // Row(
+                //   children: [
+                //     const IconText(
+                //         Icons.person_outline_outlined, 'Beginner'),
+                //     addHorizontalSpace(20),
+                //     IconText(
+                //         Icons.timer, unitInfo!.minToWatch + ' minutes'),
+                //   ],
+                // )
+                //],
+                //),
               ),
               Flexible(
                   fit: FlexFit.loose,
@@ -109,7 +116,7 @@ class UnitCart extends HookWidget {
   ///Unit Status
   getUnitStatusWidget() {
     if (courseInfo!.isPurchased) {
-     if (unitInfo!.isCompleted) {
+      if (unitInfo!.isCompleted) {
         return iconCompleted();
       } else {
         return iconLocked();

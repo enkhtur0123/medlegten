@@ -8,6 +8,7 @@ import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/pages/VideoPage/vocabulary_card.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/global.dart';
+
 class VideoVocabularyListPage extends StatefulWidget {
   const VideoVocabularyListPage({Key? key, this.movieId}) : super(key: key);
   final String? movieId;
@@ -90,7 +91,7 @@ class _VideoVocabularyListPageState extends State<VideoVocabularyListPage> {
         Positioned(
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
-          child: UnitAppBar("Үг", isCompleted: false),
+          child: UnitAppBar("Үгсийн сан", isCompleted: false),
         ),
       ]),
     );
@@ -102,8 +103,9 @@ class _VideoVocabularyListPageState extends State<VideoVocabularyListPage> {
       children: [
         addVerticalSpace(20),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          getButton('All words', isBookmarked.value == false, isBookmarked),
-          getButton('Selected words', isBookmarked.value == true, isBookmarked)
+          getButton('Бүх үгнүүд', isBookmarked.value == false, isBookmarked),
+          getButton(
+              'Тэмдэглэсэн үгнүүд', isBookmarked.value == true, isBookmarked)
         ]),
         addVerticalSpace(10),
         const Divider(
@@ -130,7 +132,7 @@ class _VideoVocabularyListPageState extends State<VideoVocabularyListPage> {
     return isSelected
         ? SizedBox(
             width: GlobalValues.getWidthRelativeToScreen(
-                20), // GlobalValues.screenWidth / 2.4,
+                23), // GlobalValues.screenWidth / 2.4,
             child: ElevatedButton(
               onPressed: () {},
               child: Text(caption,

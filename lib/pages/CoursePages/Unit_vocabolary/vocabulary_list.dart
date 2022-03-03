@@ -101,8 +101,9 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
       children: [
         addVerticalSpace(20),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          getButton('All words', isBookmarked.value == false, isBookmarked),
-          getButton('Selected words', isBookmarked.value == true, isBookmarked)
+          getButton('Бүх үгнүүд', isBookmarked.value == false, isBookmarked),
+          getButton(
+              'Тэмдэглэсэн үгнүүд', isBookmarked.value == true, isBookmarked)
         ]),
         addVerticalSpace(10),
         const Divider(
@@ -129,7 +130,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
     return isSelected
         ? SizedBox(
             width: GlobalValues.getWidthRelativeToScreen(
-                20), // GlobalValues.screenWidth / 2.4,
+                23), // GlobalValues.screenWidth / 2.4,
             child: ElevatedButton(
               onPressed: () {},
               child: Text(caption,

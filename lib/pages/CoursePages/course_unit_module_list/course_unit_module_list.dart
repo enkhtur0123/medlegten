@@ -8,6 +8,7 @@ import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Landing/course_unit_module_list.dart';
+import 'package:medlegten/pages/CoursePages/course_unit_module_list/course_unit_module_helper.dart';
 import 'package:medlegten/pages/CoursePages/course_unit_module_list/timeline_tile_item.dart';
 import 'package:medlegten/pages/CoursePages/course_unit_module_list/unit_module_header.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
@@ -40,7 +41,7 @@ class CourseUnitModuleListPage extends HookWidget {
     final moduleSnapshot = useFuture(moduleFuture);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Courses"),
+        title: Text('Unit ${unitInfo.unitNumber}'),
       ),
       backgroundColor: ColorTable.color255_255_255,
       body: Column(
@@ -51,7 +52,7 @@ class CourseUnitModuleListPage extends HookWidget {
             unitInfo: unitInfo,
           ),
           gradientButton(
-            "Үгсийн сан - Unit ${unitInfo.unitNumber}",
+            "Үгсийн сан",
             () {
               AutoRouter.of(context).push(VocabularyListRoute(
                   unitTitle: 'UNIT ${unitInfo.unitNumber}-Vocabulary',
@@ -64,6 +65,7 @@ class CourseUnitModuleListPage extends HookWidget {
           Expanded(
             child: moduleSnapshot.hasData
                 ? ListView.builder(
+                    padding: const EdgeInsets.all(0),
                     itemCount: moduleSnapshot.data!.length,
                     itemBuilder: (context, index) {
                       var tuple = moduleSnapshot.data![index];
@@ -84,9 +86,17 @@ class CourseUnitModuleListPage extends HookWidget {
             "Эхлэх",
             colorSecondary,
             colorWhite,
-            () {},
+            () {
+              for (var tuple in moduleSnapshot.data!) {
+                if (tuple.item2.isUpcoming) {
+                  UnitModuleHelper()
+                      .showUnitPages(context, tuple.item2, unitInfo);
+                  break;
+                }
+              }
+            },
           ),
-          addVerticalSpace(20),
+          addVerticalSpace(25),
         ],
       ),
     );

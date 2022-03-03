@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -55,7 +57,7 @@ class _ArticlePageState extends State<ArticlePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorTable.color255_255_255,
+      backgroundColor: const Color.fromRGBO(240, 240, 240, 1),
       body: Stack(children: [
         Positioned(
           top: unitHeaderHeight,
@@ -161,10 +163,11 @@ class _ArticlePageState extends State<ArticlePage> {
           ),
         ),
         statistikWidget(),
-        const Divider(thickness: 1, color: Color.fromRGBO(199, 201, 217, 1)),
+        const Divider(thickness: 1, color: Color.fromRGBO(199, 201, 217, .2)),
         articleTitle(),
         Expanded(
             child: ListView.builder(
+          padding: const EdgeInsets.all(0),
           shrinkWrap: true,
           addAutomaticKeepAlives: true,
           itemCount: widgetList.length,
@@ -178,11 +181,8 @@ class _ArticlePageState extends State<ArticlePage> {
   }
 
   Widget bottomLike() {
-    return //BackdropFilter(
-        //filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        //child:
-        Container(
-      padding: const EdgeInsets.only(bottom: 10),
+    return Container(
+      padding: const EdgeInsets.only(bottom: 10, top: 10),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.white,
@@ -228,8 +228,8 @@ class _ArticlePageState extends State<ArticlePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.favorite_border,
+                Icon(
+                  isLiked ? Icons.favorite : Icons.favorite_border,
                   color: Colors.white,
                   size: 30,
                 ),
@@ -247,16 +247,16 @@ class _ArticlePageState extends State<ArticlePage> {
             ),
           ),
         ),
-        //),
       ),
     );
   }
 
   Widget articleTitle() {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
         child: Center(
             child: Text(widget.articleInfo.articleTitle,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 16,
@@ -265,9 +265,8 @@ class _ArticlePageState extends State<ArticlePage> {
   }
 
   Widget statistikWidget() {
-    print(widget.articleInfo.categoryIcon);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

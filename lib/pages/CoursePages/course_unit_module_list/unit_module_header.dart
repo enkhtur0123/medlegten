@@ -29,15 +29,18 @@ class UnitModuleHeader extends HookWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'UNIT ${unitInfo!.unitNumber}: ${unitInfo!.unitName.toUpperCase()}',
-              style: const TextStyle(
-                  color: colorPrimary,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16),
+            Expanded(
+              child: Center(
+                child: Text(
+                  unitInfo!.unitName.toUpperCase(),
+                  style: const TextStyle(
+                      color: colorPrimary,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16),
+                ),
+              ),
             ),
-            addHorizontalSpace(20),
             CircularPercentIndicator(
                 radius: 45.0,
                 lineWidth: 3.0,
@@ -71,7 +74,8 @@ class UnitModuleHeader extends HookWidget {
                         textAlign: TextAlign.center,
                       )
                     : const Text("0%"),
-                progressColor: colorPrimary)
+                progressColor: colorPrimary),
+            addHorizontalSpace(20)
           ],
         ),
         addVerticalSpace(10),
@@ -101,7 +105,7 @@ class UnitModuleHeader extends HookWidget {
     } else {
       percent = 0;
     }
-    if (percent > 0) {  
+    if (percent > 0) {
       percent = percent / 100;
     } else {
       return 0;

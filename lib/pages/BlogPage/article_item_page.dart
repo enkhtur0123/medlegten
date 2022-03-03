@@ -19,10 +19,10 @@ class ArticleItemPage extends HookWidget {
         onTap: () async {
           LoadingIndicator(context: context).showLoadingIndicator();
           UnitRepository().getArticleInfo(articleItem!.articleId).then((value) {
-               LoadingIndicator(context: context).hideLoadingIndicator();
+            LoadingIndicator(context: context).hideLoadingIndicator();
             AutoRouter.of(context).push(ArticleRoute(articleInfo: value!));
-          }).catchError((onError){
-              LoadingIndicator(context: context).hideLoadingIndicator();
+          }).catchError((onError) {
+            LoadingIndicator(context: context).hideLoadingIndicator();
           });
         },
         child: Container(
@@ -113,15 +113,13 @@ class ArticleItemPage extends HookWidget {
                           children: [
                             viewWithLikeWidget(
                                 iconData: Icons.remove_red_eye,
-                                text: articleItem!.viewCount.toString() +
-                                    " views"),
+                                text: articleItem!.viewCount.toString()),
                             const SizedBox(
                               width: 10,
                             ),
                             viewWithLikeWidget(
                                 iconData: Icons.favorite_outline_outlined,
-                                text: articleItem!.likeCount.toString() +
-                                    " likes"),
+                                text: articleItem!.likeCount.toString()),
                           ],
                         ),
                       ],
