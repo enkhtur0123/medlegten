@@ -116,7 +116,7 @@ class LandingPageState extends ConsumerState<LandingPage>
               index: 1,
               imgUrl:
                   "assets/img/Landing/${1 == _index!.value ? "selected" : "unselected"}/course.svg",
-              text: "Курс"),
+              text: "Хөтөлбөр"),
           getTab(
               index: 2,
               imgUrl:

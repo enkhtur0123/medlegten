@@ -37,8 +37,7 @@ class PaymentState extends State<PaymentPage> {
   TextEditingController controller =
       TextEditingController(text: "924161ED12DA");
   FocusNode couponNode = FocusNode();
-  String infoText =
-      "Гүйлгээний мэдээллийг нэг бүрчлэн оруулах шаардлагагүйгээр дээрх банкны апп-р төлбөр төлөх боломжтой.";
+  String infoText = "Компанийн нэр: Стардаст вишн Партнерс ХХК";
   String? couponCode;
   String? price;
   @override
@@ -124,14 +123,14 @@ class PaymentState extends State<PaymentPage> {
                   icon: "assets/img/payment/qpay.svg",
                 ),
               ),
-              GestureDetector(
-                onTap: () {},
-                child: getPaymentFunction(
-                  title: "Social pay",
-                  body: "Social pay-р төлбөр төлөх",
-                  icon: "assets/img/payment/socialpay.svg",
-                ),
-              )
+              // GestureDetector(
+              //   onTap: () {},
+              //   child: getPaymentFunction(
+              //     title: "Social pay",
+              //     body: "Social pay-р төлбөр төлөх",
+              //     icon: "assets/img/payment/socialpay.svg",
+              //   ),
+              // )
             ],
           ),
         ],
@@ -141,14 +140,21 @@ class PaymentState extends State<PaymentPage> {
         backgroundColor: Colors.white,
         onClosing: () {},
         builder: (context) {
-          return Container(
-              padding: const EdgeInsets.only(bottom: 100),
-              child: Text(infoText,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.normal)));
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+          Container(
+            padding: const EdgeInsets.only(bottom: 100),
+            child: Text(
+              infoText,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.normal),
+            ),
+          )]);
         },
       ),
     );

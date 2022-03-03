@@ -26,9 +26,9 @@ class CustomerReviewList extends HookWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButtonWidget(text: 'Reviews', onTap: () {}),
+            TextButtonWidget(text: 'Санал, сэтгэгдлүүд', onTap: () {}),
             TextButtonWidget(
-                text: 'See All',
+                text: 'Бүгд',
                 onTap: () async {
                   isAll.value = true;
                   _controller.jumpTo(_controller.position.maxScrollExtent);

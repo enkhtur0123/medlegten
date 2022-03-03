@@ -29,7 +29,8 @@ class LandingHomeState extends ConsumerState<LandingHome> {
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 children: [
-                  snapShot.data!.promotions!.isNotEmpty
+                  snapShot.data!.promotions != null &&
+                          snapShot.data!.promotions!.isNotEmpty
                       ? PromotionList(
                           promoList: snapShot.data!.promotions,
                         )

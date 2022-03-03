@@ -48,9 +48,9 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 10, bottom: 20, top: 20),
-              child: const Text(
-                "Audio 2:\nBTS Show",
-                style: TextStyle(
+              child: Text(
+                "Сонсгол ${widget.currentIndex!+1}:\n${widget.listeningQuiz!.listening.cue[widget.currentIndex!].title}",
+                style: const TextStyle(
                     fontSize: 15,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.bold),
