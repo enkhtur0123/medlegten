@@ -9,6 +9,7 @@ import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/utils/time_convert_helper.dart';
+import 'package:medlegten/widgets/icon_with_text_widget.dart';
 import 'package:medlegten/widgets/loader.dart';
 
 class LevelEventItem extends HookWidget {
@@ -139,27 +140,25 @@ class LevelEventItem extends HookWidget {
             children: [
               Flexible(
                 fit: FlexFit.tight,
-                flex: 7,
-                child: InfoItemWidget(
+                flex: 6,
+                child: IconWithTextWidget(
                   iconData: Icons.access_time_sharp,
-                  text: event.runTime != null && event.runTime != ""
-                      ? TimeConvertHelper().timeConvert(
-                          time: int.parse(event.runTime!),
-                        )
-                      : "",
-                ),
+                   text: event.runTime != null && event.runTime != ""
+                          ? TimeConvertHelper().timeConvert(
+                              time: int.parse(event.runTime!),
+                            )
+                          : ""
+                )
               ),
               Flexible(
                 fit: FlexFit.tight,
-                flex: 3,
-                child: InfoItemWidget(isSvg: true, text: event.vocabularyCount),
+                flex: 4,
+                child: IconWithTextWidget(iconData: Icons.layers_sharp,text: event.vocabularyCount,)
               ),
               Flexible(
                 fit: FlexFit.tight,
-                flex: 8,
-                child: InfoItemWidget(
-                    iconData: Icons.category_outlined,
-                    text: event.categoryName),
+                flex: 4,
+                child: IconWithTextWidget(iconData: Icons.category_outlined,text:  event.categoryName,)  
               ),
             ],
           ),
