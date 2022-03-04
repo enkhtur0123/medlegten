@@ -1,11 +1,16 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/pages/StartPages/facebook_login.dart';
 import 'package:medlegten/pages/StartPages/google_login.dart';
 import 'package:medlegten/pages/StartPages/medlegten_vertical.dart';
 import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/utils/app_router.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,25 +54,49 @@ class LoginPage extends ConsumerWidget {
                   const GoogleLogin(),
                   const Spacer(flex: 1),
                   RichText(
-                    text: const TextSpan(
-                      text: 'By signing up you accept the',
-                      style: TextStyle(color: Color.fromRGBO(130, 130, 130, 1)),
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: 'Та манай ',
+                      style: const TextStyle(
+                          color: Color.fromRGBO(130, 130, 130, 1)),
+                      children: [
+                        TextSpan(
+                            text: 'үйлчилгээний нөхцөл',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                AutoRouter.of(context).push(
+                                    WebViewRoute(webUrl: 'https://gogo.mn'));
+                              },
+                            style: TextStyle(
+                                color: ColorTable.color120_100_254,
+                                decoration: TextDecoration.underline)),
+                      ],
                     ),
                   ),
+                  addVerticalSpace(5),
                   RichText(
+                    textAlign: TextAlign.center,
                     text: TextSpan(
-                        text: 'Terms of Service',
-                        style: TextStyle(color: ColorTable.color120_100_254),
-                        children: [
-                          const TextSpan(
-                              text: ' and ',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(130, 130, 130, 1))),
-                          TextSpan(
-                              text: ' Privacy Policy',
-                              style:
-                                  TextStyle(color: ColorTable.color120_100_254))
-                        ]),
+                      text: ' болон ',
+                      style: const TextStyle(
+                          color: Color.fromRGBO(130, 130, 130, 1)),
+                      children: [
+                        TextSpan(
+                            text: 'нууцлалын бодлоготой',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                AutoRouter.of(context).push(
+                                    WebViewRoute(webUrl: 'https://news.mn'));
+                              },
+                            style: TextStyle(
+                                color: ColorTable.color120_100_254,
+                                decoration: TextDecoration.underline)),
+                        const TextSpan(
+                            text: ' танилцана уу.',
+                            style: TextStyle(
+                                color: Color.fromRGBO(130, 130, 130, 1))),
+                      ],
+                    ),
                   ),
                   const Spacer(flex: 3),
                 ],

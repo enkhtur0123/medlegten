@@ -43,9 +43,9 @@ class HttpHelper {
     return dio;
   }
 
-  Future<dynamic> getUrl({String? url}) async {
+  Future<dynamic> getUrl({String? url, String? token}) async {
     var dio = _createDio();
-    var access_token = await getToken();
+    var access_token = token ?? await getToken();
     print(access_token);
     dio.options.headers['Authorization'] = access_token;
     try {

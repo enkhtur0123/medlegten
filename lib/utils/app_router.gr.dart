@@ -218,6 +218,13 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: PromotionDetailPage(key: args.key, webUrl: args.webUrl));
+    },
+    WebViewRoute.name: (routeData) {
+      final args = routeData.argsAs<WebViewRouteArgs>(
+          orElse: () => const WebViewRouteArgs());
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: WebViewPage(key: args.key, webUrl: args.webUrl));
     }
   };
 
@@ -254,7 +261,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(ArticleVerticalRoute.name, path: '/blog/all'),
         RouteConfig(ArticleRoute.name,
             path: '/blog/articledetail/article_detail_page'),
-        RouteConfig(PromotionDetailRoute.name, path: '/promotion/detail')
+        RouteConfig(PromotionDetailRoute.name, path: '/promotion/detail'),
+        RouteConfig(WebViewRoute.name, path: '/web_view')
       ];
 }
 
@@ -1074,5 +1082,29 @@ class PromotionDetailRouteArgs {
   @override
   String toString() {
     return 'PromotionDetailRouteArgs{key: $key, webUrl: $webUrl}';
+  }
+}
+
+/// generated route for
+/// [WebViewPage]
+class WebViewRoute extends PageRouteInfo<WebViewRouteArgs> {
+  WebViewRoute({Key? key, String? webUrl})
+      : super(WebViewRoute.name,
+            path: '/web_view',
+            args: WebViewRouteArgs(key: key, webUrl: webUrl));
+
+  static const String name = 'WebViewRoute';
+}
+
+class WebViewRouteArgs {
+  const WebViewRouteArgs({this.key, this.webUrl});
+
+  final Key? key;
+
+  final String? webUrl;
+
+  @override
+  String toString() {
+    return 'WebViewRouteArgs{key: $key, webUrl: $webUrl}';
   }
 }

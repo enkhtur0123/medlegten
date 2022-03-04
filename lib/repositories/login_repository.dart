@@ -73,7 +73,10 @@ class LoginRepository implements ILoginRepository {
   @override
   Future<Version?> getAppVersion() async {
     try {
-      final res = await HttpHelper().getUrl(url: 'Login/Version');
+      final res = await HttpHelper().getUrl(
+          url: 'Login/Version',
+          token:
+              "T0rr2flSZvRRwkZJMFMPLGttmZLDJS2pIfTg2yvYMiJNy5OXNptODn28TiJ1tZeV");
       if (res['isSuccess']) {
         return Version.fromJson(res);
       } else {
@@ -155,7 +158,21 @@ class LoginRepository implements ILoginRepository {
     try {
       final res = await HttpHelper().getUrl(url: 'UserInfo');
       if (res['errorCode'] == 401) {
-       await GetStorage().remove("token");
+        await GetStorage().remove("token");
+      }
+      return res['errorCode'] == '200';
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future<bool> setBirth(String? birthdate) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'UserInfo/BirthDate/$birthdate');
+      if (res['errorCode'] == 401) {
+        await GetStorage().remove("token");
       }
       return res['errorCode'] == '200';
     } catch (e) {
