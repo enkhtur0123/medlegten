@@ -4,7 +4,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:medlegten/models/Landing/app_bar_data.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
+import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/repositories/repository.dart';
 
@@ -23,6 +25,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
   GoogleSignIn? googleSignIn;
   FacebookAuth? facebookAuth;
   MUserInfo? userInfo;
+  AppBarData? appBarData;
 
   AuthViewModel()
       : _auth = FirebaseAuth.instance,
@@ -81,6 +84,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   _login() async {
     var user = await LoginRepository().getUserInfo();
+    appBarData = await LandingRepository().getAppbarData();
+    // print(appBarData);
     userInfo = user;
     if (user == null) {
       changeStatus(AuthState.UnAuthorized);

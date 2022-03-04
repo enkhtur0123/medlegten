@@ -3,7 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Starting/version.dart';
+import 'package:medlegten/providers/app_provider.dart';
+import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:medlegten/utils/global.dart';
@@ -87,7 +90,6 @@ class Init {
     // the splash screen is displayed.  Remove the following example because
     // delaying the user experience is a bad design practice!
     //ref.read(loginNotifierProvider.notifier).getAppVersion();
-
     ref.read(authProvider.notifier).login();
     //Future.delayed(const Duration(milliseconds: 10));
   }

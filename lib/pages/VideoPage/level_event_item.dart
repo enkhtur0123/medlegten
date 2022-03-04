@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
@@ -25,11 +27,11 @@ class LevelEventItem extends HookWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        List data=[];
+        List data = [];
         LoadingIndicator(context: context).showLoadingIndicator();
         try {
-          data = await VideoRepository()
-              .getContentDetail(contentId: !isHome!?event!.eventId:event!.contentId);
+          data = await VideoRepository().getContentDetail(
+              contentId: !isHome! ? event!.eventId : event!.contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
         } catch (ex) {
           LoadingIndicator(context: context).hideLoadingIndicator();
@@ -122,7 +124,7 @@ class LevelEventItem extends HookWidget {
         Flexible(
           flex: 4,
           child: Text(
-           !isHome!?event.eventName??"":event.contentName??"",
+            !isHome! ? event.eventName ?? "" : event.contentName ?? "",
             style: const TextStyle(
                 color: Color(0xff333333),
                 fontSize: 14,
@@ -134,31 +136,41 @@ class LevelEventItem extends HookWidget {
         const SizedBox(height: 10),
         Flexible(
           flex: 4,
+          fit: FlexFit.loose,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
-                fit: FlexFit.tight,
-                flex: 6,
+                fit: FlexFit.loose,
+                flex: 2,
                 child: IconWithTextWidget(
-                  iconData: Icons.access_time_sharp,
-                   text: event.runTime != null && event.runTime != ""
-                          ? TimeConvertHelper().timeConvert(
-                              time: int.parse(event.runTime!),
-                            )
-                          : ""
-                )
+                    iconData: Icons.access_time_sharp,
+                    fontSize: 10,
+                    text: event.runTime != null && event.runTime != ""
+                        ? TimeConvertHelper().timeConvert(
+                            time: int.parse(event.runTime!),
+                          )
+                        : ""),
               ),
               Flexible(
-                fit: FlexFit.tight,
-                flex: 4,
-                child: IconWithTextWidget(iconData: Icons.layers_sharp,text: event.vocabularyCount,)
+                fit: FlexFit.loose,
+                flex: 2,
+                child: IconWithTextWidget(
+                  iconData: CupertinoIcons.layers_alt,
+                  text: event.vocabularyCount,
+                  fontSize: 10,
+                ),
               ),
               Flexible(
-                fit: FlexFit.tight,
-                flex: 4,
-                child: IconWithTextWidget(iconData: Icons.category_outlined,text:  event.categoryName,)  
+                fit: FlexFit.loose,
+                flex: 3,
+                child: IconWithTextWidget(
+                  iconData: Icons.category_outlined,
+                  text: event.categoryName,
+                  fontSize: 10,
+                ),
               ),
             ],
           ),

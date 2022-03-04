@@ -165,7 +165,7 @@ class LandingRepository {
     }
   }
 
-  //// Шалгалтын мэдээлэл авах
+  //// Мэдээлэл авах
   Future<AppBarData> getAppbarData() async {
     try {
       final res = await HttpHelper().getUrl(url: 'UserInfo/AppBar');
