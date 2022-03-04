@@ -65,8 +65,7 @@ class CustomPopUpDialog extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: color, borderRadius: BorderRadius.circular(15)),
-              child: icon
-          ),
+              child: icon),
         ],
       ),
       elevation: 5,

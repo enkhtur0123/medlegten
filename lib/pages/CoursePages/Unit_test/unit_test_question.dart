@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_answer.dart';
 import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_helper.dart';
@@ -29,6 +30,19 @@ class UnitTestQuestion extends HookWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
         children: [
+          quizQuestionEx.quizQuestion.segmentId == '' &&
+                  quizQuestionEx.quizQuestion.ordering == '1'
+              ? Center(
+                  child: Text(
+                    '${quizQuestionEx.quizQuestion.segmentName}  -  ${quizQuestionEx.quizQuestion.questionId}',
+                    style: const TextStyle(
+                        color: colorPrimary,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16),
+                  ),
+                )
+              : Container(),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(

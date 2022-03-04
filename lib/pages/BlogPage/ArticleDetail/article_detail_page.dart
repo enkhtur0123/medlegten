@@ -13,6 +13,7 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
 import 'package:medlegten/utils/global.dart';
+import 'package:medlegten/widgets/icon_with_text_widget.dart';
 import 'dart:math' as math;
 import 'article_helper.dart';
 import 'article_translate.dart';
@@ -290,38 +291,17 @@ class _ArticlePageState extends State<ArticlePage> {
           //   width: 20,
           //   height: 20,
           // ),
-          const Icon(
-            Icons.folder_open,
-            color: Color(0xff4F4F4F),
-            size: 20,
-          ),
-          addHorizontalSpace(8),
-          Text(
-            widget.articleInfo.categoryName,
-            style: textStyle,
-          ),
+          IconWithTextWidget(
+              iconData: Icons.folder_open,
+              text: widget.articleInfo.categoryName),
           addHorizontalSpace(16),
-          const Icon(
-            Icons.remove_red_eye,
-            color: Color(0xff4F4F4F),
-            size: 20,
-          ),
-          addHorizontalSpace(8),
-          Text(
-            '${widget.articleInfo.viewCount} views',
-            style: textStyle,
-          ),
+          IconWithTextWidget(
+              iconData: Icons.remove_red_eye,
+              text: widget.articleInfo.viewCount),
           addHorizontalSpace(16),
-          const Icon(
-            Icons.favorite_outline_outlined,
-            color: Color(0xff4F4F4F),
-            size: 20,
-          ),
-          addHorizontalSpace(8),
-          Text(
-            '${int.parse(widget.articleInfo.likeCount) + likeAdd} likes',
-            style: textStyle,
-          )
+          IconWithTextWidget(
+              iconData: Icons.favorite_outline_outlined,
+              text: '${int.parse(widget.articleInfo.likeCount) + likeAdd}'),
         ],
       ),
     );

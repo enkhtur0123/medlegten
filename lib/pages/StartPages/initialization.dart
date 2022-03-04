@@ -24,7 +24,7 @@ class InitializationPage extends HookWidget {
     GlobalValues.screenScaleFactor = MediaQuery.of(context).textScaleFactor;
     //final loginState = ref.watch(loginNotifierProvider);
 
-    var str = 'Medlegten app v0.0';
+    var str = 'Medlegten app v 1.0';
     // loginState.whenOrNull(
     //   data: (data) {
     //     if (data is Version) {

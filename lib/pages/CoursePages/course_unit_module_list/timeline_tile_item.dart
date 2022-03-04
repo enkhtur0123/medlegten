@@ -82,9 +82,18 @@ class TimeLineTileItemWidget extends HookWidget {
                   case "8":
                   case "9":
                     {
-                      if (!data!.isUpcoming && !data!.isCompleted) {
+                      if (data!.isUpcoming && !data!.isCompleted) {
                         AutoRouter.of(context).push(
                           UnitTestRoute(
+                              isOnlyShowResult: false,
+                              unitTitle: data!.moduleTypeName,
+                              moduleTypeId: data!.moduleTypeId,
+                              moduleId: data!.moduleId),
+                        );
+                      } else if (!data!.isUpcoming && data!.isCompleted) {
+                        AutoRouter.of(context).push(
+                          UnitTestRoute(
+                              isOnlyShowResult: true,
                               unitTitle: data!.moduleTypeName,
                               moduleTypeId: data!.moduleTypeId,
                               moduleId: data!.moduleId),

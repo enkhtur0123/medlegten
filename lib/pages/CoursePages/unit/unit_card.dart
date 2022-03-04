@@ -2,8 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/pages/CoursePages/payment/buy_course_intro_bsheet.dart';

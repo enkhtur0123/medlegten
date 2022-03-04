@@ -12,7 +12,7 @@ import 'package:rxdart/rxdart.dart';
 import 'bottom_sheet_dialog.dart';
 
 class ModuleListenPage extends StatefulWidget {
-  const ModuleListenPage(
+  const ModuleListenPage(this.unitTitle,
       {Key? key,
       this.unitInfo,
       this.listeningQuiz,
@@ -24,6 +24,7 @@ class ModuleListenPage extends StatefulWidget {
   final ListeningQuiz? listeningQuiz;
   final String? moduleId;
   final bool? isCompleted;
+  final String? unitTitle;
 
   @override
   _ModuleListenPageState createState() => _ModuleListenPageState();
@@ -68,8 +69,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
     /// Player ээ сонсож байна
     _player.playbackEventStream.listen((event) async {
       if ((event.duration != null &&
-          event.duration!.inSeconds == _player.position.inSeconds &&
-          !listenChecks.value[currentIndex].isChecking!) && !isBottomSheet) {
+              event.duration!.inSeconds == _player.position.inSeconds &&
+              !listenChecks.value[currentIndex].isChecking!) &&
+          !isBottomSheet) {
         isBottomSheet = true;
         setState(() {});
         await showModalBottomSheet<void>(
@@ -97,9 +99,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
           },
         ).then((value) async {
           isBottomSheet = false;
-          setState(() {
-            
-          });
+          setState(() {});
         });
       }
     }, onError: (Object e, StackTrace stackTrace) {
@@ -152,7 +152,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("UNIT ${widget.unitInfo!.unitNumber} - Listening"),
+        title: Text(widget.unitTitle!),
         actions: [
           UnitModuleCompletedBtn(
             moduleId: widget.moduleId,
@@ -172,7 +172,6 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
               fit: FlexFit.loose,
               flex: 2,
               child: Container(
-                
                 margin: const EdgeInsets.only(top: 50),
                 child: const Text(
                   "Анхааралтай сонсоод\nасуултанд хариулаарай.",
