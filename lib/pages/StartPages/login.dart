@@ -10,7 +10,6 @@ import 'package:medlegten/pages/StartPages/google_login.dart';
 import 'package:medlegten/pages/StartPages/medlegten_vertical.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/utils/app_router.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
