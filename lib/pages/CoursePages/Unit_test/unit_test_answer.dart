@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:medlegten/models/Landing/quiz_answer.dart';
 import 'package:medlegten/pages/CoursePages/Unit_test/unit_test_helper.dart';
 
 // ignore: must_be_immutable
@@ -8,7 +7,7 @@ class UnitTestAnswerItem extends HookWidget {
   UnitTestAnswerItem(this.callBack,
       {Key? key, this.answer, this.quizQuestionEx, this.duussan})
       : super(key: key);
-  QuizAnswer? answer;
+  AnswerWrapper? answer;
   ExamQuestionEx? quizQuestionEx;
   int? duussan;
   Function() callBack;
@@ -79,7 +78,7 @@ class UnitTestAnswerItem extends HookWidget {
     );
   }
 
-  Color getBorderSide(QuizAnswer answer) {
+  Color getBorderSide(AnswerWrapper answer) {
     Color color = Colors.transparent;
     if (duussan == 1) {
       if (answer.isTrue == '1') {

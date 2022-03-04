@@ -91,7 +91,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
       changeStatus(AuthState.UnAuthorized);
     } else {
       //1 bval birthday asuuna, 2 bval skipped, 0 bval nasaa oruultsan
-      if (user.skipBirthDate != '1') {
+      if (user.skipBirthDate != '0') {
         changeStatus(AuthState.AuthorizedAge);
       } else {
         // print(user);

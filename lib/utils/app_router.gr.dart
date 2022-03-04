@@ -103,11 +103,10 @@ class _$AppRouter extends RootStackRouter {
               isCompleted: args.isCompleted));
     },
     ModuleListenRoute.name: (routeData) {
-      final args = routeData.argsAs<ModuleListenRouteArgs>(
-          orElse: () => const ModuleListenRouteArgs());
+      final args = routeData.argsAs<ModuleListenRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: ModuleListenPage(
+          child: ModuleListenPage(args.unitTitle,
               key: args.key,
               unitInfo: args.unitInfo,
               listeningQuiz: args.listeningQuiz,
@@ -196,6 +195,7 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: UnitTestPage(args.moduleTypeId, args.moduleId, args.unitTitle,
+              args.isOnlyShowResult,
               key: args.key));
     },
     ArticleVerticalRoute.name: (routeData) {
@@ -596,7 +596,8 @@ class ReadingRouteArgs {
 /// [ModuleListenPage]
 class ModuleListenRoute extends PageRouteInfo<ModuleListenRouteArgs> {
   ModuleListenRoute(
-      {Key? key,
+      {required String? unitTitle,
+      Key? key,
       CourseUnit? unitInfo,
       ListeningQuiz? listeningQuiz,
       String? moduleId,
@@ -604,6 +605,7 @@ class ModuleListenRoute extends PageRouteInfo<ModuleListenRouteArgs> {
       : super(ModuleListenRoute.name,
             path: '/unit_module_listening',
             args: ModuleListenRouteArgs(
+                unitTitle: unitTitle,
                 key: key,
                 unitInfo: unitInfo,
                 listeningQuiz: listeningQuiz,
@@ -615,11 +617,14 @@ class ModuleListenRoute extends PageRouteInfo<ModuleListenRouteArgs> {
 
 class ModuleListenRouteArgs {
   const ModuleListenRouteArgs(
-      {this.key,
+      {required this.unitTitle,
+      this.key,
       this.unitInfo,
       this.listeningQuiz,
       this.moduleId,
       this.isCompleted});
+
+  final String? unitTitle;
 
   final Key? key;
 
@@ -633,7 +638,7 @@ class ModuleListenRouteArgs {
 
   @override
   String toString() {
-    return 'ModuleListenRouteArgs{key: $key, unitInfo: $unitInfo, listeningQuiz: $listeningQuiz, moduleId: $moduleId, isCompleted: $isCompleted}';
+    return 'ModuleListenRouteArgs{unitTitle: $unitTitle, key: $key, unitInfo: $unitInfo, listeningQuiz: $listeningQuiz, moduleId: $moduleId, isCompleted: $isCompleted}';
   }
 }
 
@@ -977,6 +982,7 @@ class UnitTestRoute extends PageRouteInfo<UnitTestRouteArgs> {
       {required String moduleTypeId,
       required String moduleId,
       required String unitTitle,
+      required bool isOnlyShowResult,
       Key? key})
       : super(UnitTestRoute.name,
             path: '/unit_test_page',
@@ -984,6 +990,7 @@ class UnitTestRoute extends PageRouteInfo<UnitTestRouteArgs> {
                 moduleTypeId: moduleTypeId,
                 moduleId: moduleId,
                 unitTitle: unitTitle,
+                isOnlyShowResult: isOnlyShowResult,
                 key: key));
 
   static const String name = 'UnitTestRoute';
@@ -994,6 +1001,7 @@ class UnitTestRouteArgs {
       {required this.moduleTypeId,
       required this.moduleId,
       required this.unitTitle,
+      required this.isOnlyShowResult,
       this.key});
 
   final String moduleTypeId;
@@ -1002,11 +1010,13 @@ class UnitTestRouteArgs {
 
   final String unitTitle;
 
+  final bool isOnlyShowResult;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, unitTitle: $unitTitle, key: $key}';
+    return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, unitTitle: $unitTitle, isOnlyShowResult: $isOnlyShowResult, key: $key}';
   }
 }
 

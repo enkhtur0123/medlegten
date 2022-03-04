@@ -95,6 +95,7 @@ class UnitModuleHelper {
             showLoading(context: context, isLoad: false);
             AutoRouter.of(context).push(
               ModuleListenRoute(
+                  unitTitle: data.moduleTypeName,
                   isCompleted: data.isCompleted,
                   unitInfo: unitInfo,
                   listeningQuiz: value,

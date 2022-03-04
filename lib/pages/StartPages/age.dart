@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/wide_button.dart';
+import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class AgePage extends HookWidget {
-  //DateTime selectedDate = DateTime.now();
-
+class AgePage extends HookConsumerWidget {
   const AgePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const double paddingTop = 80.0;
     const double paddingRight = 30.0;
-    final textController = useTextEditingController();
+    final selectedDate = useState<String>('Төрсөн он сар өдөр');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -38,7 +41,11 @@ class AgePage extends HookWidget {
                   children: [
                     addHorizontalSpace(10),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        ref
+                            .read(authProvider.notifier)
+                            .changeStatus(AuthState.Authorized);
+                      },
                       child: Text(
                         'Алгасах',
                         style: TEXT_THEME_DEFAULT.headline1,
@@ -58,39 +65,46 @@ class AgePage extends HookWidget {
               addVerticalSpace(10),
               Container(
                 height: 52,
+                width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: TextField(
-                  controller: textController,
-                  style: const TextStyle(color: colorPrimary),
-                  decoration: InputDecoration(
-                      hintText: 'Он сар өдөр',
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide:
-                            const BorderSide(color: colorPrimary, width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide:
-                            const BorderSide(color: colorPrimary, width: 1),
-                      ),
-                      suffixIcon: const Icon(
-                        Icons.date_range_outlined,
+                child: OutlinedButton(
+                  onPressed: () {
+                    _showMaterialDialog(context, selectedDate);
+                  },
+                  child: Row(children: [
+                    Text(selectedDate.value,
+                        style: const TextStyle(color: Colors.grey)),
+                    const Spacer(),
+                    const Icon(
+                      Icons.date_range_outlined,
+                      color: colorPrimary,
+                    )
+                  ]),
+                  style: OutlinedButton.styleFrom(
+                    //elevation: 0.5,
+                    backgroundColor: Colors.white,
+                    side: const BorderSide(
                         color: colorPrimary,
-                      ),
-                      filled: true,
-                      fillColor: colorWhite),
+                        width: 1,
+                        style: BorderStyle.solid),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                  ),
                 ),
               ),
               addVerticalSpace(250),
               WideButton('Үргэлжлүүлэх', colorSecondary, colorWhite, () {
-                if (textController.text.isEmpty) {
+                if (selectedDate.value == 'Төрсөн он сар өдөр') {
                   ScaffoldMessenger.of(context).showSnackBar(
                     MySnackBar(
                       text: "Огноо оруулна уу!",
                     ),
                   );
+                } else {
+                  LoginRepository().setBirth(selectedDate.value).then((value) =>
+                      ref
+                          .read(authProvider.notifier)
+                          .changeStatus(AuthState.Authorized));
                 }
               }),
               addVerticalSpace(20),
@@ -107,5 +121,41 @@ class AgePage extends HookWidget {
         ],
       ),
     );
+  }
+
+  void _showMaterialDialog(
+      BuildContext context, ValueNotifier<String> selectedDateNotifier) {
+    showDialog(
+        context: context,
+        barrierColor: Colors.transparent,
+        builder: (context) {
+          DateTime selectedDate = DateTime.now();
+          return AlertDialog(
+            content: SizedBox(
+              height: 300,
+              width: 300,
+              child: SfDateRangePicker(
+                onSelectionChanged: (args) {
+                  if (args.value is DateTime) {
+                    selectedDate = args.value;
+                  }
+                },
+                selectionMode: DateRangePickerSelectionMode.single,
+              ),
+            ),
+            actions: [
+              Center(
+                child: TextButton(
+                  child: const Text("Сонгох"),
+                  onPressed: () {
+                    selectedDateNotifier.value =
+                        DateFormat('yyyy-MM-dd').format(selectedDate);
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

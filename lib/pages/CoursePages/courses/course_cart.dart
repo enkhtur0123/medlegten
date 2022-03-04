@@ -3,12 +3,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/icon_with_text_widget.dart';
 
 ////Cart байгаа хэсэгт заавал Flexible ашигла
 // ignore: must_be_immutable
@@ -84,16 +84,19 @@ class CourseCart extends StatelessWidget {
                           children: [
                             Flexible(
                                 flex: 2,
-                                child: IconText(Icons.person_outline_outlined,
-                                    courseInfo.levelName)),
+                                child: IconWithTextWidget(
+                                    iconData: Icons.person_outline_outlined,
+                                    text: courseInfo.levelName)),
                             Flexible(
                                 flex: 3,
-                                child: IconText(
-                                    Icons.timer, courseInfo.hours + ' цаг')),
+                                child: IconWithTextWidget(
+                                    iconData: Icons.timer,
+                                    text: courseInfo.hours + ' цаг')),
                             Flexible(
                                 flex: 4,
-                                child: IconText(Icons.feed_outlined,
-                                    courseInfo.units + ' хичээл')),
+                                child: IconWithTextWidget(
+                                    iconData: Icons.feed_outlined,
+                                    text: courseInfo.units + ' хичээл')),
                           ],
                         ),
                         addVerticalSpace(5),
@@ -174,7 +177,7 @@ courseBgImg(context, CourseInfo courseInfo) {
                         .setCoursePlan(id: courseInfo.courseId)
                         .then((value) {
                       if (value != null) {
-                       AutoRouter.of(context).push(PaymentRoute(
+                        AutoRouter.of(context).push(PaymentRoute(
                             courseInfo: courseInfo,
                             paymentType: "1001",
                             isCourse: true));
@@ -187,7 +190,9 @@ courseBgImg(context, CourseInfo courseInfo) {
                         .push(CourseDetailRoute(courseInfo: courseInfo));
                   } else {
                     AutoRouter.of(context).push(PaymentRoute(
-                        courseInfo: courseInfo, paymentType: "1001",isCourse: true));
+                        courseInfo: courseInfo,
+                        paymentType: "1001",
+                        isCourse: true));
                   }
                 },
                 text: courseInfo.isPurchased ? "Эхлэх" : "Худалдаж авах",
