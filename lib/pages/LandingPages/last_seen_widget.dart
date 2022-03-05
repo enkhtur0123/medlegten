@@ -116,7 +116,6 @@ class LastSeenWidget extends HookWidget {
       BuildContext? context,
       bool? isArticle,
       dynamic data}) {
-    print(data);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

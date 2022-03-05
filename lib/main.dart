@@ -8,8 +8,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/navigator/navigator_key.dart';
 import 'package:medlegten/pages/StartPages/initialization.dart';
+import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/utils/app_router.dart';
 
+import 'repositories/landing_repository.dart';
 import 'themes/style.dart';
 
 void main() async {

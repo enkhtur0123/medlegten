@@ -29,51 +29,73 @@ class LandingPageState extends ConsumerState<LandingPage>
         const LandingHome(),
         const LandingCourse(),
         const VideoPage(),
-         BlogPage(),
+        BlogPage(),
         LandingProfile(),
       ];
-
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
-    ref.read(appbarProvider.notifier).changeStatus(AppBarState(
-          height: 130,
-          isRichText: true,
-          text1:
-              "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
-          text2: "Today’s Goal:",
-          text3: ' A1 UNIT - Reading',
-        ));
+    changeAppBarData(
+        ref: ref,
+        height: 120,
+        appbarProvider: appbarProvider,
+        authProvider: authProvider,
+        text:
+            "${ref.read(authProvider.notifier).appBarData?.homePageText ?? ""} 👋\n");
     tabController!.addListener(() {
       if (tabController!.indexIsChanging) {
         if (tabController!.index == 0) {
-          ref.read(appbarProvider.notifier).changeStatus(AppBarState(
-                height: 130,
-                isRichText: true,
-                text1:
-                    "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
-                text2: "Today’s Goal:",
-                text3: ' A1 UNIT - Reading',
-              ));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text:
+                  "${ref.read(appbarProvider.notifier).appBarState.appBarData?.homePageText ?? ""} 👋\n");
         }
         if (tabController!.index == 1) {
-          ref.read(appbarProvider.notifier).changeStatus(AppBarState(
-              height: 110,
-              isRichText: false,
-              text1: "Өнөөдрийн хичээлдээ бэлэн үү? ✍️"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text:
+                  "${ref.read(appbarProvider.notifier).appBarState.appBarData?.coursePageText ?? ""} ✍️");
         }
         if (tabController!.index == 2) {
-          ref.read(appbarProvider.notifier).changeStatus(
-              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text: ref
+                      .read(appbarProvider.notifier)
+                      .appBarState
+                      .appBarData
+                      ?.ppvPageText ??
+                  "");
         }
         if (tabController!.index == 3) {
-          ref.read(appbarProvider.notifier).changeStatus(
-              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text: ref
+                      .read(appbarProvider.notifier)
+                      .appBarState
+                      .appBarData
+                      ?.articlePageText ??
+                  "");
         }
         if (tabController!.index == 4) {
-          ref.read(appbarProvider.notifier).changeStatus(
-              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text: "Have fun!");
         }
       }
     });
@@ -164,4 +186,19 @@ class LandingPageState extends ConsumerState<LandingPage>
       text: text,
     );
   }
+}
+
+changeAppBarData(
+    {StateNotifierProvider<AppBarViewModel, AppBarState>? appbarProvider,
+    StateNotifierProvider<AuthViewModel, AuthState>? authProvider,
+    WidgetRef? ref,
+    double? height,
+    String? text}) {
+  ref!.read(appbarProvider!.notifier).changeStatus(
+        AppBarState(
+          height: 120,
+          appBarData: ref.read(authProvider!.notifier).appBarData,
+          text: text,
+        ),
+      );
 }
