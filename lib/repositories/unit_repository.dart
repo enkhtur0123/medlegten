@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:medlegten/models/Landing/article_info.dart';
 import 'package:medlegten/models/Landing/unit_complete_percent.dart';
 import 'package:medlegten/models/Test/exam_name.dart';
-import 'package:medlegten/models/Test/exam_result.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_conversation_video.dart';
