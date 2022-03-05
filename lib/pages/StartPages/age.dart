@@ -92,7 +92,7 @@ class AgePage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              addVerticalSpace(250),
+              const Spacer(),
               WideButton('Үргэлжлүүлэх', colorSecondary, colorWhite, () {
                 if (selectedDate.value == 'Төрсөн он сар өдөр') {
                   ScaffoldMessenger.of(context).showSnackBar(

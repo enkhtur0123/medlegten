@@ -4,7 +4,6 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
-import 'package:medlegten/pages/CoursePages/Unit_grammarTable/animatedtext.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
@@ -38,6 +37,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   final selectedIndex = [0, 1, 0];
   late TabController _controller;
   late VideoPlayerController _videoPlayerController;
+
   @override
   void initState() {
     _controller =
@@ -115,6 +115,13 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   }
 
   Widget body() {
+    List<Tab> tabs = [];
+    for (int i = 0; i < widget.unitGrammar.grammar.length; i++) {
+      tabs.add(Tab(
+        child: _buildTabHeader(widget.unitGrammar.grammar[i].label,
+            selectedIndex[0] == i, widget.unitGrammar.grammar.length),
+      ));
+    }
     Widget videoWidget = const SizedBox(
       height: 110,
       width: 1,
@@ -148,11 +155,11 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          addVerticalSpace(20),
-          videoWidget,
-          addVerticalSpace(20),
-          const Align(
+        children: List.unmodifiable(() sync* {
+          yield addVerticalSpace(20);
+          yield videoWidget;
+          yield addVerticalSpace(20);
+          yield const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Жишээ:',
@@ -161,17 +168,17 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                   fontWeight: FontWeight.w500,
                   fontSize: 16),
             ),
-          ),
-          Text(
+          );
+          yield Text(
             helper
                 .getSentence(widget.unitGrammar.grammar[_controller.index])
                 .textEng,
             textAlign: TextAlign.center,
             style: const TextStyle(
                 color: colorBlack, fontWeight: FontWeight.w400, fontSize: 17),
-          ),
-          addVerticalSpace(20),
-          Text(
+          );
+          yield addVerticalSpace(20);
+          yield Text(
             helper
                 .getSentence(widget.unitGrammar.grammar[_controller.index])
                 .textMon,
@@ -181,62 +188,52 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                 fontWeight: FontWeight.w400,
                 fontSize: 15,
                 fontStyle: FontStyle.italic),
-          ),
-          addVerticalSpace(20),
-          const Divider(
+          );
+          yield addVerticalSpace(20);
+          yield const Divider(
             color: Color.fromRGBO(199, 201, 217, 0.2),
             thickness: 1,
-          ),
-          addVerticalSpace(10),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Өгүүлбэрийн төрөл сонгох',
-              style: TextStyle(
-                fontFamily: 'Roboto',
-                color: colorPrimary,
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
+          );
+          yield addVerticalSpace(10);
+          yield Visibility(
+            visible: widget.unitGrammar.grammar[0].label != 'Types',
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Өгүүлбэрийн төрөл сонгох',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  color: colorPrimary,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: SizedBox(
-              width: double.infinity,
-              height: 35,
-              child: TabBar(
-                isScrollable: false,
-                unselectedLabelColor: Colors.black,
-                labelColor: Colors.black,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: Colors.transparent,
-                tabs: [
-                  Tab(
-                    child: _buildTab(
-                        text: widget.unitGrammar.grammar[0].label,
-                        isSelected: selectedIndex[0] == 0),
-                  ),
-                  Tab(
-                    child: _buildTab(
-                        text: widget.unitGrammar.grammar[1].label,
-                        isSelected: selectedIndex[0] == 1),
-                  ),
-                  Tab(
-                    child: _buildTab(
-                        text: widget.unitGrammar.grammar[2].label,
-                        isSelected: selectedIndex[0] == 2),
-                  ),
-                ],
-                controller: _controller,
-                onTap: (index) {
-                  selectedIndex[0] = index;
-                  refreshView.value = !refreshView.value;
-                },
+          );
+          yield Visibility(
+            visible: widget.unitGrammar.grammar[0].label != 'Types',
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: SizedBox(
+                width: double.infinity,
+                height: 35,
+                child: TabBar(
+                  isScrollable: false,
+                  unselectedLabelColor: Colors.black,
+                  labelColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorColor: Colors.transparent,
+                  tabs: tabs,
+                  controller: _controller,
+                  onTap: (index) {
+                    selectedIndex[0] = index;
+                    refreshView.value = !refreshView.value;
+                  },
+                ),
               ),
             ),
-          ),
-          Flexible(
+          );
+          yield Flexible(
             fit: FlexFit.tight,
             child: buildTabview(
               widget.unitGrammar.grammar[selectedIndex[0]],
@@ -261,8 +258,8 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                 }
               },
             ),
-          ),
-        ],
+          );
+        }()),
       ),
     );
   }
@@ -283,6 +280,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
 
     return ListView.builder(
       shrinkWrap: true,
+      padding: const EdgeInsets.all(0),
       itemCount: list.length,
       itemBuilder: (context, index) {
         return list[index];
@@ -340,26 +338,29 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                   border:
                       Border.all(color: const Color.fromRGBO(120, 100, 254, 1)),
                   borderRadius: const BorderRadius.all(Radius.circular(20.0))),
-              child: AnimatedTextWidget(partLabel)
-              // BlinkWidget([
-              //     Text(
-              //       partLabel,
-              //       style: const TextStyle(
-              //           color: Color.fromRGBO(0, 0, 0, 1),
-              //           fontFamily: 'Roboto',
-              //           fontSize: 18,
-              //           fontWeight: FontWeight.w800),
-              //     ),
-              //     Text(
-              //       partLabel,
-              //       style: const TextStyle(
-              //           color: Color.fromRGBO(0, 0, 0, 1),
-              //           fontFamily: 'Roboto',
-              //           fontSize: 16,
-              //           fontWeight: FontWeight.w500),
-              //     )
-              //   ])
-              )
+              child:
+                  //AnimatedTextWidget(partLabel)
+                  BlinkWidget(
+                [
+                  Text(
+                    partLabel,
+                    style: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 1),
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800),
+                  ),
+                  Text(
+                    partLabel,
+                    style: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 1),
+                        fontFamily: 'Roboto',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
+            )
           : Container(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
               decoration: BoxDecoration(
@@ -380,35 +381,38 @@ class _GrammarTablePageState extends State<GrammarTablePage>
     return widget;
   }
 
-  _buildTab({required String text, required bool isSelected}) {
-    return isSelected
-        ? PhysicalModel(
-            color: Colors.white,
-            elevation: 2,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              width: GlobalValues.getWidthRelativeToScreen(30),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: const Color.fromRGBO(120, 100, 254, 1),
-                  ),
-                  color: const Color.fromRGBO(255, 255, 255, 1)),
-              //color: color,
-              child: Text(text),
-            ))
-        : PhysicalModel(
-            color: Colors.white,
-            elevation: 2,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              width: GlobalValues.getWidthRelativeToScreen(30),
-              alignment: Alignment.center,
-              child: Text(text),
+  _buildTabHeader(String text, bool isSelected, int tabcount) {
+    return SizedBox(
+      width: GlobalValues.screenWidth / (tabcount == 3 ? 1 : 6),
+      child: isSelected
+          ? PhysicalModel(
+              color: Colors.white,
+              elevation: 2,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: GlobalValues.getWidthRelativeToScreen(30),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color.fromRGBO(120, 100, 254, 1),
+                    ),
+                    color: const Color.fromRGBO(255, 255, 255, 1)),
+                //color: color,
+                child: Text(text),
+              ))
+          : PhysicalModel(
+              color: Colors.white,
+              elevation: 2,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: GlobalValues.getWidthRelativeToScreen(30),
+                alignment: Alignment.center,
+                child: Text(text),
+              ),
             ),
-          );
+    );
   }
 }

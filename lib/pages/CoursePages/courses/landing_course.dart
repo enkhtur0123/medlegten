@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/pages/CoursePages/courses/course_list.dart';
 import 'package:medlegten/pages/CoursePages/customer_review/customer_review_list.dart';
 import 'package:medlegten/pages/CoursePages/courses/level_info.dart';
@@ -26,6 +27,7 @@ class LandingCourseState extends State<LandingCourse> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           FutureBuilder(
               future: LandingRepository().getSelfTestDetail(),
@@ -33,15 +35,14 @@ class LandingCourseState extends State<LandingCourse> {
                 if (snapshot.hasData) {
                   bool isExam = checkExam(data: snapshot.data);
                   return isExam
-                      ? const PreliminaryTest(
-                          )
+                      ? const PreliminaryTest()
                       : LevelInfoWidget(
                           level: (snapshot.data as Map)["quizDetial"]
                               ["quizResult"]);
                 } else if (snapshot.hasError) {
                   return Container();
                 } else {
-                  return Container();
+                  return const SizedBox(height: 100, child: Loading());
                 }
               }),
           Expanded(
@@ -49,7 +50,7 @@ class LandingCourseState extends State<LandingCourse> {
               scrollDirection: Axis.vertical,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CourseList(),
                   CustomerReviewList(),

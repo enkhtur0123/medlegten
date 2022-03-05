@@ -9,6 +9,7 @@ import 'package:medlegten/pages/CoursePages/courses/course_cart.dart';
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/TextButton.dart';
 import 'package:medlegten/widgets/loader.dart';
 
@@ -68,7 +69,9 @@ class CourseList extends HookWidget {
             } else if (snapshot.hasError) {
               return const Loading();
             } else {
-              return const Loading();
+              return SizedBox(
+                  height: GlobalValues.screenHeight / 3,
+                  child: const Loading());
             }
           },
         ),

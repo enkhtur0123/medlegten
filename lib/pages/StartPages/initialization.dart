@@ -24,7 +24,7 @@ class InitializationPage extends HookWidget {
     GlobalValues.screenScaleFactor = MediaQuery.of(context).textScaleFactor;
     //final loginState = ref.watch(loginNotifierProvider);
 
-    var str = 'Medlegten app v 1.0';
+    var str = 'Medlegten app v 1.0.0';
     // loginState.whenOrNull(
     //   data: (data) {
     //     if (data is Version) {
@@ -56,7 +56,7 @@ class InitializationPage extends HookWidget {
             ),
             Text(
               snapshot.hasData
-                  ? 'Medlegten app ${snapshot.data!.appVersion}'
+                  ? 'Medlegten app v ${snapshot.data!.appVersion}'
                   : str,
               textAlign: TextAlign.center,
               style: const TextStyle(

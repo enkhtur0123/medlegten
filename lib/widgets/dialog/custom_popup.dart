@@ -10,6 +10,7 @@ class CustomPopUpDialog extends StatelessWidget {
       this.isAlert = false,
       this.isSuccess = false,
       this.isError = false,
+      this.isInfo = false,
       this.isBtn = false})
       : super(key: key);
 
@@ -19,6 +20,7 @@ class CustomPopUpDialog extends StatelessWidget {
   final bool? isAlert;
   final bool? isSuccess;
   final bool? isError;
+  final bool? isInfo;
   final bool isBtn;
 
   @override
@@ -42,6 +44,14 @@ class CustomPopUpDialog extends StatelessWidget {
       );
       title = "Анхааруулга";
       color = Colors.yellow;
+    } else if (isInfo!) {
+      icon = const Icon(
+        Icons.swipe_right,
+        size: 30,
+        color: Colors.white,
+      );
+      title = "ЗААВАР";
+      color = Colors.green;
     } else {
       icon = const Icon(
         Icons.close,

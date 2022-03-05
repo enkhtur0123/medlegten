@@ -117,35 +117,28 @@ class _ReadingPageState extends State<ReadingPage> {
 
   Widget childWidget(CParagraph paragraph, int index, bool selectParagraph) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SizedBox(
-        height: BaseCueHelper().getMaxHeight(
-            [paragraph],
-            true,
-            const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            helper.width),
-        child: ReadingParagraph(
-            paragraph,
-            (word, position) {
-              wordCallBack(word, position);
-              if (helper.lastIndex > -1 && helper.lastIndex != index) {
-                helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
-                    helper.valueKeys[helper.paragraphs[helper.lastIndex]]! + 1;
-              }
-              helper.lastIndex = index;
-              refreshView.value = !refreshView.value;
-            },
-            (paragraph) {
-              selectedParagraph = paragraph;
-            },
-            tailWidget(selectParagraph),
-            (paragraph) {
-              tailCallBackParagraph(paragraph);
-            },
-            selectParagraph,
-            const Color.fromRGBO(51, 5, 51, 1),
-            key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: ReadingParagraph(
+          paragraph,
+          (word, position) {
+            wordCallBack(word, position);
+            if (helper.lastIndex > -1 && helper.lastIndex != index) {
+              helper.valueKeys[helper.paragraphs[helper.lastIndex]] =
+                  helper.valueKeys[helper.paragraphs[helper.lastIndex]]! + 1;
+            }
+            helper.lastIndex = index;
+            refreshView.value = !refreshView.value;
+          },
+          (paragraph) {
+            selectedParagraph = paragraph;
+          },
+          tailWidget(selectParagraph),
+          (paragraph) {
+            tailCallBackParagraph(paragraph);
+          },
+          selectParagraph,
+          const Color.fromRGBO(51, 5, 51, 1),
+          key: ValueKey<int>(helper.valueKeys[paragraph]!)), //
     );
   }
 
