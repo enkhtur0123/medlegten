@@ -29,6 +29,7 @@ class _$LastSeenTearOff {
       LastSeenArticle? lastSeenArticle,
       LastSeenVideo? lastSeenPPV,
       List<Event>? recommends,
+      LastSeenUnit? lastSeenUnit,
       List<Promotion>? promotions) {
     return _LastSeen(
       isSuccess,
@@ -37,6 +38,7 @@ class _$LastSeenTearOff {
       lastSeenArticle,
       lastSeenPPV,
       recommends,
+      lastSeenUnit,
       promotions,
     );
   }
@@ -57,6 +59,7 @@ mixin _$LastSeen {
   LastSeenArticle? get lastSeenArticle => throw _privateConstructorUsedError;
   LastSeenVideo? get lastSeenPPV => throw _privateConstructorUsedError;
   List<Event>? get recommends => throw _privateConstructorUsedError;
+  LastSeenUnit? get lastSeenUnit => throw _privateConstructorUsedError;
   List<Promotion>? get promotions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -76,10 +79,12 @@ abstract class $LastSeenCopyWith<$Res> {
       LastSeenArticle? lastSeenArticle,
       LastSeenVideo? lastSeenPPV,
       List<Event>? recommends,
+      LastSeenUnit? lastSeenUnit,
       List<Promotion>? promotions});
 
   $LastSeenArticleCopyWith<$Res>? get lastSeenArticle;
   $LastSeenVideoCopyWith<$Res>? get lastSeenPPV;
+  $LastSeenUnitCopyWith<$Res>? get lastSeenUnit;
 }
 
 /// @nodoc
@@ -98,6 +103,7 @@ class _$LastSeenCopyWithImpl<$Res> implements $LastSeenCopyWith<$Res> {
     Object? lastSeenArticle = freezed,
     Object? lastSeenPPV = freezed,
     Object? recommends = freezed,
+    Object? lastSeenUnit = freezed,
     Object? promotions = freezed,
   }) {
     return _then(_value.copyWith(
@@ -125,6 +131,10 @@ class _$LastSeenCopyWithImpl<$Res> implements $LastSeenCopyWith<$Res> {
           ? _value.recommends
           : recommends // ignore: cast_nullable_to_non_nullable
               as List<Event>?,
+      lastSeenUnit: lastSeenUnit == freezed
+          ? _value.lastSeenUnit
+          : lastSeenUnit // ignore: cast_nullable_to_non_nullable
+              as LastSeenUnit?,
       promotions: promotions == freezed
           ? _value.promotions
           : promotions // ignore: cast_nullable_to_non_nullable
@@ -153,6 +163,17 @@ class _$LastSeenCopyWithImpl<$Res> implements $LastSeenCopyWith<$Res> {
       return _then(_value.copyWith(lastSeenPPV: value));
     });
   }
+
+  @override
+  $LastSeenUnitCopyWith<$Res>? get lastSeenUnit {
+    if (_value.lastSeenUnit == null) {
+      return null;
+    }
+
+    return $LastSeenUnitCopyWith<$Res>(_value.lastSeenUnit!, (value) {
+      return _then(_value.copyWith(lastSeenUnit: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -167,12 +188,15 @@ abstract class _$LastSeenCopyWith<$Res> implements $LastSeenCopyWith<$Res> {
       LastSeenArticle? lastSeenArticle,
       LastSeenVideo? lastSeenPPV,
       List<Event>? recommends,
+      LastSeenUnit? lastSeenUnit,
       List<Promotion>? promotions});
 
   @override
   $LastSeenArticleCopyWith<$Res>? get lastSeenArticle;
   @override
   $LastSeenVideoCopyWith<$Res>? get lastSeenPPV;
+  @override
+  $LastSeenUnitCopyWith<$Res>? get lastSeenUnit;
 }
 
 /// @nodoc
@@ -192,6 +216,7 @@ class __$LastSeenCopyWithImpl<$Res> extends _$LastSeenCopyWithImpl<$Res>
     Object? lastSeenArticle = freezed,
     Object? lastSeenPPV = freezed,
     Object? recommends = freezed,
+    Object? lastSeenUnit = freezed,
     Object? promotions = freezed,
   }) {
     return _then(_LastSeen(
@@ -219,6 +244,10 @@ class __$LastSeenCopyWithImpl<$Res> extends _$LastSeenCopyWithImpl<$Res>
           ? _value.recommends
           : recommends // ignore: cast_nullable_to_non_nullable
               as List<Event>?,
+      lastSeenUnit == freezed
+          ? _value.lastSeenUnit
+          : lastSeenUnit // ignore: cast_nullable_to_non_nullable
+              as LastSeenUnit?,
       promotions == freezed
           ? _value.promotions
           : promotions // ignore: cast_nullable_to_non_nullable
@@ -230,8 +259,15 @@ class __$LastSeenCopyWithImpl<$Res> extends _$LastSeenCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_LastSeen implements _LastSeen {
-  _$_LastSeen(this.isSuccess, this.errorCode, this.resultMessage,
-      this.lastSeenArticle, this.lastSeenPPV, this.recommends, this.promotions);
+  _$_LastSeen(
+      this.isSuccess,
+      this.errorCode,
+      this.resultMessage,
+      this.lastSeenArticle,
+      this.lastSeenPPV,
+      this.recommends,
+      this.lastSeenUnit,
+      this.promotions);
 
   factory _$_LastSeen.fromJson(Map<String, dynamic> json) =>
       _$$_LastSeenFromJson(json);
@@ -249,11 +285,13 @@ class _$_LastSeen implements _LastSeen {
   @override
   final List<Event>? recommends;
   @override
+  final LastSeenUnit? lastSeenUnit;
+  @override
   final List<Promotion>? promotions;
 
   @override
   String toString() {
-    return 'LastSeen(isSuccess: $isSuccess, errorCode: $errorCode, resultMessage: $resultMessage, lastSeenArticle: $lastSeenArticle, lastSeenPPV: $lastSeenPPV, recommends: $recommends, promotions: $promotions)';
+    return 'LastSeen(isSuccess: $isSuccess, errorCode: $errorCode, resultMessage: $resultMessage, lastSeenArticle: $lastSeenArticle, lastSeenPPV: $lastSeenPPV, recommends: $recommends, lastSeenUnit: $lastSeenUnit, promotions: $promotions)';
   }
 
   @override
@@ -272,6 +310,8 @@ class _$_LastSeen implements _LastSeen {
             const DeepCollectionEquality()
                 .equals(other.recommends, recommends) &&
             const DeepCollectionEquality()
+                .equals(other.lastSeenUnit, lastSeenUnit) &&
+            const DeepCollectionEquality()
                 .equals(other.promotions, promotions));
   }
 
@@ -284,6 +324,7 @@ class _$_LastSeen implements _LastSeen {
       const DeepCollectionEquality().hash(lastSeenArticle),
       const DeepCollectionEquality().hash(lastSeenPPV),
       const DeepCollectionEquality().hash(recommends),
+      const DeepCollectionEquality().hash(lastSeenUnit),
       const DeepCollectionEquality().hash(promotions));
 
   @JsonKey(ignore: true)
@@ -305,6 +346,7 @@ abstract class _LastSeen implements LastSeen {
       LastSeenArticle? lastSeenArticle,
       LastSeenVideo? lastSeenPPV,
       List<Event>? recommends,
+      LastSeenUnit? lastSeenUnit,
       List<Promotion>? promotions) = _$_LastSeen;
 
   factory _LastSeen.fromJson(Map<String, dynamic> json) = _$_LastSeen.fromJson;
@@ -321,6 +363,8 @@ abstract class _LastSeen implements LastSeen {
   LastSeenVideo? get lastSeenPPV;
   @override
   List<Event>? get recommends;
+  @override
+  LastSeenUnit? get lastSeenUnit;
   @override
   List<Promotion>? get promotions;
   @override

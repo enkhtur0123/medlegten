@@ -22,11 +22,13 @@ LastSeenVideo _$LastSeenVideoFromJson(Map<String, dynamic> json) {
 class _$LastSeenVideoTearOff {
   const _$LastSeenVideoTearOff();
 
-  _LastSeenVideo call(String? contentId, String? contentName, String? imgUrl) {
+  _LastSeenVideo call(
+      String? contentId, String? contentName, String? imgUrl, String isSerial) {
     return _LastSeenVideo(
       contentId,
       contentName,
       imgUrl,
+      isSerial,
     );
   }
 
@@ -43,6 +45,7 @@ mixin _$LastSeenVideo {
   String? get contentId => throw _privateConstructorUsedError;
   String? get contentName => throw _privateConstructorUsedError;
   String? get imgUrl => throw _privateConstructorUsedError;
+  String get isSerial => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +58,11 @@ abstract class $LastSeenVideoCopyWith<$Res> {
   factory $LastSeenVideoCopyWith(
           LastSeenVideo value, $Res Function(LastSeenVideo) then) =
       _$LastSeenVideoCopyWithImpl<$Res>;
-  $Res call({String? contentId, String? contentName, String? imgUrl});
+  $Res call(
+      {String? contentId,
+      String? contentName,
+      String? imgUrl,
+      String isSerial});
 }
 
 /// @nodoc
@@ -72,6 +79,7 @@ class _$LastSeenVideoCopyWithImpl<$Res>
     Object? contentId = freezed,
     Object? contentName = freezed,
     Object? imgUrl = freezed,
+    Object? isSerial = freezed,
   }) {
     return _then(_value.copyWith(
       contentId: contentId == freezed
@@ -86,6 +94,10 @@ class _$LastSeenVideoCopyWithImpl<$Res>
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      isSerial: isSerial == freezed
+          ? _value.isSerial
+          : isSerial // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -97,7 +109,11 @@ abstract class _$LastSeenVideoCopyWith<$Res>
           _LastSeenVideo value, $Res Function(_LastSeenVideo) then) =
       __$LastSeenVideoCopyWithImpl<$Res>;
   @override
-  $Res call({String? contentId, String? contentName, String? imgUrl});
+  $Res call(
+      {String? contentId,
+      String? contentName,
+      String? imgUrl,
+      String isSerial});
 }
 
 /// @nodoc
@@ -116,6 +132,7 @@ class __$LastSeenVideoCopyWithImpl<$Res>
     Object? contentId = freezed,
     Object? contentName = freezed,
     Object? imgUrl = freezed,
+    Object? isSerial = freezed,
   }) {
     return _then(_LastSeenVideo(
       contentId == freezed
@@ -130,6 +147,10 @@ class __$LastSeenVideoCopyWithImpl<$Res>
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      isSerial == freezed
+          ? _value.isSerial
+          : isSerial // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -137,7 +158,8 @@ class __$LastSeenVideoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_LastSeenVideo implements _LastSeenVideo {
-  _$_LastSeenVideo(this.contentId, this.contentName, this.imgUrl);
+  _$_LastSeenVideo(
+      this.contentId, this.contentName, this.imgUrl, this.isSerial);
 
   factory _$_LastSeenVideo.fromJson(Map<String, dynamic> json) =>
       _$$_LastSeenVideoFromJson(json);
@@ -148,10 +170,12 @@ class _$_LastSeenVideo implements _LastSeenVideo {
   final String? contentName;
   @override
   final String? imgUrl;
+  @override
+  final String isSerial;
 
   @override
   String toString() {
-    return 'LastSeenVideo(contentId: $contentId, contentName: $contentName, imgUrl: $imgUrl)';
+    return 'LastSeenVideo(contentId: $contentId, contentName: $contentName, imgUrl: $imgUrl, isSerial: $isSerial)';
   }
 
   @override
@@ -162,7 +186,8 @@ class _$_LastSeenVideo implements _LastSeenVideo {
             const DeepCollectionEquality().equals(other.contentId, contentId) &&
             const DeepCollectionEquality()
                 .equals(other.contentName, contentName) &&
-            const DeepCollectionEquality().equals(other.imgUrl, imgUrl));
+            const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
+            const DeepCollectionEquality().equals(other.isSerial, isSerial));
   }
 
   @override
@@ -170,7 +195,8 @@ class _$_LastSeenVideo implements _LastSeenVideo {
       runtimeType,
       const DeepCollectionEquality().hash(contentId),
       const DeepCollectionEquality().hash(contentName),
-      const DeepCollectionEquality().hash(imgUrl));
+      const DeepCollectionEquality().hash(imgUrl),
+      const DeepCollectionEquality().hash(isSerial));
 
   @JsonKey(ignore: true)
   @override
@@ -184,9 +210,8 @@ class _$_LastSeenVideo implements _LastSeenVideo {
 }
 
 abstract class _LastSeenVideo implements LastSeenVideo {
-  factory _LastSeenVideo(
-          String? contentId, String? contentName, String? imgUrl) =
-      _$_LastSeenVideo;
+  factory _LastSeenVideo(String? contentId, String? contentName, String? imgUrl,
+      String isSerial) = _$_LastSeenVideo;
 
   factory _LastSeenVideo.fromJson(Map<String, dynamic> json) =
       _$_LastSeenVideo.fromJson;
@@ -197,6 +222,8 @@ abstract class _LastSeenVideo implements LastSeenVideo {
   String? get contentName;
   @override
   String? get imgUrl;
+  @override
+  String get isSerial;
   @override
   @JsonKey(ignore: true)
   _$LastSeenVideoCopyWith<_LastSeenVideo> get copyWith =>

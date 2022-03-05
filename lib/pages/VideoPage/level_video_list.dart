@@ -1,40 +1,77 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/pages/VideoPage/level_event_item.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 
 // ignore: must_be_immutable
-class LevelVideoListPage extends HookWidget {
-  LevelVideoListPage({Key? key, this.levelId,required this.categoryName}) : super(key: key);
-
+class LevelVideoListPage extends StatefulWidget {
+  LevelVideoListPage(
+      {Key? key,
+      this.levelId,
+      required this.categoryName,
+      required this.isCategorySearch,
+      this.categoryId})
+      : super(key: key);
   String? levelId;
   String? categoryName;
-  
+  bool? isCategorySearch;
+  String? categoryId;
+
+  @override
+  State<StatefulWidget> createState() {
+    return LevelVideoListPageState();
+  }
+}
+
+// ignore: must_be_immutable
+class LevelVideoListPageState extends State<LevelVideoListPage> {
+  int currentPageNumber = 0;
+  static int pageSize = 10;
+  bool loadMore = false;
+
+  List<Event>? events = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(categoryName!),),
+      appBar: AppBar(
+        title: Text(widget.categoryName!),
+      ),
       body: FutureBuilder<List<Event>>(
-        future: VideoRepository().getLevelAllEvent(level_id: levelId),
+        future: !widget.isCategorySearch!
+            ? VideoRepository().getLevelAllEvent(level_id: widget.levelId)
+            : VideoRepository().categorySearch(
+                categoryId: widget.categoryId,
+                pageNumber: currentPageNumber,
+                pageSize: pageSize),
         builder: (context, AsyncSnapshot<List<Event>?> snapshot) {
           if (snapshot.hasData) {
-            return SizedBox(
+            events!.addAll(snapshot.data!);
+            return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (scrollInfo.metrics.pixels ==
+                        scrollInfo.metrics.maxScrollExtent &&
+                    !loadMore) {
+                  currentPageNumber++;
+                  onLoadMore();
+                }
+                return false;
+              },
               child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(left: 20,right: 20,top: 15),
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.width * 0.58,
-                      child: LevelEventItem(
-                        edgeInsets:
-                            const EdgeInsets.only(left: 15, right: 15, top: 10),
-                        event: snapshot.data![index],
-                      ),
-                    );
-                  }),
+                shrinkWrap: true,
+                itemCount: events!.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.width * 0.5,
+                    child: LevelEventItem(
+                      edgeInsets:
+                          const EdgeInsets.only(left: 15, right: 15, top: 10),
+                      event: events![index],
+                    ),
+                  );
+                },
+              ),
             );
           } else {
             return Container();
@@ -42,5 +79,24 @@ class LevelVideoListPage extends HookWidget {
         },
       ),
     );
+  }
+
+  Future<void> onLoadMore() async {
+    loadMore = true;
+    VideoRepository()
+        .categorySearch(
+            categoryId: widget.categoryId,
+            pageNumber: currentPageNumber,
+            pageSize: pageSize)
+        .then((value) {
+      events!.addAll(value);
+      setState(() {
+        loadMore = false;
+      });
+    }).catchError((onError) {
+      setState(() {
+        loadMore = false;
+      });
+    });
   }
 }

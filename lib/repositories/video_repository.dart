@@ -1,4 +1,3 @@
-
 import 'package:medlegten/models/video/category.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/level_event.dart';
@@ -12,6 +11,27 @@ import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class VideoRepository {
+  Future<List<Event>> categorySearch({String? categoryId,int? pageNumber,int? pageSize}) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: '/ppv/CategoryAll/$categoryId?pageNumber=$pageNumber&pageSize=$pageSize');
+      if (res['isSuccess']) {
+        if (res['events']==null) {
+          return [];
+        } else {
+          var list = res['events'] as List;
+          return list.map((i) => Event.fromJson(i)).toList();
+        }
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
   Future<dynamic> getCategory({String? type = "0"}) async {
     try {
       final res = await HttpHelper().getUrl(url: 'ppv/Category/$type');
@@ -68,7 +88,7 @@ class VideoRepository {
       PaymentInfo paymentInfo = PaymentInfo.fromJson(res['paymentInfo']);
       if (res['isSuccess']) {
         var list = res['movies'] as List;
-        return [list.map((i) => Movie.fromJson(i)).toList(),paymentInfo];
+        return [list.map((i) => Movie.fromJson(i)).toList(), paymentInfo];
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);
