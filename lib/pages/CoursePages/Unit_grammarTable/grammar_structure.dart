@@ -5,8 +5,8 @@ import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dar
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_page.dart';
 
 class StructureBody extends StatefulWidget {
-  const StructureBody(
-      this.grammar, this.helper, this.partLabel, this.partId, this.callback,
+  const StructureBody(this.grammar, this.helper, this.partLabel, this.partId,
+      this.callback, this.isType1,
       {Key? key})
       : super(key: key);
   final Grammar grammar;
@@ -14,7 +14,7 @@ class StructureBody extends StatefulWidget {
   final String partLabel;
   final int partId;
   final UnitGrammarCallback callback;
-
+  final bool isType1;
   @override
   _StructureBodyState createState() => _StructureBodyState();
 }
@@ -36,23 +36,25 @@ class _StructureBodyState extends State<StructureBody> {
     var allNames =
         widget.helper.getAllPartStructureNames(widget.grammar, widget.partId);
 
-    if (selectedNames.length == 1) {
-      //WidgetsBinding.instance?.addPostFrameCallback((_) {
-      selectedId = allNames
-          .firstWhere((o) => o.answer == selectedNames[0].answer)
-          .answerId;
-      widget.helper.selectedChips[id] = selectedId;
-      widget.helper.selectedAnswers[id] = selectedNames[0].answer;
-      //widget.callback(names[0].answer, widget.partId);
-      //});
-    }
+    if (!widget.isType1) {
+      if (selectedNames.length == 1) {
+        //WidgetsBinding.instance?.addPostFrameCallback((_) {
+        selectedId = allNames
+            .firstWhere((o) => o.answer == selectedNames[0].answer)
+            .answerId;
+        widget.helper.selectedChips[id] = selectedId;
+        widget.helper.selectedAnswers[id] = selectedNames[0].answer;
+        //widget.callback(names[0].answer, widget.partId);
+        //});
+      }
 
-    if (selectedId == -1 && selectedNames.isNotEmpty) {
-      selectedId = allNames
-          .firstWhere((o) => o.answer == selectedNames[0].answer)
-          .answerId;
-      widget.helper.selectedChips[id] = selectedId;
-      widget.helper.selectedAnswers[id] = selectedNames[0].answer;
+      if (selectedId == -1 && selectedNames.isNotEmpty) {
+        selectedId = allNames
+            .firstWhere((o) => o.answer == selectedNames[0].answer)
+            .answerId;
+        widget.helper.selectedChips[id] = selectedId;
+        widget.helper.selectedAnswers[id] = selectedNames[0].answer;
+      }
     }
 
     return Wrap(
@@ -61,8 +63,11 @@ class _StructureBodyState extends State<StructureBody> {
       children: allNames
           .map(
             (answer) => AbsorbPointer(
-              absorbing:
-                  widget.partId == 1 ? false : !selectedNames.contains(answer),
+              absorbing: widget.isType1 == false
+                  ? widget.partId == 1
+                      ? false
+                      : !selectedNames.contains(answer)
+                  : false,
               child: GestureDetector(
                 onTap: () {
                   selectedId = answer.answerId;
@@ -86,21 +91,26 @@ class _StructureBodyState extends State<StructureBody> {
                             selectedId == answer.answerId
                                 ? Icons.check
                                 : Icons.add,
-                            color: widget.partId == 1
+                            color: widget.isType1
                                 ? const Color.fromRGBO(0, 0, 0, 1)
-                                : selectedNames.contains(answer)
+                                : widget.partId == 1
                                     ? const Color.fromRGBO(0, 0, 0, 1)
-                                    : const Color.fromRGBO(51, 51, 51, .5),
+                                    : selectedNames.contains(answer)
+                                        ? const Color.fromRGBO(0, 0, 0, 1)
+                                        : const Color.fromRGBO(51, 51, 51, .5),
                             size: 15),
                         addHorizontalSpace(5),
                         Text(
                           answer.answer,
                           style: TextStyle(
-                              color: widget.partId == 1
+                              color: widget.isType1
                                   ? const Color.fromRGBO(0, 0, 0, 1)
-                                  : selectedNames.contains(answer)
+                                  : widget.partId == 1
                                       ? const Color.fromRGBO(0, 0, 0, 1)
-                                      : const Color.fromRGBO(51, 51, 51, .5),
+                                      : selectedNames.contains(answer)
+                                          ? const Color.fromRGBO(0, 0, 0, 1)
+                                          : const Color.fromRGBO(
+                                              51, 51, 51, .5),
                               fontFamily: 'Roboto',
                               fontSize: 15,
                               fontWeight: FontWeight.w400),

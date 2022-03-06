@@ -29,7 +29,8 @@ class GrammarTablePage extends StatefulWidget {
 
 class _GrammarTablePageState extends State<GrammarTablePage>
     with SingleTickerProviderStateMixin {
-  late final Grammarhelper helper = Grammarhelper(widget.unitGrammar);
+  late final Grammarhelper helper = Grammarhelper(
+      widget.unitGrammar, widget.unitGrammar.grammar[0].label == 'Types');
   late final refreshView = ValueNotifier<bool>(false)
     ..addListener(() {
       setState(() {});
@@ -37,9 +38,11 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   final selectedIndex = [0, 1, 0];
   late TabController _controller;
   late VideoPlayerController _videoPlayerController;
-
+  bool isType1 = false;
   @override
   void initState() {
+    isType1 = widget.unitGrammar.grammar[0].label == 'Types';
+
     _controller =
         TabController(length: widget.unitGrammar.grammar.length, vsync: this);
     _videoPlayerController = VideoPlayerController.network(helper.avatarUrl);
@@ -122,6 +125,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
             selectedIndex[0] == i, widget.unitGrammar.grammar.length),
       ));
     }
+
     Widget videoWidget = const SizedBox(
       height: 110,
       width: 1,
@@ -196,7 +200,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
           );
           yield addVerticalSpace(10);
           yield Visibility(
-            visible: widget.unitGrammar.grammar[0].label != 'Types',
+            visible: !isType1,
             child: const Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -211,7 +215,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
             ),
           );
           yield Visibility(
-            visible: widget.unitGrammar.grammar[0].label != 'Types',
+            visible: !isType1,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: SizedBox(
@@ -236,9 +240,26 @@ class _GrammarTablePageState extends State<GrammarTablePage>
           yield Flexible(
             fit: FlexFit.tight,
             child: buildTabview(
-              widget.unitGrammar.grammar[selectedIndex[0]],
-              helper,
-              (answer, level) {
+                widget.unitGrammar.grammar[selectedIndex[0]], helper,
+                (answer, level) {
+              if (isType1) {
+                var id = helper.grammarIndex(
+                        widget.unitGrammar.grammar[selectedIndex[0]]) +
+                    level;
+                if (helper.selectedGrammar ==
+                    widget.unitGrammar.grammar[selectedIndex[0]]) {
+                  helper.selectedAnswers = {};
+                  helper.selectedChips = {};
+                }
+
+                if (helper.selectedAnswers[id] != answer.answer) {
+                  helper.selectedAnswers[id] = answer.answer;
+                  helper.selectedChips[id] = answer.answerId;
+                  helper.selectedGrammar =
+                      widget.unitGrammar.grammar[selectedIndex[0]];
+                  refreshView.value = !refreshView.value;
+                }
+              } else {
                 var id = helper.grammarIndex(
                         widget.unitGrammar.grammar[selectedIndex[0]]) +
                     level;
@@ -256,25 +277,22 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                       widget.unitGrammar.grammar[selectedIndex[0]];
                   refreshView.value = !refreshView.value;
                 }
-              },
-            ),
+              }
+            }, isType1),
           );
         }()),
       ),
     );
   }
 
-  Widget buildTabview(
-    Grammar grammar,
-    Grammarhelper helper,
-    UnitGrammarCallback callBack,
-  ) {
+  Widget buildTabview(Grammar grammar, Grammarhelper helper,
+      UnitGrammarCallback callBack, bool isType1) {
     List<Widget> list = [];
 
     for (int i = 1; i < 7; i++) {
       if (grammar.getPart(i) != null) {
-        list.addAll(
-            buildStructure(grammar, helper, grammar.getPart(i)!, i, callBack));
+        list.addAll(buildStructure(
+            grammar, helper, grammar.getPart(i)!, i, callBack, isType1));
       }
     }
 
@@ -288,8 +306,13 @@ class _GrammarTablePageState extends State<GrammarTablePage>
     );
   }
 
-  List<Widget> buildStructure(Grammar grammar, Grammarhelper helper,
-      String partLabel, int partId, UnitGrammarCallback callBack) {
+  List<Widget> buildStructure(
+      Grammar grammar,
+      Grammarhelper helper,
+      String partLabel,
+      int partId,
+      UnitGrammarCallback callBack,
+      bool isType1) {
     return [
       buildStructureLabel(
           partLabel, grammar, partId, partId == helper.selectedLabelId),
@@ -310,15 +333,10 @@ class _GrammarTablePageState extends State<GrammarTablePage>
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: StructureBody(
-              grammar,
-              helper,
-              partLabel,
-              partId,
-              (val, level) {
-                callBack.call(val, level);
-              },
-            ),
+            child:
+                StructureBody(grammar, helper, partLabel, partId, (val, level) {
+              callBack.call(val, level);
+            }, isType1),
           ),
         ),
       ),

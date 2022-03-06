@@ -5,7 +5,7 @@ import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:tuple/tuple.dart';
 
 class Grammarhelper {
-  Grammarhelper(this.unitGrammar);
+  Grammarhelper(this.unitGrammar, this.isType1);
   UnitGrammar unitGrammar;
 
   // Map<int, String> selectedAnswersCombined() {
@@ -21,6 +21,7 @@ class Grammarhelper {
   Sentence? selectedSentence;
   int selectedLabelId = -1;
   Map<Tuple2<Grammar, int>, GlobalKey> labelWidgets = {};
+  bool isType1;
 
   Map<int, int> get avatarParts => {
         1: int.tryParse(unitGrammar.grammar[0].part1) ?? -1,
@@ -58,40 +59,56 @@ class Grammarhelper {
         }
       });
     Sentence? firstSentence;
-    List<Sentence> sentences = [];
-    for (var sentence in unitGrammar.sentences.where((sentence) =>
-        sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase())) {
-      firstSentence ??= sentence;
-      if (selectedGrammar != null &&
-          selectedSentence != null &&
-          selectedGrammar != grammar) {
-        if (selectedSentence!.groupNumber == sentence.groupNumber) {
-          sentences.add(sentence);
-        }
-      } else {
+    if (isType1) {
+      for (var sentence in unitGrammar.sentences) {
+        firstSentence ??= sentence;
         if (_partNames.isNotEmpty) {
-          bool add = true;
-          for (int i = 1; i < 7; i++) {
-            if (_partNames.length > i - 1 &&
-                sentence.getPart(i) != null &&
-                _partNames[i - 1] != '' &&
-                sentence.getPart(i) != _partNames[i - 1]) {
-              add = false;
-              break;
+          for (var structure in sentence.structure) {
+            if (structure.word == _partNames[0]) {
+              return sentence;
             }
           }
-
-          if (add) {
+        } else {
+          return firstSentence;
+        }
+      }
+    } else {
+      List<Sentence> sentences = [];
+      for (var sentence in unitGrammar.sentences.where((sentence) =>
+          sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase())) {
+        firstSentence ??= sentence;
+        if (selectedGrammar != null &&
+            selectedSentence != null &&
+            selectedGrammar != grammar) {
+          if (selectedSentence!.groupNumber == sentence.groupNumber) {
             sentences.add(sentence);
           }
         } else {
-          sentences.add(sentence);
-          break;
+          if (_partNames.isNotEmpty) {
+            bool add = true;
+            for (int i = 1; i < 7; i++) {
+              if (_partNames.length > i - 1 &&
+                  sentence.getPart(i) != null &&
+                  _partNames[i - 1] != '' &&
+                  sentence.getPart(i) != _partNames[i - 1]) {
+                add = false;
+                break;
+              }
+            }
+
+            if (add) {
+              sentences.add(sentence);
+            }
+          } else {
+            sentences.add(sentence);
+            break;
+          }
         }
       }
+      selectedSentence = sentences.isNotEmpty ? sentences.first : firstSentence;
+      return selectedSentence!;
     }
-    selectedSentence = sentences.isNotEmpty ? sentences.first : firstSentence;
-    return selectedSentence!;
+    return firstSentence!;
   }
 
   int grammarIndex(Grammar grammar) {
@@ -182,9 +199,11 @@ class Grammarhelper {
     int i = 0;
     List<GrammarAnswerEx> retValEx = [];
     for (var element in distinctIds) {
-      var exElement = GrammarAnswerEx(element);
-      exElement.answerId = i++;
-      retValEx.add(exElement);
+      if (element.isNotEmpty) {
+        var exElement = GrammarAnswerEx(element);
+        exElement.answerId = i++;
+        retValEx.add(exElement);
+      }
     }
 
     return retValEx;
