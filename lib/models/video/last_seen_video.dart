@@ -8,7 +8,7 @@ class LastSeenVideo with _$LastSeenVideo {
   factory LastSeenVideo( 
     String? contentId,
     String? contentName,
-   String? imgUrl) = _LastSeenVideo;
+   String? imgUrl,String isSerial) = _LastSeenVideo;
 
   factory LastSeenVideo.fromJson(Map<String, dynamic> json) =>
       _$LastSeenVideoFromJson(json);

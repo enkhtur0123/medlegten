@@ -6,8 +6,9 @@ import 'package:medlegten/themes/style.dart';
 
 // ignore: must_be_immutable
 class CategoryPage extends HookWidget {
-  CategoryPage({Key? key, this.category}) : super(key: key);
+  CategoryPage({Key? key, this.category, this.onTap}) : super(key: key);
   List<Category>? category;
+  Function(String categoryId,String categoryName)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class CategoryPage extends HookWidget {
           return GestureDetector(
             onTap: () {
               selectedId.value = e.id!;
+              onTap!(e.id!,e.name!);
             },
             child: Container(
               margin: const EdgeInsets.only(left: 10),

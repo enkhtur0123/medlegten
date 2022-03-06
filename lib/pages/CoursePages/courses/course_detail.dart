@@ -127,17 +127,6 @@ class _CourseDetailState extends State<CourseDetailPage> with AutoRouteAware {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  // const Align(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Text(
-                  //     ' Units',
-                  //     style: TextStyle(
-                  //         color: colorPrimary,
-                  //         fontFamily: 'Roboto',
-                  //         fontSize: 18,
-                  //         fontWeight: FontWeight.w500),
-                  //   ),
-                  // ),
                   FutureBuilder<List<CourseUnit>?>(
                     future: LandingRepository()
                         .getCourseUnitList(widget.courseInfo.courseId),

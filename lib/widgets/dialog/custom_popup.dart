@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class CustomPopUpDialog extends StatelessWidget {
@@ -46,7 +45,7 @@ class CustomPopUpDialog extends StatelessWidget {
       color = Colors.yellow;
     } else if (isInfo!) {
       icon = const Icon(
-        Icons.swipe_right,
+        Icons.swipe,
         size: 30,
         color: Colors.white,
       );

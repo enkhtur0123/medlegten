@@ -170,7 +170,9 @@ class _$AppRouter extends RootStackRouter {
           child: LevelVideoListPage(
               key: args.key,
               levelId: args.levelId,
-              categoryName: args.categoryName));
+              categoryName: args.categoryName,
+              isCategorySearch: args.isCategorySearch,
+              categoryId: args.categoryId));
     },
     VideoDetailRoute.name: (routeData) {
       final args = routeData.argsAs<VideoDetailRouteArgs>();
@@ -875,18 +877,30 @@ class VocabularyListRouteArgs {
 /// [LevelVideoListPage]
 class LevelVideoListRoute extends PageRouteInfo<LevelVideoListRouteArgs> {
   LevelVideoListRoute(
-      {Key? key, String? levelId, required String? categoryName})
+      {Key? key,
+      String? levelId,
+      required String? categoryName,
+      required bool? isCategorySearch,
+      String? categoryId})
       : super(LevelVideoListRoute.name,
             path: '/level/event/list',
             args: LevelVideoListRouteArgs(
-                key: key, levelId: levelId, categoryName: categoryName));
+                key: key,
+                levelId: levelId,
+                categoryName: categoryName,
+                isCategorySearch: isCategorySearch,
+                categoryId: categoryId));
 
   static const String name = 'LevelVideoListRoute';
 }
 
 class LevelVideoListRouteArgs {
   const LevelVideoListRouteArgs(
-      {this.key, this.levelId, required this.categoryName});
+      {this.key,
+      this.levelId,
+      required this.categoryName,
+      required this.isCategorySearch,
+      this.categoryId});
 
   final Key? key;
 
@@ -894,9 +908,13 @@ class LevelVideoListRouteArgs {
 
   final String? categoryName;
 
+  final bool? isCategorySearch;
+
+  final String? categoryId;
+
   @override
   String toString() {
-    return 'LevelVideoListRouteArgs{key: $key, levelId: $levelId, categoryName: $categoryName}';
+    return 'LevelVideoListRouteArgs{key: $key, levelId: $levelId, categoryName: $categoryName, isCategorySearch: $isCategorySearch, categoryId: $categoryId}';
   }
 }
 

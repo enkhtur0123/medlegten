@@ -1,10 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:medlegten/models/Unit/unit_introduction_cue_word.dart';
+import 'package:medlegten/models/Unit/last_seen_unit.dart';
 import 'package:medlegten/models/article/last_seen_article.dart';
 import 'package:medlegten/models/promotion/promotion.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/last_seen_video.dart';
-import 'package:medlegten/models/video/movie.dart';
 
 part 'last_seen.freezed.dart';
 part 'last_seen.g.dart';
@@ -18,6 +17,7 @@ class LastSeen with _$LastSeen {
     LastSeenArticle? lastSeenArticle,
     LastSeenVideo? lastSeenPPV,
     List<Event>? recommends,
+    LastSeenUnit? lastSeenUnit,
     List<Promotion>? promotions
   ) = _LastSeen;
 

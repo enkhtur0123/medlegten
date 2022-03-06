@@ -45,7 +45,7 @@ class LevelEventPage extends HookWidget {
                       onTap: () {
                         AutoRouter.of(context).push(LevelVideoListRoute(
                             levelId: e.levelId,
-                            categoryName: e.events[0].categoryName));
+                            categoryName: e.events[0].categoryName,isCategorySearch: false));
                       },
                     ),
                   ),

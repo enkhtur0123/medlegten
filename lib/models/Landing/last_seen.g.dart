@@ -20,6 +20,9 @@ _$_LastSeen _$$_LastSeenFromJson(Map<String, dynamic> json) => _$_LastSeen(
       (json['recommends'] as List<dynamic>?)
           ?.map((e) => Event.fromJson(e as Map<String, dynamic>))
           .toList(),
+      json['lastSeenUnit'] == null
+          ? null
+          : LastSeenUnit.fromJson(json['lastSeenUnit'] as Map<String, dynamic>),
       (json['promotions'] as List<dynamic>?)
           ?.map((e) => Promotion.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -33,5 +36,6 @@ Map<String, dynamic> _$$_LastSeenToJson(_$_LastSeen instance) =>
       'lastSeenArticle': instance.lastSeenArticle,
       'lastSeenPPV': instance.lastSeenPPV,
       'recommends': instance.recommends,
+      'lastSeenUnit': instance.lastSeenUnit,
       'promotions': instance.promotions,
     };

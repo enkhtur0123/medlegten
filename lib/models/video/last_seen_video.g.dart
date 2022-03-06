@@ -11,6 +11,7 @@ _$_LastSeenVideo _$$_LastSeenVideoFromJson(Map<String, dynamic> json) =>
       json['contentId'] as String?,
       json['contentName'] as String?,
       json['imgUrl'] as String?,
+      json['isSerial'] as String,
     );
 
 Map<String, dynamic> _$$_LastSeenVideoToJson(_$_LastSeenVideo instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$_LastSeenVideoToJson(_$_LastSeenVideo instance) =>
       'contentId': instance.contentId,
       'contentName': instance.contentName,
       'imgUrl': instance.imgUrl,
+      'isSerial': instance.isSerial,
     };
