@@ -34,8 +34,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class PaymentState extends State<PaymentPage> {
-  TextEditingController controller =
-      TextEditingController(text: "924161ED12DA");
+  TextEditingController controller = TextEditingController();
   FocusNode couponNode = FocusNode();
   String infoText = "Компанийн нэр: Стардаст вишн Партнерс ХХК";
   String? couponCode;
@@ -70,21 +69,28 @@ class PaymentState extends State<PaymentPage> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Flexible(
+                    fit: FlexFit.tight,
                     flex: 5,
                     child: Container(
-                        margin: const EdgeInsets.all(20),
-                        child: MyTextField(
-                          controller: controller,
-                          isBordered: true,
-                          labelText: "Coupon code",
-                          focusNode: couponNode,
-                          keyboardType: TextInputType.text,
-                          enabled: false,
-                          onChanged: (value) {},
-                        )),
+                      margin: const EdgeInsets.all(20),
+                      child: MyTextField(
+                        controller: controller,
+                        isBordered: true,
+                        labelText: "Купон код",
+                        focusNode: couponNode,
+                        keyboardType: TextInputType.text,
+                        enabled: true,
+                        onChanged: (value) {
+                          print(value);
+                        },
+                        onSubmitted: (value) {
+                           print(value);
+                        },
+                      ),
+                    ),
                   ),
                   Flexible(
                     flex: 2,
@@ -123,14 +129,6 @@ class PaymentState extends State<PaymentPage> {
                   icon: "assets/img/payment/qpay.svg",
                 ),
               ),
-              // GestureDetector(
-              //   onTap: () {},
-              //   child: getPaymentFunction(
-              //     title: "Social pay",
-              //     body: "Social pay-р төлбөр төлөх",
-              //     icon: "assets/img/payment/socialpay.svg",
-              //   ),
-              // )
             ],
           ),
         ],
@@ -141,20 +139,21 @@ class PaymentState extends State<PaymentPage> {
         onClosing: () {},
         builder: (context) {
           return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:[
-          Container(
-            padding: const EdgeInsets.only(bottom: 100),
-            child: Text(
-              infoText,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.normal),
-            ),
-          )]);
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(bottom: 100),
+                  child: Text(
+                    infoText,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.normal),
+                  ),
+                )
+              ]);
         },
       ),
     );

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:medlegten/common/colors.dart';
 
 const secondaryColor = Color(0xff7864FE);
 final appTheme = ThemeData(
   tabBarTheme: const TabBarTheme(),
+   textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+          primary:colorPrimary,
+          textStyle: const TextStyle(color: colorPrimary))
+  ),
   bottomAppBarColor: Colors.white,
   bottomAppBarTheme: const BottomAppBarTheme(color: Colors.white),
   bottomNavigationBarTheme:

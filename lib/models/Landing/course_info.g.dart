@@ -25,6 +25,7 @@ _$_CourseInfo _$$_CourseInfoFromJson(Map<String, dynamic> json) =>
       json['purchaseExpireDate'] as String,
       json['isCreatedPlan'] as bool,
       (json['purchaseDesc'] as List<dynamic>).map((e) => e as String).toList(),
+      json['isReady'] as String,
     );
 
 Map<String, dynamic> _$$_CourseInfoToJson(_$_CourseInfo instance) =>
@@ -46,4 +47,5 @@ Map<String, dynamic> _$$_CourseInfoToJson(_$_CourseInfo instance) =>
       'purchaseExpireDate': instance.purchaseExpireDate,
       'isCreatedPlan': instance.isCreatedPlan,
       'purchaseDesc': instance.purchaseDesc,
+      'isReady': instance.isReady,
     };

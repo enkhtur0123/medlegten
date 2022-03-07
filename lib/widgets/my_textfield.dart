@@ -12,7 +12,13 @@ class MyTextField extends StatelessWidget {
       this.labelText,
       this.enabled = true,
       this.onChanged,
-      this.isBordered = true})
+      this.isBordered = true,
+      this.suffix,
+      this.labelColor,
+      this.filled,
+      this.onSubmitted,
+      this.validator,
+      this.errorText,this.formKey})
       : super(key: key);
 
   TextEditingController? controller;
@@ -22,10 +28,19 @@ class MyTextField extends StatelessWidget {
   TextInputType? keyboardType;
   String? labelText;
   Function? onChanged;
+  Widget? suffix;
+  Color? labelColor;
+  bool? filled;
+  Function? onSubmitted;
+  String? Function(String?)? validator;
+  String? errorText;
+  var formKey;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      key: formKey,
+      validator: validator,
       focusNode: focusNode,
       controller: controller,
       showCursor: true,
@@ -33,29 +48,39 @@ class MyTextField extends StatelessWidget {
       textInputAction: TextInputAction.done,
       style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
-        enabled: enabled!,
-        filled: true,
-        labelText: labelText,
-        border: isBordered
-            ? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(width: 1, color: Color(0xff7864FE)),
-              )
-            : const UnderlineInputBorder(
-                borderSide: const BorderSide(
-                  width: 1,
-                  color:const  Color(0xff7864FE),
+          errorText: errorText,
+          enabled: enabled!,
+          filled: filled ?? false,
+          labelText: labelText,
+          suffix: suffix ?? Container(),
+          iconColor: Colors.white,
+          border: isBordered
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:
+                      const BorderSide(width: 1, color: Color(0xff7864FE)),
+                )
+              : const UnderlineInputBorder(
+                  borderSide: BorderSide.none,
                 ),
-              ),
-        labelStyle: const TextStyle(color: Color(0xFF424242)),
-        disabledBorder: isBordered
-            ? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(width: 1, color: Color(0xff7864FE)))
-            : const UnderlineInputBorder(),
-      ),
+          labelStyle: TextStyle(color: labelColor ?? const Color(0xFF424242)),
+          disabledBorder: isBordered
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:
+                      const BorderSide(width: 1, color: Color(0xff7864FE)))
+              : const UnderlineInputBorder(borderSide: BorderSide.none),
+          enabledBorder: isBordered
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:
+                      const BorderSide(width: 1, color: Color(0xff7864FE)))
+              : const UnderlineInputBorder(borderSide: BorderSide.none)),
       onChanged: (value) {
         onChanged!(value);
+      },
+      onFieldSubmitted: (value) {
+        onSubmitted!(value);
       },
     );
   }

@@ -26,11 +26,23 @@ class UnitModuleCompletedBtn extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = const TextStyle(
+        fontSize: 13,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.normal,
+        color: Colors.white);
     return Container(
       margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.only(left: 10,right: 5,top: 5,bottom: 5),
+      decoration: const BoxDecoration(
+        color: Color(0xffA8AFE5),
+        borderRadius: BorderRadius.all( 
+          Radius.circular(10),
+        ),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           !isCompleted!
@@ -49,14 +61,31 @@ class UnitModuleCompletedBtn extends HookWidget {
                       }
                     });
                   },
-                  child: const Icon(Icons.check))
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Flexible(flex: 1, child: Icon(Icons.check)),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Flexible(
+                        flex: 3,
+                        child: Text(
+                          "Дуусгах".toUpperCase(),
+                          style: textStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               : GestureDetector(
                   onTap: () async {
                     await showDialog<bool>(
                         context: context,
                         builder: (context) {
                           return ConfirmDialog(
-                            text:"Энэ хичээлийг үзээгүй болгохдоо итгэлтэй байна уу?",
+                            text:
+                                "Энэ хичээлийг үзээгүй болгохдоо итгэлтэй байна уу?",
                             isAlert: true,
                           );
                         }).then((value) async {
@@ -65,12 +94,27 @@ class UnitModuleCompletedBtn extends HookWidget {
                       }
                     });
                   },
-                  child: const Icon(Icons.close),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Flexible(
+                        flex: 1,
+                        child: Icon(Icons.close),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Flexible(
+                        flex: 3,
+                        child: Text("Буцаах".toUpperCase(), style: textStyle),
+                      ),
+                    ],
+                  ),
                 ),
         ],
       ),
     );
-}
+  }
 
   Future<void> setUnitComplete({String? type, BuildContext? context}) async {
     try {
@@ -98,7 +142,7 @@ class UnitModuleCompletedBtn extends HookWidget {
           });
     } catch (ex) {
       await showDialog(
-        barrierDismissible: true,
+          barrierDismissible: true,
           context: context!,
           builder: (context) {
             return CustomPopUpDialog(

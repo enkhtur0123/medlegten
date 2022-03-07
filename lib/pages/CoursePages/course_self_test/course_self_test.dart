@@ -8,6 +8,8 @@ import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Landing/quiz_question.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test_question.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
+import 'package:medlegten/themes/style.dart';
+import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/dialog/custom_popup.dart';
 import 'package:medlegten/widgets/loader.dart';
 
@@ -90,21 +92,27 @@ class CourseSelfTestPage extends HookWidget {
                       )
                     : const Loading()),
           ),
-          WideButton(
-              mode.value == 0 ? 'Дуусгах' : 'Буцах', colorSecondary, colorWhite,
-              () {
-            if (mode.value == 0) {
-              check.value = true;
-              mode.value = 1;
-              setSelfTestResult(
-                  correctCnt: correctCnt.value,
-                  snapshot: snapshot,
-                  context: context);
-            } else {
-              AutoRouter.of(context).pop();
-            }
-          }),
-          addVerticalSpace(20)
+          Container(
+            color: Colors.transparent,
+            margin: const EdgeInsets.only(bottom: 40,left: 20,right: 20),
+            child: CustomOutlinedButton(
+              height: 50,
+              text: mode.value == 0 ? 'Дуусгах' : 'Буцах',
+              color: secondaryColor,
+              onTap: () {
+                if (mode.value == 0) {
+                  check.value = true;
+                  mode.value = 1;
+                  setSelfTestResult(
+                      correctCnt: correctCnt.value,
+                      snapshot: snapshot,
+                      context: context);
+                } else {
+                  AutoRouter.of(context).pop();
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -122,8 +130,8 @@ class CourseSelfTestPage extends HookWidget {
     var result;
     try {
       LoadingIndicator(context: context).showLoadingIndicator();
-       result = await LandingRepository().setCourseSelfTestHistory(body: data);
-       LoadingIndicator(context: context).hideLoadingIndicator();
+      result = await LandingRepository().setCourseSelfTestHistory(body: data);
+      LoadingIndicator(context: context).hideLoadingIndicator();
     } catch (ex) {
       LoadingIndicator(context: context).hideLoadingIndicator();
     }

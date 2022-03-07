@@ -24,40 +24,56 @@ class CourseCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onTap!(courseInfo.courseId);
+        if (courseInfo.isReady != "1") {
+          onTap!(courseInfo.courseId);
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(left: 10, right: 10),
         padding: const EdgeInsets.symmetric(vertical: 5),
         width: double.infinity,
-        child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Flexible(
-                  flex: 8,
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  // BoxShadow(
+                  //   color: Colors.grey.withOpacity(0.5),
+                  //   spreadRadius: 5,
+                  //   blurRadius: 7,
+                  //   offset: const Offset(0, 3), // changes position of shadow
+                  // ),
+                  BoxShadow(
+                    color: const Color(0xff343C44).withOpacity(0.1),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                  BoxShadow(
+                    color: const Color(0xff75838E).withOpacity(0.04),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 8,
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
                             courseInfo.courseName,
                             style: const TextStyle(
                                 color: colorPrimary,
@@ -65,52 +81,68 @@ class CourseCart extends StatelessWidget {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
-                        ),
-                        addVerticalSpace(5),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            courseInfo.shortDesc,
-                            style: const TextStyle(
-                                color: Color.fromRGBO(189, 189, 189, 1),
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400),
+                          addVerticalSpace(15),
+                          addVerticalSpace(5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                  fit: FlexFit.loose,
+                                  flex: 3,
+                                  child: IconWithTextWidget(
+                                      iconData: Icons.timer,
+                                      text: courseInfo.hours + ' цаг')),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Flexible(
+                                  fit: FlexFit.loose,
+                                  flex: 4,
+                                  child: IconWithTextWidget(
+                                      iconData: Icons.feed_outlined,
+                                      text: courseInfo.units + ' хичээл')),
+                            ],
                           ),
-                        ),
-                        addVerticalSpace(5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Flexible(
-                                flex: 2,
-                                child: IconWithTextWidget(
-                                    iconData: Icons.person_outline_outlined,
-                                    text: courseInfo.levelName)),
-                            Flexible(
-                                flex: 3,
-                                child: IconWithTextWidget(
-                                    iconData: Icons.timer,
-                                    text: courseInfo.hours + ' цаг')),
-                            Flexible(
-                                flex: 4,
-                                child: IconWithTextWidget(
-                                    iconData: Icons.feed_outlined,
-                                    text: courseInfo.units + ' хичээл')),
-                          ],
-                        ),
-                        addVerticalSpace(5),
-                        AmountWidget(
-                          amount: double.parse(
-                              courseInfo.price.toString().replaceAll(",", "")),
-                        ),
-                      ],
+                          addVerticalSpace(5),
+                          AmountWidget(
+                            amount: double.parse(courseInfo.price
+                                .toString()
+                                .replaceAll(",", "")),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Flexible(flex: 4, child: courseBgImg(context, courseInfo)),
-              ],
-            )),
+                  Flexible(flex: 4, child: courseBgImg(context, courseInfo)),
+                ],
+              ),
+            ),
+            courseInfo.isReady == "1"
+                ? Positioned.fill(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.8),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Text(
+                        "Тун Удахгүй".toLowerCase(),
+                        textAlign: TextAlign.center,
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.grey),
+                      ),
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
       ),
     );
   }

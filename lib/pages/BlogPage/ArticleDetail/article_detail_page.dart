@@ -70,7 +70,7 @@ class _ArticlePageState extends State<ArticlePage> {
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
           child: UnitAppBar(
-            'MEDLEGTEN',
+            widget.articleInfo.articleTitle,
             isCompleted: null,
           ),
         ),

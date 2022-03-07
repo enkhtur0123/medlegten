@@ -15,22 +15,24 @@ class LevelEventPage extends HookWidget {
       PageController(initialPage: 0, viewportFraction: 0.68);
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.builder(
+      itemCount: levelEvents!.length,
+      padding: const EdgeInsets.all(0),
       scrollDirection: Axis.vertical,
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      children: levelEvents!.map((e) {
+      itemBuilder: (context,index){
         return Column(
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
+              margin: const EdgeInsets.only(top: 10, bottom: 0, left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    e.levelName!,
+                    levelEvents![index].levelName!,
                     style: const TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.normal,
@@ -44,8 +46,9 @@ class LevelEventPage extends HookWidget {
                       fontStyle: FontStyle.normal,
                       onTap: () {
                         AutoRouter.of(context).push(LevelVideoListRoute(
-                            levelId: e.levelId,
-                            categoryName: e.events[0].categoryName,isCategorySearch: false));
+                            levelId: levelEvents![index].levelId,
+                            categoryName: levelEvents![index].events[0].categoryName,
+                            isCategorySearch: false));
                       },
                     ),
                   ),
@@ -62,15 +65,15 @@ class LevelEventPage extends HookWidget {
                 padEnds: false,
                 controller: pageController,
                 scrollDirection: Axis.horizontal,
-                itemCount: e.events.length,
+                itemCount: levelEvents![index].events.length,
                 itemBuilder: (context, index) {
-                  return LevelEventItem(event: e.events[index]);
+                  return LevelEventItem(event: levelEvents![index].events[index]);
                 },
               ),
             ),
           ],
         );
-      }).toList(),
+      },
     );
   }
 }

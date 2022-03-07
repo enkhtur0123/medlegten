@@ -45,8 +45,9 @@ class ArticleHorizontalPage extends HookWidget {
                     textAlign: TextAlign.start,
                     style: typeStyle,
                   ),
-                  Container(
-                    child: TextButtonWidget(
+                Material(
+                  color: Colors.transparent,
+                  child: TextButtonWidget(
                       onTap: () {
                         AutoRouter.of(context).push(
                           ArticleVerticalRoute(title: typeName, typeId: typeId),
@@ -55,8 +56,9 @@ class ArticleHorizontalPage extends HookWidget {
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.normal,
                       text: "Бүгд",
-                    ),
-                  ),
+                      
+                    )),
+                
                 ],
               ),
             ),

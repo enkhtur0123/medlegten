@@ -27,6 +27,7 @@ class TextButtonWidget extends StatelessWidget {
         fontFamily: 'Roboto');
     return TextButton(
       style: TextButton.styleFrom(
+        backgroundColor: Colors.transparent,
         primary: color ?? colorPrimary,
         textStyle: const TextStyle(color: colorPrimary)
       ),

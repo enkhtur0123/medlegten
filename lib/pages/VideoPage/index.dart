@@ -33,7 +33,6 @@ class VideoPageState extends State<VideoPage> {
                 return CategoryPage(
                   category: categories,
                   onTap: (String id, String name) {
-                    print(id);
                     AutoRouter.of(context).push(LevelVideoListRoute(
                         categoryId: id,
                         categoryName: name,

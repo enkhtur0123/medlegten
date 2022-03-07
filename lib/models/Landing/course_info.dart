@@ -23,6 +23,7 @@ class CourseInfo with _$CourseInfo {
       String purchaseExpireDate,
       bool isCreatedPlan,
       List<String> purchaseDesc,
+      String isReady,
       ) = _CourseInfo;
 
   factory CourseInfo.fromJson(Map<String, dynamic> json) =>

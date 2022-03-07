@@ -206,7 +206,11 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: ArticleVerticalPage(
-              key: args.key, title: args.title, typeId: args.typeId));
+              key: args.key,
+              title: args.title,
+              typeId: args.typeId,
+              isArticleSearch: args.isArticleSearch,
+              searchValue: args.searchValue));
     },
     ArticleRoute.name: (routeData) {
       final args = routeData.argsAs<ArticleRouteArgs>();
@@ -1041,17 +1045,31 @@ class UnitTestRouteArgs {
 /// generated route for
 /// [ArticleVerticalPage]
 class ArticleVerticalRoute extends PageRouteInfo<ArticleVerticalRouteArgs> {
-  ArticleVerticalRoute({Key? key, String? title, String? typeId})
+  ArticleVerticalRoute(
+      {Key? key,
+      String? title,
+      String? typeId,
+      bool? isArticleSearch = false,
+      String? searchValue})
       : super(ArticleVerticalRoute.name,
             path: '/blog/all',
             args: ArticleVerticalRouteArgs(
-                key: key, title: title, typeId: typeId));
+                key: key,
+                title: title,
+                typeId: typeId,
+                isArticleSearch: isArticleSearch,
+                searchValue: searchValue));
 
   static const String name = 'ArticleVerticalRoute';
 }
 
 class ArticleVerticalRouteArgs {
-  const ArticleVerticalRouteArgs({this.key, this.title, this.typeId});
+  const ArticleVerticalRouteArgs(
+      {this.key,
+      this.title,
+      this.typeId,
+      this.isArticleSearch = false,
+      this.searchValue});
 
   final Key? key;
 
@@ -1059,9 +1077,13 @@ class ArticleVerticalRouteArgs {
 
   final String? typeId;
 
+  final bool? isArticleSearch;
+
+  final String? searchValue;
+
   @override
   String toString() {
-    return 'ArticleVerticalRouteArgs{key: $key, title: $title, typeId: $typeId}';
+    return 'ArticleVerticalRouteArgs{key: $key, title: $title, typeId: $typeId, isArticleSearch: $isArticleSearch, searchValue: $searchValue}';
   }
 }
 

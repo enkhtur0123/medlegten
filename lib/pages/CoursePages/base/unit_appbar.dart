@@ -96,7 +96,7 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
           widget.moduleId != null
               ? Flexible(
                   fit: FlexFit.tight,
-                  flex: 2,
+                  flex: 4,
                   child: UnitModuleCompletedBtn(
                     moduleId: widget.moduleId,
                     completeBtn: () {},

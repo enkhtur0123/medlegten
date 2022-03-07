@@ -38,7 +38,7 @@ class LevelInfoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Levels of study".toUpperCase(),
+                "Таны англи хэлний түвшин".toUpperCase(),
                 style: const TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 16,
