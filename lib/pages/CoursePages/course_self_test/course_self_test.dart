@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
-import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Landing/quiz_question.dart';
 import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test_question.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
@@ -19,6 +18,7 @@ class CourseSelfTestPage extends HookWidget {
 
   ValueNotifier<String>? quizId = ValueNotifier("");
 
+  ValueNotifier<Set<String>> correctAnswerIds = ValueNotifier(Set());
   Future<List<QuizQuestionEx>> fetchData() async {
     List<QuizQuestionEx> sortedList = [];
     var result = await LandingRepository().getSelfQuiz();
@@ -72,29 +72,23 @@ class CourseSelfTestPage extends HookWidget {
           Expanded(
             child: SingleChildScrollView(
                 child: snapshot.hasData
-                    ? ValueListenableBuilder<bool>(
-                        builder:
-                            (BuildContext context, bool value, Widget? child) {
-                          return child!;
-                        },
-                        valueListenable: check,
-                        child: Column(
-                          children: snapshot.data!
-                              .map((question) => CourseSelfTestQuestion(
-                                    question,
-                                    mode: mode.value,
-                                    check: check,
-                                    correctCnt: correctCnt,
-                                    selfTestCnt: snapshot.data!.length,
-                                  ))
-                              .toList(),
-                        ),
+                    ? Column(
+                        children: snapshot.data!
+                            .map((question) => CourseSelfTestQuestion(
+                                  question,
+                                  mode: mode.value,
+                                  check: check,
+                                  correctCnt: correctCnt,
+                                  selfTestCnt: snapshot.data!.length,
+                                  correctAnswerds: correctAnswerIds,
+                                ))
+                            .toList(),
                       )
                     : const Loading()),
           ),
           Container(
             color: Colors.transparent,
-            margin: const EdgeInsets.only(bottom: 40,left: 20,right: 20),
+            margin: const EdgeInsets.only(bottom: 40, left: 20, right: 20),
             child: CustomOutlinedButton(
               height: 50,
               text: mode.value == 0 ? 'Дуусгах' : 'Буцах',
@@ -124,8 +118,14 @@ class CourseSelfTestPage extends HookWidget {
       BuildContext? context}) async {
     Map<String, dynamic> data = {
       "quizId": quizId?.value.toString(),
-      "correctCount": correctCnt.toString(),
-      "incorrectCount": (snapshot!.data!.length - correctCnt!).toString()
+      "correctCount": correctAnswerIds.value.isNotEmpty
+          ? correctAnswerIds.value.length - 1
+          : 0,
+      "incorrectCount": (snapshot!.data!.length -
+              (correctAnswerIds.value.isNotEmpty
+                  ? correctAnswerIds.value.length - 1
+                  : 0))
+          .toString()
     };
     var result;
     try {
@@ -135,7 +135,6 @@ class CourseSelfTestPage extends HookWidget {
     } catch (ex) {
       LoadingIndicator(context: context).hideLoadingIndicator();
     }
-
     if (result != null) {
       showDialog(
           context: context!,
@@ -154,6 +153,12 @@ class CourseSelfTestPage extends HookWidget {
           });
     }
   }
+}
+
+class CorrectAnswer {
+  String? selectedAnswerId;
+  bool? isCorrect;
+  CorrectAnswer({this.selectedAnswerId, this.isCorrect});
 }
 
 class QuizQuestionEx {

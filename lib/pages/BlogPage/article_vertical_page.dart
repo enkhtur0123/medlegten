@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/article/article_item.dart';
 import 'package:medlegten/pages/BlogPage/article_item_page.dart';
 import 'package:medlegten/repositories/article_repository.dart';
 
 // ignore: must_be_immutable
-class ArticleVerticalPage extends HookWidget {
+class ArticleVerticalPage extends StatefulWidget {
   ArticleVerticalPage(
       {Key? key,
       this.title,
@@ -17,39 +16,60 @@ class ArticleVerticalPage extends HookWidget {
   String? typeId;
   bool? isArticleSearch;
   String? searchValue;
+  @override
+  State<StatefulWidget> createState() {
+    return ArticleVerticalPageState();
+  }
+}
 
+// ignore: must_be_immutable
+class ArticleVerticalPageState extends State<ArticleVerticalPage> {
   int pageNumber = 1;
   int pageSize = 10;
+  List<ArticleItem>? articles=[];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title!),
+        title: Text(widget.title!),
       ),
       body: FutureBuilder(
-        future: !isArticleSearch!
+        future: !widget.isArticleSearch!
             ? ArticleRepository().getAllArticle(
-                typeId: typeId, pageNumber: pageNumber, pageSize: pageSize)
+                typeId: widget.typeId,
+                pageNumber: pageNumber,
+                pageSize: pageSize)
             : ArticleRepository().searchArticle(
-                searchValue: searchValue,
+                searchValue: widget.searchValue,
                 pageNumber: pageNumber,
                 pageSize: pageSize),
         builder: (context, AsyncSnapshot<List<ArticleItem>> snapshot) {
           if (snapshot.hasData) {
-            print(snapshot.data);
+            articles!.addAll(snapshot.data!);
             return Container(
-                margin: const EdgeInsets.all(20),
-                child: ListView(
+              margin: const EdgeInsets.all(20),
+              child: NotificationListener(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (scrollInfo.metrics.pixels ==
+                      scrollInfo.metrics.maxScrollExtent) {
+                    onLoadMore();
+                  }
+                  return false;
+                },
+                child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
+                  itemCount: articles!.length,
                   physics: const BouncingScrollPhysics(),
-                  children: snapshot.data!.map((e) {
+                  itemBuilder: (context, index) {
                     return ArticleItemPage(
-                      articleItem: e,
+                      articleItem: articles![index],
                     );
-                  }).toList(),
-                ));
+                  },
+                ),
+              ),
+            );
           } else {
             return Container();
           }
@@ -57,4 +77,6 @@ class ArticleVerticalPage extends HookWidget {
       ),
     );
   }
+
+  void onLoadMore() {}
 }

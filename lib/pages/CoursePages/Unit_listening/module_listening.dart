@@ -53,9 +53,11 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
       getRandom();
       listenChecks.value
           .add(ListenCheck(index: int.parse(item.cueId), isChecking: false));
-      uriAudioSource!.add(AudioSource.uri(
-        Uri.parse(item.hostUrl),
-      ));
+      uriAudioSource!.add(
+        AudioSource.uri(
+          Uri.parse(item.hostUrl),
+        ),
+      );
     }
     _playlist = ConcatenatingAudioSource(children: uriAudioSource!);
     _init();
@@ -69,7 +71,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
     /// Player ээ сонсож байна
     _player.playbackEventStream.listen((event) async {
       if ((event.duration != null &&
-              event.duration!.inSeconds == _player.position.inSeconds &&
+              event.duration!.inSeconds == _player.duration!.inSeconds &&
               !listenChecks.value[currentIndex].isChecking!) &&
           !isBottomSheet) {
         isBottomSheet = true;
@@ -98,6 +100,11 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
             );
           },
         ).then((value) async {
+          // controller.nextPage(
+          //     duration: const Duration(milliseconds: 300),
+          //     curve: Curves.easeIn);
+          // await _player.play();
+
           isBottomSheet = false;
           setState(() {});
         });

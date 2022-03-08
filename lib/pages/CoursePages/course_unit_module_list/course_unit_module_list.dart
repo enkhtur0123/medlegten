@@ -105,7 +105,7 @@ class CourseUnitModuleListPage extends HookWidget {
   Widget gradientButton(String caption, Function() whenTap) {
     return SizedBox(
       height: 52,
-      width: double.infinity, // <-- match_parent
+      width: double.infinity, 
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Container(

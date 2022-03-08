@@ -5,18 +5,21 @@ import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.da
 
 import 'course_self_test_answer_item.dart';
 
+// ignore: must_be_immutable
 class CourseSelfTestQuestion extends HookWidget {
   final QuizQuestionEx quizQuestionEx;
   final int mode;
   final ValueNotifier<bool>? check;
   ValueNotifier<int> correctCnt;
+  ValueNotifier? selectedAnswerId = ValueNotifier("");
   int selfTestCnt;
+  ValueNotifier<Set<String>>? correctAnswerds;
   CourseSelfTestQuestion(this.quizQuestionEx,
       {Key? key,
       this.mode = 0,
       this.check,
       required this.correctCnt,
-      required this.selfTestCnt})
+      required this.selfTestCnt,this.correctAnswerds})
       : super(key: key);
 
   final style = const TextStyle(
@@ -29,8 +32,6 @@ class CourseSelfTestQuestion extends HookWidget {
   Widget build(BuildContext context) {
     var sortedAnswers = quizQuestionEx.quizQuestion.answers
       ..sort((a, b) => int.parse(a.ordering).compareTo(int.parse(b.ordering)));
-    //var state = useState(-1);
-    //var isSelected = useState(false);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
@@ -62,26 +63,7 @@ class CourseSelfTestQuestion extends HookWidget {
             ),
           ),
           addVerticalSpace(5),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: sortedAnswers
-                      .map(
-                        (answer) => CourseSelfAnswerItem(
-                          answer: answer,
-                          quizQuestionEx: quizQuestionEx,
-                          mode: mode,
-                          correctCnt: correctCnt,
-                        ),
-                      )
-                      .toList()
-                  ),
-            ),
-          )
+          CourseSelfAnswerItem(answers: sortedAnswers,mode: mode,correctCnt: correctCnt,correctAnswerds: correctAnswerds)
         ],
       ),
     );

@@ -66,8 +66,8 @@ class LevelEventPage extends HookWidget {
                 controller: pageController,
                 scrollDirection: Axis.horizontal,
                 itemCount: levelEvents![index].events.length,
-                itemBuilder: (context, index) {
-                  return LevelEventItem(event: levelEvents![index].events[index]);
+                itemBuilder: (context, position) {
+                  return LevelEventItem(event: levelEvents![index].events[position]);
                 },
               ),
             ),

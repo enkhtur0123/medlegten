@@ -19,6 +19,7 @@ class AnsWerItem extends HookWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: quizAnswer!.map((e) {
         return Flexible(
           fit: FlexFit.tight,
@@ -28,8 +29,9 @@ class AnsWerItem extends HookWidget {
               selectedAnswerId.value = e.answerId;
             },
             child: Container(
+              alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 10),
-              height: 30,
+              height: 52,
               padding:
                   const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
               decoration: BoxDecoration(
@@ -56,7 +58,7 @@ class AnsWerItem extends HookWidget {
               ),
               child: AutoSizeText(
                 e.answer,
-                maxLines: 2,
+                // maxLines: 2,
                 textAlign: TextAlign.center,
                 softWrap: true,
                 maxFontSize: 15,

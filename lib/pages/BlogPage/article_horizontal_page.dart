@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/article/article_item.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/TextButton.dart';
-
 import 'article_item_page.dart';
 
 // ignore: must_be_immutable
@@ -45,9 +44,9 @@ class ArticleHorizontalPage extends HookWidget {
                     textAlign: TextAlign.start,
                     style: typeStyle,
                   ),
-                Material(
-                  color: Colors.transparent,
-                  child: TextButtonWidget(
+                  Material(
+                    color: Colors.transparent,
+                    child: TextButtonWidget(
                       onTap: () {
                         AutoRouter.of(context).push(
                           ArticleVerticalRoute(title: typeName, typeId: typeId),
@@ -56,9 +55,8 @@ class ArticleHorizontalPage extends HookWidget {
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.normal,
                       text: "Бүгд",
-                      
-                    )),
-                
+                    ),
+                  ),
                 ],
               ),
             ),

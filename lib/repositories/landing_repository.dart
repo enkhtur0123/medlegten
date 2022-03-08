@@ -15,7 +15,8 @@ class LandingRepository {
   Future<LastSeenUnitInfo> getLastSeenUnitInfo(
       {String? unitId, String? moduleId, String? moduleTypeId}) async {
     try {
-      final res = await HttpHelper().getUrl(url: 'Course/LastSeenUnitModule/$unitId/$moduleId');
+      final res = await HttpHelper()
+          .getUrl(url: 'Course/LastSeenUnitModule/$unitId/$moduleId');
       if (res['isSuccess']) {
         return LastSeenUnitInfo.fromJson(res);
       } else {

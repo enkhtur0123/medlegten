@@ -87,6 +87,8 @@ class UnitModuleHelper {
 
       case "5":
         {
+          // print(data.moduleId);
+          //  print(data.moduleTypeId);
           showLoading(context: context, isLoad: true);
           UnitRepository()
               .getUnitListening(

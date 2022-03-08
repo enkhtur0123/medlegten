@@ -84,7 +84,8 @@ class ArticleItemPage extends HookWidget {
                       fit: FlexFit.tight,
                       child: SizedBox(
                         width: double.infinity,
-                        child: Text(
+                        child: 
+                        Text(
                           articleItem!.articleTitle,
                           style: const TextStyle(
                               color: Color(0xff333333),

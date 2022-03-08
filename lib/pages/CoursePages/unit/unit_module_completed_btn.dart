@@ -31,37 +31,39 @@ class UnitModuleCompletedBtn extends HookWidget {
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
         color: Colors.white);
-    return Container(
-      margin: const EdgeInsets.all(15),
-      padding: const EdgeInsets.only(left: 10,right: 5,top: 5,bottom: 5),
-      decoration: const BoxDecoration(
-        color: Color(0xffA8AFE5),
-        borderRadius: BorderRadius.all( 
-          Radius.circular(10),
+    return GestureDetector(
+      onTap: () async {
+        await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return ConfirmDialog(
+                text: !isCompleted!
+                    ? "Энэ хичээлийг дуусгахдаа итгэлтэй байна уу?"
+                    : "Энэ хичээлийг үзээгүй болгохдоо итгэлтэй байна уу?",
+                isAlert: true,
+              );
+            }).then((value) async {
+          if (value != null && value) {
+            setUnitComplete(type: !isCompleted! ? "1" : "0", context: context);
+          }
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.all(15),
+        padding: const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
+        decoration: const BoxDecoration(
+          color: Color(0xffA8AFE5),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          !isCompleted!
-              ? GestureDetector(
-                  onTap: () async {
-                    await showDialog<bool>(
-                        context: context,
-                        builder: (context) {
-                          return ConfirmDialog(
-                            text: "Энэ хичээлийг дуусгахдаа итгэлтэй байна уу?",
-                            isAlert: true,
-                          );
-                        }).then((value) async {
-                      if (value != null && value) {
-                        setUnitComplete(type: "1", context: context);
-                      }
-                    });
-                  },
-                  child: Row(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            !isCompleted!
+                ? Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Flexible(flex: 1, child: Icon(Icons.check)),
@@ -76,25 +78,8 @@ class UnitModuleCompletedBtn extends HookWidget {
                         ),
                       ),
                     ],
-                  ),
-                )
-              : GestureDetector(
-                  onTap: () async {
-                    await showDialog<bool>(
-                        context: context,
-                        builder: (context) {
-                          return ConfirmDialog(
-                            text:
-                                "Энэ хичээлийг үзээгүй болгохдоо итгэлтэй байна уу?",
-                            isAlert: true,
-                          );
-                        }).then((value) async {
-                      if (value != null && value) {
-                        setUnitComplete(type: "0", context: context);
-                      }
-                    });
-                  },
-                  child: Row(
+                  )
+                : Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Flexible(
@@ -110,8 +95,8 @@ class UnitModuleCompletedBtn extends HookWidget {
                       ),
                     ],
                   ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }

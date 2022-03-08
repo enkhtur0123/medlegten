@@ -34,7 +34,7 @@ class LandingCourseState extends State<LandingCourse> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   bool isExam = checkExam(data: snapshot.data);
-                  return isExam
+                  return !isExam
                       ? const PreliminaryTest()
                       : LevelInfoWidget(
                           level: (snapshot.data as Map)["quizDetial"]

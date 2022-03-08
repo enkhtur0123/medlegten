@@ -8,7 +8,7 @@ class ArticleRepository {
   Future<List<ArticleItem>> searchArticle(
       {String? searchValue, int? pageNumber, int? pageSize}) async {
     try {
-      final res = await HttpHelper().getUrl(url: 'Article/Search/$searchValue');
+      final res = await HttpHelper().getUrl(url: 'Article/Search/$searchValue?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
         var list = res['articles'] as List;
         var articles = list.map((i) => ArticleItem.fromJson(i)).toList();
