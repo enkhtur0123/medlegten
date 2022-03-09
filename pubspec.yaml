@@ -58,6 +58,7 @@ dependencies:
   flutter_spinkit: ^5.1.0
   webview_flutter: ^3.0.0
   syncfusion_flutter_datepicker: ^19.4.54
+  measure_size: ^2.0.0
 
 dev_dependencies:
   flutter_test:

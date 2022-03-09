@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/loading.dart';
 import 'dart:math';
+import 'package:measure_size/measure_size.dart';
+import 'package:medlegten/utils/global.dart';
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   MyDynamicHeader(this.imgUrl, this.titleText);
@@ -10,6 +12,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   int index = 0;
   String imgUrl;
   String titleText;
+  double measureSize = 0;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -50,21 +53,25 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   Widget titleWidget(double shrinkPercentage) {
     var fontSize = max(14.0, 18.0 * (1 - shrinkPercentage));
     return Container(
-      //color: Colors.amber,
       height: minExtent,
       width: double.infinity,
       padding: EdgeInsets.only(
         top: 5,
-        right: -1 * min(0, -100 * shrinkPercentage),
+        left: -1 * min(0, -110 * shrinkPercentage),
       ),
       child: Center(
-        child: Text(
-          titleText,
-          style: TextStyle(
-            color: colorPrimary,
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.w700,
-            fontSize: fontSize,
+        child: MeasureSize(
+          onChange: (Size newSize) {
+            measureSize = newSize.width;
+          },
+          child: Text(
+            titleText,
+            style: TextStyle(
+              color: colorPrimary,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w700,
+              fontSize: fontSize,
+            ),
           ),
         ),
       ),

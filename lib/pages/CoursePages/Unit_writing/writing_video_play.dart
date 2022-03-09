@@ -151,7 +151,7 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
     if (counter == 1) {
       if (answers.values
           .any((element) => element == null || element == false)) {
-        showCorrectAnswer = true;
+        WritingHelper().showCorrectAnswer[widget.index[1]] = true;
         return true;
       } else {
         return false;

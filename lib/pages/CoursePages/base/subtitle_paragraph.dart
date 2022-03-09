@@ -32,6 +32,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
   Widget build(BuildContext context) {
     //bool beforeSpace = false;
     Map<CWord, Widget> widgetList = {};
+
     for (int i1 = 0; i1 < widget.paragraph.words!.length; i1++) {
       CWord w = widget.paragraph.words![i1];
 
@@ -39,14 +40,16 @@ class _CueTexteState extends State<SubtitleParagraph> {
           widget.currentWord!.id == w.id) {
         var splitted = widget.currentWord!.wordValue.split(' ');
         for (int i2 = 0; i2 < splitted.length; i2++) {
-          if (splitted[i2] == widget.currentWord!.word) {
+          if (splitted[i2].toLowerCase() ==
+              widget.currentWord!.word.toLowerCase()) {
             widgetList[widget.currentWord!] =
                 buildTextElevated(widget.currentWord!);
           } else {
             for (int i3 = i2; i3 < 10; i3++) {
               if (widget.paragraph.words!.length > i1 + i3) {
                 var wordForward = widget.paragraph.words![i1 + i3];
-                if (wordForward.word == splitted[i2]) {
+                if (wordForward.word.toLowerCase() ==
+                    splitted[i2].toLowerCase()) {
                   widgetList[wordForward] = buildTextElevated(wordForward);
                   //skip.add(wordForward);
                   break;
@@ -54,7 +57,8 @@ class _CueTexteState extends State<SubtitleParagraph> {
               }
               if (i1 - i3 > -1) {
                 var wordBackward = widget.paragraph.words![i1 - i3];
-                if (wordBackward.word == splitted[i2]) {
+                if (wordBackward.word.toLowerCase() ==
+                    splitted[i2].toLowerCase()) {
                   widgetList[wordBackward] = buildTextElevated(wordBackward);
                   //skip.add(wordBackward);
                   break;

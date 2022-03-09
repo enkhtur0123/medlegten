@@ -231,6 +231,7 @@ class _CueWordWidgetState extends State<CueWordWidget> {
           ),
           Expanded(
             child: ListView.builder(
+              padding: const EdgeInsets.all(0),
               shrinkWrap: true,
               itemCount: list.length,
               //separatorBuilder: (BuildContext context, int index) =>

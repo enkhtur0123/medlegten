@@ -215,6 +215,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                           (entry.key.wordValue != '')) {
                         selectedWord = entry.key;
                         selectedWordParagraphIndex = currentIndex;
+                        //print('Here onTapDown $selectedWordParagraphIndex');
                         selectedRect = rect;
                         valueKeyList[cue] = valueKeyList[cue]! + 1;
 
@@ -247,6 +248,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       }
                     } else if (scrollNotification is ScrollEndNotification &&
                         isUser == 1) {
+                      //print('Here ScrollEndNotification $currentIndex');
                       isUser = 0;
                       //widget.videoPlayerController.removeListener(listener);
                       widget.videoPlayerController.seekTo(getDuration(
@@ -277,6 +279,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       controller: _fixedExtentScrollController,
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
+                        //print('Here onSelectedItemChanged $currentIndex');
                         selectedWord = null;
                         //print(
                         //    'currentIndex: ${widget.paragraphs[index].engText}');

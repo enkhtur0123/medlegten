@@ -172,7 +172,7 @@ class _ReadingPageState extends State<ReadingPage> {
   Widget tailWidget(bool selected) {
     return SizedBox(
       height: 20,
-      width: 20,
+      width: 50,
       child: Transform.rotate(
         angle: 90 * math.pi / 180,
         child: Icon(Icons.call_made,
@@ -196,6 +196,7 @@ class _ReadingPageState extends State<ReadingPage> {
         //alignmentTemp: Alignment.bottomCenter,
         useSystem: false,
         isUseAnimationTemp: false,
+        onDismiss: () {},
         maskColorTemp: Colors.transparent,
         widget: SizedBox(
           height: 220 + 20,

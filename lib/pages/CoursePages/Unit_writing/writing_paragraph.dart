@@ -39,8 +39,8 @@ class _WritingParagraphState extends State<WritingParagraph> {
   void dispose() {
     for (var element in missingList.entries) {
       element.value.item2.dispose();
-      element.value.item3.dispose();
       element.value.item3.removeListener(() => _onFocusChange);
+      element.value.item3.dispose();
     }
     super.dispose();
   }
@@ -80,9 +80,7 @@ class _WritingParagraphState extends State<WritingParagraph> {
           _focusNode.addListener(() => _onFocusChange(_focusNode));
 
           missingList[word] = Tuple4(i2++, _controller, _focusNode, word);
-          if (this.widget.showCorrectAnswer) {
-            _controller.text = word.mainText;
-          }
+
           _controller.addListener(() {
             this.widget.answers[word] = _controller.value.text.toLowerCase() ==
                 word.mainText.toLowerCase();
@@ -96,6 +94,11 @@ class _WritingParagraphState extends State<WritingParagraph> {
               }
             }
           });
+        }
+        if (this.widget.showCorrectAnswer) {
+          if (missingList.containsKey(word)) {
+            missingList[word]!.item2.text = word.mainText;
+          }
         }
         var widget = missingText(
             word,

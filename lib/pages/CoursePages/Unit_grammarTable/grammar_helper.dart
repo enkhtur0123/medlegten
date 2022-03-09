@@ -195,7 +195,6 @@ class Grammarhelper {
     var distinctIds = [
       ...{...retVal}
     ];
-
     int i = 0;
     List<GrammarAnswerEx> retValEx = [];
     for (var element in distinctIds) {

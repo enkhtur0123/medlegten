@@ -101,7 +101,7 @@ class _StructureBodyState extends State<StructureBody> {
                             size: 15),
                         addHorizontalSpace(5),
                         Text(
-                          answer.answer,
+                          answer.answer.replaceAll('\n', ''),
                           style: TextStyle(
                               color: widget.isType1
                                   ? const Color.fromRGBO(0, 0, 0, 1)
