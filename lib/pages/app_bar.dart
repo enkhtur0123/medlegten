@@ -69,7 +69,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                           width: 8,
                         ),
                         const Text(
-                          "МЭДЛЭГТЭН",
+                          "LINGOS",
                           style: TextStyle(
                               color: Colors.white,
                               fontStyle: FontStyle.normal,

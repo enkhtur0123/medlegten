@@ -1,5 +1,8 @@
 // ignore_for_file: empty_catches
 
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/services/custom_exception.dart';
@@ -7,10 +10,16 @@ import 'package:medlegten/services/custom_exception.dart';
 class HttpHelper {
   Dio _createDio() {
     var dio = Dio();
-    dio.options.baseUrl = 'https://api.ddishtv.mn/v1/';
+    dio.options.baseUrl = 'https://api.lingos.mn/v1/';
     dio.options.headers['content-Type'] = 'application/json; charset=utf-8';
     dio.options.connectTimeout = 40000;
     dio.options.receiveTimeout = 40000;
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
 
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -67,10 +76,13 @@ class HttpHelper {
     dio.options.headers['Authorization'] = access_token;
     try {
       var response = await dio.post(url!, data: body);
+
       return response.data;
     } on DioError catch (ex) {
+      print(ex.toString());
       throw CustomException(errorMsg: ex.message.toString());
     } catch (ex) {
+      print(ex.toString());
       throw CustomException(errorMsg: ex.toString());
     }
   }

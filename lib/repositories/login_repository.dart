@@ -91,8 +91,11 @@ class LoginRepository implements ILoginRepository {
   Future<List<Onboarding>?> getOnboardingInfo() async {
     try {
       final res = await HttpHelper().getUrl(url: 'Login/Slider');
+      print(res);
       if (res['isSuccess']) {
         var list = res['onBoarding'] as List;
+        print(list);
+
         return list.map((i) => Onboarding.fromJson(i)).toList();
       } else {
         return null;
@@ -108,6 +111,7 @@ class LoginRepository implements ILoginRepository {
       bool? isGoogle,
       Map<String, dynamic>? fUser,
       GoogleSignInAccount? googleSignInAccount}) async {
+    print(googleSignInAccount);
     try {
       if (user != null) {
         final res = await HttpHelper().postUrl(
@@ -128,14 +132,15 @@ class LoginRepository implements ILoginRepository {
             'birthDate': ''
           }),
         );
-        // print(res);
         if (res['isSuccess']) {
           GetStorage().write('token', res['token']);
           // print(res['token']);
         }
       }
     } catch (e) {
+       print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
+
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }

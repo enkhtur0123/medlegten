@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.medlegten.mapp">
+    package="mn.svp.lingos">
    <application
-        android:label="medlegten"
+        android:label="Lingos"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -1,4 +1,4 @@
-package com.medlegten.mapp;
+package mn.svp.lingos;
 
 import androidx.annotation.NonNull;
 
