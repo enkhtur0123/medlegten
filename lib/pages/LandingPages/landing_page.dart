@@ -6,8 +6,10 @@ import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
 import 'package:medlegten/pages/VideoPage/index.dart';
 import 'package:medlegten/pages/app_bar.dart';
+import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/repositories/login_repository.dart';
 import 'landing_home.dart';
 
 class LandingPage extends ConsumerStatefulWidget {
@@ -36,6 +38,9 @@ class LandingPageState extends ConsumerState<LandingPage>
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
+    LoginRepository().getAppVersion().then((value) {
+      ref.read(appProvider.notifier).changeState(value: VersionState(version: value));
+    });
     changeAppBarData(
         ref: ref,
         height: 120,

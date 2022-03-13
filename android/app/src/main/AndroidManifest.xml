@@ -2,7 +2,8 @@
     package="mn.svp.lingos">
    <application
         android:label="Lingos"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:extractNativeLibs="false">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

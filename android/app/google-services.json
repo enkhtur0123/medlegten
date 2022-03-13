@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "79251626405-8j310dna7jeg5etfhol5fn0b73tkt3nq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mn.svp.lingos",
+            "certificate_hash": "00a83bf9169281fe43f44d054aad08c7c1a3158f"
+          }
+        },
+        {
           "client_id": "79251626405-sljtt545o5gvdaf29qfqmsagr3mvq4qs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

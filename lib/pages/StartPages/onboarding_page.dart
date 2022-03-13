@@ -72,7 +72,7 @@ class OnboardingPage extends HookWidget {
                 AutoRouter.of(context).pop();
               },
               child: Text(
-                'Skip',
+                'Алгасах',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Utils().hexToColor(inner.btnSkipTxtColor),

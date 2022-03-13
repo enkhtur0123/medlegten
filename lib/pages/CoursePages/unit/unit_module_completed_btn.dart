@@ -32,8 +32,8 @@ class UnitModuleCompletedBtn extends HookWidget {
         fontWeight: FontWeight.normal,
         color: Colors.white);
     return GestureDetector(
-      onTap: () async {
-        await showDialog<bool>(
+      onTap: ()  {
+        showDialog<bool>(
             context: context,
             builder: (context) {
               return ConfirmDialog(

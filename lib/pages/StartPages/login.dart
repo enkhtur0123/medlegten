@@ -37,16 +37,7 @@ class LoginPage extends ConsumerWidget {
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   const Spacer(flex: 5),
-                  const MedlegtenLogoVertical(
-                    TextStyle(
-                      color: Color.fromRGBO(48, 53, 159, 1),
-                      fontFamily: 'Poppins-SemiBold',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      height: 1,
-                    ),
-                    width: 103.76,
-                  ),
+                  Image.asset("assets/logo/vertical_logo.png",height: 100,filterQuality: FilterQuality.high),
                   const Spacer(flex: 5),
                   const FacebookLogin(),
                   const SizedBox(height: 10),
@@ -64,7 +55,7 @@ class LoginPage extends ConsumerWidget {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 AutoRouter.of(context).push(
-                                    WebViewRoute(webUrl: 'https://gogo.mn'));
+                                    WebViewRoute(webUrl: 'https://www.lingos.mn/terms.html'));
                               },
                             style: TextStyle(
                                 color: ColorTable.color120_100_254,
@@ -85,7 +76,7 @@ class LoginPage extends ConsumerWidget {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 AutoRouter.of(context).push(
-                                    WebViewRoute(webUrl: 'https://news.mn'));
+                                    WebViewRoute(webUrl: 'https://www.lingos.mn/privacy.html'));
                               },
                             style: TextStyle(
                                 color: ColorTable.color120_100_254,

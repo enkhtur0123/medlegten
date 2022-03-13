@@ -79,6 +79,7 @@ flutter:
     - assets/img/Landing/unselected/
     - assets/img/payment/
     - assets/img/Course/
+    - assets/logo/
     - assets/svg/
     - assets/img/profile/
     - assets/json/
