@@ -68,11 +68,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   }
 
   void setMaxExtent() {
-    maxExtent = BaseCueHelper().getMaxHeight(
-        paragraphs,
-        !isMon.value,
-        subtitleTextStyle,
-        GlobalValues.screenWidth - 80 - (Platform.isIOS ? 50 : 0));
+    maxExtent = BaseCueHelper().getMaxHeight(paragraphs, !isMon.value,
+        subtitleTextStyle, GlobalValues.screenWidth - 50);
   }
 
   @override
@@ -341,7 +338,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
       valueKeyList[paragraph] = 0;
     }
     var widget = isMon
-        ? getTextWidget(paragraph.monText, isSelectedIndex)
+        ? getTextWidget(paragraph.monText, isSelectedIndex, true)
         : paragraph.words != null
             ? SubtitleParagraph(
                 paragraph,
@@ -351,7 +348,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                 currentWord: isSelectedIndex ? selectedWord : null,
                 alignment: Alignment.center,
               )
-            : getTextWidget(paragraph.engText, true);
+            : getTextWidget(paragraph.engText, true, false);
 
     if (widget is SubtitleParagraph) {
       cueWidgets[paragraph] = widget.wordWidgets;
@@ -359,14 +356,19 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     return widget;
   }
 
-  Widget getTextWidget(String caption, bool isSelected) {
+  Widget getTextWidget(String caption, bool isSelected, bool isMon) {
     return Center(
       child: Text(
         caption,
         style: isSelected
-            ? subtitleTextStyle
+            ? TextStyle(
+                color: colorBlack,
+                fontSize: isMon ? 16 : 18,
+                fontWeight: FontWeight.w400)
             : TextStyle(
-                color: defaultColor, fontSize: 18, fontWeight: FontWeight.w400),
+                color: defaultColor,
+                fontSize: isMon ? 16 : 18,
+                fontWeight: FontWeight.w400),
         textAlign: TextAlign.center,
       ),
     );
