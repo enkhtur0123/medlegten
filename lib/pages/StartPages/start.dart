@@ -18,7 +18,7 @@ class StartPage extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/img/backround.png'),
+              image: AssetImage('assets/logo/backround.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -40,13 +40,13 @@ class StartPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             height: 1),
-                        text: 'LEARN FOREIGN LANGUAGE',
+                        text: 'LEARN FOREIGN LANGUAGES',
                         width: 83.52),
                     const SizedBox(
                       height: 5,
                     ),
                     const Text(
-                      'in Entertaining Way',
+                      'in Entertaining Ways',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color.fromRGBO(48, 53, 159, 1),
@@ -85,7 +85,7 @@ class StartPage extends StatelessWidget {
                         flex: 1,
                       ),
                       WideButton(
-                          "Мэдлэгтэн гэж юу вэ?",
+                          "Lingos гэж юу вэ?",
                           ColorTable.color255_255_255,
                           ColorTable.color120_100_254, () async {
                         showLoading(context: context, isLoad: true);

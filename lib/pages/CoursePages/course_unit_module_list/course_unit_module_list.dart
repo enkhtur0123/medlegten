@@ -86,7 +86,6 @@ class _CourseUnitModuleListPageState extends State<CourseUnitModuleListPage> {
                       return TimeLineTileItemWidget(() {
                         setState(() {
                           switcher = !switcher;
-                          print('Hereeeeeeeeeeeeeeeeee $switcher');
                         });
                       },
                           unitInfo: widget.unitInfo,

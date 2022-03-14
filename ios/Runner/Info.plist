@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Medlegten</string>
+	<string>Lingos</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>medlegten</string>
+	<string>Lingos</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -27,19 +27,19 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb264867155362191</string>
-				<string>com.googleusercontent.apps.300736177830-ucib707qafusksls5p3s78r23gbqud2t</string>
+				<string>fb663564111522122</string>
+				<string>com.googleusercontent.apps.79251626405-n982k211gnnt6tmui809v5o54d8l1lru</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FacebookAppID</key>
-	<string>264867155362191</string>
+	<string>663564111522122</string>
 	<key>FacebookClientToken</key>
 	<string>65824f58c7549b94927c1e989c75abe0</string>
 	<key>FacebookDisplayName</key>
-	<string>Medlegten</string>
+	<string>Lingos</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/models/Starting/version.dart';
 
-final appProvider = AppProvider();
+class VersionState {
+  Version? version;
+  VersionState({this.version});
+}
 
-class AppProvider extends ChangeNotifier {
-  //final GlobalKey<NavigatorState> key;
+final appProvider = StateNotifierProvider<AppViewModel, VersionState>((ref) {
+  return AppViewModel();
+});
 
-  AppProvider()
-      : //key = GlobalKey<NavigatorState>(),
-        super();
+class AppViewModel extends StateNotifier<VersionState> {
+  AppViewModel() : super(VersionState());
+  VersionState get versionState => state;
 
-  //NavigatorState? get navi => key.currentState;
+  changeState({VersionState? value}) {
+    state = value!;
+  }
 }

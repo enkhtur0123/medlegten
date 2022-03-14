@@ -6,7 +6,6 @@ import 'package:medlegten/pages/CoursePages/courses/level_info.dart';
 import 'package:medlegten/pages/CoursePages/courses/preliminary_test.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/utils/date_time_formatter.dart';
-
 class LandingCourse extends StatefulWidget {
   const LandingCourse({Key? key}) : super(key: key);
 
@@ -34,7 +33,7 @@ class LandingCourseState extends State<LandingCourse> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   bool isExam = checkExam(data: snapshot.data);
-                  return !isExam
+                  return isExam 
                       ? const PreliminaryTest()
                       : LevelInfoWidget(
                           level: (snapshot.data as Map)["quizDetial"]

@@ -84,12 +84,13 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   _login() async {
     var user = await LoginRepository().getUserInfo();
-    appBarData = await LandingRepository().getAppbarData();
+
     // print(appBarData);
     userInfo = user;
     if (user == null) {
       changeStatus(AuthState.UnAuthorized);
     } else {
+      appBarData = await LandingRepository().getAppbarData();
       //1 bval birthday asuuna, 2 bval skipped, 0 bval nasaa oruultsan
       if (user.skipBirthDate != '0') {
         changeStatus(AuthState.AuthorizedAge);
@@ -143,6 +144,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
               FacebookAuthProvider.credential(result.accessToken!.token);
           await _auth.signInWithCredential(credential);
         } else {
+       
           dioRepository.snackBar(result.message!);
           changeStatus(AuthState.UnAuthorized);
         }
@@ -152,6 +154,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
         _login();
       }
     } catch (e) {
+         print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       changeStatus(AuthState.UnAuthorized);
     }

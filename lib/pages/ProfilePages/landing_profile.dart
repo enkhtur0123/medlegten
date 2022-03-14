@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:medlegten/common/colors.dart';
-import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
+import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
-import 'package:medlegten/widgets/TextButton.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'report_items.dart';
 
@@ -49,27 +47,32 @@ class LandingProfile extends ConsumerWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              GridView.count(
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(10),
-                childAspectRatio: 16 / 14,
-                shrinkWrap: true,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                children: items.map((e) {
-                  return getReportItemWidget(e: e);
-                }).toList(),
-              ),
+              // GridView.count(
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   crossAxisCount: 2,
+              //   padding: const EdgeInsets.all(10),
+              //   childAspectRatio: 16 / 14,
+              //   shrinkWrap: true,
+              //   mainAxisSpacing: 10,
+              //   crossAxisSpacing: 10,
+              //   children: items.map((e) {
+              //     return getReportItemWidget(e: e);
+              //   }).toList(),
+              // ),
               Container(
-                margin: const EdgeInsets.only(top: 20,left: 10,right: 10),
+                margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
                 child: CustomOutlinedButton(
-                height: 50,    
-                color: Color(0xff7864FE),
-                text:"Гарах" ,onTap: (){
-                 ref.read(authProvider.notifier).logoff();
-              },))
-            
+                  height: 50,
+                  color: const Color(0xff7864FE),
+                  text: "Гарах",
+                  onTap: () {
+                    ref.read(authProvider.notifier).logoff();
+                  },
+                ),
+              ),
+              const SizedBox(height: 15,),
+              // ignore: invalid_use_of_protected_member
+              Text("Апп хувилбар  "+ref.read(appProvider.notifier).state.version!.appVersion.toString(),textAlign: TextAlign.center,)
             ],
           ),
         ),
