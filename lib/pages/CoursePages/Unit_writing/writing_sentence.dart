@@ -82,12 +82,13 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
       itemCount: widget.unitWritingVideo.cue.length,
       itemBuilder: (context, index) {
         var currentCue = widget.unitWritingVideo.cue[index];
-        if (currentCue.missWordRequired == "0") {
+        if (currentCue.missWordRequired == "0" ||
+            currentCue.missWords.isEmpty) {
           return sentence(
               index,
               widget.unitWritingVideo.cue.length,
               index == currentIndex,
-              buildText(currentCue.fromLangTranslation, index == currentIndex));
+              buildText(currentCue.toLangTranslation, index == currentIndex));
         } else {
           for (var e in currentCue.missWords
               .where((element) => element.isVisible == '1')) {

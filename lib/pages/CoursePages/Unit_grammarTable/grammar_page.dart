@@ -263,9 +263,11 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                 var id = helper.grammarIndex(
                         widget.unitGrammar.grammar[selectedIndex[0]]) +
                     level;
+
                 if (level == 1 &&
-                    helper.selectedGrammar ==
-                        widget.unitGrammar.grammar[selectedIndex[0]]) {
+                    helper.selectedGrammar!.grammarNameEng ==
+                        widget.unitGrammar.grammar[selectedIndex[0]]
+                            .grammarNameEng) {
                   helper.selectedAnswers = {};
                   helper.selectedChips = {};
                 }

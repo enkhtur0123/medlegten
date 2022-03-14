@@ -128,7 +128,7 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
     List<Widget> list = [];
 
     list.add(const Text(
-      'Grammar',
+      'Дүрмийн тайлбар',
       style: TextStyle(
           fontFamily: 'Roboto',
           color: Color.fromRGBO(48, 53, 159, 1),
@@ -149,10 +149,10 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
         ),
       ),
     );
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
       child: ListView.builder(
+        padding: const EdgeInsets.all(0),
         itemCount: list.length,
         itemBuilder: (context, index) => list[index],
       ),

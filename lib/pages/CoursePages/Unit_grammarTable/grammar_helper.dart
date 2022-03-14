@@ -58,6 +58,7 @@ class Grammarhelper {
           //  }
         }
       });
+
     Sentence? firstSentence;
     if (isType1) {
       for (var sentence in unitGrammar.sentences) {
@@ -86,6 +87,7 @@ class Grammarhelper {
         } else {
           if (_partNames.isNotEmpty) {
             bool add = true;
+            //print('DDDDDDDDDDDDDDDDDDDDDDDDDDD ${sentence} ${_partNames}');
             for (int i = 1; i < 7; i++) {
               if (_partNames.length > i - 1 &&
                   sentence.getPart(i) != null &&

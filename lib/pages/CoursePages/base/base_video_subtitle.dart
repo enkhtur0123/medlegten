@@ -1,4 +1,6 @@
 // ignore_for_file: implementation_imports
+import 'dart:io';
+
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,12 +49,11 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   late FixedExtentScrollController _fixedExtentScrollController;
   var valueKeyList = <CParagraph, int>{};
-
   late final isMon = ValueNotifier<bool>(true)..addListener(_listener);
-  int prevCueId = -1;
+  int prevCueId = -2;
   late final refreshCue = ValueNotifier<bool>(false)..addListener(_listener2);
   double maxExtent = 60;
-
+  List<CParagraph> paragraphs = [];
   Rect? selectedRect;
   CWord? selectedWord;
   int selectedWordParagraphIndex = -1;
@@ -67,12 +68,25 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   }
 
   void setMaxExtent() {
-    maxExtent = BaseCueHelper().getMaxHeight(widget.paragraphs, !isMon.value,
-        subtitleTextStyle, GlobalValues.screenWidth - 50);
+    maxExtent = BaseCueHelper().getMaxHeight(
+        paragraphs,
+        !isMon.value,
+        subtitleTextStyle,
+        GlobalValues.screenWidth - 80 - (Platform.isIOS ? 50 : 0));
   }
 
   @override
   void initState() {
+    paragraphs.add(CParagraph("-1", -1, "", "",
+        startTime: "0:0:0.0",
+        endTime: widget.paragraphs.first.startTime,
+        words: [CWord('-1', '', '', false)]));
+
+    paragraphs.addAll(widget.paragraphs);
+    for (var element in paragraphs) {
+      element.ordering = element.ordering + 1;
+    }
+
     defaultColor = widget.defaultColor ?? Colors.grey.shade400;
     _fixedExtentScrollController = FixedExtentScrollController();
 
@@ -95,7 +109,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     if (widget.videoPlayerController.value.isPlaying) {
       if (isUser == -1) {
         var _duration = widget.videoPlayerController.value.position;
-        var idx = widget.paragraphs.firstWhereOrNull((element) =>
+        var idx = paragraphs.firstWhereOrNull((element) =>
             getDuration(element.startTime!) <= _duration &&
             getDuration(element.endTime!) > _duration);
         if (idx != null && prevCueId != idx.ordering) {
@@ -206,9 +220,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                 selectedWordParagraphIndex = -1;
                 if (widget.wordCallback != null && isMon.value == false) {
                   var position = details.globalPosition;
-                  if (currentIndex > -1 &&
-                      currentIndex < widget.paragraphs.length) {
-                    var cue = widget.paragraphs[currentIndex];
+                  if (currentIndex > -1 && currentIndex < paragraphs.length) {
+                    var cue = paragraphs[currentIndex];
                     for (var entry in cueWidgets[cue]!.entries) {
                       var rect = entry.value.item1.globalPaintBounds!;
                       if (rect.contains(position) &&
@@ -251,8 +264,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       //print('Here ScrollEndNotification $currentIndex');
                       isUser = 0;
                       //widget.videoPlayerController.removeListener(listener);
-                      widget.videoPlayerController.seekTo(getDuration(
-                          widget.paragraphs[currentIndex].startTime!));
+                      widget.videoPlayerController.seekTo(
+                          getDuration(paragraphs[currentIndex].startTime!));
                       //widget.videoPlayerController.addListener(listener);
                       if (!widget.videoPlayerController.value.isPlaying) {
                         widget.videoPlayerController.play();
@@ -263,7 +276,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                   child: ClickableListWheelScrollView(
                     scrollController: _fixedExtentScrollController,
                     itemHeight: maxExtent,
-                    itemCount: widget.paragraphs.length,
+                    itemCount: paragraphs.length,
                     onItemTapCallback: (index) {
                       currentIndex = index;
                     },
@@ -285,16 +298,14 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                         //    'currentIndex: ${widget.paragraphs[index].engText}');
                         if (!widget.videoPlayerController.value.isPlaying &&
                             widget.paragraphCallback != null) {
-                          widget.paragraphCallback!(widget.paragraphs[index]);
+                          widget.paragraphCallback!(paragraphs[index]);
                         }
 
-                        if (widget.paragraphs[index].grammarIsHighLighted !=
-                                null &&
+                        if (paragraphs[index].grammarIsHighLighted != null &&
                             widget.paragraphCallback != null) {
                           widget.paragraphCallback!(
-                              widget.paragraphs[index].grammarIsHighLighted ==
-                                      "1"
-                                  ? widget.paragraphs[index]
+                              paragraphs[index].grammarIsHighLighted == "1"
+                                  ? paragraphs[index]
                                   : null);
                         }
 
@@ -303,11 +314,11 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       childDelegate: ListWheelChildBuilderDelegate(
                         builder: (context, index) => buildParagraph(
                             isMon.value,
-                            widget.paragraphs[index],
+                            paragraphs[index],
                             valueKeyList,
                             selectedWord,
                             index == currentIndex), //selectedIndex == index
-                        childCount: widget.paragraphs.length,
+                        childCount: paragraphs.length,
                       ),
                     ),
                   ),
@@ -330,7 +341,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
       valueKeyList[paragraph] = 0;
     }
     var widget = isMon
-        ? getTextWidget(paragraph.monText, paragraph, isSelectedIndex)
+        ? getTextWidget(paragraph.monText, isSelectedIndex)
         : paragraph.words != null
             ? SubtitleParagraph(
                 paragraph,
@@ -340,7 +351,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                 currentWord: isSelectedIndex ? selectedWord : null,
                 alignment: Alignment.center,
               )
-            : getTextWidget(paragraph.engText, paragraph, true);
+            : getTextWidget(paragraph.engText, true);
 
     if (widget is SubtitleParagraph) {
       cueWidgets[paragraph] = widget.wordWidgets;
@@ -348,7 +359,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     return widget;
   }
 
-  Widget getTextWidget(String caption, CParagraph paragraph, bool isSelected) {
+  Widget getTextWidget(String caption, bool isSelected) {
     return Center(
       child: Text(
         caption,
