@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>300736177830-ucib707qafusksls5p3s78r23gbqud2t.apps.googleusercontent.com</string>
+	<string>79251626405-n982k211gnnt6tmui809v5o54d8l1lru.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.300736177830-ucib707qafusksls5p3s78r23gbqud2t</string>
+	<string>com.googleusercontent.apps.79251626405-n982k211gnnt6tmui809v5o54d8l1lru</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>300736177830-3goaqqiaaeoodn8q6fdqb8hess7t1b7t.apps.googleusercontent.com</string>
+	<string>79251626405-8j310dna7jeg5etfhol5fn0b73tkt3nq.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAzaN0i_xCt5PvgZGx8pVoZWwEMBxcIoCo</string>
+	<string>AIzaSyDhW-_NycQFQwSzuI_u4i9T3EsN_4xuB3o</string>
 	<key>GCM_SENDER_ID</key>
-	<string>300736177830</string>
+	<string>79251626405</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.medlegten.mapp</string>
+	<string>mn.svp.lingos</string>
 	<key>PROJECT_ID</key>
-	<string>medlegten-60f35</string>
+	<string>lingos-3e3b4</string>
 	<key>STORAGE_BUCKET</key>
-	<string>medlegten-60f35.appspot.com</string>
+	<string>lingos-3e3b4.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:300736177830:ios:4290c6de82c7cfac20f667</string>
+	<string>1:79251626405:ios:ce160f60492f4a6611f04c</string>
 </dict>
 </plist>
