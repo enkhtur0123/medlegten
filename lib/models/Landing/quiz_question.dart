@@ -7,7 +7,7 @@ part 'quiz_question.g.dart';
 @freezed
 class QuizQuestion with _$QuizQuestion {
   factory QuizQuestion(String questionId, String question, String ordering,
-      List<QuizAnswer> answers) = _QuizQuestion;
+      String? type, String? typeText, List<QuizAnswer> answers) = _QuizQuestion;
 
   factory QuizQuestion.fromJson(Map<String, dynamic> json) =>
       _$QuizQuestionFromJson(json);

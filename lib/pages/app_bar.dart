@@ -4,6 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
+
+import '../widgets/dialog/custom_popup.dart';
+
 // ignore: must_be_immutable
 class CustomAppBar extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
@@ -19,6 +22,7 @@ class CustomAppBar extends ConsumerStatefulWidget
   Size get preferredSize =>
       Size.fromHeight(ref!.read(appbarProvider.notifier).appBarState.height!);
 }
+
 class CustomAppBarState extends ConsumerState<CustomAppBar> {
   bool? isRichText;
   double? height;
@@ -63,7 +67,21 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                     ),
                     Stack(
                       children: [
-                        const Icon(Icons.notifications),
+                        IconButton(
+                            onPressed: () async {
+                              await showDialog(
+                                  barrierDismissible: true,
+                                  barrierColor: Colors.transparent,
+                                  context: context,
+                                  builder: (context) {
+                                    return const CustomPopUpDialog(
+                                      isNotification: true,
+                                      title: "Мэдэгдэл",
+                                      body: 'Хоосон байна',
+                                    );
+                                  });
+                            },
+                            icon: const Icon(Icons.notifications)),
                         Positioned.fill(
                           child: Align(
                             alignment: Alignment.topRight,

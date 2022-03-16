@@ -46,7 +46,7 @@ class CourseIntroWidget extends StatelessWidget {
     return Row(
       children: [
         IconWithTextWidget(
-            iconData: Icons.remove_red_eye_outlined, text: '1233 views'),
+            iconData: Icons.shopping_cart, text: courseInfo!.purchaseCount),
         addHorizontalSpace(20),
         IconWithTextWidget(
             iconData: Icons.timer, text: courseInfo!.hours + " цаг"),

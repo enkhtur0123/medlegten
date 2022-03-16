@@ -33,10 +33,11 @@ class HomePage extends ConsumerWidget {
         break;
       case AuthState.Authorizing:
       case AuthState.UnAuthorized:
-        GetStorage().write('token',
-            'gbwtXkaooXkjByptFaPyBUFcOtfTcXOebTPpISCytwEZMkmXKlyLjAguUcNzHpTQqAYJRrrzXUXNEszZedfMXvZwvcoPIVPkwdidceWiFWZosfUzFsLflsMmcNZZNGkUxGrhWWHjAFAQatvBVAutOc');
-        home = const LandingPage();
-        //home = const StartPage();
+        //GetStorage().write('token',
+        //    'MRIhZxgkrNGKdtbFlErUTPLtdGHzKGcnphpbMDqqpXdQUIBzlcvaAXIpXQhjEIXhuvlqxRvabVkoYNtOiDZKdldMxWLQMOXjSOHRZxaMygOYkBEGTHuhuBusSwHKfTKukrFyKTahjnjNnhTReFyHPS');
+        //'gbwtXkaooXkjByptFaPyBUFcOtfTcXOebTPpISCytwEZMkmXKlyLjAguUcNzHpTQqAYJRrrzXUXNEszZedfMXvZwvcoPIVPkwdidceWiFWZosfUzFsLflsMmcNZZNGkUxGrhWWHjAFAQatvBVAutOc');
+        //home = const LandingPage();
+        home = const StartPage();
         break;
       case AuthState.Initial:
         home = const InitializationPage();

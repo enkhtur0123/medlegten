@@ -69,7 +69,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   void setMaxExtent() {
     maxExtent = BaseCueHelper().getMaxHeight(paragraphs, !isMon.value,
-        subtitleTextStyle, GlobalValues.screenWidth - 50);
+            subtitleTextStyle, GlobalValues.screenWidth - 80) +
+        10;
   }
 
   @override
