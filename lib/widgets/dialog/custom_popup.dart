@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 class CustomPopUpDialog extends StatelessWidget {
   const CustomPopUpDialog(
       {Key? key,
-      this.title = "",
+      this.title,
       this.body,
       this.isBlur = true,
       this.isAlert = false,
@@ -11,7 +13,10 @@ class CustomPopUpDialog extends StatelessWidget {
       this.isError = false,
       this.isInfo = false,
       this.isNotification = false,
-      this.isBtn = false})
+      this.isBtn = false,
+      this.btnText = "",
+      this.iconData,
+      this.onTap})
       : super(key: key);
 
   final String? title;
@@ -23,6 +28,9 @@ class CustomPopUpDialog extends StatelessWidget {
   final bool? isInfo;
   final bool? isNotification;
   final bool isBtn;
+  final String? btnText;
+  final IconData? iconData;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,6 @@ class CustomPopUpDialog extends StatelessWidget {
         size: 30,
         color: Colors.white,
       );
-
       titleInner = "Амжилттай";
       color = const Color(0xff70C217);
     } else if (isAlert!) {
@@ -71,14 +78,10 @@ class CustomPopUpDialog extends StatelessWidget {
       titleInner = "Амжилтгүй";
       color = Colors.red;
     }
-    if (title != null) {
-      titleInner = title;
-    }
-    return
-        // BackdropFilter(
-        //   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        // blendMode: BlendMode.lighten,
-        AlertDialog(
+    // if (title != null) {
+    //   titleInner = title;
+    // }
+    return AlertDialog(
       title: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +93,7 @@ class CustomPopUpDialog extends StatelessWidget {
                 color: color,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: icon),
+              child: iconData != null ? Icon(iconData) : icon),
         ],
       ),
       elevation: 5,
@@ -108,7 +111,7 @@ class CustomPopUpDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              titleInner!.toUpperCase(),
+             title?? titleInner.toUpperCase(),
               maxLines: 1,
               style: const TextStyle(
                   color: Color(0xff30359F),
@@ -126,11 +129,20 @@ class CustomPopUpDialog extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.normal),
               textAlign: TextAlign.center,
-            )
+            ),
+            isBtn
+                ? CustomOutlinedButton(
+                    color: colorPrimary,
+                    text: "тэгье",
+                    onTap: () {
+                      onTap!();
+                      // Navigator.pop(context, true);
+                    },
+                  )
+                : Container()
           ],
         ),
       ),
     );
-    // );
   }
 }

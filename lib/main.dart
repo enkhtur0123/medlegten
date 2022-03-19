@@ -66,7 +66,6 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
               debugShowCheckedModeBanner: false, home: InitializationPage());
         } else {
           var app = MaterialApp.router(
-           
             color: Colors.white,
             key: GlobalKeys.navigatorKey,
             routerDelegate: _appRouter.delegate(

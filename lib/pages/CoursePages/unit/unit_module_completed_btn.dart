@@ -16,7 +16,8 @@ class UnitModuleCompletedBtn extends HookWidget {
       this.success,
       this.failure,
       required this.isCompleted,
-      this.edgeInsets,this.margin})
+      this.edgeInsets,
+      this.margin})
       : super(key: key);
   String? moduleId;
   VoidCallback? completeBtn;
@@ -52,7 +53,7 @@ class UnitModuleCompletedBtn extends HookWidget {
         });
       },
       child: Container(
-        margin: margin??const EdgeInsets.all(15),
+        margin: margin ?? const EdgeInsets.all(15),
         padding: edgeInsets ??
             const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
         decoration: const BoxDecoration(

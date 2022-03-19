@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/pages/BlogPage/index.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
@@ -10,6 +14,9 @@ import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/login_repository.dart';
+import 'package:medlegten/utils/global.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../widgets/dialog/custom_popup.dart';
 import 'landing_home.dart';
 
 class LandingPage extends ConsumerStatefulWidget {
@@ -38,8 +45,12 @@ class LandingPageState extends ConsumerState<LandingPage>
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
     LoginRepository().getAppVersion().then((value) {
-      ref.read(appProvider.notifier).changeState(value: VersionState(version: value));
+      ref
+          .read(appProvider.notifier)
+          .changeState(value: VersionState(version: value));
+      checkVersion(version: value);
     });
     changeAppBarData(
         ref: ref,
@@ -104,6 +115,33 @@ class LandingPageState extends ConsumerState<LandingPage>
         }
       }
     });
+    // });
+  }
+
+  Future checkVersion({Version? version}) async {
+    if (int.parse(AppProperties.version.replaceAll(".", "")) <
+        int.parse(version!.appVersion.toString().replaceAll(".", ""))) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return CustomPopUpDialog(
+              iconData: Icons.new_releases_outlined,
+              isAlert: true,
+              isBtn: true,
+              body: "Та аппликейшнаа шинэчилнэ үү",
+              onTap: () async {
+                if (await canLaunch(Platform.isIOS
+                    ? version.iosUrl ?? ""
+                    : version.androidUrl ?? "")) {
+                  launch(Platform.isIOS
+                      ? version.iosUrl ?? ""
+                      : version.androidUrl ?? "");
+                }
+              },
+            );
+          });
+    }
   }
 
   @override
