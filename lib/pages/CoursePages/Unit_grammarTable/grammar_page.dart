@@ -7,6 +7,7 @@ import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_structure.dart';
+import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_video.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
@@ -37,27 +38,28 @@ class _GrammarTablePageState extends State<GrammarTablePage>
     });
   final selectedIndex = [0, 1, 0];
   late TabController _controller;
-  late VideoPlayerController _videoPlayerController;
+  //late VideoPlayerController _videoPlayerController;
   bool isType1 = false;
+  final ValueNotifier<int> _counter = ValueNotifier<int>(0);
+
   @override
   void initState() {
     isType1 = widget.unitGrammar.grammar[0].label == 'Types';
 
     _controller =
         TabController(length: widget.unitGrammar.grammar.length, vsync: this);
-    _videoPlayerController = VideoPlayerController.network(helper.avatarUrl);
-    //qVideoPlayerController.asset('assets/A1-U1-INTRO.mp4');
-    _videoPlayerController
-      ..setLooping(false)
-      ..initialize().then((value) {
-        //WidgetsBinding.instance?.addPostFrameCallback((_) {
-        setState(() {
-          _videoPlayerController.play();
-        });
-        //});
-      });
+    //_videoPlayerController = VideoPlayerController.network(helper.avatarUrl);
+    // _videoPlayerController
+    //   ..setLooping(false)
+    //   ..initialize().then((value) {
+    //     //WidgetsBinding.instance?.addPostFrameCallback((_) {
+    //     setState(() {
+    //       _videoPlayerController.play();
+    //     });
+    //     //});
+    //   });
 
-    _videoPlayerController.addListener(_listener);
+    // _videoPlayerController.addListener(_listener);
 
     helper.selectedGrammar = widget.unitGrammar.grammar[0];
 
@@ -66,35 +68,36 @@ class _GrammarTablePageState extends State<GrammarTablePage>
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    //_videoPlayerController.dispose();
     _controller.dispose();
     super.dispose();
   }
 
-  void _listener() {
-    if (_videoPlayerController.value.isPlaying) {
-      var _duration =
-          _videoPlayerController.value.position.inSeconds - selectedIndex[2];
-      if (_duration < 0) {
-        _duration = _videoPlayerController.value.position.inSeconds;
-        selectedIndex[2] = 0;
-      }
-      var blink = helper.getNextAvatarPart(selectedIndex[1]);
-      if (blink <= _duration) {
-        helper.selectedLabelId = selectedIndex[1];
-        selectedIndex[1] = selectedIndex[1] + 1;
-        //dioRepository.snackBar('At seconds: $blink');
-        refreshView.value = !refreshView.value;
-        //} else if (blink <= _duration + 2) {
-      } else if (helper.selectedLabelId > 0) {
-        helper.selectedLabelId = -1;
-        refreshView.value = !refreshView.value;
-      }
-    }
-  }
+  // void _listener() {
+  //   if (_videoPlayerController.value.isPlaying) {
+  //     var _duration =
+  //         _videoPlayerController.value.position.inSeconds - selectedIndex[2];
+  //     if (_duration < 0) {
+  //       _duration = _videoPlayerController.value.position.inSeconds;
+  //       selectedIndex[2] = 0;
+  //     }
+  //     var blink = helper.getNextAvatarPart(selectedIndex[1]);
+  //     if (blink <= _duration) {
+  //       helper.selectedLabelId = selectedIndex[1];
+  //       selectedIndex[1] = selectedIndex[1] + 1;
+  //       //dioRepository.snackBar('At seconds: $blink');
+  //       refreshView.value = !refreshView.value;
+  //       //} else if (blink <= _duration + 2) {
+  //     } else if (helper.selectedLabelId > 0) {
+  //       helper.selectedLabelId = -1;
+  //       refreshView.value = !refreshView.value;
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _counter.value++);
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Stack(children: [
@@ -126,42 +129,44 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       ));
     }
 
-    Widget videoWidget = const SizedBox(
-      height: 110,
-      width: 1,
-    );
-    if (_videoPlayerController.value.isInitialized) {
-      videoWidget = SizedBox(
-          height: 110,
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () async {
-              if (_videoPlayerController.value.isPlaying) {
-                _videoPlayerController.pause();
-                selectedIndex[2] =
-                    _videoPlayerController.value.position.inSeconds;
-              } else {
-                _videoPlayerController.seekTo(Duration.zero);
-                _videoPlayerController.removeListener(_listener);
-                _videoPlayerController.addListener(_listener);
-                selectedIndex[1] = 1;
-                _videoPlayerController.play();
-                refreshView.value = !refreshView.value;
-              }
-            },
-            child: VideoPlayerWidget(
-              controller: _videoPlayerController,
-              height: 110,
-            ),
-          ));
-    }
+    // Widget videoWidget = const SizedBox(
+    //   height: 110,
+    //   width: 1,
+    // );
+    // if (_videoPlayerController.value.isInitialized) {
+    //   videoWidget = SizedBox(
+    //       height: 110,
+    //       child: GestureDetector(
+    //         behavior: HitTestBehavior.opaque,
+    //         onTap: () async {
+    //           if (_videoPlayerController.value.isPlaying) {
+    //             _videoPlayerController.pause();
+    //             selectedIndex[2] =
+    //                 _videoPlayerController.value.position.inSeconds;
+    //           } else {
+    //             _videoPlayerController.seekTo(Duration.zero);
+    //             _videoPlayerController.removeListener(_listener);
+    //             _videoPlayerController.addListener(_listener);
+    //             selectedIndex[1] = 1;
+    //             _videoPlayerController.play();
+    //             refreshView.value = !refreshView.value;
+    //           }
+    //         },
+    //         child: VideoPlayerWidget(
+    //           controller: _videoPlayerController,
+    //           height: 110,
+    //         ),
+    //       ));
+    // }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: List.unmodifiable(() sync* {
           yield addVerticalSpace(20);
-          yield videoWidget;
+          yield GrammarVideo(helper, () {
+            refreshView.value = !refreshView.value;
+          });
           yield addVerticalSpace(20);
           yield const Align(
             alignment: Alignment.centerLeft,
@@ -173,26 +178,38 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                   fontSize: 16),
             ),
           );
-          yield Text(
-            helper
-                .getSentence(widget.unitGrammar.grammar[_controller.index])
-                .textEng,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: colorBlack, fontWeight: FontWeight.w400, fontSize: 17),
-          );
+          yield ValueListenableBuilder(
+              builder: (BuildContext context, int value, Widget? child) {
+                return Text(
+                  helper
+                      .getSentence(
+                          widget.unitGrammar.grammar[_controller.index])
+                      .textEng,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: colorBlack,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 17),
+                );
+              },
+              valueListenable: _counter);
           yield addVerticalSpace(20);
-          yield Text(
-            helper
-                .getSentence(widget.unitGrammar.grammar[_controller.index])
-                .textMon,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: Color.fromRGBO(168, 175, 229, 1),
-                fontWeight: FontWeight.w400,
-                fontSize: 15,
-                fontStyle: FontStyle.italic),
-          );
+          yield ValueListenableBuilder(
+              builder: (BuildContext context, int value, Widget? child) {
+                return Text(
+                  helper
+                      .getSentence(
+                          widget.unitGrammar.grammar[_controller.index])
+                      .textMon,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: Color.fromRGBO(168, 175, 229, 1),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                      fontStyle: FontStyle.italic),
+                );
+              },
+              valueListenable: _counter);
           yield addVerticalSpace(20);
           yield const Divider(
             color: Color.fromRGBO(199, 201, 217, 0.2),
@@ -252,8 +269,9 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                   helper.selectedChips = {};
                 }
 
-                if (helper.selectedAnswers[id] != answer.answer) {
-                  helper.selectedAnswers[id] = answer.answer;
+                if (replaceRN(helper.selectedAnswers[id]) !=
+                    replaceRN(answer.answer)) {
+                  helper.selectedAnswers[id] = replaceRN(answer.answer);
                   helper.selectedChips[id] = answer.answerId;
                   helper.selectedGrammar =
                       widget.unitGrammar.grammar[selectedIndex[0]];
@@ -265,20 +283,19 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                     level;
 
                 if (level == 1 &&
-                    helper.selectedGrammar!.grammarNameEng ==
-                        widget.unitGrammar.grammar[selectedIndex[0]]
-                            .grammarNameEng) {
+                    helper.selectedGrammar! ==
+                        widget.unitGrammar.grammar[selectedIndex[0]]) {
                   helper.selectedAnswers = {};
                   helper.selectedChips = {};
                 }
-
-                if (helper.selectedAnswers[id] != answer.answer) {
-                  helper.selectedAnswers[id] = answer.answer;
-                  helper.selectedChips[id] = answer.answerId;
-                  helper.selectedGrammar =
-                      widget.unitGrammar.grammar[selectedIndex[0]];
-                  refreshView.value = !refreshView.value;
-                }
+                //if (replaceRN(helper.selectedAnswers[id]) !=
+                //    replaceRN(answer.answer)) {
+                helper.selectedAnswers[id] = replaceRN(answer.answer);
+                helper.selectedChips[id] = answer.answerId;
+                helper.selectedGrammar =
+                    widget.unitGrammar.grammar[selectedIndex[0]];
+                refreshView.value = !refreshView.value;
+                // }
               }
             }, isType1),
           );
@@ -291,7 +308,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
       UnitGrammarCallback callBack, bool isType1) {
     List<Widget> list = [];
 
-    for (int i = 1; i < 7; i++) {
+    for (int i = 1; i < 20; i++) {
       if (grammar.getPart(i) != null) {
         list.addAll(buildStructure(
             grammar, helper, grammar.getPart(i)!, i, callBack, isType1));

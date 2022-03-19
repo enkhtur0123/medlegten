@@ -78,7 +78,7 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
     return ListView.builder(
       controller: _scrollController,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      //physics: const NeverScrollableScrollPhysics(),
       itemCount: widget.unitWritingVideo.cue.length,
       itemBuilder: (context, index) {
         var currentCue = widget.unitWritingVideo.cue[index];
@@ -96,6 +96,11 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
               widget.answers[e] = null;
             }
           }
+          Widget? child2;
+          if (widget.showCorrectAnswer) {
+            child2 =
+                buildText(currentCue.toLangTranslation, index == currentIndex);
+          }
           return sentence(
               index,
               widget.unitWritingVideo.cue.length,
@@ -106,13 +111,15 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
                   currentIndex = index;
                   setState(() {});
                 }
-              }, widget.showCorrectAnswer));
+              }, widget.showCorrectAnswer),
+              child2: child2);
         }
       },
     );
   }
 
-  Widget sentence(int index, int length, bool isSelected, Widget child) {
+  Widget sentence(int index, int length, bool isSelected, Widget child,
+      {Widget? child2}) {
     List<Widget> list = [];
     list.add(Align(
       alignment: Alignment.topLeft,
@@ -127,6 +134,10 @@ class _WritingSentencePageState extends State<WritingSentencePage> {
     ));
     list.add(addVerticalSpace(20));
     list.add(Align(alignment: Alignment.topCenter, child: child));
+    if (child2 != null) {
+      list.add(addVerticalSpace(20));
+      list.add(Align(alignment: Alignment.topCenter, child: child2));
+    }
     if (index + 1 != length) {
       list.add(addVerticalSpace(20));
       list.add(const Divider(color: Color.fromRGBO(199, 201, 217, 0.2)));

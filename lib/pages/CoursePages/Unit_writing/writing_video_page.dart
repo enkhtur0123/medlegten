@@ -3,6 +3,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
+import 'package:medlegten/pages/CoursePages/Unit_writing/writing_helper.dart';
 import 'package:medlegten/pages/CoursePages/Unit_writing/writing_video_play.dart';
 import 'package:video_player/video_player.dart';
 import '../unit/unit_module_completed_btn.dart';
@@ -95,6 +96,7 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
     videoPlayerController!.pause();
     videoPlayerController!.dispose();
     videoPlayerController = null;
+    WritingHelper().clear();
     super.dispose();
   }
 

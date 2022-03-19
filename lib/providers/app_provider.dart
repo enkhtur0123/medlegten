@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/models/Starting/version.dart';
+import 'package:medlegten/repositories/unit_repository.dart';
 
 class VersionState {
   Version? version;
@@ -19,3 +19,8 @@ class AppViewModel extends StateNotifier<VersionState> {
     state = value!;
   }
 }
+
+final wordCountProvider = FutureProvider<int>((ref) async {
+  final result = await UnitRepository().getWordCount(0);
+  return result;
+});

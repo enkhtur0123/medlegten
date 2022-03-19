@@ -33,9 +33,10 @@ class HomePage extends ConsumerWidget {
         break;
       case AuthState.Authorizing:
       case AuthState.UnAuthorized:
-        //GetStorage().write('token',
+        //GetStorage().write(
+        //    'token',
         //    'MRIhZxgkrNGKdtbFlErUTPLtdGHzKGcnphpbMDqqpXdQUIBzlcvaAXIpXQhjEIXhuvlqxRvabVkoYNtOiDZKdldMxWLQMOXjSOHRZxaMygOYkBEGTHuhuBusSwHKfTKukrFyKTahjnjNnhTReFyHPS');
-        //'gbwtXkaooXkjByptFaPyBUFcOtfTcXOebTPpISCytwEZMkmXKlyLjAguUcNzHpTQqAYJRrrzXUXNEszZedfMXvZwvcoPIVPkwdidceWiFWZosfUzFsLflsMmcNZZNGkUxGrhWWHjAFAQatvBVAutOc');
+        //    'gbwtXkaooXkjByptFaPyBUFcOtfTcXOebTPpISCytwEZMkmXKlyLjAguUcNzHpTQqAYJRrrzXUXNEszZedfMXvZwvcoPIVPkwdidceWiFWZosfUzFsLflsMmcNZZNGkUxGrhWWHjAFAQatvBVAutOc');
         //home = const LandingPage();
         home = const StartPage();
         break;

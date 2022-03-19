@@ -11,6 +11,8 @@ class ReportItem {
   double? bodyFontSize;
   FontWeight? bodyFontWeight;
   String? imgUrl;
+  ReportType? reportType;
+  Widget? iconWidget;
   ReportItem(
       {this.iconData,
       this.title,
@@ -21,5 +23,9 @@ class ReportItem {
       this.bodyFontSize,
       this.bodyFontWeight,
       this.imgUrl,
-      this.titleColor});
+      this.titleColor,
+      this.reportType,
+      this.iconWidget});
 }
+
+enum ReportType { common, vocabulary }

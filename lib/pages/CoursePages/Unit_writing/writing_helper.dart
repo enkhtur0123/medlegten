@@ -7,4 +7,9 @@ class WritingHelper {
   WritingHelper._internal();
 
   factory WritingHelper() => _instance;
+
+  clear() {
+    showCorrectAnswer = {};
+    counter = {};
+  }
 }

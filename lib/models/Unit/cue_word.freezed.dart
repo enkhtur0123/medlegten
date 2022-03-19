@@ -28,6 +28,7 @@ class _$CueWordTearOff {
       String resultMessage,
       String wordId,
       String word,
+      String pronunciationUrl,
       bool bookMarked,
       bool isKnow,
       RootWordInfo rootWordInfo,
@@ -39,6 +40,7 @@ class _$CueWordTearOff {
       resultMessage,
       wordId,
       word,
+      pronunciationUrl,
       bookMarked,
       isKnow,
       rootWordInfo,
@@ -62,6 +64,7 @@ mixin _$CueWord {
   String get resultMessage => throw _privateConstructorUsedError;
   String get wordId => throw _privateConstructorUsedError;
   String get word => throw _privateConstructorUsedError;
+  String get pronunciationUrl => throw _privateConstructorUsedError;
   bool get bookMarked => throw _privateConstructorUsedError;
   bool get isKnow => throw _privateConstructorUsedError;
   RootWordInfo get rootWordInfo => throw _privateConstructorUsedError;
@@ -83,6 +86,7 @@ abstract class $CueWordCopyWith<$Res> {
       String resultMessage,
       String wordId,
       String word,
+      String pronunciationUrl,
       bool bookMarked,
       bool isKnow,
       RootWordInfo rootWordInfo,
@@ -108,6 +112,7 @@ class _$CueWordCopyWithImpl<$Res> implements $CueWordCopyWith<$Res> {
     Object? resultMessage = freezed,
     Object? wordId = freezed,
     Object? word = freezed,
+    Object? pronunciationUrl = freezed,
     Object? bookMarked = freezed,
     Object? isKnow = freezed,
     Object? rootWordInfo = freezed,
@@ -134,6 +139,10 @@ class _$CueWordCopyWithImpl<$Res> implements $CueWordCopyWith<$Res> {
       word: word == freezed
           ? _value.word
           : word // ignore: cast_nullable_to_non_nullable
+              as String,
+      pronunciationUrl: pronunciationUrl == freezed
+          ? _value.pronunciationUrl
+          : pronunciationUrl // ignore: cast_nullable_to_non_nullable
               as String,
       bookMarked: bookMarked == freezed
           ? _value.bookMarked
@@ -184,6 +193,7 @@ abstract class _$CueWordCopyWith<$Res> implements $CueWordCopyWith<$Res> {
       String resultMessage,
       String wordId,
       String word,
+      String pronunciationUrl,
       bool bookMarked,
       bool isKnow,
       RootWordInfo rootWordInfo,
@@ -212,6 +222,7 @@ class __$CueWordCopyWithImpl<$Res> extends _$CueWordCopyWithImpl<$Res>
     Object? resultMessage = freezed,
     Object? wordId = freezed,
     Object? word = freezed,
+    Object? pronunciationUrl = freezed,
     Object? bookMarked = freezed,
     Object? isKnow = freezed,
     Object? rootWordInfo = freezed,
@@ -238,6 +249,10 @@ class __$CueWordCopyWithImpl<$Res> extends _$CueWordCopyWithImpl<$Res>
       word == freezed
           ? _value.word
           : word // ignore: cast_nullable_to_non_nullable
+              as String,
+      pronunciationUrl == freezed
+          ? _value.pronunciationUrl
+          : pronunciationUrl // ignore: cast_nullable_to_non_nullable
               as String,
       bookMarked == freezed
           ? _value.bookMarked
@@ -272,6 +287,7 @@ class _$_CueWord implements _CueWord {
       this.resultMessage,
       this.wordId,
       this.word,
+      this.pronunciationUrl,
       this.bookMarked,
       this.isKnow,
       this.rootWordInfo,
@@ -292,6 +308,8 @@ class _$_CueWord implements _CueWord {
   @override
   final String word;
   @override
+  final String pronunciationUrl;
+  @override
   final bool bookMarked;
   @override
   final bool isKnow;
@@ -304,7 +322,7 @@ class _$_CueWord implements _CueWord {
 
   @override
   String toString() {
-    return 'CueWord(isSuccess: $isSuccess, errorCode: $errorCode, resultMessage: $resultMessage, wordId: $wordId, word: $word, bookMarked: $bookMarked, isKnow: $isKnow, rootWordInfo: $rootWordInfo, wordType: $wordType, translation: $translation)';
+    return 'CueWord(isSuccess: $isSuccess, errorCode: $errorCode, resultMessage: $resultMessage, wordId: $wordId, word: $word, pronunciationUrl: $pronunciationUrl, bookMarked: $bookMarked, isKnow: $isKnow, rootWordInfo: $rootWordInfo, wordType: $wordType, translation: $translation)';
   }
 
   @override
@@ -318,6 +336,8 @@ class _$_CueWord implements _CueWord {
                 .equals(other.resultMessage, resultMessage) &&
             const DeepCollectionEquality().equals(other.wordId, wordId) &&
             const DeepCollectionEquality().equals(other.word, word) &&
+            const DeepCollectionEquality()
+                .equals(other.pronunciationUrl, pronunciationUrl) &&
             const DeepCollectionEquality()
                 .equals(other.bookMarked, bookMarked) &&
             const DeepCollectionEquality().equals(other.isKnow, isKnow) &&
@@ -336,6 +356,7 @@ class _$_CueWord implements _CueWord {
       const DeepCollectionEquality().hash(resultMessage),
       const DeepCollectionEquality().hash(wordId),
       const DeepCollectionEquality().hash(word),
+      const DeepCollectionEquality().hash(pronunciationUrl),
       const DeepCollectionEquality().hash(bookMarked),
       const DeepCollectionEquality().hash(isKnow),
       const DeepCollectionEquality().hash(rootWordInfo),
@@ -360,6 +381,7 @@ abstract class _CueWord implements CueWord {
       String resultMessage,
       String wordId,
       String word,
+      String pronunciationUrl,
       bool bookMarked,
       bool isKnow,
       RootWordInfo rootWordInfo,
@@ -378,6 +400,8 @@ abstract class _CueWord implements CueWord {
   String get wordId;
   @override
   String get word;
+  @override
+  String get pronunciationUrl;
   @override
   bool get bookMarked;
   @override
