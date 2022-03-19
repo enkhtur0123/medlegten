@@ -53,7 +53,7 @@ class BlogPage extends HookWidget {
                       onTap: () {
                         searchValue = base64.encode(
                             utf8.encode(controller.value.text.toString()));
-                         validateSearchValue(context: context);
+                        validateSearchValue(context: context);
                       },
                       child: const Icon(
                         Icons.search,
@@ -74,22 +74,24 @@ class BlogPage extends HookWidget {
                     },
                   ),
                 ),
+                const SizedBox(height: 20),
                 Expanded(
-                    child: ListView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  children: snapshot.data!.map((e) {
-                    return Container(
-                      margin: const EdgeInsets.all(5),
-                      child: ArticleHorizontalPage(
-                        articles: e.articles,
-                        typeId: e.typeId,
-                        typeName: e.typeName,
-                      ),
-                    );
-                  }).toList(),
-                )),
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    children: snapshot.data!.map((e) {
+                      return Container(
+                        margin: const EdgeInsets.all(5),
+                        child: ArticleHorizontalPage(
+                          articles: e.articles,
+                          typeId: e.typeId,
+                          typeName: e.typeName,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ],
             ),
           );

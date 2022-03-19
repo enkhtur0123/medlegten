@@ -201,7 +201,7 @@ changeAppBarData(
     String? text}) {
   ref!.read(appbarProvider!.notifier).changeStatus(
         AppBarState(
-          height: 120,
+          height: height,
           appBarData: ref.read(authProvider!.notifier).appBarData,
           text: text,
         ),

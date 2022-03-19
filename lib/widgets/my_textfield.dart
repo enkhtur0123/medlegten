@@ -75,7 +75,8 @@ class MyTextField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   borderSide:
                       const BorderSide(width: 1, color: Color(0xff7864FE)))
-              : const UnderlineInputBorder(borderSide: BorderSide.none)),
+              : const UnderlineInputBorder(borderSide: BorderSide.none),
+      ),
       onChanged: (value) {
         onChanged!(value);
       },

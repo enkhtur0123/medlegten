@@ -166,6 +166,8 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
             completeBtn: () {},
             unCompleteBtn: () {},
             isCompleted: widget.isCompleted,
+            edgeInsets:const  EdgeInsets.only(left: 20,right: 15,bottom: 5,top: 5),
+            margin: const EdgeInsets.all(10),
           ),
         ],
       ),

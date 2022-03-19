@@ -156,11 +156,14 @@ class LandingRepository {
     try {
       final res = await HttpHelper()
           .postUrl(url: 'Course/SelfQuiz/SetHistory', body: body);
-      if (res['isSuccess']) {
+      if (res['isSuccess']) { 
         return res;
       } else {
-        throw CustomException(errorMsg: res['resultMessage']);
+        dioRepository.snackBar(res['resultMessage']);
       }
+    } on CustomException catch (ex) {
+      dioRepository.snackBar(ex.toString().toUpperCase());
+      throw CustomException(errorMsg: ex.toString());
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString());

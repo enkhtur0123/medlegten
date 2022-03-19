@@ -56,6 +56,7 @@ class LevelEventItem extends HookWidget {
         }
       },
       child: Container(
+       height: MediaQuery.of(context).size.width * 0.58,
         margin:
             edgeInsets ?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
         decoration: BoxDecoration(

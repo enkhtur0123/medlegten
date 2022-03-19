@@ -15,7 +15,8 @@ class UnitModuleCompletedBtn extends HookWidget {
       required this.unCompleteBtn,
       this.success,
       this.failure,
-      required this.isCompleted})
+      required this.isCompleted,
+      this.edgeInsets,this.margin})
       : super(key: key);
   String? moduleId;
   VoidCallback? completeBtn;
@@ -23,6 +24,8 @@ class UnitModuleCompletedBtn extends HookWidget {
   Function? success;
   Function? failure;
   bool? isCompleted;
+  EdgeInsets? edgeInsets;
+  EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class UnitModuleCompletedBtn extends HookWidget {
         fontWeight: FontWeight.normal,
         color: Colors.white);
     return GestureDetector(
-      onTap: ()  {
+      onTap: () {
         showDialog<bool>(
             context: context,
             builder: (context) {
@@ -49,8 +52,9 @@ class UnitModuleCompletedBtn extends HookWidget {
         });
       },
       child: Container(
-        margin: const EdgeInsets.all(15),
-        padding: const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
+        margin: margin??const EdgeInsets.all(15),
+        padding: edgeInsets ??
+            const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 5),
         decoration: const BoxDecoration(
           color: Color(0xffA8AFE5),
           borderRadius: BorderRadius.all(

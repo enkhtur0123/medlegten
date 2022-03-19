@@ -1,10 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomPopUpDialog extends StatelessWidget {
   const CustomPopUpDialog(
       {Key? key,
-      this.title="",
+      this.title = "",
       this.body,
       this.isBlur = true,
       this.isAlert = false,
@@ -67,14 +66,16 @@ class CustomPopUpDialog extends StatelessWidget {
         // blendMode: BlendMode.lighten,
         AlertDialog(
       title: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: color, borderRadius: BorderRadius.circular(15)),
+                color: color,
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: icon),
         ],
       ),
@@ -85,8 +86,7 @@ class CustomPopUpDialog extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(26))),
       titleTextStyle: const TextStyle(
           fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
-      content: 
-      Container(
+      content: Container(
         padding: const EdgeInsets.all(30),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -99,9 +99,9 @@ class CustomPopUpDialog extends StatelessWidget {
               style: const TextStyle(
                   color: Color(0xff30359F),
                   fontStyle: FontStyle.normal,
-                  fontSize: 30,
+                  fontSize: 26,
                   fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
             Text(

@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/article/article_item.dart';
 import 'package:medlegten/utils/app_router.dart';
-import 'package:medlegten/widgets/TextButton.dart';
+import 'package:medlegten/widgets/buttons/custom_inkwell_btn.dart';
 import 'article_item_page.dart';
 
 // ignore: must_be_immutable
@@ -44,18 +45,16 @@ class ArticleHorizontalPage extends HookWidget {
                     textAlign: TextAlign.start,
                     style: typeStyle,
                   ),
-                  Material(
-                    color: Colors.transparent,
-                    child: TextButtonWidget(
-                      onTap: () {
-                        AutoRouter.of(context).push(
-                          ArticleVerticalRoute(title: typeName, typeId: typeId),
-                        );
-                      },
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                      text: "Бүгд",
-                    ),
+                  CustomInkWellButton(
+                    onTap: () {
+                      AutoRouter.of(context).push(
+                        ArticleVerticalRoute(title: typeName, typeId: typeId),
+                      );
+                    },
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.normal,
+                    color: colorPrimary,
+                    text: "Бүгд",
                   ),
                 ],
               ),

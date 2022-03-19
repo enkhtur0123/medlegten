@@ -76,7 +76,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               Text(
                 ref.read(appbarProvider.notifier).appBarState.text ?? "",
