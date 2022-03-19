@@ -11,6 +11,8 @@ _$_QuizQuestion _$$_QuizQuestionFromJson(Map<String, dynamic> json) =>
       json['questionId'] as String,
       json['question'] as String,
       json['ordering'] as String,
+      json['type'] as String?,
+      json['typeText'] as String?,
       (json['answers'] as List<dynamic>)
           .map((e) => QuizAnswer.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -21,5 +23,7 @@ Map<String, dynamic> _$$_QuizQuestionToJson(_$_QuizQuestion instance) =>
       'questionId': instance.questionId,
       'question': instance.question,
       'ordering': instance.ordering,
+      'type': instance.type,
+      'typeText': instance.typeText,
       'answers': instance.answers,
     };

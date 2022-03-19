@@ -340,4 +340,18 @@ class UnitRepository {
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
+
+  //0 for Vocabulary, 1 for Bookmarked
+  Future<int> getWordCount(int type) async {
+    try {
+      var res = await HttpHelper().getUrl(url: 'Word/WordCount/$type');
+      if (res['isSuccess']) {
+        return int.parse(res['wordCount'].toString());
+      } else {
+        return 0;
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
+    }
+  }
 }

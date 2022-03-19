@@ -29,31 +29,36 @@ class _StructureBodyState extends State<StructureBody> {
     //selectedId.addListener(() {
     //  setState(() {});
     //});
-
-    var selectedNames =
-        widget.helper.getPartStructureNames(widget.grammar, widget.partId);
-
     var allNames =
         widget.helper.getAllPartStructureNames(widget.grammar, widget.partId);
 
+    var selectedNames = widget.helper
+        .getPartStructureNames(widget.grammar, widget.partId, allNames);
+
     if (!widget.isType1) {
-      if (selectedNames.length == 1) {
-        //WidgetsBinding.instance?.addPostFrameCallback((_) {
+      //if (selectedNames.length == 1) {
+      if (selectedNames.length > 1 &&
+              !selectedNames.any((e) => e.answerId == selectedId) ||
+          selectedNames.length == 1) {
+        //
+
         selectedId = allNames
-            .firstWhere((o) => o.answer == selectedNames[0].answer)
+            .firstWhere((o) =>
+                replaceRN(o.answer) == replaceRN(selectedNames[0].answer))
             .answerId;
         widget.helper.selectedChips[id] = selectedId;
-        widget.helper.selectedAnswers[id] = selectedNames[0].answer;
+        widget.helper.selectedAnswers[id] = replaceRN(selectedNames[0].answer);
         //widget.callback(names[0].answer, widget.partId);
         //});
       }
 
       if (selectedId == -1 && selectedNames.isNotEmpty) {
         selectedId = allNames
-            .firstWhere((o) => o.answer == selectedNames[0].answer)
+            .firstWhere((o) =>
+                replaceRN(o.answer) == replaceRN(selectedNames[0].answer))
             .answerId;
         widget.helper.selectedChips[id] = selectedId;
-        widget.helper.selectedAnswers[id] = selectedNames[0].answer;
+        widget.helper.selectedAnswers[id] = replaceRN(selectedNames[0].answer);
       }
     }
 
@@ -101,7 +106,7 @@ class _StructureBodyState extends State<StructureBody> {
                             size: 15),
                         addHorizontalSpace(5),
                         Text(
-                          answer.answer.replaceAll('\n', ''),
+                          replaceRN(answer.answer),
                           style: TextStyle(
                               color: widget.isType1
                                   ? const Color.fromRGBO(0, 0, 0, 1)

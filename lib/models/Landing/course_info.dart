@@ -24,7 +24,7 @@ class CourseInfo with _$CourseInfo {
       bool isCreatedPlan,
       List<String> purchaseDesc,
       String isReady,
-      ) = _CourseInfo;
+      String purchaseCount) = _CourseInfo;
 
   factory CourseInfo.fromJson(Map<String, dynamic> json) =>
       _$CourseInfoFromJson(json);

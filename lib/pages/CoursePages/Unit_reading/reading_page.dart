@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:medlegten/common/colors.dart';
@@ -185,6 +187,8 @@ class _ReadingPageState extends State<ReadingPage> {
 
   void wordCallBack(word, position) {
     if (word != null) {
+      var width1 =
+          GlobalValues.getWidthRelativeToScreen(51) - (Platform.isIOS ? 40 : 0);
       var isTop = GlobalValues.screenHeight - position.top > 220;
       SmartDialog.showAttach(
         isLoadingTemp: false,
@@ -199,7 +203,7 @@ class _ReadingPageState extends State<ReadingPage> {
         maskColorTemp: Colors.transparent,
         widget: SizedBox(
           height: 220 + 20,
-          width: GlobalValues.getWidthRelativeToScreen(51),
+          width: width1,
           child: CueWordWidget(word,
               ppointerPosition: position, isshadow: true, istop: isTop),
         ),

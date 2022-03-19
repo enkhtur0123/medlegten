@@ -23,11 +23,13 @@ class _$QuizQuestionTearOff {
   const _$QuizQuestionTearOff();
 
   _QuizQuestion call(String questionId, String question, String ordering,
-      List<QuizAnswer> answers) {
+      String? type, String? typeText, List<QuizAnswer> answers) {
     return _QuizQuestion(
       questionId,
       question,
       ordering,
+      type,
+      typeText,
       answers,
     );
   }
@@ -45,6 +47,8 @@ mixin _$QuizQuestion {
   String get questionId => throw _privateConstructorUsedError;
   String get question => throw _privateConstructorUsedError;
   String get ordering => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get typeText => throw _privateConstructorUsedError;
   List<QuizAnswer> get answers => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,6 +66,8 @@ abstract class $QuizQuestionCopyWith<$Res> {
       {String questionId,
       String question,
       String ordering,
+      String? type,
+      String? typeText,
       List<QuizAnswer> answers});
 }
 
@@ -78,6 +84,8 @@ class _$QuizQuestionCopyWithImpl<$Res> implements $QuizQuestionCopyWith<$Res> {
     Object? questionId = freezed,
     Object? question = freezed,
     Object? ordering = freezed,
+    Object? type = freezed,
+    Object? typeText = freezed,
     Object? answers = freezed,
   }) {
     return _then(_value.copyWith(
@@ -93,6 +101,14 @@ class _$QuizQuestionCopyWithImpl<$Res> implements $QuizQuestionCopyWith<$Res> {
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
               as String,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      typeText: typeText == freezed
+          ? _value.typeText
+          : typeText // ignore: cast_nullable_to_non_nullable
+              as String?,
       answers: answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
@@ -112,6 +128,8 @@ abstract class _$QuizQuestionCopyWith<$Res>
       {String questionId,
       String question,
       String ordering,
+      String? type,
+      String? typeText,
       List<QuizAnswer> answers});
 }
 
@@ -130,6 +148,8 @@ class __$QuizQuestionCopyWithImpl<$Res> extends _$QuizQuestionCopyWithImpl<$Res>
     Object? questionId = freezed,
     Object? question = freezed,
     Object? ordering = freezed,
+    Object? type = freezed,
+    Object? typeText = freezed,
     Object? answers = freezed,
   }) {
     return _then(_QuizQuestion(
@@ -145,6 +165,14 @@ class __$QuizQuestionCopyWithImpl<$Res> extends _$QuizQuestionCopyWithImpl<$Res>
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
               as String,
+      type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      typeText == freezed
+          ? _value.typeText
+          : typeText // ignore: cast_nullable_to_non_nullable
+              as String?,
       answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
@@ -156,7 +184,8 @@ class __$QuizQuestionCopyWithImpl<$Res> extends _$QuizQuestionCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_QuizQuestion implements _QuizQuestion {
-  _$_QuizQuestion(this.questionId, this.question, this.ordering, this.answers);
+  _$_QuizQuestion(this.questionId, this.question, this.ordering, this.type,
+      this.typeText, this.answers);
 
   factory _$_QuizQuestion.fromJson(Map<String, dynamic> json) =>
       _$$_QuizQuestionFromJson(json);
@@ -168,11 +197,15 @@ class _$_QuizQuestion implements _QuizQuestion {
   @override
   final String ordering;
   @override
+  final String? type;
+  @override
+  final String? typeText;
+  @override
   final List<QuizAnswer> answers;
 
   @override
   String toString() {
-    return 'QuizQuestion(questionId: $questionId, question: $question, ordering: $ordering, answers: $answers)';
+    return 'QuizQuestion(questionId: $questionId, question: $question, ordering: $ordering, type: $type, typeText: $typeText, answers: $answers)';
   }
 
   @override
@@ -184,6 +217,8 @@ class _$_QuizQuestion implements _QuizQuestion {
                 .equals(other.questionId, questionId) &&
             const DeepCollectionEquality().equals(other.question, question) &&
             const DeepCollectionEquality().equals(other.ordering, ordering) &&
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.typeText, typeText) &&
             const DeepCollectionEquality().equals(other.answers, answers));
   }
 
@@ -193,6 +228,8 @@ class _$_QuizQuestion implements _QuizQuestion {
       const DeepCollectionEquality().hash(questionId),
       const DeepCollectionEquality().hash(question),
       const DeepCollectionEquality().hash(ordering),
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(typeText),
       const DeepCollectionEquality().hash(answers));
 
   @JsonKey(ignore: true)
@@ -207,7 +244,12 @@ class _$_QuizQuestion implements _QuizQuestion {
 }
 
 abstract class _QuizQuestion implements QuizQuestion {
-  factory _QuizQuestion(String questionId, String question, String ordering,
+  factory _QuizQuestion(
+      String questionId,
+      String question,
+      String ordering,
+      String? type,
+      String? typeText,
       List<QuizAnswer> answers) = _$_QuizQuestion;
 
   factory _QuizQuestion.fromJson(Map<String, dynamic> json) =
@@ -219,6 +261,10 @@ abstract class _QuizQuestion implements QuizQuestion {
   String get question;
   @override
   String get ordering;
+  @override
+  String? get type;
+  @override
+  String? get typeText;
   @override
   List<QuizAnswer> get answers;
   @override

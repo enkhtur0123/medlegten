@@ -54,15 +54,15 @@ class CourseSelfTestPage extends HookWidget {
                 fontWeight: FontWeight.w700,
                 fontSize: 16),
           ),
-          addVerticalSpace(6),
-          const Text(
-            'Явцын шалгалт 2',
-            style: TextStyle(
-                color: colorPrimary,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w700,
-                fontSize: 12),
-          ),
+          // addVerticalSpace(6),
+          // const Text(
+          //   'Явцын шалгалт 2',
+          //   style: TextStyle(
+          //       color: colorPrimary,
+          //       fontFamily: 'Roboto',
+          //       fontWeight: FontWeight.w700,
+          //       fontSize: 12),
+          // ),
           addVerticalSpace(10),
           const Divider(
             color: Color.fromRGBO(199, 201, 217, .3),

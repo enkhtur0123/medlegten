@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/app_provider.dart';
@@ -17,7 +18,9 @@ class LandingProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<int> wordCount = ref.watch(wordCountProvider);
     userInfo = ref.read(authProvider.notifier).userInfo;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -47,18 +50,30 @@ class LandingProfile extends ConsumerWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              // GridView.count(
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   crossAxisCount: 2,
-              //   padding: const EdgeInsets.all(10),
-              //   childAspectRatio: 16 / 14,
-              //   shrinkWrap: true,
-              //   mainAxisSpacing: 10,
-              //   crossAxisSpacing: 10,
-              //   children: items.map((e) {
-              //     return getReportItemWidget(e: e);
-              //   }).toList(),
-              // ),
+              GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                padding: const EdgeInsets.all(10),
+                childAspectRatio: 16 / 14,
+                shrinkWrap: true,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                children: items.map((item) {
+                  switch (item.reportType!) {
+                    case ReportType.common:
+                      return getReportItemWidget(e: item);
+                    case ReportType.vocabulary:
+                      return wordCount.when(
+                        loading: () => const Loading(),
+                        error: (err, stack) => Text('Error: $err'),
+                        data: (data) {
+                          item.body = '$data';
+                          return getReportItemWidget(e: item);
+                        },
+                      ); //
+                  }
+                }).toList(),
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
                 child: CustomOutlinedButton(
@@ -70,9 +85,23 @@ class LandingProfile extends ConsumerWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 15,),
+              const SizedBox(
+                height: 15,
+              ),
               // ignore: invalid_use_of_protected_member
-              Text("Апп хувилбар  "+ref.read(appProvider.notifier).state.version!.appVersion.toString(),textAlign: TextAlign.center,)
+              Text(
+                "Апп хувилбар  " +
+                    ref
+                        .read(appProvider.notifier)
+                        .state
+                        .version!
+                        .appVersion
+                        .toString(),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
             ],
           ),
         ),
@@ -93,10 +122,11 @@ class LandingProfile extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            e.iconData,
-            color: e.iconColor ?? Colors.white,
-          ),
+          e.iconWidget ??
+              Icon(
+                e.iconData,
+                color: e.iconColor ?? Colors.white,
+              ),
           const SizedBox(
             height: 12,
           ),
@@ -170,6 +200,17 @@ class LandingProfile extends ConsumerWidget {
               size: 13,
             )
           ],
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Text(
+          'Id: ${userInfo?.userId ?? ""}',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.bold,
+              fontSize: 18),
         ),
         // TextButtonWidget(text: "Change profile", onTap: () {})
       ],

@@ -19,7 +19,8 @@ class CourseSelfTestQuestion extends HookWidget {
       this.mode = 0,
       this.check,
       required this.correctCnt,
-      required this.selfTestCnt,this.correctAnswerds})
+      required this.selfTestCnt,
+      this.correctAnswerds})
       : super(key: key);
 
   final style = const TextStyle(
@@ -39,7 +40,10 @@ class CourseSelfTestQuestion extends HookWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Асуулт ' + quizQuestionEx.quizQuestion.ordering + ':',
+              quizQuestionEx.quizQuestion.type == '0'
+                  ? 'Асуулт ${quizQuestionEx.quizQuestion.ordering}:'
+                  : '${quizQuestionEx.quizQuestion.typeText}:',
+              //'Асуулт ' + quizQuestionEx.quizQuestion.ordering + ':',
               style: const TextStyle(
                   color: Color.fromRGBO(48, 53, 159, 1),
                   fontWeight: FontWeight.w600,
@@ -63,7 +67,11 @@ class CourseSelfTestQuestion extends HookWidget {
             ),
           ),
           addVerticalSpace(5),
-          CourseSelfAnswerItem(answers: sortedAnswers,mode: mode,correctCnt: correctCnt,correctAnswerds: correctAnswerds)
+          CourseSelfAnswerItem(
+              answers: sortedAnswers,
+              mode: mode,
+              correctCnt: correctCnt,
+              correctAnswerds: correctAnswerds)
         ],
       ),
     );

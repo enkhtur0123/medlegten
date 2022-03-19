@@ -14,6 +14,7 @@ class CueWord with _$CueWord {
       String resultMessage,
       String wordId,
       String word,
+      String pronunciationUrl,
       bool bookMarked,
       bool isKnow,
       RootWordInfo rootWordInfo,
