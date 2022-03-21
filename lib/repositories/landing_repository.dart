@@ -153,10 +153,12 @@ class LandingRepository {
 
   //// Шалгалтын мэдээлэл хадгалах сервис
   Future<dynamic> setCourseSelfTestHistory({Map<String, dynamic>? body}) async {
+    // print(body);
     try {
       final res = await HttpHelper()
           .postUrl(url: 'Course/SelfQuiz/SetHistory', body: body);
-      if (res['isSuccess']) { 
+      // print(res);
+      if (res['isSuccess']) {
         return res;
       } else {
         dioRepository.snackBar(res['resultMessage']);

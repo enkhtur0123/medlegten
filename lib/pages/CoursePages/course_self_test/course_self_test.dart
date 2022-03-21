@@ -119,13 +119,12 @@ class CourseSelfTestPage extends HookWidget {
     Map<String, dynamic> data = {
       "quizId": quizId?.value.toString(),
       "correctCount": correctAnswerIds.value.isNotEmpty
-          ? correctAnswerIds.value.length - 1
-          : 0,
+          ? (correctAnswerIds.value.length - 1).toString()
+          : 0.toString(),
       "incorrectCount": (snapshot!.data!.length -
               (correctAnswerIds.value.isNotEmpty
                   ? correctAnswerIds.value.length - 1
-                  : 0))
-          .toString()
+                  : 0)).toString()
     };
     var result;
     try {

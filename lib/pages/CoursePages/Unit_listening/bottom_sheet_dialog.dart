@@ -49,7 +49,7 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
             Container(
               margin: const EdgeInsets.only(left: 10, bottom: 20, top: 20),
               child: Text(
-                "Сонсгол ${widget.currentIndex!+1}:\n${widget.listeningQuiz!.listening.cue[widget.currentIndex!].title}",
+                "Сонсгол ${widget.currentIndex! + 1}:\n${widget.listeningQuiz!.listening.cue[widget.currentIndex!].title}",
                 style: const TextStyle(
                     fontSize: 15,
                     fontStyle: FontStyle.normal,
@@ -122,8 +122,11 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
               height: 50,
               onTap: () {
                 mode.value = 1;
-                widget.heardIndex!(int.parse(widget.listeningQuiz!.listening.cue[widget.currentIndex!].cueId));
+                widget.heardIndex!(int.parse(widget
+                    .listeningQuiz!.listening.cue[widget.currentIndex!].cueId));
+
                 setState(() {});
+                Navigator.pop(context, true);
               },
             ))
       ],

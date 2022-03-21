@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
+import 'package:medlegten/pages/CoursePages/Unit_listening/bottom_sheet_dialog.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/card_colors.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/common.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/control_button.dart';
@@ -66,23 +67,49 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   Future<void> _init() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-
-    /// Player ээ сонсож байна
-    // _player.durationStream.listen((event) {
-    //   if (event!.inSeconds != 0 &&
-    //       event.inSeconds ==
-    //           uriAudioSource![currentIndex].duration!.inSeconds) {
-    //     // print(uriAudioSource![currentIndex].duration!.inSeconds);
-    //   }
-    // });
-    // _player.playerStateStream.listen((state) {
-    //   print(state.processingState);
-    // });
-    // _player.playbackEventStream.listen(
-    //   (event) async {},
-    //   onError: (Object e, StackTrace stackTrace) {},
-    //   onDone: () {},
-    // );
+    _player.currentIndexStream.listen((event) async {
+      if (event != null &&
+          event != 0 &&
+          !listenChecks.value[currentIndex].isChecking! &&
+          !isBottomSheet) {
+        await _player.seekToNext();
+        await _player.stop();
+        // await _player.pause();
+        isBottomSheet = true;
+        setState(() {});
+        await showModalBottomSheet<dynamic>(
+          isScrollControlled: true,
+          isDismissible: false,
+          elevation: 5,
+          backgroundColor: Colors.white.withOpacity(0.8),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(26), topRight: Radius.circular(26)),
+          ),
+          context: context,
+          builder: (BuildContext context) {
+            return ListenQuizWidget(
+              listeningQuiz: widget.listeningQuiz,
+              randomColors: randomColors[currentIndex],
+              currentIndex: currentIndex,
+              heardIndex: (index) {
+                listenChecks.value
+                    .where((element) => element.index == index)
+                    .first
+                    .isChecking = true;
+                setState(() {});
+              },
+            );
+          },
+        ).then((value) async {
+          if (value != null && value) {
+            await _player.play();
+          }
+          isBottomSheet = false;
+          setState(() {});
+        });
+      }
+    });
     try {
       await _player.setAudioSource(_playlist!, preload: false, initialIndex: 0);
     } catch (e) {}
@@ -228,18 +255,6 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                           stream: _positionDataStream,
                           builder: (context, snapshot) {
                             final positionData = snapshot.data;
-
-                            if (positionData != null &&
-                                positionData.position.inMilliseconds ==
-                                    uriAudioSource![currentIndex]
-                                        .duration!
-                                        .inMilliseconds) {
-                              currentIndex++;
-                              setState(() {
-                                
-                              });
-                            }
-
                             return SeekBar(
                               duration: positionData?.duration ?? Duration.zero,
                               position: positionData?.position ?? Duration.zero,
