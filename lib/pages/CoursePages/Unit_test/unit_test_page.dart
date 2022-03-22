@@ -64,15 +64,18 @@ class UnitTestPage extends HookWidget {
 
     if (!isOnlyShowResult) {
       list.add(addVerticalSpace(20));
+
       list.add(snapshot.hasData
-          ? Text(
-              examName,
-              style: const TextStyle(
-                  color: colorPrimary,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16),
-            )
+          ? examName != ''
+              ? Text(
+                  examName,
+                  style: const TextStyle(
+                      color: colorPrimary,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16),
+                )
+              : Container()
           : const Center(child: CircularProgressIndicator()));
       list.add(addVerticalSpace(10));
       list.add(const Divider(
