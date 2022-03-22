@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Unit/unit_writing_cue.dart';
 import 'package:medlegten/models/Unit/unit_writing_cueword.dart';
+import 'package:medlegten/pages/CoursePages/Unit_writing/writing_helper.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
 
@@ -86,10 +87,25 @@ class _WritingParagraphState extends State<WritingParagraph> {
                 word.mainText.toLowerCase();
             if (_controller.value.text.length == word.mainText.length) {
               var nextId = missingList[word]!.item1 + 1;
+              bool isLast = true;
               for (var element in missingList.values) {
                 if (element.item1 == nextId) {
                   element.item3.requestFocus();
+                  isLast = false;
                   break;
+                }
+              }
+
+              if (isLast) {
+                if (!this
+                    .widget
+                    .answers
+                    .values
+                    .any((element) => element == null || element == false)) {
+                  WritingHelper().showCorrectAnswer[
+                      WritingHelper().currentVideoIndex] = true;
+                  WritingHelper().counter[WritingHelper().currentVideoIndex] =
+                      0;
                 }
               }
             }

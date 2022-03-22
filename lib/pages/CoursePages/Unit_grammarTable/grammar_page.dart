@@ -337,16 +337,16 @@ class _GrammarTablePageState extends State<GrammarTablePage>
           partLabel, grammar, partId, partId == helper.selectedLabelId),
       Padding(
         padding: EdgeInsets.only(
-            left: (grammar.getPartCount() - 1 == partId ? 10 : 25), right: 10),
+            left: (grammar.structure.length == partId ? 10 : 25), right: 10),
         child: Container(
           width: GlobalValues.screenWidth - 20,
           decoration: BoxDecoration(
             border: Border(
               left: BorderSide(
-                color: grammar.getPartCount() - 1 == partId
+                color: grammar.structure.length == partId
                     ? Colors.transparent
                     : const Color.fromRGBO(199, 201, 217, .5),
-                width: grammar.getPartCount() - 1 == partId ? 0 : 1,
+                width: grammar.structure.length == partId ? 0 : 1,
               ),
             ),
           ),

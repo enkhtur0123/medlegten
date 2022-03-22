@@ -53,6 +53,7 @@ class WritingVideoSubPageState extends State<WritingVideoSubPage> {
 
   @override
   Widget build(BuildContext context) {
+    WritingHelper().currentVideoIndex = widget.index[1];
     if (WritingHelper().counter.containsKey(widget.index[1]) == false) {
       WritingHelper().counter[widget.index[1]] = 3;
       WritingHelper().showCorrectAnswer[widget.index[1]] = false;
