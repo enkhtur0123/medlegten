@@ -128,7 +128,17 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
             child: PagedListView<int, UnitVocabularyWord>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<UnitVocabularyWord>(
-                  itemBuilder: (context, item, index) => VocabularyCart(item)),
+                itemBuilder: (context, item, index) => VocabularyCart(item),
+                noItemsFoundIndicatorBuilder: (_) => const Center(
+                    child: Text(
+                  'Хоосон байна',
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Color.fromARGB(153, 100, 20, 20),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700),
+                )),
+              ),
             ),
           ),
         ),
