@@ -34,6 +34,7 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
       showControls: true,
       showControlsOnInitialize: false,
       customControls: const ChewieCustomControls(),
+      autoInitialize: false,
       // showOptions: false,
       allowPlaybackSpeedChanging: true,
       overlay: null,
@@ -53,6 +54,7 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
         );
       },
     );
+    _chewieController.pause();
   }
 
   @override

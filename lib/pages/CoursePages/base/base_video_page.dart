@@ -143,7 +143,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
 
   ///Video Player widget
   Widget getVideoPlayerWidget() {
-    return VideoPlayerChewie(videoPlayerController!);
+    return VideoPlayerChewie(videoPlayerController!,);
   }
 
   ///Get Serial Widget

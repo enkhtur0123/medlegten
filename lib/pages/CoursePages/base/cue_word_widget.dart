@@ -152,6 +152,28 @@ class _CueWordWidgetState extends State<CueWordWidget> {
           ],
         ),
       );
+
+      if (cueWord.rootWordInfo.translation != null) {
+        for (var translation in cueWord.rootWordInfo.translation!) {
+          {
+            list.add(Text(
+              translation.trTypeShortName,
+              style: const TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, 1),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+            ));
+            list.add(Text(
+              translation.trText,
+              style: const TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, .6),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
+            ));
+            list.add(addVerticalSpace(10));
+          }
+        }
+      }
     }
 
     for (var translation in cueWord.translation) {
