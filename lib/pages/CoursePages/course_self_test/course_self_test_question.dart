@@ -44,7 +44,6 @@ class CourseSelfTestQuestion extends HookWidget {
               quizQuestionEx.quizQuestion.type == '0'
                   ? 'Асуулт ${quizQuestionEx.quizQuestion.ordering}:'
                   : '${quizQuestionEx.quizQuestion.typeText}:',
-              //'Асуулт ' + quizQuestionEx.quizQuestion.ordering + ':',
               style: const TextStyle(
                   color: Color.fromRGBO(48, 53, 159, 1),
                   fontWeight: FontWeight.w600,

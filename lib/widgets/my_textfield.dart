@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:medlegten/common/colors.dart';
 
 // ignore: must_be_immutable
 class MyTextField extends StatelessWidget {
@@ -19,7 +18,9 @@ class MyTextField extends StatelessWidget {
       this.filled,
       this.onSubmitted,
       this.validator,
-      this.errorText,this.formKey})
+      this.errorText,
+      this.formKey,
+      this.borderColor})
       : super(key: key);
 
   TextEditingController? controller;
@@ -36,6 +37,7 @@ class MyTextField extends StatelessWidget {
   String? Function(String?)? validator;
   String? errorText;
   var formKey;
+  Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,39 +47,44 @@ class MyTextField extends StatelessWidget {
       focusNode: focusNode,
       controller: controller,
       showCursor: true,
-      cursorColor: colorBlack,
+      cursorColor: Colors.black,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
-      style: const TextStyle(color: Colors.black),
+      style: const TextStyle(
+        color: Colors.black,
+      ),
       decoration: InputDecoration(
-          errorText: errorText,
-          enabled: enabled!,
-          filled: filled ?? false,
-          labelText: labelText,
-          suffix: suffix ?? Container(),
-          iconColor: Colors.white,
-          border: isBordered
-              ? OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(width: 1, color: Color(0xff7864FE)),
-                )
-              : const UnderlineInputBorder(
-                  borderSide: BorderSide.none,
+        errorText: errorText,
+        enabled: enabled!,
+        filled: filled ?? false,
+        labelText: labelText,
+        suffix: suffix ?? Container(),
+        iconColor: Colors.white,
+        border: isBordered
+            ? OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                    width: 1, color: borderColor ?? const Color(0xff7864FE)),
+              )
+            : const UnderlineInputBorder(
+                borderSide: BorderSide.none,
+              ),
+        labelStyle: TextStyle(color: labelColor ?? const Color(0xFF424242)),
+        disabledBorder: isBordered
+            ? OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                    width: 1, color: borderColor ?? const Color(0xff7864FE)))
+            : const UnderlineInputBorder(borderSide: BorderSide.none),
+        enabledBorder: isBordered
+            ? OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  width: 1,
+                  color: borderColor ?? const Color(0xff7864FE),
                 ),
-          labelStyle: TextStyle(color: labelColor ?? const Color(0xFF424242)),
-          disabledBorder: isBordered
-              ? OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(width: 1, color: Color(0xff7864FE)))
-              : const UnderlineInputBorder(borderSide: BorderSide.none),
-          enabledBorder: isBordered
-              ? OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(width: 1, color: Color(0xff7864FE)))
-              : const UnderlineInputBorder(borderSide: BorderSide.none),
+              )
+            : const UnderlineInputBorder(borderSide: BorderSide.none),
       ),
       onChanged: (value) {
         onChanged!(value);
