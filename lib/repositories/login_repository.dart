@@ -91,10 +91,10 @@ class LoginRepository implements ILoginRepository {
   Future<List<Onboarding>?> getOnboardingInfo() async {
     try {
       final res = await HttpHelper().getUrl(url: 'Login/Slider');
-      print(res);
+      // print(res);
       if (res['isSuccess']) {
         var list = res['onBoarding'] as List;
-        print(list);
+        // print(list);
 
         return list.map((i) => Onboarding.fromJson(i)).toList();
       } else {
@@ -111,7 +111,7 @@ class LoginRepository implements ILoginRepository {
       bool? isGoogle,
       Map<String, dynamic>? fUser,
       GoogleSignInAccount? googleSignInAccount}) async {
-    print(googleSignInAccount);
+    // print(googleSignInAccount);
     try {
       if (user != null) {
         final res = await HttpHelper().postUrl(

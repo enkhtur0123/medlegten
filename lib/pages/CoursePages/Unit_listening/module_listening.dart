@@ -4,12 +4,12 @@ import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
+import 'package:medlegten/pages/CoursePages/Unit_listening/bottom_sheet_dialog.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/card_colors.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/common.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/control_button.dart';
 import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:rxdart/rxdart.dart';
-import 'bottom_sheet_dialog.dart';
 
 class ModuleListenPage extends StatefulWidget {
   const ModuleListenPage(this.unitTitle,
@@ -67,17 +67,19 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   Future<void> _init() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-
-    /// Player ээ сонсож байна
-    _player.playbackEventStream.listen((event) async {
-      if ((event.duration != null &&
-              event.duration!.inSeconds == _player.duration!.inSeconds &&
-              !listenChecks.value[currentIndex].isChecking!) &&
+    _player.currentIndexStream.listen((event) async {
+      if (event != null &&
+          event != 0 &&
+          !listenChecks.value[currentIndex].isChecking! &&
           !isBottomSheet) {
+        await _player.seekToNext();
+        await _player.stop();
+        // await _player.pause();
         isBottomSheet = true;
         setState(() {});
-        await showModalBottomSheet<void>(
+        await showModalBottomSheet<dynamic>(
           isScrollControlled: true,
+          isDismissible: false,
           elevation: 5,
           backgroundColor: Colors.white.withOpacity(0.8),
           shape: const RoundedRectangleBorder(
@@ -100,24 +102,17 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
             );
           },
         ).then((value) async {
-          // controller.nextPage(
-          //     duration: const Duration(milliseconds: 300),
-          //     curve: Curves.easeIn);
-          // await _player.play();
-
+          if (value != null && value) {
+            await _player.play();
+          }
           isBottomSheet = false;
           setState(() {});
         });
       }
-    }, onError: (Object e, StackTrace stackTrace) {
-      print('A stream error occurred: $e');
     });
     try {
-      await _player.setAudioSource(_playlist!, preload: true, initialIndex: 0);
-    } catch (e) {
-      // Catch load errors: 404, invalid url...
-      print("Error loading audio source: $e");
-    }
+      await _player.setAudioSource(_playlist!, preload: false, initialIndex: 0);
+    } catch (e) {}
   }
 
   @override
@@ -166,6 +161,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
             completeBtn: () {},
             unCompleteBtn: () {},
             isCompleted: widget.isCompleted,
+            edgeInsets:
+                const EdgeInsets.only(left: 20, right: 15, bottom: 5, top: 5),
+            margin: const EdgeInsets.all(10),
           ),
         ],
       ),
@@ -263,6 +261,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                               bufferedPosition:
                                   positionData?.bufferedPosition ??
                                       Duration.zero,
+                              onChanged: (Duration duration) async {
+                                // print(positionData!.position.inSeconds);
+                              },
                               onChangeEnd: _player.seek,
                             );
                           },

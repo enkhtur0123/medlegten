@@ -49,7 +49,8 @@ class VideoPageState extends State<VideoPage> {
               if (snapshot.hasData) {
                 levelEvents = snapshot.data as List<LevelEvent>?;
                 return Expanded(
-                    child: LevelEventPage(levelEvents: levelEvents));
+                  child: LevelEventPage(levelEvents: levelEvents),
+                );
               } else {
                 return Container();
               }

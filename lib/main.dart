@@ -71,12 +71,13 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
             routerDelegate: _appRouter.delegate(
                 navigatorObservers: () => [AutoRouteObserver()]),
             routeInformationParser: _appRouter.defaultRouteParser(),
+            
             routeInformationProvider: PlatformRouteInformationProvider(
               initialRouteInformation: const RouteInformation(
                 location: '/',
               ),
             ),
-            debugShowCheckedModeBanner: true,
+            debugShowCheckedModeBanner: false,
             title: 'Lingos',
             theme: appTheme,
             builder: FlutterSmartDialog.init(),

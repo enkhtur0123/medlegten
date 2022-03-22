@@ -55,7 +55,7 @@ class HttpHelper {
   Future<dynamic> getUrl({String? url, String? token}) async {
     var dio = _createDio();
     var access_token = token ?? await getToken();
-    print(access_token);
+    // print(access_token);
     dio.options.headers['Authorization'] = access_token;
     try {
       var response = await dio.get(url!);
@@ -73,13 +73,15 @@ class HttpHelper {
   Future<dynamic> postUrl({String? url, dynamic body}) async {
     var dio = _createDio();
     var access_token = await getToken();
+    // print(access_token.toString()+"access_token");
     dio.options.headers['Authorization'] = access_token;
     try {
       var response = await dio.post(url!, data: body);
+      // print(response.data);
 
       return response.data;
     } on DioError catch (ex) {
-      print(ex.toString());
+      print(ex.response!.data.toString());
       throw CustomException(errorMsg: ex.message.toString());
     } catch (ex) {
       print(ex.toString());

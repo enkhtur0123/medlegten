@@ -60,18 +60,33 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(
-                      "assets/logo/horizontal_logo.svg",
-                      height: 25,
-                      fit: BoxFit.contain,
-                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                       SvgPicture.asset(
+                          "assets/logo/horizontal_logo.svg",
+                          height: 25,
+                          fit: BoxFit.contain,
+                        ),
+                         Text(
+                          ref.read(appbarProvider.notifier).appBarState.text ??
+                              "",
+                          style: const TextStyle(
+                              color: Color(0xffC7C9D9),
+                              fontSize: 14,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.normal),
+                        ),
+                    ],)
+,
                     Stack(
                       children: [
                         IconButton(
                             onPressed: () async {
                               await showDialog(
                                   barrierDismissible: true,
-                                  barrierColor: Colors.transparent,
+                                  // barrierColor: Colors.transparent,
                                   context: context,
                                   builder: (context) {
                                     return const CustomPopUpDialog(
@@ -93,17 +108,10 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                ref.read(appbarProvider.notifier).appBarState.text ?? "",
-                style: const TextStyle(
-                    color: Color(0xffC7C9D9),
-                    fontSize: 14,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal),
-              ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+
             ],
           ),
         ],

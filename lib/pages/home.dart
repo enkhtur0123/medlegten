@@ -1,24 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/LandingPages/landing_page.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/initialization.dart';
 import 'package:medlegten/providers/auth_provider.dart';
-
 import 'StartPages/start.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  @override
-  // ignore: dead_code
-  Widget build(BuildContext context, WidgetRef ref) {
-    final _authState = ref.watch(authProvider);
-
-    return Material(color: Colors.white, child: getChild(context, _authState));
-  }
 
   Widget getChild(BuildContext context, AuthState _authState) {
     Widget home;
@@ -47,5 +37,13 @@ class HomePage extends ConsumerWidget {
         home = const Scaffold(body: Text('Empty page'));
     }
     return home;
+  }
+
+  @override
+  // ignore: dead_code
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _authState = ref.watch(authProvider);
+
+    return Material(color: Colors.white, child: getChild(context, _authState));
   }
 }

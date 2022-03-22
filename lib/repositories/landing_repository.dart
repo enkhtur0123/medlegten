@@ -89,7 +89,7 @@ class LandingRepository {
         throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
@@ -153,14 +153,19 @@ class LandingRepository {
 
   //// Шалгалтын мэдээлэл хадгалах сервис
   Future<dynamic> setCourseSelfTestHistory({Map<String, dynamic>? body}) async {
+    // print(body);
     try {
       final res = await HttpHelper()
           .postUrl(url: 'Course/SelfQuiz/SetHistory', body: body);
+      // print(res);
       if (res['isSuccess']) {
         return res;
       } else {
-        throw CustomException(errorMsg: res['resultMessage']);
+        dioRepository.snackBar(res['resultMessage']);
       }
+    } on CustomException catch (ex) {
+      dioRepository.snackBar(ex.toString().toUpperCase());
+      throw CustomException(errorMsg: ex.toString());
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString());

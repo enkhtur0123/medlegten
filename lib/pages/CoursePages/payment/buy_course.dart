@@ -84,10 +84,10 @@ class PaymentState extends State<PaymentPage> {
                         keyboardType: TextInputType.text,
                         enabled: true,
                         onChanged: (value) {
-                          print(value);
+                          // print(value);
                         },
                         onSubmitted: (value) {
-                           print(value);
+                          //  print(value);
                         },
                       ),
                     ),

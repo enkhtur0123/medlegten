@@ -144,6 +144,8 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
             completeBtn: () {},
             unCompleteBtn: () {},
             isCompleted: widget.isCompleted,
+            margin: const EdgeInsets.all(13),
+            edgeInsets: const EdgeInsets.only(left: 15,right: 15,top: 5,bottom: 5),
           ),
         ],
       ),

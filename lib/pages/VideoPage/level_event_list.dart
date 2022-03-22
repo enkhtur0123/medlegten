@@ -24,8 +24,11 @@ class LevelEventPage extends HookWidget {
       itemBuilder: (context,index){
         return Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Flexible(
+              fit: FlexFit.loose,
+              child: 
             Container(
               margin: const EdgeInsets.only(top: 10, bottom: 0, left: 20),
               child: Row(
@@ -54,7 +57,10 @@ class LevelEventPage extends HookWidget {
                   ),
                 ],
               ),
-            ),
+            ),),
+            Flexible(
+              flex: 12,
+              child: 
             Container(
               alignment: Alignment.topLeft,
               width: double.infinity,
@@ -70,7 +76,7 @@ class LevelEventPage extends HookWidget {
                   return LevelEventItem(event: levelEvents![index].events[position]);
                 },
               ),
-            ),
+            ),)
           ],
         );
       },

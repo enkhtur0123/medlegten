@@ -23,17 +23,17 @@ class UnitRepository {
   Future<UnitCompleteInfo> getUnitCompletePercent(
       {String? id, String? mode}) async {
     try {
-      print(id);
+      // print(id);
       final res = await HttpHelper().getUrl(url: 'Course/Precent/$id/$mode');
       if (res['isSuccess']) {
         return UnitCompleteInfo.fromJson(res);
       } else {
-        print(res['resultMessage']);
+        // print(res['resultMessage']);
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
@@ -52,7 +52,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      print(e.toString());
+      // print(e.toString());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
@@ -208,7 +208,7 @@ class UnitRepository {
         return null;
       }
     } catch (e) {
-      print(e.toString().toUpperCase());
+      // print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }

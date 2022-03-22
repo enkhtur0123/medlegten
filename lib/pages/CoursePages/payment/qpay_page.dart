@@ -31,7 +31,6 @@ class QpayPage extends HookWidget {
   ValueNotifier isCall = ValueNotifier(false);
 
   Future<List<dynamic>> createInvoice() async {
-    print("create invoice");
     Map<String, dynamic> body = {
       "paymentType": paymentType,
       "productId": isCourse! ? courseInfo!.courseId : paymentInfo!.productId,

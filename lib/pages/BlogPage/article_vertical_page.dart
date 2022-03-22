@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/models/article/article_item.dart';
 import 'package:medlegten/pages/BlogPage/article_item_page.dart';
+import 'package:medlegten/pages/BlogPage/article_vertical_item_page.dart';
 import 'package:medlegten/repositories/article_repository.dart';
 
 // ignore: must_be_immutable
@@ -63,7 +64,7 @@ class ArticleVerticalPageState extends State<ArticleVerticalPage> {
                   itemCount: articles!.length,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return ArticleItemPage(
+                    return ArticleVerticalItemPage(
                       articleItem: articles![index],
                     );
                   },

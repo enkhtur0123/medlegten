@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Starting/version.dart';
-import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +16,9 @@ class InitializationPage extends HookWidget {
 
   Future<Version?> fetchData() async {
     Version? version = await LoginRepository().getAppVersion();
+    // if(!GetStorage().hasData("version")){
+    //   await GetStorage().write("version", version!.appVersion); 
+    // }
     return version;
   }
 
@@ -26,7 +29,7 @@ class InitializationPage extends HookWidget {
     GlobalValues.screenScaleFactor = MediaQuery.of(context).textScaleFactor;
     //final loginState = ref.watch(loginNotifierProvider);
 
-    var str = 'Medlegten app v 1.0.0';
+    var str = 'Lingos app v 1.0.0';
     // loginState.whenOrNull(
     //   data: (data) {
     //     if (data is Version) {
@@ -58,7 +61,7 @@ class InitializationPage extends HookWidget {
             ),
             Text(
               snapshot.hasData
-                  ? 'Medlegten app v ${snapshot.data!.appVersion}'
+                  ? 'Lingos app v ${snapshot.data!.appVersion}'
                   : str,
               textAlign: TextAlign.center,
               style: const TextStyle(

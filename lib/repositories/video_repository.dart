@@ -94,7 +94,7 @@ class VideoRepository {
         throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
@@ -111,7 +111,7 @@ class VideoRepository {
         throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }

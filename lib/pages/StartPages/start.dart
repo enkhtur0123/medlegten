@@ -18,7 +18,7 @@ class StartPage extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/logo/backround.png'),
+              image: AssetImage('assets/img/backround.png'),
               fit: BoxFit.cover,
             ),
           ),
