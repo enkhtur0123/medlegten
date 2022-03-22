@@ -130,14 +130,15 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
               builderDelegate: PagedChildBuilderDelegate<UnitVocabularyWord>(
                 itemBuilder: (context, item, index) => VocabularyCart(item),
                 noItemsFoundIndicatorBuilder: (_) => const Center(
-                    child: Text(
-                  'Хоосон байна',
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      color: Color.fromARGB(153, 100, 20, 20),
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700),
-                )),
+                  child: Text(
+                    'Хоосон байна',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        color: Color.fromARGB(153, 100, 20, 20),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
               ),
             ),
           ),

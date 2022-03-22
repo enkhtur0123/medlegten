@@ -119,6 +119,16 @@ class _VideoVocabularyListPageState extends State<VideoVocabularyListPage> {
             child: PagedListView<int, VideoVocabularyWord>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<VideoVocabularyWord>(
+                  noItemsFoundIndicatorBuilder: (_) => const Center(
+                        child: Text(
+                          'Хоосон байна',
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              color: Color.fromARGB(153, 100, 20, 20),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
                   itemBuilder: (context, item, index) => VocabularyCart(item)),
             ),
           ),

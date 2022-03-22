@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -216,7 +217,9 @@ class QpayPage extends HookWidget {
       bool? isSuccess = false,
       bool? isError = false,
       String? body}) {
-    showModalBottomSheet(
+    showModalBottomSheet<bool>(
+        enableDrag: false,
+        isScrollControlled: true,
         context: context!,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -225,7 +228,14 @@ class QpayPage extends HookWidget {
         backgroundColor: Colors.white,
         builder: (context) {
           return CustomBottomSheetDialog(
-              isError: isError, isSuccess: isSuccess, body: body);
-        });
+            isError: isError,
+            isSuccess: isSuccess,
+            body: body,
+          );
+        }).then((value) {
+      if (value!) {
+        AutoRouter.of(context).navigateNamed("/");
+      }
+    });
   }
 }
