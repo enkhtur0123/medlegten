@@ -116,17 +116,19 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
         Container(
             margin: const EdgeInsets.all(20),
             child: CustomOutlinedButton(
-              text: "Шалгах",
+              text: mode.value == 0 ? "Шалгах" : "Дуусгах",
               color: secondaryColor,
               fontSize: 16,
               height: 50,
               onTap: () {
-                mode.value = 1;
-                widget.heardIndex!(int.parse(widget
-                    .listeningQuiz!.listening.cue[widget.currentIndex!].cueId));
-
+                if (mode.value == 0) {
+                  mode.value = 1;
+                  widget.heardIndex!(int.parse(widget.listeningQuiz!.listening
+                      .cue[widget.currentIndex!].cueId));
+                } else {
+                  Navigator.pop(context, true);
+                }
                 setState(() {});
-                Navigator.pop(context, true);
               },
             ))
       ],

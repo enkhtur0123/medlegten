@@ -65,9 +65,9 @@ class VideoRepository {
   }
 
   // ignore: non_constant_identifier_names
-  Future<List<Event>> getLevelAllEvent({String? level_id}) async {
+  Future<List<Event>> getLevelAllEvent({String? level_id,int? pageNumber,int? pageSize}) async {
     try {
-      final res = await HttpHelper().getUrl(url: 'ppv/LevelAll/$level_id');
+      final res = await HttpHelper().getUrl(url: 'ppv/LevelAll/$level_id?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
         var list = res['events'] as List;
         return list.map((i) => Event.fromJson(i)).toList();

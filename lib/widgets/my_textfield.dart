@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:medlegten/common/colors.dart';
 
 // ignore: must_be_immutable
 class MyTextField extends StatelessWidget {
@@ -44,6 +45,7 @@ class MyTextField extends StatelessWidget {
       focusNode: focusNode,
       controller: controller,
       showCursor: true,
+      cursorColor: colorBlack,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
       style: const TextStyle(color: Colors.black),

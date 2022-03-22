@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/components/loading.dart';
@@ -52,119 +53,126 @@ class QpayPage extends HookWidget {
     checkPaymentStatus(appLifecycleState: appLifecycleState, context: context);
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Qpay Payment"),
-          centerTitle: false,
-        ),
-        body: snapshot.hasData && snapshot.data!.isNotEmpty
-            ? Container(
-                color: Colors.white,
-                margin: const EdgeInsets.all(20),
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Төлөх дүн:",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600),
+      appBar: AppBar(
+        title: const Text("Төлбөр"),
+        centerTitle: false,
+      ),
+      body: snapshot.hasData && snapshot.data!.isNotEmpty
+          ? Container(
+              color: Colors.white,
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Төлөх дүн:",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AmountWidget(
+                        amount: double.parse(
+                          price!.replaceAll(",", ""),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        AmountWidget(
-                          amount: double.parse(
-                            price!.replaceAll(",", ""),
-                          ),
-                        )
-                      ],
-                    ),
-                    const Text(
-                      "Банкны апп-аар",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.normal),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Divider(
-                      thickness: 0.5,
-                      height: 5,
-                      color: Colors.grey.withOpacity(0.5),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GridView.count(
-                      crossAxisSpacing: 30,
-                      mainAxisSpacing: 10,
-                      crossAxisCount: 3,
-                      shrinkWrap: true,
-                      children: (snapshot.data![0] as List)
-                          .map(
-                            (e) => GestureDetector(
-                              onTap: () async {
-                                await launchApp(
-                                    context: context, link: e["link"]);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 1,
-                                      offset: const Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: SizedBox(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Flexible(
-                                        fit: FlexFit.tight,
-                                        flex: 5,
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(15)),
-                                          child: Image.network(
-                                            e["logo"],
-                                            width: 50,
-                                          ),
+                      )
+                    ],
+                  ),
+                  const Text(
+                    "Банкны апп-аар",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Divider(
+                    thickness: 0.5,
+                    height: 5,
+                    color: Colors.grey.withOpacity(0.5),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  GridView.count(
+                    crossAxisSpacing: 30,
+                    mainAxisSpacing: 10,
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    children: (snapshot.data![0] as List)
+                        .map(
+                          (e) => GestureDetector(
+                            onTap: () async {
+                              await launchApp(
+                                  context: context, link: e["link"]);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: SizedBox(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      fit: FlexFit.tight,
+                                      flex: 5,
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8)),
+                                        child: Image.network(
+                                          e["logo"],
+                                          height: 45,
+                                          fit: BoxFit.contain,
                                         ),
                                       ),
-                                      Flexible(
-                                          fit: FlexFit.tight,
-                                          flex: 3,
-                                          child: Text(e["name"],
-                                              textAlign: TextAlign.center))
-                                    ],
-                                  ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Expanded(
+                                      flex: 4,
+                                      child: AutoSizeText(
+                                        e["name"],
+                                        maxLines: 3,
+                                        textAlign: TextAlign.center,
+                                        // style: const TextStyle(fontSize: 6),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                          )
-                          .toList(),
-                    ),
-                  ],
-                ),
-              )
-            : const Loading());
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+              ),
+            )
+          : const Loading(),
+    );
   }
 
   checkPaymentStatus(

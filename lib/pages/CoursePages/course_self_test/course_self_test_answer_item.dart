@@ -4,17 +4,19 @@ import 'package:medlegten/models/Landing/quiz_answer.dart';
 
 // ignore: must_be_immutable
 class CourseSelfAnswerItem extends HookWidget {
-  CourseSelfAnswerItem({
-    Key? key,
-    this.answers,
-    this.mode,
-    this.correctCnt,
-    this.correctAnswerds,
-  }) : super(key: key);
+  CourseSelfAnswerItem(
+      {Key? key,
+      this.answers,
+      this.mode,
+      this.correctCnt,
+      this.correctAnswerds,
+      this.clickCnts})
+      : super(key: key);
   List<QuizAnswer>? answers;
   int? mode;
   ValueNotifier<int>? correctCnt;
   ValueNotifier<Set<String>>? correctAnswerds;
+  ValueNotifier<int>? clickCnts;
 
   final style = const TextStyle(
       color: Color.fromRGBO(51, 51, 51, 1),
@@ -75,6 +77,7 @@ class CourseSelfAnswerItem extends HookWidget {
   }
 
   setCnt({QuizAnswer? answer, String? selectedAnswerId}) {
+    clickCnts!.value++;
     if (answer!.isTrue == '1' && answer.answerId == selectedAnswerId) {
       correctAnswerds!.value.add(answer.answerId);
     } else if (answer.answerId == selectedAnswerId && answer.isTrue == '0') {
@@ -98,6 +101,10 @@ class CourseSelfAnswerItem extends HookWidget {
       if (answer!.isTrue == '1') {
         color = Colors.greenAccent;
       }
+      // if (answer.isTrue == '1' && selectedAnswerId == answer.answerId) {
+      //   correctCnt!.value++;
+      //   print(correctCnt!.value);
+      // }
       if (selectedAnswerId == answer.answerId && answer.isTrue == '0') {
         color = Colors.redAccent;
       }

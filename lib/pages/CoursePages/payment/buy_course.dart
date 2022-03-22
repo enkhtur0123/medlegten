@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/repositories/payment_repository.dart';
@@ -9,7 +10,6 @@ import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/loader.dart';
 import 'package:medlegten/widgets/my_textfield.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
-
 class PaymentPage extends StatefulWidget {
   final CourseInfo? courseInfo;
   final String? paymentType;
@@ -42,6 +42,7 @@ class PaymentState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: const Text(
           "Төлбөр",
@@ -49,7 +50,7 @@ class PaymentState extends State<PaymentPage> {
         ),
         centerTitle: false,
       ),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.red,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
@@ -75,8 +76,13 @@ class PaymentState extends State<PaymentPage> {
                     fit: FlexFit.tight,
                     flex: 5,
                     child: Container(
+                      // color: Colors.black,
+                      width: double.infinity,
                       margin: const EdgeInsets.all(20),
-                      child: MyTextField(
+                      child: 
+                      MyTextField(
+                        labelColor: Colors.black,
+                        key: GlobalKey<FormFieldState>(),
                         controller: controller,
                         isBordered: true,
                         labelText: "Купон код",
@@ -84,10 +90,9 @@ class PaymentState extends State<PaymentPage> {
                         keyboardType: TextInputType.text,
                         enabled: true,
                         onChanged: (value) {
-                          // print(value);
                         },
                         onSubmitted: (value) {
-                          //  print(value);
+                        
                         },
                       ),
                     ),
