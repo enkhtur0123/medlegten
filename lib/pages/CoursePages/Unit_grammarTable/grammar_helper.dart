@@ -81,6 +81,7 @@ class Grammarhelper {
       });
 
     Sentence? firstSentence;
+
     if (isType1) {
       for (var sentence in unitGrammar.sentences) {
         firstSentence ??= sentence;
@@ -96,8 +97,12 @@ class Grammarhelper {
       }
     } else {
       List<Sentence> sentences = [];
-      for (var sentence in unitGrammar.sentences.where((sentence) =>
-          sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase())) {
+      var sentenceList = unitGrammar.sentences.where((sentence) =>
+          sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase());
+      Sentence? lastNearSentence;
+      int lastNearIndex = 0;
+
+      for (var sentence in sentenceList) {
         firstSentence ??= sentence;
         if (selectedGrammar != null &&
             selectedSentence != null &&
@@ -115,6 +120,11 @@ class Grammarhelper {
                   sentence.getPart(i) != _partNames[i - 1]) {
                 add = false;
                 break;
+              } else {
+                if (lastNearIndex < i) {
+                  lastNearIndex = i;
+                  lastNearSentence = sentence;
+                }
               }
             }
 
@@ -128,6 +138,7 @@ class Grammarhelper {
           }
         }
       }
+      print('DDDDDDDDDDDDDDDD: $lastNearSentence');
       selectedSentence = sentences.isNotEmpty ? sentences.first : firstSentence;
       return selectedSentence!;
     }

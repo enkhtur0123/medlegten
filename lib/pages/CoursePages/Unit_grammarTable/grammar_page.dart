@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/video_player_widget.dart';
 import 'package:medlegten/models/Unit/grammar.dart';
 import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/pages/CoursePages/Unit_grammarTable/blink.dart';
@@ -11,7 +10,6 @@ import 'package:medlegten/pages/CoursePages/Unit_grammarTable/grammar_video.dart
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
-import 'package:video_player/video_player.dart';
 
 typedef UnitGrammarCallback = void Function(GrammarAnswerEx asnwer, int level);
 
@@ -41,6 +39,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
   //late VideoPlayerController _videoPlayerController;
   bool isType1 = false;
   final ValueNotifier<int> _counter = ValueNotifier<int>(0);
+  bool show = false;
 
   @override
   void initState() {
@@ -97,7 +96,10 @@ class _GrammarTablePageState extends State<GrammarTablePage>
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _counter.value++);
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _counter.value++;
+      show = true;
+    });
     return Scaffold(
       backgroundColor: ColorTable.color255_255_255,
       body: Stack(children: [
@@ -186,8 +188,8 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                           widget.unitGrammar.grammar[_controller.index])
                       .textEng,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: colorBlack,
+                  style: TextStyle(
+                      color: show == false ? Colors.transparent : colorBlack,
                       fontWeight: FontWeight.w400,
                       fontSize: 17),
                 );
@@ -202,8 +204,10 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                           widget.unitGrammar.grammar[_controller.index])
                       .textMon,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(168, 175, 229, 1),
+                  style: TextStyle(
+                      color: show == false
+                          ? Colors.transparent
+                          : const Color.fromRGBO(168, 175, 229, 1),
                       fontWeight: FontWeight.w400,
                       fontSize: 15,
                       fontStyle: FontStyle.italic),
@@ -287,6 +291,14 @@ class _GrammarTablePageState extends State<GrammarTablePage>
                         widget.unitGrammar.grammar[selectedIndex[0]]) {
                   helper.selectedAnswers = {};
                   helper.selectedChips = {};
+                } else {
+                  for (int i = level + 1; i < 20; i++) {
+                    var idDown = helper.grammarIndex(
+                            widget.unitGrammar.grammar[selectedIndex[0]]) +
+                        i;
+                    helper.selectedAnswers.remove(idDown);
+                    helper.selectedChips.remove(idDown);
+                  }
                 }
                 //if (replaceRN(helper.selectedAnswers[id]) !=
                 //    replaceRN(answer.answer)) {
