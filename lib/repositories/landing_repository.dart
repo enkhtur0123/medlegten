@@ -1,3 +1,4 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/models/Landing/app_bar_data.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
@@ -14,6 +15,7 @@ import 'package:medlegten/services/http_helper.dart';
 class LandingRepository {
   Future<LastSeenUnitInfo> getLastSeenUnitInfo(
       {String? unitId, String? moduleId, String? moduleTypeId}) async {
+    //  await  GetStorage().remove("token");
     try {
       final res = await HttpHelper()
           .getUrl(url: 'Course/LastSeenUnitModule/$unitId/$moduleId');
@@ -64,6 +66,7 @@ class LandingRepository {
   Future<List<CourseInfo>?> getCourseList() async {
     try {
       final res = await HttpHelper().getUrl(url: 'Course');
+      print(res);
       if (res['isSuccess']) {
         var list = res['courseList'] as List;
         return list.map((i) => CourseInfo.fromJson(i)).toList();

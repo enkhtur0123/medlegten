@@ -47,7 +47,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
               isGoogle: isGoogle!,
               googleSignInAccount: googleSignInAccount,
               isApple: isApple!,
-              userIdentifier: authorizationCredentialAppleID!.userIdentifier,
+              // ignore: unnecessary_null_in_if_null_operators
+              userIdentifier: authorizationCredentialAppleID?.userIdentifier??null,
               credentialAppleID: authorizationCredentialAppleID,
               fUser: fUser);
           _login();
@@ -91,7 +92,6 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   _login() async {
     var user = await LoginRepository().getUserInfo();
-
     // print(appBarData);
     userInfo = user;
     if (user == null) {

@@ -33,7 +33,7 @@ class HttpHelper {
         },
         onResponse: (response, handler) {
           // if (response.data != null && response.data["errorCode"] == "401") {
-          // GetStorage().remove("token");
+         
 
           // }
           // Do something with response data
@@ -53,6 +53,7 @@ class HttpHelper {
   }
 
   Future<dynamic> getUrl({String? url, String? token}) async {
+    //  GetStorage().remove("token");
     var dio = _createDio();
     var access_token = token ?? await getToken();
     // print(access_token);

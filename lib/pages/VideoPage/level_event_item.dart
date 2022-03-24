@@ -83,7 +83,7 @@ class LevelEventItem extends HookWidget {
                 child: getEventImageWidget(context: context, event: event),
               ),
               const SizedBox(height: 10),
-              Flexible(flex: 3, child: getEventInfo(event: event!))
+              Flexible(flex: 3, child: getEventInfo(event: event!),fit: FlexFit.tight,)
             ],
           ),
         ),

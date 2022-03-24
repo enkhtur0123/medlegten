@@ -121,10 +121,16 @@ class LoginRepository implements ILoginRepository {
           url: 'Login',
           body: json.encode({
             'userId': !isApple ? user.providerData.first.uid : userIdentifier,
-            'firstName': !isApple?
-                (isGoogle! ? googleSignInAccount!.displayName : fUser!["name"]):credentialAppleID!.givenName,
-            'lastName': !isApple?
-                (isGoogle! ? googleSignInAccount!.displayName : fUser!["name"]): credentialAppleID!.familyName,
+            'firstName': !isApple
+                ? (isGoogle!
+                    ? googleSignInAccount!.displayName
+                    : fUser!["name"])
+                : credentialAppleID!.givenName,
+            'lastName': !isApple
+                ? (isGoogle!
+                    ? googleSignInAccount!.displayName
+                    : fUser!["name"])
+                : credentialAppleID!.familyName,
             'profileUrl': !isApple
                 ? (isGoogle!
                     ? googleSignInAccount!.photoUrl
@@ -134,8 +140,9 @@ class LoginRepository implements ILoginRepository {
                 !isApple ? (isGoogle! ? 'google' : 'facebook') : "apple",
             'deviceInfo': Platform.operatingSystem, //DO IT
             'channel': 'app',
-            'email': !isApple?
-                (isGoogle! ? googleSignInAccount!.email : fUser!["email"]): credentialAppleID!.email,
+            'email': !isApple
+                ? (isGoogle! ? googleSignInAccount!.email : fUser!["email"])
+                : credentialAppleID!.email,
             'birthDate': ''
           }),
         );
