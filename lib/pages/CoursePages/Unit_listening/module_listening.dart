@@ -44,7 +44,6 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   int currentIndex = 0;
   ValueNotifier<List<ListenCheck>> listenChecks = ValueNotifier([]);
   ScrollPhysics scrollPhysics = const NeverScrollableScrollPhysics();
-
   @override
   void initState() {
     super.initState();
@@ -67,17 +66,15 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   Future<void> _init() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-    _player.currentIndexStream.listen((event) async {
-      if (event != null &&
-          event != 0 &&
-          !listenChecks.value[currentIndex].isChecking! &&
-          !isBottomSheet) {
-        await _player.seekToNext();
-        await _player.stop();
-        // await _player.pause();
+    _player.positionStream.listen((event) async {
+      if (event == uriAudioSource![currentIndex].duration &&
+          event.inSeconds != 0) {
         isBottomSheet = true;
+        await _player.stop();
+        await _player.seekToNext();
         setState(() {});
         await showModalBottomSheet<dynamic>(
+          enableDrag: false,
           isScrollControlled: true,
           isDismissible: false,
           elevation: 5,
@@ -102,14 +99,27 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
             );
           },
         ).then((value) async {
-          if (value != null && value) {
-            await _player.play();
-          }
           isBottomSheet = false;
+          if (value != null && value) {
+            await controller.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn);
+          } else {
+            if (currentIndex != 0) {
+              currentIndex--;
+            }
+          }
           setState(() {});
+          await _player.play();
         });
       }
     });
+    // _player.currentIndexStream.listen((event) async {
+    //   if (event != null &&
+    //       event != 0 &&
+    //       !listenChecks.value[currentIndex].isChecking! &&
+    //       !isBottomSheet) {}
+    // });
     try {
       await _player.setAudioSource(_playlist!, preload: false, initialIndex: 0);
     } catch (e) {}
@@ -262,7 +272,6 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                                   positionData?.bufferedPosition ??
                                       Duration.zero,
                               onChanged: (Duration duration) async {
-                                // print(positionData!.position.inSeconds);
                               },
                               onChangeEnd: _player.seek,
                             );

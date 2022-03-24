@@ -11,12 +11,14 @@ import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class VideoRepository {
-  Future<List<Event>> categorySearch({String? categoryId,int? pageNumber,int? pageSize}) async {
+  Future<List<Event>> categorySearch(
+      {String? categoryId, int? pageNumber, int? pageSize}) async {
     try {
-      final res =
-          await HttpHelper().getUrl(url: '/ppv/CategoryAll/$categoryId?pageNumber=$pageNumber&pageSize=$pageSize');
+      final res = await HttpHelper().getUrl(
+          url:
+              '/ppv/CategoryAll/$categoryId?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
-        if (res['events']==null) {
+        if (res['events'] == null) {
           return [];
         } else {
           var list = res['events'] as List;
@@ -65,9 +67,12 @@ class VideoRepository {
   }
 
   // ignore: non_constant_identifier_names
-  Future<List<Event>> getLevelAllEvent({String? level_id}) async {
+  Future<List<Event>> getLevelAllEvent(
+      {String? level_id, int? pageNumber, int? pageSize}) async {
     try {
-      final res = await HttpHelper().getUrl(url: 'ppv/LevelAll/$level_id');
+      final res = await HttpHelper().getUrl(
+          url:
+              'ppv/LevelAll/$level_id?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
         var list = res['events'] as List;
         return list.map((i) => Event.fromJson(i)).toList();
@@ -126,6 +131,7 @@ class VideoRepository {
       if (res['isSuccess']) {
         var list = res['words'] as List;
         var words = list.map((i) => VideoVocabularyWord.fromJson(i)).toList();
+
         return VideoVocabulary(res['wordCount'], words);
       } else {
         dioRepository.snackBar(res['resultMessage']);

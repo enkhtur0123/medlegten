@@ -11,6 +11,7 @@ import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/dialog/custom_popup.dart';
 import 'package:medlegten/widgets/loader.dart';
+import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
 // ignore: must_be_immutable
 class CourseSelfTestPage extends HookWidget {
@@ -19,6 +20,8 @@ class CourseSelfTestPage extends HookWidget {
   ValueNotifier<String>? quizId = ValueNotifier("");
 
   ValueNotifier<Set<String>> correctAnswerIds = ValueNotifier(Set());
+  ValueNotifier<int> clickCnts = ValueNotifier(0);
+
   Future<List<QuizQuestionEx>> fetchData() async {
     List<QuizQuestionEx> sortedList = [];
     var result = await LandingRepository().getSelfQuiz();
@@ -54,15 +57,6 @@ class CourseSelfTestPage extends HookWidget {
                 fontWeight: FontWeight.w700,
                 fontSize: 16),
           ),
-          // addVerticalSpace(6),
-          // const Text(
-          //   'Явцын шалгалт 2',
-          //   style: TextStyle(
-          //       color: colorPrimary,
-          //       fontFamily: 'Roboto',
-          //       fontWeight: FontWeight.w700,
-          //       fontSize: 12),
-          // ),
           addVerticalSpace(10),
           const Divider(
             color: Color.fromRGBO(199, 201, 217, .3),
@@ -79,7 +73,7 @@ class CourseSelfTestPage extends HookWidget {
                                   mode: mode.value,
                                   check: check,
                                   correctCnt: correctCnt,
-                                  selfTestCnt: snapshot.data!.length,
+                                  clickCnt: clickCnts,
                                   correctAnswerds: correctAnswerIds,
                                 ))
                             .toList(),
@@ -96,11 +90,15 @@ class CourseSelfTestPage extends HookWidget {
               onTap: () {
                 if (mode.value == 0) {
                   check.value = true;
-                  mode.value = 1;
-                  setSelfTestResult(
-                      correctCnt: correctCnt.value,
-                      snapshot: snapshot,
-                      context: context);
+                  if (clickCnts.value != 0) {
+                    mode.value = 1;
+                    setSelfTestResult(
+                        correctCnt: correctCnt.value,
+                        snapshot: snapshot,
+                        context: context);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Хариултаа сонгоно уу",));
+                  }
                 } else {
                   AutoRouter.of(context).pop();
                 }
@@ -119,13 +117,15 @@ class CourseSelfTestPage extends HookWidget {
     Map<String, dynamic> data = {
       "quizId": quizId?.value.toString(),
       "correctCount": correctAnswerIds.value.isNotEmpty
-          ? (correctAnswerIds.value.length - 1).toString()
+          ? (correctAnswerIds.value.length).toString()
           : 0.toString(),
       "incorrectCount": (snapshot!.data!.length -
               (correctAnswerIds.value.isNotEmpty
                   ? correctAnswerIds.value.length - 1
-                  : 0)).toString()
+                  : 0))
+          .toString()
     };
+    print(data.toString());
     var result;
     try {
       LoadingIndicator(context: context).showLoadingIndicator();

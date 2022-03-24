@@ -7,8 +7,12 @@ import 'package:medlegten/services/http_helper.dart';
 class ArticleRepository {
   Future<List<ArticleItem>> searchArticle(
       {String? searchValue, int? pageNumber, int? pageSize}) async {
+    // print("searchArticle");
+   
     try {
-      final res = await HttpHelper().getUrl(url: 'Article/Search/$searchValue?pageNumber=$pageNumber&pageSize=$pageSize');
+      final res = await HttpHelper().getUrl(
+          url:
+              'Article/Search/$searchValue?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
         var list = res['articles'] as List;
         var articles = list.map((i) => ArticleItem.fromJson(i)).toList();
@@ -42,6 +46,8 @@ class ArticleRepository {
 
   Future<List<ArticleItem>> getAllArticle(
       {String? typeId, int? pageNumber, int? pageSize}) async {
+    print(pageNumber);
+    // print("all");
     try {
       final res = await HttpHelper().getUrl(
           url: 'Article/All/$typeId?pageNumber=$pageNumber&pageSize=$pageSize');

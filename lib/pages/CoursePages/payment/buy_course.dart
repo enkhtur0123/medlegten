@@ -36,9 +36,10 @@ class PaymentPage extends StatefulWidget {
 class PaymentState extends State<PaymentPage> {
   TextEditingController controller = TextEditingController();
   FocusNode couponNode = FocusNode();
-  String infoText = "Компанийн нэр: Стардаст вишн Партнерс ХХК";
+  String infoText = "Стардаст вишн Партнерс ХХК";
   String? couponCode;
   String? price;
+  bool isSuccess = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,7 @@ class PaymentState extends State<PaymentPage> {
         ),
         centerTitle: false,
       ),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.red,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
@@ -60,12 +61,14 @@ class PaymentState extends State<PaymentPage> {
               Container(
                 alignment: Alignment.topCenter,
                 margin: const EdgeInsets.all(30),
-                child: const Text("Төлбөрийн төрлөө сонгоно уу!",
-                    style: TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                    textAlign: TextAlign.center),
+                child: const Text(
+                  "Төлбөрийн төрлөө сонгоно уу!",
+                  style: TextStyle(
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,20 +78,21 @@ class PaymentState extends State<PaymentPage> {
                     fit: FlexFit.tight,
                     flex: 5,
                     child: Container(
+                      width: double.infinity,
                       margin: const EdgeInsets.all(20),
                       child: MyTextField(
+                        borderColor: isSuccess ? Colors.green : Colors.red,
+                        labelColor: Colors.black,
+                        key: GlobalKey<FormFieldState>(),
+                        suffix: Container(width: 0,height: 0,),
                         controller: controller,
                         isBordered: true,
                         labelText: "Купон код",
                         focusNode: couponNode,
                         keyboardType: TextInputType.text,
                         enabled: true,
-                        onChanged: (value) {
-                          // print(value);
-                        },
-                        onSubmitted: (value) {
-                          //  print(value);
-                        },
+                        onChanged: (value) {},
+                        onSubmitted: (value) {},
                       ),
                     ),
                   ),
@@ -139,21 +143,22 @@ class PaymentState extends State<PaymentPage> {
         onClosing: () {},
         builder: (context) {
           return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  child: Text(
-                    infoText,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal),
-                  ),
-                )
-              ]);
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(bottom: 100),
+                child: Text(
+                  infoText,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.normal),
+                ),
+              )
+            ],
+          );
         },
       ),
     );
@@ -172,15 +177,25 @@ class PaymentState extends State<PaymentPage> {
       if (value != null) {
         couponCode = value["coupon"]["couponCode"];
         price = value["coupon"]["price"];
-        ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
-          text: "Амжилттай",
-        ));
+        isSuccess = true;
+        keyboardHide();
+        couponNode.unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+        ScaffoldMessenger.of(context).showSnackBar(
+          MySnackBar(
+            text: "Уг купон кодыг ашиглах боломжтой байна.",
+          ),
+        );
+        setState(() {});
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           MySnackBar(
             text: "Купон кодоо шалгана уу",
           ),
         );
+        isSuccess = false;
+        keyboardHide();
+        setState(() {});
       }
     }).catchError((onError) {
       LoadingIndicator(context: context).hideLoadingIndicator();
@@ -189,7 +204,14 @@ class PaymentState extends State<PaymentPage> {
           text: "Купон кодоо шалгана уу",
         ),
       );
+      keyboardHide();
+      isSuccess = false;
+      setState(() {});
     });
+  }
+
+  void keyboardHide() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   Widget getPaymentFunction({String? icon, String? title, String? body}) {

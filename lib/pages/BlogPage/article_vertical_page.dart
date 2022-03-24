@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/models/article/article_item.dart';
-import 'package:medlegten/pages/BlogPage/article_item_page.dart';
 import 'package:medlegten/pages/BlogPage/article_vertical_item_page.dart';
 import 'package:medlegten/repositories/article_repository.dart';
 
@@ -25,9 +24,18 @@ class ArticleVerticalPage extends StatefulWidget {
 
 // ignore: must_be_immutable
 class ArticleVerticalPageState extends State<ArticleVerticalPage> {
-  int pageNumber = 1;
+  int pageNumber = 0;
   int pageSize = 10;
-  List<ArticleItem>? articles=[];
+  List<ArticleItem>? articles = [];
+  bool isLoadMore = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      onLoadMore();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,26 +43,19 @@ class ArticleVerticalPageState extends State<ArticleVerticalPage> {
       appBar: AppBar(
         title: Text(widget.title!),
       ),
-      body: FutureBuilder(
-        future: !widget.isArticleSearch!
-            ? ArticleRepository().getAllArticle(
-                typeId: widget.typeId,
-                pageNumber: pageNumber,
-                pageSize: pageSize)
-            : ArticleRepository().searchArticle(
-                searchValue: widget.searchValue,
-                pageNumber: pageNumber,
-                pageSize: pageSize),
-        builder: (context, AsyncSnapshot<List<ArticleItem>> snapshot) {
-          if (snapshot.hasData) {
-            articles!.addAll(snapshot.data!);
-            return Container(
+      body: articles!.isNotEmpty
+          ? Container(
               margin: const EdgeInsets.all(20),
               child: NotificationListener(
                 onNotification: (ScrollNotification scrollInfo) {
                   if (scrollInfo.metrics.pixels ==
-                      scrollInfo.metrics.maxScrollExtent) {
+                          scrollInfo.metrics.maxScrollExtent &&
+                      !isLoadMore) {
+                    pageNumber++;
+                    isLoadMore = true;
+                    widget.isArticleSearch = widget.isArticleSearch;
                     onLoadMore();
+                    return true;
                   }
                   return false;
                 },
@@ -62,7 +63,7 @@ class ArticleVerticalPageState extends State<ArticleVerticalPage> {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemCount: articles!.length,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return ArticleVerticalItemPage(
                       articleItem: articles![index],
@@ -70,14 +71,22 @@ class ArticleVerticalPageState extends State<ArticleVerticalPage> {
                   },
                 ),
               ),
-            );
-          } else {
-            return Container();
-          }
-        },
-      ),
+            )
+          : Container(),
     );
   }
 
-  void onLoadMore() {}
+  void onLoadMore() async {
+    if (!widget.isArticleSearch!) {
+      articles!.addAll(await ArticleRepository().getAllArticle(
+          typeId: widget.typeId, pageNumber: pageNumber, pageSize: pageSize));
+    } else {
+      articles!.addAll(await ArticleRepository().searchArticle(
+          searchValue: widget.searchValue,
+          pageNumber: pageNumber,
+          pageSize: pageSize));
+    }
+    isLoadMore = false;
+    setState(() {});
+  }
 }

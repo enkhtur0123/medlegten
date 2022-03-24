@@ -12,14 +12,15 @@ class CourseSelfTestQuestion extends HookWidget {
   final ValueNotifier<bool>? check;
   ValueNotifier<int> correctCnt;
   ValueNotifier? selectedAnswerId = ValueNotifier("");
-  int selfTestCnt;
+  ValueNotifier<int>? clickCnt;
+
   ValueNotifier<Set<String>>? correctAnswerds;
   CourseSelfTestQuestion(this.quizQuestionEx,
       {Key? key,
       this.mode = 0,
       this.check,
       required this.correctCnt,
-      required this.selfTestCnt,
+      required this.clickCnt,
       this.correctAnswerds})
       : super(key: key);
 
@@ -43,7 +44,6 @@ class CourseSelfTestQuestion extends HookWidget {
               quizQuestionEx.quizQuestion.type == '0'
                   ? 'Асуулт ${quizQuestionEx.quizQuestion.ordering}:'
                   : '${quizQuestionEx.quizQuestion.typeText}:',
-              //'Асуулт ' + quizQuestionEx.quizQuestion.ordering + ':',
               style: const TextStyle(
                   color: Color.fromRGBO(48, 53, 159, 1),
                   fontWeight: FontWeight.w600,
@@ -70,6 +70,7 @@ class CourseSelfTestQuestion extends HookWidget {
           CourseSelfAnswerItem(
               answers: sortedAnswers,
               mode: mode,
+              clickCnts: clickCnt,
               correctCnt: correctCnt,
               correctAnswerds: correctAnswerds)
         ],

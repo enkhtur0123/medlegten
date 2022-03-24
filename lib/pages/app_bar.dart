@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
 
@@ -66,6 +67,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                       children: [
                        SvgPicture.asset(
                           "assets/logo/horizontal_logo.svg",
+                          color: Colors.white,
                           height: 25,
                           fit: BoxFit.contain,
                         ),

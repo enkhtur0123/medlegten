@@ -27,32 +27,34 @@ class LevelVideoListPage extends StatefulWidget {
 class LevelVideoListPageState extends State<LevelVideoListPage> {
   int currentPageNumber = 0;
   static int pageSize = 10;
-  bool loadMore = false;
+  bool isLoadMore = false;
 
   List<Event>? events = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      onLoadMore();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.categoryName!),
       ),
-      body: FutureBuilder<List<Event>>(
-        future: !widget.isCategorySearch!
-            ? VideoRepository().getLevelAllEvent(level_id: widget.levelId)
-            : VideoRepository().categorySearch(
-                categoryId: widget.categoryId,
-                pageNumber: currentPageNumber,
-                pageSize: pageSize),
-        builder: (context, AsyncSnapshot<List<Event>?> snapshot) {
-          if (snapshot.hasData) {
-            events!.addAll(snapshot.data!);
-            return NotificationListener<ScrollNotification>(
+      body: events!.isNotEmpty
+          ? NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
                 if (scrollInfo.metrics.pixels ==
                         scrollInfo.metrics.maxScrollExtent &&
-                    !loadMore) {
+                    !isLoadMore) {
+                  isLoadMore = true;
                   currentPageNumber++;
                   onLoadMore();
+                  return true;
                 }
                 return false;
               },
@@ -72,31 +74,24 @@ class LevelVideoListPageState extends State<LevelVideoListPage> {
                   );
                 },
               ),
-            );
-          } else {
-            return Container();
-          }
-        },
-      ),
+            )
+          : Container(),
     );
   }
 
   Future<void> onLoadMore() async {
-    loadMore = true;
-    VideoRepository()
-        .categorySearch(
-            categoryId: widget.categoryId,
-            pageNumber: currentPageNumber,
-            pageSize: pageSize)
-        .then((value) {
-      events!.addAll(value);
-      setState(() {
-        loadMore = false;
-      });
-    }).catchError((onError) {
-      setState(() {
-        loadMore = false;
-      });
-    });
+    if (widget.isCategorySearch!) {
+      events!.addAll(await VideoRepository().categorySearch(
+          categoryId: widget.categoryId,
+          pageNumber: currentPageNumber,
+          pageSize: pageSize));
+    } else {
+      events!.addAll(await VideoRepository().getLevelAllEvent(
+          level_id: widget.levelId,
+          pageNumber: currentPageNumber,
+          pageSize: pageSize));
+    }
+    isLoadMore = false;
+    setState(() {});
   }
 }
