@@ -138,7 +138,6 @@ class Grammarhelper {
           }
         }
       }
-      print('DDDDDDDDDDDDDDDD: $lastNearSentence');
       selectedSentence = sentences.isNotEmpty ? sentences.first : firstSentence;
       return selectedSentence!;
     }
@@ -170,9 +169,12 @@ class Grammarhelper {
           }
         }
       });
-
+    print('SSSSSSSSSSSSSSSSSS: $_partNames');
     List<String> retVal = [];
-
+    // Sentence? selectedSentence;
+    // if (selectedGrammar != null && selectedGrammar != grammar) {
+    //   selectedSentence = getSentence(selectedGrammar!);
+    // }
     for (var sentence in unitGrammar.sentences.where((sentence) =>
         sentence.grammarLabel.toLowerCase() == grammar.label.toLowerCase())) {
       if (selectedAnswers.isNotEmpty &&
@@ -182,6 +184,7 @@ class Grammarhelper {
         if (selectedSentence.groupNumber != sentence.groupNumber) {
           continue;
         } else {
+          print('DDDDDDDDDDDDDDDDDDD: $sentence');
           retVal.add(sentence.getPart(partId)!);
         }
       }

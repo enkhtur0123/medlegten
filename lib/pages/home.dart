@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/pages/LandingPages/landing_page.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
@@ -23,12 +24,12 @@ class HomePage extends ConsumerWidget {
         break;
       case AuthState.Authorizing:
       case AuthState.UnAuthorized:
-        //GetStorage().write(
-        //    'token',
-        //    'MRIhZxgkrNGKdtbFlErUTPLtdGHzKGcnphpbMDqqpXdQUIBzlcvaAXIpXQhjEIXhuvlqxRvabVkoYNtOiDZKdldMxWLQMOXjSOHRZxaMygOYkBEGTHuhuBusSwHKfTKukrFyKTahjnjNnhTReFyHPS');
-        //    'gbwtXkaooXkjByptFaPyBUFcOtfTcXOebTPpISCytwEZMkmXKlyLjAguUcNzHpTQqAYJRrrzXUXNEszZedfMXvZwvcoPIVPkwdidceWiFWZosfUzFsLflsMmcNZZNGkUxGrhWWHjAFAQatvBVAutOc');
-        //home = const LandingPage();
-        home = const StartPage();
+        GetStorage().write(
+            'token',
+            //    'MRIhZxgkrNGKdtbFlErUTPLtdGHzKGcnphpbMDqqpXdQUIBzlcvaAXIpXQhjEIXhuvlqxRvabVkoYNtOiDZKdldMxWLQMOXjSOHRZxaMygOYkBEGTHuhuBusSwHKfTKukrFyKTahjnjNnhTReFyHPS');
+            'JBwEidgvcOQLIRVfYjGgMlQrkSMeBHsJLfkKFNvhNYjruRtigCzdjNCtUIijlZFouBWNeQNlHpXHCKaQVLIkVvDgnTuqnBWHZFEZhGUnrWklXdJqTqUGVJVhUQDSRjshucgkQvENhsWsZNWHKOwIKs');
+        home = const LandingPage();
+        //home = const StartPage();
         break;
       case AuthState.Initial:
         home = const InitializationPage();

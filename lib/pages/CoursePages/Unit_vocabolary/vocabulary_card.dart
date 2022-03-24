@@ -18,6 +18,53 @@ class VocabularyCart extends HookWidget {
     }, [wordInfo]);
 
     List<Widget> list = [];
+    if (wordInfo.rootWordInfo.rootWord != null) {
+      list.add(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Text(
+              'Үгийн үндэс',
+              style: TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, 1),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
+            ),
+            addHorizontalSpace(20),
+            Text(
+              wordInfo.rootWordInfo.rootWord!,
+              style: const TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, .3),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      );
+
+      if (wordInfo.rootWordInfo.translation != null) {
+        for (var translation in wordInfo.rootWordInfo.translation!) {
+          {
+            list.add(Text(
+              translation.trTypeShortName,
+              style: const TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, 1),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+            ));
+            list.add(Text(
+              translation.trText,
+              style: const TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, .6),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
+            ));
+            list.add(addVerticalSpace(10));
+          }
+        }
+      }
+    }
     for (var translation in wordInfo.translation) {
       {
         list.add(Text(

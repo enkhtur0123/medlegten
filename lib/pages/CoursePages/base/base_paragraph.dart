@@ -63,8 +63,10 @@ mixin BaseSubtitleMixin<Page extends BaseSubtitlePage>
               if (key.id == '-1') {
                 widget.tailCallback!(paragraph);
               } else {
-                selectedWord = key;
-                widget.wordCallback!(key, rect);
+                if (key.wordValue != '') {
+                  selectedWord = key;
+                  widget.wordCallback!(key, rect);
+                }
               }
               refreshCue.value = !refreshCue.value;
             } else {
