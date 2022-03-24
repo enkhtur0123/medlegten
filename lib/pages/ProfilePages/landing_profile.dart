@@ -6,6 +6,7 @@ import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'report_items.dart';
 
@@ -91,12 +92,7 @@ class LandingProfile extends ConsumerWidget {
               // ignore: invalid_use_of_protected_member
               Text(
                 "Апп хувилбар  " +
-                    ref
-                        .read(appProvider.notifier)
-                        .state
-                        .version!
-                        .appVersion
-                        .toString(),
+                   AppProperties.version,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(

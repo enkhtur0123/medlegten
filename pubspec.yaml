@@ -59,6 +59,8 @@ dependencies:
   webview_flutter: ^3.0.0
   syncfusion_flutter_datepicker: ^19.4.54
   measure_size: ^2.0.0
+  sign_in_with_apple: ^3.3.0
+  the_apple_sign_in: ^1.1.1
 
 dev_dependencies:
   flutter_test:

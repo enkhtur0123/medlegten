@@ -12,6 +12,7 @@ import 'package:medlegten/repositories/rep_state.dart';
 import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 final loginNotifierProvider = StateNotifierProvider<LoginNotifier, RepState>(
   (ref) => LoginNotifier(
@@ -109,26 +110,32 @@ class LoginRepository implements ILoginRepository {
   Future fetchLoginInfo(
       {User? user,
       bool? isGoogle,
+      bool isApple = false,
       Map<String, dynamic>? fUser,
-      GoogleSignInAccount? googleSignInAccount}) async {
-    // print(googleSignInAccount);
+      GoogleSignInAccount? googleSignInAccount,
+      AuthorizationCredentialAppleID? credentialAppleID,
+      String? userIdentifier}) async {
     try {
       if (user != null) {
         final res = await HttpHelper().postUrl(
           url: 'Login',
           body: json.encode({
-            'userId': user.providerData.first.uid,
-            'firstName':
-                isGoogle! ? googleSignInAccount!.displayName : fUser!["name"],
-            'lastName':
-                isGoogle ? googleSignInAccount!.displayName : fUser!["name"],
-            'profileUrl': isGoogle
-                ? googleSignInAccount!.photoUrl
-                : fUser!["picture"]["data"]["url"],
-            'socialType': isGoogle ? 'google' : 'facebook',
+            'userId': !isApple ? user.providerData.first.uid : userIdentifier,
+            'firstName': !isApple?
+                (isGoogle! ? googleSignInAccount!.displayName : fUser!["name"]):credentialAppleID!.givenName,
+            'lastName': !isApple?
+                (isGoogle! ? googleSignInAccount!.displayName : fUser!["name"]): credentialAppleID!.familyName,
+            'profileUrl': !isApple
+                ? (isGoogle!
+                    ? googleSignInAccount!.photoUrl
+                    : fUser!["picture"]["data"]["url"])
+                : "",
+            'socialType':
+                !isApple ? (isGoogle! ? 'google' : 'facebook') : "apple",
             'deviceInfo': Platform.operatingSystem, //DO IT
             'channel': 'app',
-            'email': isGoogle ? googleSignInAccount!.email : fUser!["email"],
+            'email': !isApple?
+                (isGoogle! ? googleSignInAccount!.email : fUser!["email"]): credentialAppleID!.email,
             'birthDate': ''
           }),
         );
@@ -138,7 +145,7 @@ class LoginRepository implements ILoginRepository {
         }
       }
     } catch (e) {
-       print(e.toString().toUpperCase());
+      print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
 
       throw CustomException(errorMsg: e.toString().toUpperCase());

@@ -9,6 +9,7 @@ import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 enum AuthState { UnAuthorized, Authorizing, Authorized, AuthorizedAge, Initial }
 
@@ -19,6 +20,7 @@ final authProvider = StateNotifierProvider<AuthViewModel, AuthState>((ref) {
 class AuthViewModel extends StateNotifier<AuthState> {
   final FirebaseAuth _auth;
   bool? isGoogle;
+  bool? isApple = false;
   User? user;
   Map<String, dynamic>? fUser;
   GoogleSignInAccount? googleSignInAccount;
@@ -26,6 +28,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
   FacebookAuth? facebookAuth;
   MUserInfo? userInfo;
   AppBarData? appBarData;
+  AuthorizationCredentialAppleID? authorizationCredentialAppleID;
+  Map<String, dynamic>? appleData;
 
   AuthViewModel()
       : _auth = FirebaseAuth.instance,
@@ -42,6 +46,9 @@ class AuthViewModel extends StateNotifier<AuthState> {
               user: user,
               isGoogle: isGoogle!,
               googleSignInAccount: googleSignInAccount,
+              isApple: isApple!,
+              userIdentifier: authorizationCredentialAppleID!.userIdentifier,
+              credentialAppleID: authorizationCredentialAppleID,
               fUser: fUser);
           _login();
         }
@@ -132,6 +139,39 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
+  loginApple() async {
+    isGoogle = false;
+    isApple = true;
+    changeStatus(AuthState.Authorizing);
+    try {
+      if (user == null) {
+        authorizationCredentialAppleID =
+            await SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+        );
+        final oauthCredential = OAuthProvider("apple.com").credential(
+          idToken: authorizationCredentialAppleID!.identityToken,
+        );
+        _auth.signInWithCredential(oauthCredential);
+        print(authorizationCredentialAppleID!.userIdentifier);
+      } else {
+        await LoginRepository().fetchLoginInfo(
+          credentialAppleID: authorizationCredentialAppleID,
+          isApple: true,
+          isGoogle: isGoogle!,
+          userIdentifier: authorizationCredentialAppleID!.userIdentifier,
+        );
+        _login();
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      changeStatus(AuthState.UnAuthorized);
+    }
+  }
+
   loginFacebook() async {
     isGoogle = false;
     changeStatus(AuthState.Authorizing);
@@ -144,7 +184,6 @@ class AuthViewModel extends StateNotifier<AuthState> {
               FacebookAuthProvider.credential(result.accessToken!.token);
           await _auth.signInWithCredential(credential);
         } else {
-       
           dioRepository.snackBar(result.message!);
           changeStatus(AuthState.UnAuthorized);
         }
@@ -154,7 +193,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
         _login();
       }
     } catch (e) {
-         print(e.toString());
+      print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       changeStatus(AuthState.UnAuthorized);
     }

@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
+import 'package:medlegten/pages/StartPages/apple_login.dart';
 import 'package:medlegten/pages/StartPages/facebook_login.dart';
 import 'package:medlegten/pages/StartPages/google_login.dart';
-import 'package:medlegten/pages/StartPages/medlegten_vertical.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/utils/app_router.dart';
 
@@ -42,7 +42,10 @@ class LoginPage extends ConsumerWidget {
                   const FacebookLogin(),
                   const SizedBox(height: 10),
                   const GoogleLogin(),
+                  const SizedBox(height: 10),
+                  const AppleLogin(),
                   const Spacer(flex: 1),
+
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
