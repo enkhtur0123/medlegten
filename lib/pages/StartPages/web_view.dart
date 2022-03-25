@@ -29,7 +29,7 @@ class WebViewPage extends HookWidget {
         },
         onPageStarted: (url) {},
         onPageFinished: (url) {
-          print(url);
+          // print(url);
         },
         initialUrl: webUrl,
         javascriptMode: JavascriptMode.unrestricted,

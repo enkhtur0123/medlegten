@@ -125,7 +125,7 @@ class CourseSelfTestPage extends HookWidget {
                   : 0))
           .toString()
     };
-    print(data.toString());
+    // print(data.toString());
     var result;
     try {
       LoadingIndicator(context: context).showLoadingIndicator();

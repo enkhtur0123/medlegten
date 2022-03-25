@@ -156,7 +156,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
           idToken: authorizationCredentialAppleID!.identityToken,
         );
         _auth.signInWithCredential(oauthCredential);
-        print(authorizationCredentialAppleID!.userIdentifier);
+        // print(authorizationCredentialAppleID!.userIdentifier);
       } else {
         await LoginRepository().fetchLoginInfo(
           credentialAppleID: authorizationCredentialAppleID,
@@ -193,7 +193,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
         _login();
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       changeStatus(AuthState.UnAuthorized);
     }

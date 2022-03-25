@@ -83,7 +83,7 @@ class LevelEventItem extends HookWidget {
                 child: getEventImageWidget(context: context, event: event),
               ),
               const SizedBox(height: 10),
-              Flexible(flex: 3, child: getEventInfo(event: event!),fit: FlexFit.tight,)
+              Flexible(flex: 4, child: getEventInfo(event: event!),fit: FlexFit.tight,)
             ],
           ),
         ),
@@ -110,7 +110,7 @@ class LevelEventItem extends HookWidget {
             alignment: Alignment.center,
             child: SvgPicture.asset("assets/svg/player.svg"),
           ),
-        )
+        ),
       ],
     );
   }
@@ -123,6 +123,7 @@ class LevelEventItem extends HookWidget {
       children: [
         Flexible(
           flex: 4,
+          fit: FlexFit.tight,
           child: Text(
             !isHome! ? event.eventName ?? "" : event.contentName ?? "",
             style: const TextStyle(

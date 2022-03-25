@@ -6,8 +6,6 @@ import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:medlegten/widgets/loader.dart';
-
 class OnboardingPage extends HookWidget {
   final List<Onboarding> onboardingList;
 
@@ -48,27 +46,25 @@ class OnboardingPage extends HookWidget {
         alignment: AlignmentDirectional.center,
         children: [
           CachedNetworkImage(
-            fit: BoxFit.fill,
+            fit: BoxFit.contain,
             fadeInDuration: const Duration(milliseconds: 10),
             placeholder: (context, url) => const Loading(),
             errorWidget: (context, url, error) => const Icon(Icons.error),
             imageUrl: inner.mainImageUrl,
+            filterQuality: FilterQuality.high,
           ),
           Positioned(
             top: 65,
-            right: 20,
+            right: 25,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Utils().hexToColor(inner.btnSkipBgColor),
-                fixedSize: const Size(40, 24),
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                 ),
               ),
               onPressed: () {
-                //currentCarouselIndex.value =
-                //    nextBoarding(currentCarouselIndex.value);
                 AutoRouter.of(context).pop();
               },
               child: Text(

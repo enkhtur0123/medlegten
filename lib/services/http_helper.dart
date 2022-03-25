@@ -14,12 +14,12 @@ class HttpHelper {
     dio.options.headers['content-Type'] = 'application/json; charset=utf-8';
     dio.options.connectTimeout = 40000;
     dio.options.receiveTimeout = 40000;
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
+    // (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    //     (HttpClient client) {
+    //   client.badCertificateCallback =
+    //       (X509Certificate cert, String host, int port) => true;
+    //   return client;
+    // };
 
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -82,10 +82,10 @@ class HttpHelper {
 
       return response.data;
     } on DioError catch (ex) {
-      print(ex.response!.data.toString());
+      // print(ex.response!.data.toString());
       throw CustomException(errorMsg: ex.message.toString());
     } catch (ex) {
-      print(ex.toString());
+      // print(ex.toString());
       throw CustomException(errorMsg: ex.toString());
     }
   }

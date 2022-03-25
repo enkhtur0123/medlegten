@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "79251626405-ff79jaiuhpg114bbri31s0cn7o0uq0ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mn.svp.lingos",
+            "certificate_hash": "cde51db82e332dd398666ff608cb8756ac1e7f25"
+          }
+        },
+        {
           "client_id": "79251626405-sljtt545o5gvdaf29qfqmsagr3mvq4qs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

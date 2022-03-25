@@ -201,7 +201,7 @@ class LandingProfile extends ConsumerWidget {
           height: 15,
         ),
         Text(
-          'Id: ${userInfo?.userId ?? ""}',
+          'ID: ${userInfo?.userId ?? ""}',
           textAlign: TextAlign.center,
           style: const TextStyle(
               fontStyle: FontStyle.normal,

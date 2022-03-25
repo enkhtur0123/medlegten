@@ -25,7 +25,7 @@ class LevelVideoListPage extends StatefulWidget {
 
 // ignore: must_be_immutable
 class LevelVideoListPageState extends State<LevelVideoListPage> {
-  int currentPageNumber = 0;
+  int currentPageNumber = 1;
   static int pageSize = 10;
   bool isLoadMore = false;
 

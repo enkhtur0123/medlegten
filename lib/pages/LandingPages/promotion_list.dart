@@ -23,7 +23,7 @@ class PromotionList extends HookWidget {
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('Урамшуулал', style: textStyle),
+          Text('Мэдээлэл', style: textStyle),
           // Container(
           //     margin: const EdgeInsets.only(right: 20),
           //     child: Text('Бүгдийг харах', style: textStyle))

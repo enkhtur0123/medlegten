@@ -24,7 +24,7 @@ class ArticleVerticalPage extends StatefulWidget {
 
 // ignore: must_be_immutable
 class ArticleVerticalPageState extends State<ArticleVerticalPage> {
-  int pageNumber = 0;
+  int pageNumber = 1;
   int pageSize = 10;
   List<ArticleItem>? articles = [];
   bool isLoadMore = false;

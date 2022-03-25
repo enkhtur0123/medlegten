@@ -169,7 +169,7 @@ class Grammarhelper {
           }
         }
       });
-    print('SSSSSSSSSSSSSSSSSS: $_partNames');
+    // print('SSSSSSSSSSSSSSSSSS: $_partNames');
     List<String> retVal = [];
     // Sentence? selectedSentence;
     // if (selectedGrammar != null && selectedGrammar != grammar) {
@@ -184,7 +184,7 @@ class Grammarhelper {
         if (selectedSentence.groupNumber != sentence.groupNumber) {
           continue;
         } else {
-          print('DDDDDDDDDDDDDDDDDDD: $sentence');
+          // print('DDDDDDDDDDDDDDDDDDD: $sentence');
           retVal.add(sentence.getPart(partId)!);
         }
       }

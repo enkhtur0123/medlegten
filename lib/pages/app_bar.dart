@@ -2,12 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
-
 import '../widgets/dialog/custom_popup.dart';
-
 // ignore: must_be_immutable
 class CustomAppBar extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
@@ -65,13 +62,13 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       SvgPicture.asset(
+                        SvgPicture.asset(
                           "assets/logo/horizontal_logo.svg",
                           color: Colors.white,
                           height: 25,
                           fit: BoxFit.contain,
                         ),
-                         Text(
+                        Text(
                           ref.read(appbarProvider.notifier).appBarState.text ??
                               "",
                           style: const TextStyle(
@@ -80,8 +77,8 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.normal),
                         ),
-                    ],)
-,
+                      ],
+                    ),
                     Stack(
                       children: [
                         IconButton(
@@ -113,7 +110,6 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
               // const SizedBox(
               //   height: 5,
               // ),
-
             ],
           ),
         ],

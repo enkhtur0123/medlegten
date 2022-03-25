@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
     final _authState = ref.watch(authProvider);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -34,6 +37,7 @@ class LoginPage extends ConsumerWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   const Spacer(flex: 5),
@@ -43,9 +47,8 @@ class LoginPage extends ConsumerWidget {
                   const SizedBox(height: 10),
                   const GoogleLogin(),
                   const SizedBox(height: 10),
-                  const AppleLogin(),
+                  Platform.isIOS ? const AppleLogin():const SizedBox(),
                   const Spacer(flex: 1),
-
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(

@@ -46,7 +46,7 @@ class ArticleRepository {
 
   Future<List<ArticleItem>> getAllArticle(
       {String? typeId, int? pageNumber, int? pageSize}) async {
-    print(pageNumber);
+    // print(pageNumber);
     // print("all");
     try {
       final res = await HttpHelper().getUrl(

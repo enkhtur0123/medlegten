@@ -6,6 +6,7 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/utils/date_time_formatter.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/icon_with_text_widget.dart';
@@ -39,12 +40,6 @@ class CourseCart extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
-                  // BoxShadow(
-                  //   color: Colors.grey.withOpacity(0.5),
-                  //   spreadRadius: 5,
-                  //   blurRadius: 7,
-                  //   offset: const Offset(0, 3), // changes position of shadow
-                  // ),
                   BoxShadow(
                     color: const Color(0xff343C44).withOpacity(0.1),
                     spreadRadius: 5,
@@ -105,11 +100,19 @@ class CourseCart extends StatelessWidget {
                             ],
                           ),
                           addVerticalSpace(5),
-                          AmountWidget(
-                            amount: double.parse(courseInfo.price
-                                .toString()
-                                .replaceAll(",", "")),
-                          ),
+                          !courseInfo.isPurchased
+                              ? AmountWidget(
+                                  amount: double.parse(courseInfo.price
+                                      .toString()
+                                      .replaceAll(",", "")),
+                                )
+                              : Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    MyDateTimeFormatter(date: courseInfo.purchaseExpireDate,noTime: true).toDateTime().toString().split(" ")[0].replaceAll("-", "."),
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                ),
                         ],
                       ),
                     ),

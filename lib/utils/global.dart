@@ -8,7 +8,7 @@ class Utils {
 }
 
 class AppProperties {
- static String version = "1.1.1";
+  static String version = "1.1.2";
 }
 
 class GlobalValues {
