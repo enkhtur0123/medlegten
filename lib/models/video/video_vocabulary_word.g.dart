@@ -13,6 +13,7 @@ _$_VideoVocabularyWord _$$_VideoVocabularyWordFromJson(
       json['word'] as String,
       json['bookMarked'] as bool,
       json['isKnow'] as bool,
+      RootWordInfo.fromJson(json['rootWordInfo'] as Map<String, dynamic>),
       WordType.fromJson(json['wordType'] as Map<String, dynamic>),
       (json['translation'] as List<dynamic>)
           .map((e) => Translation.fromJson(e as Map<String, dynamic>))
@@ -26,6 +27,7 @@ Map<String, dynamic> _$$_VideoVocabularyWordToJson(
       'word': instance.word,
       'bookMarked': instance.bookMarked,
       'isKnow': instance.isKnow,
+      'rootWordInfo': instance.rootWordInfo,
       'wordType': instance.wordType,
       'translation': instance.translation,
     };

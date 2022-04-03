@@ -66,9 +66,9 @@ class _CourseDetailState extends State<CourseDetailPage> with AutoRouteAware {
   @override
   void didPopNext() {
     isPushNext = false;
-    if (_controller.value.position != _controller.value.duration) {
-      _controller.play();
-    }
+    // if (_controller.value.position != _controller.value.duration) {
+    //   _controller.play();
+    // }
   }
 
   @override
@@ -109,7 +109,7 @@ class _CourseDetailState extends State<CourseDetailPage> with AutoRouteAware {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _controller.value.isInitialized
-            ? VideoPlayerChewie(_controller)
+            ? VideoPlayerChewie(_controller,autoPlay: false,)
             : const AspectRatio(
                 aspectRatio: 16 / 9,
                 child: SizedBox(width: double.infinity, child: Loading())),

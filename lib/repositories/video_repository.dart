@@ -129,10 +129,13 @@ class VideoRepository {
           url:
               'ppv/Movie/Vocabulary/$movieId/$mode?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
-        var list = res['words'] as List;
-        var words = list.map((i) => VideoVocabularyWord.fromJson(i)).toList();
-
-        return VideoVocabulary(res['wordCount'], words);
+        if (res['words'] != null) {
+          var list = res['words'] as List;
+          var words = list.map((i) => VideoVocabularyWord.fromJson(i)).toList();
+          return VideoVocabulary(res['wordCount'], words);
+        } else {
+          return VideoVocabulary(res['wordCount'], []);
+        }
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);

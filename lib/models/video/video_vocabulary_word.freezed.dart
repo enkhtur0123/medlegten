@@ -22,13 +22,20 @@ VideoVocabularyWord _$VideoVocabularyWordFromJson(Map<String, dynamic> json) {
 class _$VideoVocabularyWordTearOff {
   const _$VideoVocabularyWordTearOff();
 
-  _VideoVocabularyWord call(String wordId, String word, bool bookMarked,
-      bool isKnow, WordType wordType, List<Translation> translation) {
+  _VideoVocabularyWord call(
+      String wordId,
+      String word,
+      bool bookMarked,
+      bool isKnow,
+      RootWordInfo rootWordInfo,
+      WordType wordType,
+      List<Translation> translation) {
     return _VideoVocabularyWord(
       wordId,
       word,
       bookMarked,
       isKnow,
+      rootWordInfo,
       wordType,
       translation,
     );
@@ -48,6 +55,7 @@ mixin _$VideoVocabularyWord {
   String get word => throw _privateConstructorUsedError;
   bool get bookMarked => throw _privateConstructorUsedError;
   bool get isKnow => throw _privateConstructorUsedError;
+  RootWordInfo get rootWordInfo => throw _privateConstructorUsedError;
   WordType get wordType => throw _privateConstructorUsedError;
   List<Translation> get translation => throw _privateConstructorUsedError;
 
@@ -67,9 +75,11 @@ abstract class $VideoVocabularyWordCopyWith<$Res> {
       String word,
       bool bookMarked,
       bool isKnow,
+      RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation});
 
+  $RootWordInfoCopyWith<$Res> get rootWordInfo;
   $WordTypeCopyWith<$Res> get wordType;
 }
 
@@ -88,6 +98,7 @@ class _$VideoVocabularyWordCopyWithImpl<$Res>
     Object? word = freezed,
     Object? bookMarked = freezed,
     Object? isKnow = freezed,
+    Object? rootWordInfo = freezed,
     Object? wordType = freezed,
     Object? translation = freezed,
   }) {
@@ -108,6 +119,10 @@ class _$VideoVocabularyWordCopyWithImpl<$Res>
           ? _value.isKnow
           : isKnow // ignore: cast_nullable_to_non_nullable
               as bool,
+      rootWordInfo: rootWordInfo == freezed
+          ? _value.rootWordInfo
+          : rootWordInfo // ignore: cast_nullable_to_non_nullable
+              as RootWordInfo,
       wordType: wordType == freezed
           ? _value.wordType
           : wordType // ignore: cast_nullable_to_non_nullable
@@ -117,6 +132,13 @@ class _$VideoVocabularyWordCopyWithImpl<$Res>
           : translation // ignore: cast_nullable_to_non_nullable
               as List<Translation>,
     ));
+  }
+
+  @override
+  $RootWordInfoCopyWith<$Res> get rootWordInfo {
+    return $RootWordInfoCopyWith<$Res>(_value.rootWordInfo, (value) {
+      return _then(_value.copyWith(rootWordInfo: value));
+    });
   }
 
   @override
@@ -139,9 +161,12 @@ abstract class _$VideoVocabularyWordCopyWith<$Res>
       String word,
       bool bookMarked,
       bool isKnow,
+      RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation});
 
+  @override
+  $RootWordInfoCopyWith<$Res> get rootWordInfo;
   @override
   $WordTypeCopyWith<$Res> get wordType;
 }
@@ -163,6 +188,7 @@ class __$VideoVocabularyWordCopyWithImpl<$Res>
     Object? word = freezed,
     Object? bookMarked = freezed,
     Object? isKnow = freezed,
+    Object? rootWordInfo = freezed,
     Object? wordType = freezed,
     Object? translation = freezed,
   }) {
@@ -183,6 +209,10 @@ class __$VideoVocabularyWordCopyWithImpl<$Res>
           ? _value.isKnow
           : isKnow // ignore: cast_nullable_to_non_nullable
               as bool,
+      rootWordInfo == freezed
+          ? _value.rootWordInfo
+          : rootWordInfo // ignore: cast_nullable_to_non_nullable
+              as RootWordInfo,
       wordType == freezed
           ? _value.wordType
           : wordType // ignore: cast_nullable_to_non_nullable
@@ -199,7 +229,7 @@ class __$VideoVocabularyWordCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_VideoVocabularyWord implements _VideoVocabularyWord {
   _$_VideoVocabularyWord(this.wordId, this.word, this.bookMarked, this.isKnow,
-      this.wordType, this.translation);
+      this.rootWordInfo, this.wordType, this.translation);
 
   factory _$_VideoVocabularyWord.fromJson(Map<String, dynamic> json) =>
       _$$_VideoVocabularyWordFromJson(json);
@@ -213,13 +243,15 @@ class _$_VideoVocabularyWord implements _VideoVocabularyWord {
   @override
   final bool isKnow;
   @override
+  final RootWordInfo rootWordInfo;
+  @override
   final WordType wordType;
   @override
   final List<Translation> translation;
 
   @override
   String toString() {
-    return 'VideoVocabularyWord(wordId: $wordId, word: $word, bookMarked: $bookMarked, isKnow: $isKnow, wordType: $wordType, translation: $translation)';
+    return 'VideoVocabularyWord(wordId: $wordId, word: $word, bookMarked: $bookMarked, isKnow: $isKnow, rootWordInfo: $rootWordInfo, wordType: $wordType, translation: $translation)';
   }
 
   @override
@@ -232,6 +264,8 @@ class _$_VideoVocabularyWord implements _VideoVocabularyWord {
             const DeepCollectionEquality()
                 .equals(other.bookMarked, bookMarked) &&
             const DeepCollectionEquality().equals(other.isKnow, isKnow) &&
+            const DeepCollectionEquality()
+                .equals(other.rootWordInfo, rootWordInfo) &&
             const DeepCollectionEquality().equals(other.wordType, wordType) &&
             const DeepCollectionEquality()
                 .equals(other.translation, translation));
@@ -244,6 +278,7 @@ class _$_VideoVocabularyWord implements _VideoVocabularyWord {
       const DeepCollectionEquality().hash(word),
       const DeepCollectionEquality().hash(bookMarked),
       const DeepCollectionEquality().hash(isKnow),
+      const DeepCollectionEquality().hash(rootWordInfo),
       const DeepCollectionEquality().hash(wordType),
       const DeepCollectionEquality().hash(translation));
 
@@ -265,6 +300,7 @@ abstract class _VideoVocabularyWord implements VideoVocabularyWord {
       String word,
       bool bookMarked,
       bool isKnow,
+      RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation) = _$_VideoVocabularyWord;
 
@@ -279,6 +315,8 @@ abstract class _VideoVocabularyWord implements VideoVocabularyWord {
   bool get bookMarked;
   @override
   bool get isKnow;
+  @override
+  RootWordInfo get rootWordInfo;
   @override
   WordType get wordType;
   @override

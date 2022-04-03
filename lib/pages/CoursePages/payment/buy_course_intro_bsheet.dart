@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class BuyCourseIntroWidget extends StatelessWidget {
@@ -88,15 +92,29 @@ class BuyCourseIntroWidget extends StatelessWidget {
             margin: const EdgeInsets.all(25),
             child: CustomOutlinedButton(
               color: secondaryColor,
-              text: "Худалдаж авах",
+              text: "Төлбөр төлөх",
               height: 50,
-              onTap: () {
-                AutoRouter.of(context).push(
-                  PaymentRoute(
-                      courseInfo: courseInfo,
-                      paymentType: "1001",
-                      isCourse: true),
-                );
+              onTap: () async {
+                if (Platform.isIOS) {
+                  CountryCodes.init().then((value) {
+                    final Locale? deviceLocale = CountryCodes.getDeviceLocale();
+                    if (deviceLocale!.countryCode == "MN") {
+                      AutoRouter.of(context).push(PaymentRoute(
+                          courseInfo: courseInfo,
+                          paymentType: "1001",
+                          isCourse: true));
+                    } else {
+                      launch("https://www.lingos.mn/payment");
+                    }
+                  });
+                } else {
+                  AutoRouter.of(context).push(
+                    PaymentRoute(
+                        courseInfo: courseInfo,
+                        paymentType: "1001",
+                        isCourse: true),
+                  );
+                }
               },
             ),
           )

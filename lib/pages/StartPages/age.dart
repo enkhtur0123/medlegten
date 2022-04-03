@@ -146,7 +146,7 @@ class AgePage extends HookConsumerWidget {
             actions: [
               Center(
                 child: TextButton(
-                  child: const Text("Сонгох"),
+                  child: const Text("Сонгох",style: TextStyle(color: Colors.white),),
                   onPressed: () {
                     selectedDateNotifier.value =
                         DateFormat('yyyy-MM-dd').format(selectedDate);

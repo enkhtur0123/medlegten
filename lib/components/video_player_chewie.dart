@@ -8,10 +8,12 @@ import 'package:video_player/video_player.dart';
 class VideoPlayerChewie extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final double aspectRatio;
+  final bool? autoPlay;
 
   const VideoPlayerChewie(
     this.videoPlayerController, {
     this.aspectRatio = 16 / 9,
+    this.autoPlay=true,
     Key? key,
   }) : super(key: key);
 
@@ -54,7 +56,10 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
         );
       },
     );
-    _chewieController.pause();
+    if(!widget.autoPlay!){
+      _chewieController.pause();
+    }
+   
   }
 
   @override

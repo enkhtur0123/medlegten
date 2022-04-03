@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
@@ -10,6 +13,7 @@ import 'package:medlegten/utils/date_time_formatter.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/icon_with_text_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 ////Cart байгаа хэсэгт заавал Flexible ашигла
 // ignore: must_be_immutable
@@ -109,7 +113,13 @@ class CourseCart extends StatelessWidget {
                               : Container(
                                   margin: const EdgeInsets.only(top: 10),
                                   child: Text(
-                                    MyDateTimeFormatter(date: courseInfo.purchaseExpireDate,noTime: true).toDateTime().toString().split(" ")[0].replaceAll("-", "."),
+                                    MyDateTimeFormatter(
+                                            date: courseInfo.purchaseExpireDate,
+                                            noTime: true)
+                                        .toDateTime()
+                                        .toString()
+                                        .split(" ")[0]
+                                        .replaceAll("-", "."),
                                     style: const TextStyle(fontSize: 15),
                                   ),
                                 ),
@@ -224,13 +234,28 @@ courseBgImg(context, CourseInfo courseInfo) {
                     AutoRouter.of(context)
                         .push(CourseDetailRoute(courseInfo: courseInfo));
                   } else {
-                    AutoRouter.of(context).push(PaymentRoute(
-                        courseInfo: courseInfo,
-                        paymentType: "1001",
-                        isCourse: true));
+                    if (Platform.isIOS) {
+                      CountryCodes.init().then((value) {
+                        final Locale? deviceLocale =
+                            CountryCodes.getDeviceLocale();
+                        if (deviceLocale!.countryCode == "MN") {
+                          AutoRouter.of(context).push(PaymentRoute(
+                              courseInfo: courseInfo,
+                              paymentType: "1001",
+                              isCourse: true));
+                        } else {
+                          launch("https://www.lingos.mn/payment");
+                        }
+                      });
+                    } else {
+                      AutoRouter.of(context).push(PaymentRoute(
+                          courseInfo: courseInfo,
+                          paymentType: "1001",
+                          isCourse: true));
+                    }
                   }
                 },
-                text: courseInfo.isPurchased ? "Эхлэх" : "Худалдаж авах",
+                text: courseInfo.isPurchased ? "Эхлэх" : "Төлбөр төлөх",
                 textAlign: TextAlign.center,
               ),
             ),

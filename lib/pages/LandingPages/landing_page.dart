@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/pages/BlogPage/index.dart';
@@ -119,6 +118,8 @@ class LandingPageState extends ConsumerState<LandingPage>
   }
 
   Future checkVersion({Version? version}) async {
+   
+    
     if (int.parse(AppProperties.version.replaceAll(".", "")) <
         int.parse(version!.appVersion.toString().replaceAll(".", ""))) {
       showDialog(

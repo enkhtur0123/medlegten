@@ -1,4 +1,3 @@
-import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/models/Landing/app_bar_data.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';

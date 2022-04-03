@@ -116,7 +116,7 @@ class CustomPopUpDialog extends StatelessWidget {
               style: const TextStyle(
                   color: Color(0xff30359F),
                   fontStyle: FontStyle.normal,
-                  fontSize: 26,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),

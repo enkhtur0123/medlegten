@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:medlegten/models/Unit/root_word_info.dart';
 import 'package:medlegten/models/Unit/translation.dart';
 import 'package:medlegten/models/Unit/word_type.dart';
 
@@ -12,6 +13,7 @@ class VideoVocabularyWord with _$VideoVocabularyWord {
       String word,
       bool bookMarked,
       bool isKnow,
+      RootWordInfo rootWordInfo,
       WordType wordType,
       List<Translation> translation) = _VideoVocabularyWord;
 
