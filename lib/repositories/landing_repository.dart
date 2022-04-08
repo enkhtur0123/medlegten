@@ -195,6 +195,7 @@ class LandingRepository {
     try {
       final res = await HttpHelper().getUrl(url: 'UserInfo/AppBar');
       AppBarData appBarData = AppBarData.fromJson(res['appBarText']);
+
       if (res['isSuccess']) {
         return appBarData;
       } else {

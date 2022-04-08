@@ -9,6 +9,7 @@ import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/repositories/repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 enum AuthState { UnAuthorized, Authorizing, Authorized, AuthorizedAge, Initial }
@@ -21,6 +22,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
   final FirebaseAuth _auth;
   bool? isGoogle;
   bool? isApple = false;
+  bool? isGuest = false;
   User? user;
   Map<String, dynamic>? fUser;
   GoogleSignInAccount? googleSignInAccount;
@@ -38,6 +40,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
         super(AuthState.Initial) {
     _auth.authStateChanges().listen((user) async {
       if (user == null) {
+        try {
+          await GetStorage().remove('token');
+        } catch (Ex) {}
+
         changeStatus(AuthState.UnAuthorized);
       } else {
         user = user;
@@ -47,8 +53,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
               isGoogle: isGoogle!,
               googleSignInAccount: googleSignInAccount,
               isApple: isApple!,
-              // ignore: unnecessary_null_in_if_null_operators
-              userIdentifier: authorizationCredentialAppleID?.userIdentifier??null,
+              userIdentifier:
+                  authorizationCredentialAppleID?.userIdentifier ?? null,
               credentialAppleID: authorizationCredentialAppleID,
               fUser: fUser);
           _login();
@@ -62,27 +68,34 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   login() async {
     var token = await GetStorage().read("token") ?? "";
-    if (token != "" && !await checkToken()) {
-      token = '';
-    }
-    if (token == '') {
-      _auth.signOut();
+    if (GetStorage().hasData("isGuest")) {
+      changeStatus(AuthState.UnAuthorized);
     } else {
-      _login();
+      if (token != "" && !await checkToken()) {
+        token = '';
+      }
+      if (token == '') {
+        _auth.signOut();
+      } else {
+        _login();
+      }
     }
   }
 
   logoff() async {
-    await _auth.signOut();
-    if (facebookAuth != null) {
-      await facebookAuth!.logOut();
-    }
-    if (googleSignIn != null) {
-      await googleSignIn!.signOut();
-    }
+    try {
+      await _auth.signOut();
+      if (facebookAuth != null) {
+        await facebookAuth!.logOut();
+      }
+      if (googleSignIn != null) {
+        await googleSignIn!.signOut();
+      }
+    } catch (ex) {}
     await changeStatus(AuthState.UnAuthorized);
     await GetStorage().remove('token');
     user = null;
+    userInfo = null;
   }
 
   /// Токен идэвхитэй эсэх
@@ -102,6 +115,8 @@ class AuthViewModel extends StateNotifier<AuthState> {
       if (user.skipBirthDate != '0') {
         changeStatus(AuthState.AuthorizedAge);
       } else {
+        await GetStorage().remove("isGuest");
+        isGuest = false;
         // print(user);
         changeStatus(AuthState.Authorized);
       }
@@ -114,6 +129,11 @@ class AuthViewModel extends StateNotifier<AuthState> {
   }
 
   loginGoogle() async {
+    try {
+      await GetStorage().remove('token');
+      await GetStorage().remove("isGuest");
+    } catch (ex) {}
+
     isGoogle = true;
     changeStatus(AuthState.Authorizing);
     try {
@@ -139,7 +159,38 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
+  loginGuest() async {
+    try {
+      await GetStorage().remove('token');
+    } catch (Ex) {}
+
+    isGoogle = false;
+    isApple = false;
+    isGuest = true;
+    changeStatus(AuthState.Authorizing);
+    try {
+      await LoginRepository().fetchLoginInfo(
+        isGoogle: false,
+        isGuest: true,
+        isApple: false,
+      );
+      await GetStorage().write("isGuest", true);
+      var user = await LoginRepository().getUserInfo();
+      // print(appBarData);
+      userInfo = user;
+      changeStatus(AuthState.Authorized);
+    } catch (ex) {
+      changeStatus(AuthState.UnAuthorized);
+      throw CustomException(errorMsg: "Түр хүлээгээд дахин оролдоно уу");
+    }
+  }
+
   loginApple() async {
+    try {
+      await GetStorage().remove('token');
+      await GetStorage().remove("isGuest");
+    } catch (Ex) {}
+
     isGoogle = false;
     isApple = true;
     changeStatus(AuthState.Authorizing);
@@ -173,6 +224,11 @@ class AuthViewModel extends StateNotifier<AuthState> {
   }
 
   loginFacebook() async {
+    try {
+      await GetStorage().remove('token');
+      await GetStorage().remove("isGuest");
+    } catch (ex) {}
+
     isGoogle = false;
     changeStatus(AuthState.Authorizing);
     try {

@@ -13,6 +13,8 @@ import 'package:medlegten/pages/StartPages/google_login.dart';
 import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/utils/app_router.dart';
 
+import 'guest_login.dart';
+
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -35,7 +37,9 @@ class LoginPage extends ConsumerWidget {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(10),
-              child: Column(
+              // child: SingleChildScrollView(
+                child: 
+                Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 // ignore: prefer_const_literals_to_create_immutables
@@ -48,6 +52,8 @@ class LoginPage extends ConsumerWidget {
                   const GoogleLogin(),
                   const SizedBox(height: 10),
                   Platform.isIOS ? const AppleLogin():const SizedBox(),
+                    const SizedBox(height: 10),
+                    const GuestLogin(),
                   const Spacer(flex: 1),
                   RichText(
                     textAlign: TextAlign.center,
@@ -96,7 +102,8 @@ class LoginPage extends ConsumerWidget {
                   ),
                   const Spacer(flex: 3),
                 ],
-              ),
+                ),
+              // ),
             ),
           ),
           Center(

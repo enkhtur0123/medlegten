@@ -91,8 +91,7 @@ class LandingProfile extends ConsumerWidget {
               ),
               // ignore: invalid_use_of_protected_member
               Text(
-                "Апп хувилбар  " +
-                   AppProperties.version,
+                "Апп хувилбар  " + AppProperties.version,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(

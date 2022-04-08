@@ -114,37 +114,47 @@ class LoginRepository implements ILoginRepository {
       Map<String, dynamic>? fUser,
       GoogleSignInAccount? googleSignInAccount,
       AuthorizationCredentialAppleID? credentialAppleID,
-      String? userIdentifier}) async {
+      String? userIdentifier,
+      bool? isGuest = false}) async {
     try {
-      if (user != null) {
+      if (user != null || isGuest!) {
         final res = await HttpHelper().postUrl(
           url: 'Login',
-          body: json.encode({
-            'userId': !isApple ? user.providerData.first.uid : userIdentifier,
-            'firstName': !isApple
-                ? (isGoogle!
-                    ? googleSignInAccount!.displayName
-                    : fUser!["name"])
-                : credentialAppleID!.givenName,
-            'lastName': !isApple
-                ? (isGoogle!
-                    ? googleSignInAccount!.displayName
-                    : fUser!["name"])
-                : credentialAppleID!.familyName,
-            'profileUrl': !isApple
-                ? (isGoogle!
-                    ? googleSignInAccount!.photoUrl
-                    : fUser!["picture"]["data"]["url"])
-                : "",
-            'socialType':
-                !isApple ? (isGoogle! ? 'google' : 'facebook') : "apple",
-            'deviceInfo': Platform.operatingSystem, //DO IT
-            'channel': 'app',
-            'email': !isApple
-                ? (isGoogle! ? googleSignInAccount!.email : fUser!["email"])
-                : credentialAppleID!.email,
-            'birthDate': ''
-          }),
+          body: !isGuest!
+              ? json.encode({
+                  'userId':
+                      !isApple ? user!.providerData.first.uid : userIdentifier,
+                  'firstName': !isApple
+                      ? (isGoogle!
+                          ? googleSignInAccount!.displayName
+                          : fUser!["name"])
+                      : credentialAppleID!.givenName,
+                  'lastName': !isApple
+                      ? (isGoogle!
+                          ? googleSignInAccount!.displayName
+                          : fUser!["name"])
+                      : credentialAppleID!.familyName,
+                  'profileUrl': !isApple
+                      ? (isGoogle!
+                          ? googleSignInAccount!.photoUrl
+                          : fUser!["picture"]["data"]["url"])
+                      : "",
+                  'socialType':
+                      !isApple ? (isGoogle! ? 'google' : 'facebook') : "apple",
+                  'deviceInfo': Platform.operatingSystem, //DO IT
+                  'channel': 'app',
+                  'email': !isApple
+                      ? (isGoogle!
+                          ? googleSignInAccount!.email
+                          : fUser!["email"])
+                      : credentialAppleID!.email,
+                  'birthDate': ''
+                })
+              : json.encode({
+                  "socialType": "guest",
+                  "deviceInfo": Platform.operatingSystem,
+                  "channel": "guest"
+                }),
         );
         if (res['isSuccess']) {
           GetStorage().write('token', res['token']);
@@ -152,7 +162,6 @@ class LoginRepository implements ILoginRepository {
         }
       }
     } catch (e) {
-      print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
 
       throw CustomException(errorMsg: e.toString().toUpperCase());

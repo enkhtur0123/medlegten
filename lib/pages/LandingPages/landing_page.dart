@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/models/Starting/version.dart';
 import 'package:medlegten/pages/BlogPage/index.dart';
@@ -56,8 +57,9 @@ class LandingPageState extends ConsumerState<LandingPage>
         height: 120,
         appbarProvider: appbarProvider,
         authProvider: authProvider,
-        text:
-            "${ref.read(authProvider.notifier).appBarData?.homePageText ?? ""} 👋\n");
+        text: !GetStorage().hasData("isGuest")
+            ? "${ref.read(authProvider.notifier).appBarData?.homePageText ?? ""} 👋\n"
+            : "👋");
     tabController!.addListener(() {
       if (tabController!.indexIsChanging) {
         if (tabController!.index == 0) {
@@ -118,8 +120,6 @@ class LandingPageState extends ConsumerState<LandingPage>
   }
 
   Future checkVersion({Version? version}) async {
-   
-    
     if (int.parse(AppProperties.version.replaceAll(".", "")) <
         int.parse(version!.appVersion.toString().replaceAll(".", ""))) {
       showDialog(
