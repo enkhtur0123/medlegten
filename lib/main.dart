@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:country_codes/country_codes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +63,9 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const MaterialApp(
-              debugShowCheckedModeBanner: false, home: InitializationPage());
+            debugShowCheckedModeBanner: false,
+            home: InitializationPage(),
+          );
         } else {
           var app = MaterialApp.router(
             color: Colors.white,

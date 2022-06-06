@@ -89,7 +89,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       if (widget.isSerial ?? false) {
         list.add(getSerialWidget());
       }
-      // list.add(subtitleWidget());
+      list.add(subtitleWidget());
     } else {
       list.add(
         const AspectRatio(
@@ -100,15 +100,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
           ),
         ),
       );
-      // list.add(
-      //   SizedBox(
-      //     height: GlobalValues.screenHeight - 100,
-      //     child: const Loading(),
-      //   ),
-      // );
     }
-
-    list.add(subtitleWidget());
     list.add(Divider(
       color: Colors.grey.shade300,
       thickness: 1,

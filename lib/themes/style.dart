@@ -7,7 +7,8 @@ final appTheme = ThemeData(
    textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
           primary:colorPrimary,
-          textStyle: const TextStyle(color: colorPrimary))
+      textStyle: const TextStyle(color: colorPrimary),
+    ),
   ),
   bottomAppBarColor: Colors.white,
   bottomAppBarTheme: const BottomAppBarTheme(color: Colors.white),

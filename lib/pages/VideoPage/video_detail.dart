@@ -70,7 +70,7 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
               },
               bookMark: () {
                 AutoRouter.of(context).push(
-                 VideoVocabularyListRoute(movieId: movieId),
+                  VideoVocabularyListRoute(movieId: movieId),
                 );
               },
               isBookMark: true,
@@ -84,8 +84,8 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
   @override
   onTapIndex(int index) {
     movieId = widget.movies![index].movieId!;
-    super.initVideoPlayer(changedUrl: widget.movies![index].hostUrl);
     super.subtitleWidget();
+    super.initVideoPlayer(changedUrl: widget.movies![index].hostUrl);
   }
 
   @override
