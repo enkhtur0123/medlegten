@@ -13,6 +13,7 @@ import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
+import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/BlogPage/ArticleDetail/article_detail_page.dart';
 import 'package:medlegten/pages/BlogPage/article_vertical_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_video_page.dart';
@@ -41,6 +42,8 @@ import 'package:medlegten/pages/VideoPage/level_video_list.dart';
 import 'package:medlegten/pages/VideoPage/video_detail.dart';
 import 'package:medlegten/pages/VideoPage/vocabulary_list.dart';
 import 'package:medlegten/pages/home.dart';
+
+import '../pages/VideoPage/quiz_widget.dart';
 
 part 'app_router.gr.dart';
 
@@ -75,6 +78,7 @@ part 'app_router.gr.dart';
         path: '/blog/articledetail/article_detail_page', page: ArticlePage),
     AutoRoute(path: '/promotion/detail', page: PromotionDetailPage),
     AutoRoute(path: '/web_view', page: WebViewPage),
+    AutoRoute(path: '/video/quiz', page: VideoQuizPage),
     // QpayPage
   ],
 )

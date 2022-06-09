@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/movie.dart';
+import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
@@ -14,12 +15,18 @@ import 'video_helper.dart';
 
 class VideoDetailPage extends BaseVideoPage {
   const VideoDetailPage(this.url,
-      {Key? key, this.movies, this.title, this.isSerial, this.serialChange})
+      {Key? key,
+      this.movies,
+      this.title,
+      this.isSerial,
+      this.serialChange,
+      this.quiz})
       : super(url, isSerial: isSerial, movies: movies, key: key);
   final String url;
   final List<Movie>? movies;
   final String? title;
   final bool? isSerial;
+  final VideoQuiz? quiz;
   final Function(int currentIndex)? serialChange;
   @override
   State<StatefulWidget> createState() {

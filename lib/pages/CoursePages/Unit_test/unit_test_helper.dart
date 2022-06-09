@@ -16,7 +16,7 @@ class ExamQuestionEx {
         item.segmentName,
         item.answers
             .map((e) =>
-                AnswerWrapper(e.answerId, e.answer, e.isTrue, e.ordering))
+                AnswerWrapper(e.answerId!, e.answer!, e.isTrue!, e.ordering!))
             .toList());
   }
 

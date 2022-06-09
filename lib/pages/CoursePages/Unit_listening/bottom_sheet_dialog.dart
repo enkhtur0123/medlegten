@@ -95,7 +95,7 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
                             height: 8,
                           ),
                           Text(
-                            e.question,
+                            e.question!,
                             style: const TextStyle(
                               color: Color(0xff000000),
                               fontSize: 15,

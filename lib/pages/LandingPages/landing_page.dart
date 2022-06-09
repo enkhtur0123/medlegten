@@ -45,7 +45,6 @@ class LandingPageState extends ConsumerState<LandingPage>
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
     LoginRepository().getAppVersion().then((value) {
       ref
           .read(appProvider.notifier)
@@ -54,7 +53,7 @@ class LandingPageState extends ConsumerState<LandingPage>
     });
     changeAppBarData(
         ref: ref,
-        height: 120,
+        height: 122,
         appbarProvider: appbarProvider,
         authProvider: authProvider,
         text: !GetStorage().hasData("isGuest")
@@ -116,7 +115,6 @@ class LandingPageState extends ConsumerState<LandingPage>
         }
       }
     });
-    // });
   }
 
   Future checkVersion({Version? version}) async {

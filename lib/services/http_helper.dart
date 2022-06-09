@@ -33,7 +33,6 @@ class HttpHelper {
         },
         onResponse: (response, handler) {
           // if (response.data != null && response.data["errorCode"] == "401") {
-         
 
           // }
           // Do something with response data
@@ -120,6 +119,7 @@ class HttpHelper {
 
 Future<String> getToken() async {
   String token = GetStorage().read('token') ?? '';
+  print(token);
   if (token != '') {
     return token;
   } else {

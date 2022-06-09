@@ -36,7 +36,7 @@ class CourseSelfAnswerItem extends HookWidget {
             flex: 3,
             child: GestureDetector(
               onTap: () {
-                selectedAnswerId.value = e.answerId;
+                selectedAnswerId.value = e.answerId!;
                 setCnt(answer: e, selectedAnswerId: selectedAnswerId.value);
               },
               child: Container(
@@ -66,7 +66,7 @@ class CourseSelfAnswerItem extends HookWidget {
                             answer: e,
                             selectedAnswerId: selectedAnswerId.value))),
                 child: Text(
-                  e.answer,
+                  e.answer!,
                   style: style,
                   textAlign: TextAlign.center,
                 ),
@@ -79,7 +79,7 @@ class CourseSelfAnswerItem extends HookWidget {
   setCnt({QuizAnswer? answer, String? selectedAnswerId}) {
     clickCnts!.value++;
     if (answer!.isTrue == '1' && answer.answerId == selectedAnswerId) {
-      correctAnswerds!.value.add(answer.answerId);
+      correctAnswerds!.value.add(answer.answerId!);
     } else if (answer.answerId == selectedAnswerId && answer.isTrue == '0') {
       if (correctAnswerds!.value.contains(answer.answerId)) {
         correctAnswerds!.value.remove(answer.answerId);

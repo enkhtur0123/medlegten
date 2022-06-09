@@ -32,8 +32,9 @@ class CourseSelfTestQuestion extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sortedAnswers = quizQuestionEx.quizQuestion.answers
-      ..sort((a, b) => int.parse(a.ordering).compareTo(int.parse(b.ordering)));
+    var sortedAnswers = quizQuestionEx.quizQuestion.answers!
+      ..sort(
+          (a, b) => int.parse(a.ordering!).compareTo(int.parse(b.ordering!)));
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
@@ -56,7 +57,7 @@ class CourseSelfTestQuestion extends HookWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                quizQuestionEx.quizQuestion.question,
+                quizQuestionEx.quizQuestion.question!,
                 style: const TextStyle(
                     color: Color.fromRGBO(51, 51, 51, 1),
                     fontWeight: FontWeight.w600,

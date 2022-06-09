@@ -27,7 +27,8 @@ class CourseSelfTestPage extends HookWidget {
     var result = await LandingRepository().getSelfQuiz();
     quizId?.value = result!.quizId;
     var _sortedList = result!.questions
-      ..sort((a, b) => int.parse(a.ordering).compareTo(int.parse(b.ordering)));
+      ..sort(
+          (a, b) => int.parse(a.ordering!).compareTo(int.parse(b.ordering!)));
     for (var e in _sortedList) {
       sortedList.add(QuizQuestionEx(e));
     }

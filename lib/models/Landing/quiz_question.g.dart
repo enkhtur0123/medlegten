@@ -8,13 +8,13 @@ part of 'quiz_question.dart';
 
 _$_QuizQuestion _$$_QuizQuestionFromJson(Map<String, dynamic> json) =>
     _$_QuizQuestion(
-      json['questionId'] as String,
-      json['question'] as String,
-      json['ordering'] as String,
+      json['questionId'] as String?,
+      json['question'] as String?,
+      json['ordering'] as String?,
       json['type'] as String?,
       json['typeText'] as String?,
-      (json['answers'] as List<dynamic>)
-          .map((e) => QuizAnswer.fromJson(e as Map<String, dynamic>))
+      (json['answers'] as List<dynamic>?)
+          ?.map((e) => QuizAnswer.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -21,41 +21,41 @@ class VideoPageState extends State<VideoPage> {
   List<LevelEvent>? levelEvents;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        FutureBuilder(
-            future: VideoRepository().getCategory(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                categories = snapshot.data as List<Category>?;
-                return CategoryPage(
-                  category: categories,
-                  onTap: (String id, String name) {
-                    AutoRouter.of(context).push(LevelVideoListRoute(
-                        categoryId: id,
-                        categoryName: name,
-                        isCategorySearch: true));
-                  },
-                );
-              } else {
-                return Container();
-              }
-            }),
-        FutureBuilder(
-            future: VideoRepository().getLevelEvent(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                levelEvents = snapshot.data as List<LevelEvent>?;
-                return Expanded(
-                  child: LevelEventPage(levelEvents: levelEvents),
-                );
-              } else {
-                return Container();
-              }
-            }),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          FutureBuilder(
+              future: VideoRepository().getCategory(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  categories = snapshot.data as List<Category>?;
+                  return CategoryPage(
+                    category: categories,
+                    onTap: (String id, String name) {
+                      AutoRouter.of(context).push(LevelVideoListRoute(
+                          categoryId: id,
+                          categoryName: name,
+                          isCategorySearch: true));
+                    },
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+          FutureBuilder(
+              future: VideoRepository().getLevelEvent(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  levelEvents = snapshot.data as List<LevelEvent>?;
+                  return LevelEventPage(levelEvents: levelEvents);
+                } else {
+                  return Container();
+                }
+              }),
+        ],
+      ),
     );
   }
 }

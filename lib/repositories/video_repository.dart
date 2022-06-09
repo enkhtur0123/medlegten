@@ -3,6 +3,7 @@ import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/level_event.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
+import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/models/video/video_vocabulary.dart';
 import 'package:medlegten/models/video/video_vocabulary_word.dart';
@@ -136,6 +137,23 @@ class VideoRepository {
         } else {
           return VideoVocabulary(res['wordCount'], []);
         }
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  ///Шалгалт
+  Future<VideoQuiz> getVideoQuiz({String? contentId}) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'ppv/PpvQuiz?contentId=$contentId');
+      if (res['isSuccess']) {
+        return VideoQuiz.fromJson(res);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);

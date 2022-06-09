@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
+import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/utils/time_convert_helper.dart';
@@ -27,9 +30,12 @@ class LevelEventItem extends HookWidget {
     return GestureDetector(
       onTap: () async {
         List data = [];
+        VideoQuiz? quiz;
         LoadingIndicator(context: context).showLoadingIndicator();
         try {
           data = await VideoRepository().getContentDetail(
+              contentId: !isHome! ? event!.eventId : event!.contentId);
+          quiz = await VideoRepository().getVideoQuiz(
               contentId: !isHome! ? event!.eventId : event!.contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
         } catch (ex) {
@@ -43,7 +49,10 @@ class LevelEventItem extends HookWidget {
               movies: movies,
               url: movies[0].hostUrl!,
               title: movies[0].contentName,
-              isSerial: event!.isSerial == "1" ? true : false));
+              isSerial: event!.isSerial == "1" ? true : false,
+              quiz: quiz,
+            ),
+          );
         } else {
           AutoRouter.of(context).push(
             PaymentRoute(
@@ -56,7 +65,7 @@ class LevelEventItem extends HookWidget {
         }
       },
       child: Container(
-       height: MediaQuery.of(context).size.width * 0.58,
+        height: MediaQuery.of(context).size.width * 0.58,
         margin:
             edgeInsets ?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
         decoration: BoxDecoration(
@@ -83,7 +92,11 @@ class LevelEventItem extends HookWidget {
                 child: getEventImageWidget(context: context, event: event),
               ),
               const SizedBox(height: 10),
-              Flexible(flex: 4, child: getEventInfo(event: event!),fit: FlexFit.tight,)
+              Flexible(
+                flex: 4,
+                child: getEventInfo(event: event!),
+                fit: FlexFit.tight,
+              )
             ],
           ),
         ),

@@ -22,8 +22,8 @@ QuizQuestion _$QuizQuestionFromJson(Map<String, dynamic> json) {
 class _$QuizQuestionTearOff {
   const _$QuizQuestionTearOff();
 
-  _QuizQuestion call(String questionId, String question, String ordering,
-      String? type, String? typeText, List<QuizAnswer> answers) {
+  _QuizQuestion call(String? questionId, String? question, String? ordering,
+      String? type, String? typeText, List<QuizAnswer>? answers) {
     return _QuizQuestion(
       questionId,
       question,
@@ -44,12 +44,12 @@ const $QuizQuestion = _$QuizQuestionTearOff();
 
 /// @nodoc
 mixin _$QuizQuestion {
-  String get questionId => throw _privateConstructorUsedError;
-  String get question => throw _privateConstructorUsedError;
-  String get ordering => throw _privateConstructorUsedError;
+  String? get questionId => throw _privateConstructorUsedError;
+  String? get question => throw _privateConstructorUsedError;
+  String? get ordering => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get typeText => throw _privateConstructorUsedError;
-  List<QuizAnswer> get answers => throw _privateConstructorUsedError;
+  List<QuizAnswer>? get answers => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,12 +63,12 @@ abstract class $QuizQuestionCopyWith<$Res> {
           QuizQuestion value, $Res Function(QuizQuestion) then) =
       _$QuizQuestionCopyWithImpl<$Res>;
   $Res call(
-      {String questionId,
-      String question,
-      String ordering,
+      {String? questionId,
+      String? question,
+      String? ordering,
       String? type,
       String? typeText,
-      List<QuizAnswer> answers});
+      List<QuizAnswer>? answers});
 }
 
 /// @nodoc
@@ -92,15 +92,15 @@ class _$QuizQuestionCopyWithImpl<$Res> implements $QuizQuestionCopyWith<$Res> {
       questionId: questionId == freezed
           ? _value.questionId
           : questionId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       question: question == freezed
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -112,7 +112,7 @@ class _$QuizQuestionCopyWithImpl<$Res> implements $QuizQuestionCopyWith<$Res> {
       answers: answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as List<QuizAnswer>,
+              as List<QuizAnswer>?,
     ));
   }
 }
@@ -125,12 +125,12 @@ abstract class _$QuizQuestionCopyWith<$Res>
       __$QuizQuestionCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String questionId,
-      String question,
-      String ordering,
+      {String? questionId,
+      String? question,
+      String? ordering,
       String? type,
       String? typeText,
-      List<QuizAnswer> answers});
+      List<QuizAnswer>? answers});
 }
 
 /// @nodoc
@@ -156,15 +156,15 @@ class __$QuizQuestionCopyWithImpl<$Res> extends _$QuizQuestionCopyWithImpl<$Res>
       questionId == freezed
           ? _value.questionId
           : questionId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       question == freezed
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -176,7 +176,7 @@ class __$QuizQuestionCopyWithImpl<$Res> extends _$QuizQuestionCopyWithImpl<$Res>
       answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as List<QuizAnswer>,
+              as List<QuizAnswer>?,
     ));
   }
 }
@@ -191,17 +191,17 @@ class _$_QuizQuestion implements _QuizQuestion {
       _$$_QuizQuestionFromJson(json);
 
   @override
-  final String questionId;
+  final String? questionId;
   @override
-  final String question;
+  final String? question;
   @override
-  final String ordering;
+  final String? ordering;
   @override
   final String? type;
   @override
   final String? typeText;
   @override
-  final List<QuizAnswer> answers;
+  final List<QuizAnswer>? answers;
 
   @override
   String toString() {
@@ -245,28 +245,28 @@ class _$_QuizQuestion implements _QuizQuestion {
 
 abstract class _QuizQuestion implements QuizQuestion {
   factory _QuizQuestion(
-      String questionId,
-      String question,
-      String ordering,
+      String? questionId,
+      String? question,
+      String? ordering,
       String? type,
       String? typeText,
-      List<QuizAnswer> answers) = _$_QuizQuestion;
+      List<QuizAnswer>? answers) = _$_QuizQuestion;
 
   factory _QuizQuestion.fromJson(Map<String, dynamic> json) =
       _$_QuizQuestion.fromJson;
 
   @override
-  String get questionId;
+  String? get questionId;
   @override
-  String get question;
+  String? get question;
   @override
-  String get ordering;
+  String? get ordering;
   @override
   String? get type;
   @override
   String? get typeText;
   @override
-  List<QuizAnswer> get answers;
+  List<QuizAnswer>? get answers;
   @override
   @JsonKey(ignore: true)
   _$QuizQuestionCopyWith<_QuizQuestion> get copyWith =>

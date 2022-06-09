@@ -49,7 +49,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width - 40,

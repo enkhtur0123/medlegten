@@ -22,8 +22,8 @@ QuizAnswer _$QuizAnswerFromJson(Map<String, dynamic> json) {
 class _$QuizAnswerTearOff {
   const _$QuizAnswerTearOff();
 
-  _QuizAnswer call(String answerId, String answer, String isTrue,
-      String ordering, bool? isCorrect) {
+  _QuizAnswer call(String? answerId, String? answer, String? isTrue,
+      String? ordering, bool? isCorrect) {
     return _QuizAnswer(
       answerId,
       answer,
@@ -43,10 +43,10 @@ const $QuizAnswer = _$QuizAnswerTearOff();
 
 /// @nodoc
 mixin _$QuizAnswer {
-  String get answerId => throw _privateConstructorUsedError;
-  String get answer => throw _privateConstructorUsedError;
-  String get isTrue => throw _privateConstructorUsedError;
-  String get ordering => throw _privateConstructorUsedError;
+  String? get answerId => throw _privateConstructorUsedError;
+  String? get answer => throw _privateConstructorUsedError;
+  String? get isTrue => throw _privateConstructorUsedError;
+  String? get ordering => throw _privateConstructorUsedError;
   bool? get isCorrect => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,10 +61,10 @@ abstract class $QuizAnswerCopyWith<$Res> {
           QuizAnswer value, $Res Function(QuizAnswer) then) =
       _$QuizAnswerCopyWithImpl<$Res>;
   $Res call(
-      {String answerId,
-      String answer,
-      String isTrue,
-      String ordering,
+      {String? answerId,
+      String? answer,
+      String? isTrue,
+      String? ordering,
       bool? isCorrect});
 }
 
@@ -88,19 +88,19 @@ class _$QuizAnswerCopyWithImpl<$Res> implements $QuizAnswerCopyWith<$Res> {
       answerId: answerId == freezed
           ? _value.answerId
           : answerId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       answer: answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isTrue: isTrue == freezed
           ? _value.isTrue
           : isTrue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isCorrect: isCorrect == freezed
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
@@ -116,10 +116,10 @@ abstract class _$QuizAnswerCopyWith<$Res> implements $QuizAnswerCopyWith<$Res> {
       __$QuizAnswerCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String answerId,
-      String answer,
-      String isTrue,
-      String ordering,
+      {String? answerId,
+      String? answer,
+      String? isTrue,
+      String? ordering,
       bool? isCorrect});
 }
 
@@ -145,19 +145,19 @@ class __$QuizAnswerCopyWithImpl<$Res> extends _$QuizAnswerCopyWithImpl<$Res>
       answerId == freezed
           ? _value.answerId
           : answerId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isTrue == freezed
           ? _value.isTrue
           : isTrue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isCorrect == freezed
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
@@ -176,13 +176,13 @@ class _$_QuizAnswer implements _QuizAnswer {
       _$$_QuizAnswerFromJson(json);
 
   @override
-  final String answerId;
+  final String? answerId;
   @override
-  final String answer;
+  final String? answer;
   @override
-  final String isTrue;
+  final String? isTrue;
   @override
-  final String ordering;
+  final String? ordering;
   @override
   final bool? isCorrect;
 
@@ -224,20 +224,20 @@ class _$_QuizAnswer implements _QuizAnswer {
 }
 
 abstract class _QuizAnswer implements QuizAnswer {
-  factory _QuizAnswer(String answerId, String answer, String isTrue,
-      String ordering, bool? isCorrect) = _$_QuizAnswer;
+  factory _QuizAnswer(String? answerId, String? answer, String? isTrue,
+      String? ordering, bool? isCorrect) = _$_QuizAnswer;
 
   factory _QuizAnswer.fromJson(Map<String, dynamic> json) =
       _$_QuizAnswer.fromJson;
 
   @override
-  String get answerId;
+  String? get answerId;
   @override
-  String get answer;
+  String? get answer;
   @override
-  String get isTrue;
+  String? get isTrue;
   @override
-  String get ordering;
+  String? get ordering;
   @override
   bool? get isCorrect;
   @override

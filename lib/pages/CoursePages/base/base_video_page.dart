@@ -1,10 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/video/movie.dart';
+import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
+import 'package:medlegten/pages/VideoPage/quiz_widget.dart';
+import 'package:medlegten/utils/app_router.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
@@ -18,6 +22,7 @@ abstract class BaseVideoPage extends StatefulWidget {
     this.isCompleted,
     this.isSerial,
     this.movies,
+    this.quiz,
   }) : super(key: key);
   final String videoUrl;
   final bool? isSerial;
@@ -25,6 +30,7 @@ abstract class BaseVideoPage extends StatefulWidget {
   final String? title;
   final bool? isCompleted;
   final List<Movie>? movies;
+  final VideoQuiz? quiz;
 }
 
 abstract class BaseVideoPageState<Page extends BaseVideoPage>
@@ -57,7 +63,7 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
       ..setLooping(false)
       ..initialize().then((value) {
         if (isFirst!) {
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
               videoPlayerController!.play();
               isFirst = false;
@@ -130,12 +136,33 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       ]),
       bottomSheet: bottomSheetWidget(),
+      bottomNavigationBar: InkWell(
+        onTap: () async {
+          await videoPlayerController!.pause();
+
+          AutoRouter.of(context).push(
+            VideoQuizRoute(videoQuiz: widget.quiz, title: widget.title),
+          );
+        },
+        child: Container(
+          margin: const EdgeInsets.all(30),
+          child: Text(
+            "Exam",
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Colors.black),
+          ),
+        ),
+      ),
     );
   }
 
   ///Video Player widget
   Widget getVideoPlayerWidget() {
-    return VideoPlayerChewie(videoPlayerController!,);
+    return VideoPlayerChewie(
+      videoPlayerController!,
+    );
   }
 
   ///Get Serial Widget
