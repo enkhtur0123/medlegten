@@ -65,7 +65,7 @@ class HttpHelper {
       // print(ex.error.toString());
       throw CustomException(errorMsg: ex.message.toString());
     } catch (ex) {
-      //  print(ex.toString());
+      // print(ex.toString());
       throw CustomException(errorMsg: ex.toString());
     }
   }

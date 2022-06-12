@@ -184,6 +184,7 @@ class _$AppRouter extends RootStackRouter {
               title: args.title,
               isSerial: args.isSerial,
               serialChange: args.serialChange,
+              contentId: args.contentId,
               quiz: args.quiz));
     },
     VideoVocabularyListRoute.name: (routeData) {
@@ -942,6 +943,7 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
       String? title,
       bool? isSerial,
       dynamic Function(int)? serialChange,
+      String? contentId,
       VideoQuiz? quiz})
       : super(VideoDetailRoute.name,
             path: '/video/detail',
@@ -952,6 +954,7 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
                 title: title,
                 isSerial: isSerial,
                 serialChange: serialChange,
+                contentId: contentId,
                 quiz: quiz));
 
   static const String name = 'VideoDetailRoute';
@@ -965,6 +968,7 @@ class VideoDetailRouteArgs {
       this.title,
       this.isSerial,
       this.serialChange,
+      this.contentId,
       this.quiz});
 
   final String url;
@@ -979,11 +983,13 @@ class VideoDetailRouteArgs {
 
   final dynamic Function(int)? serialChange;
 
+  final String? contentId;
+
   final VideoQuiz? quiz;
 
   @override
   String toString() {
-    return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange, quiz: $quiz}';
+    return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange, contentId: $contentId, quiz: $quiz}';
   }
 }
 

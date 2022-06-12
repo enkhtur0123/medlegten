@@ -2,10 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/models/Landing/quiz_question.dart';
 import 'package:medlegten/models/video/quiz.dart';
-import 'package:medlegten/pages/CoursePages/Unit_listening/answer_item.dart';
+import 'package:medlegten/pages/VideoPage/answer_item.dart';
+import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 // ignore: must_be_immutable
 class VideoQuizPage extends StatefulWidget {
@@ -23,12 +27,15 @@ class VideoQuizPage extends StatefulWidget {
 class VideoQuizPageState extends State<VideoQuizPage> {
   ValueNotifier<int> mode = ValueNotifier(0);
   Timer? _timer;
-  int _start = 60;
+  int _start = 0;
+  List<QuizQuestion> totalQuestion = [];
+  ValueNotifier<int> wrongCnt = ValueNotifier(0);
   @override
   void initState() {
     super.initState();
+    _start = widget.videoQuiz!.quizDuration!;
+  
     startTimer();
-    widget.videoQuiz!.contextQuiz!.addAll(widget.videoQuiz!.vocQuiz!);
   }
 
   @override
@@ -43,9 +50,10 @@ class VideoQuizPageState extends State<VideoQuizPage> {
             child: Text(
               formatHHMMSS(_start),
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: Colors.white,
-                  fontSize: 21,
-                  fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 21,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           )
         ],
@@ -67,50 +75,17 @@ class VideoQuizPageState extends State<VideoQuizPage> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                children: widget.videoQuiz!.contextQuiz!.map((e) {
-                  return Container(
-                      margin: const EdgeInsets.only(top: 15),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Асуулт ${widget.videoQuiz!.contextQuiz!.indexOf(e) + 1}:",
-                                style: const TextStyle(
-                                    color: colorPrimary,
-                                    fontSize: 17,
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.start,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                e.question!,
-                                style: const TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          AnsWerItem(quizAnswer: e.answers, mode: mode)
-                        ],
-                      ));
-                }).toList(),
-              ),
+              child: getQuizWidget(
+                  questions: widget.videoQuiz!.contextQuiz,
+                  isContextQuiz: true),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20),
+              child: getQuizWidget(
+                  questions: widget.videoQuiz!.vocQuiz, isContextQuiz: false),
+            ),
+            const SizedBox(
+              height: 30,
             ),
           ],
         ),
@@ -126,6 +101,7 @@ class VideoQuizPageState extends State<VideoQuizPage> {
           onTap: () {
             if (mode.value == 0) {
               mode.value = 1;
+              print(wrongCnt.value);
             } else {
               Navigator.pop(context, true);
             }
@@ -136,11 +112,81 @@ class VideoQuizPageState extends State<VideoQuizPage> {
     );
   }
 
+  getQuizWidget({bool? isContextQuiz = true, List<QuizQuestion>? questions}) {
+    return Column(
+      children: [
+        Container(
+          margin: isContextQuiz!
+              ? const EdgeInsets.all(0)
+              : const EdgeInsets.only(top: 25),
+          child: Text(
+            isContextQuiz
+                ? "Агуулгын асуулт".toUpperCase()
+                : "Үгсийн сангийн асуулт".toUpperCase(),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.black),
+          ),
+        ),
+        Column(
+          children: questions!.map((e) {
+            return Container(
+              margin: const EdgeInsets.only(top: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Асуулт ${questions.indexOf(e) + 1}:",
+                        style: const TextStyle(
+                          color: colorPrimary,
+                          fontSize: 17,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        e.question!,
+                        style: const TextStyle(
+                          color: Color(0xff000000),
+                          fontSize: 15,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AnsWerItem(
+                    quizAnswer: e.answers,
+                    mode: mode,
+                    wrongCnt: wrongCnt,
+                  )
+                ],
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
   String formatHHMMSS(int seconds) {
     int hours = (seconds / 3600).truncate();
     seconds = (seconds % 3600).truncate();
     int minutes = (seconds / 60).truncate();
-
     String hoursStr = (hours).toString().padLeft(2, '0');
     String minutesStr = (minutes).toString().padLeft(2, '0');
     String secondsStr = (seconds % 60).toString().padLeft(2, '0');
@@ -152,12 +198,32 @@ class VideoQuizPageState extends State<VideoQuizPage> {
     return "$hoursStr:$minutesStr:$secondsStr";
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future sentResult({String? result}) async {
+    LoadingIndicator(context: context).showLoadingIndicator();
+    try {
+      await VideoRepository().sentQuizResult(quizResult: result);
+      LoadingIndicator(context: context).hideLoadingIndicator();
+    } on CustomException catch (ex) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      print(ex.toString());
+    } catch (ex) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      print(ex.toString());
+    }
+  }
+
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         if (_start == 0) {
+          // sentResult(result: "1");
           setState(() {
             timer.cancel();
           });

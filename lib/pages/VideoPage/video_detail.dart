@@ -20,13 +20,17 @@ class VideoDetailPage extends BaseVideoPage {
       this.title,
       this.isSerial,
       this.serialChange,
-      this.quiz})
+      this.contentId,
+      this.quiz,
+      this.isMemorize})
       : super(url, isSerial: isSerial, movies: movies, key: key);
   final String url;
+  final String? contentId;
   final List<Movie>? movies;
   final String? title;
   final bool? isSerial;
   final VideoQuiz? quiz;
+  final ValueNotifier<bool>? isMemorize;
   final Function(int currentIndex)? serialChange;
   @override
   State<StatefulWidget> createState() {
@@ -98,10 +102,11 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
   @override
   Widget bottomSheetWidget() {
     return ValueListenableBuilder<bool>(
-        builder: (BuildContext context, bool value, Widget? child) {
-          return _showBottomSheet(context, word, position);
-        },
-        valueListenable: refreshNotifier);
+      builder: (BuildContext context, bool value, Widget? child) {
+        return _showBottomSheet(context, word, position);
+      },
+      valueListenable: refreshNotifier,
+    );
   }
 
   Widget _showBottomSheet(context, CWord? word, Rect position) {

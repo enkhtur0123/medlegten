@@ -1,14 +1,19 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
-import 'package:medlegten/pages/VideoPage/quiz_widget.dart';
+import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/loader.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
@@ -23,6 +28,8 @@ abstract class BaseVideoPage extends StatefulWidget {
     this.isSerial,
     this.movies,
     this.quiz,
+    this.contentId,
+   
   }) : super(key: key);
   final String videoUrl;
   final bool? isSerial;
@@ -31,6 +38,8 @@ abstract class BaseVideoPage extends StatefulWidget {
   final bool? isCompleted;
   final List<Movie>? movies;
   final VideoQuiz? quiz;
+  final String? contentId;
+  
 }
 
 abstract class BaseVideoPageState<Page extends BaseVideoPage>
@@ -61,20 +70,22 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
         : VideoPlayerController.network(videoUrl);
     videoPlayerController!
       ..setLooping(false)
-      ..initialize().then((value) {
-        if (isFirst!) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+      ..initialize().then(
+        (value) {
+          if (isFirst!) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              setState(() {
+                videoPlayerController!.play();
+                isFirst = false;
+              });
+            });
+          } else {
             setState(() {
               videoPlayerController!.play();
-              isFirst = false;
             });
-          });
-        } else {
-          setState(() {
-            videoPlayerController!.play();
-          });
-        }
-      });
+          }
+        },
+      );
   }
 
   @override
@@ -113,49 +124,87 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
     ));
     list.add(addVerticalSpace(10));
     return Scaffold(
-      backgroundColor: ColorTable.color255_255_255,
-      body: Stack(children: [
-        Positioned(
-          top: unitHeaderHeight,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height - unitHeaderHeight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: list,
+        backgroundColor: ColorTable.color255_255_255,
+        body: Stack(children: [
+          Positioned(
+            top: unitHeaderHeight,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height - unitHeaderHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: list,
+            ),
           ),
-        ),
-        Positioned(
-          width: MediaQuery.of(context).size.width,
-          height: unitHeaderHeight + 8,
-          child: UnitAppBar(
-            widget.title ?? "Undefined",
-            moduleId: moduleId,
-            isCompleted: widget.isCompleted,
+          Positioned(
+            width: MediaQuery.of(context).size.width,
+            height: unitHeaderHeight + 8,
+            child: UnitAppBar(
+              widget.title ?? "Undefined",
+              moduleId: moduleId,
+              isCompleted: widget.isCompleted,
+            ),
           ),
-        ),
-      ]),
-      bottomSheet: bottomSheetWidget(),
-      bottomNavigationBar: InkWell(
-        onTap: () async {
-          await videoPlayerController!.pause();
+        ]),
+        bottomSheet: bottomSheetWidget(),
+        bottomNavigationBar: Row(
+          children: [
+            InkWell(
+              onTap: () async {
+                await videoPlayerController!.pause();
+                AutoRouter.of(context).push(
+                  VideoQuizRoute(videoQuiz: widget.quiz, title: widget.title),
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.all(30),
+                child: Text(
+                  "Exam",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () async {
+                memorizeWords();
+              },
+              child: Container(
+                margin: const EdgeInsets.all(30),
+                child: Text(
+                  "Memorize",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
 
-          AutoRouter.of(context).push(
-            VideoQuizRoute(videoQuiz: widget.quiz, title: widget.title),
-          );
-        },
-        child: Container(
-          margin: const EdgeInsets.all(30),
-          child: Text(
-            "Exam",
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1!
-                .copyWith(color: Colors.black),
-          ),
-        ),
-      ),
-    );
+  Future memorizeWords() async {
+    LoadingIndicator(context: context).showLoadingIndicator();
+    try {
+      VideoMemorizeWord videoMemorizeWord =
+          await VideoRepository().getMemorizeWord(
+        isAll: "1",
+        contentId: widget.contentId,
+      );
+      videoPlayerController!.seekTo(
+        getDuration(videoMemorizeWord.startTime!),
+      );
+      LoadingIndicator(context: context).hideLoadingIndicator();
+    } on CustomException catch (ex) {
+      print(ex.toString());
+      LoadingIndicator(context: context).hideLoadingIndicator();
+    } catch (Ex) {
+      print(Ex.toString());
+      LoadingIndicator(context: context).hideLoadingIndicator();
+    }
   }
 
   ///Video Player widget

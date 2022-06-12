@@ -17,13 +17,13 @@ import 'package:medlegten/widgets/icon_with_text_widget.dart';
 import 'package:medlegten/widgets/loader.dart';
 
 class LevelEventItem extends HookWidget {
-  const LevelEventItem(
-      {Key? key, this.event, this.edgeInsets, this.isHome = false})
+  LevelEventItem({Key? key, this.event, this.edgeInsets, this.isHome = false})
       : super(key: key);
 
   final Event? event;
   final EdgeInsets? edgeInsets;
   final bool? isHome;
+  String? contentId = "";
 
   @override
   Widget build(BuildContext context) {
@@ -31,26 +31,30 @@ class LevelEventItem extends HookWidget {
       onTap: () async {
         List data = [];
         VideoQuiz? quiz;
+        contentId = !isHome! ? event!.eventId : event!.contentId;
         LoadingIndicator(context: context).showLoadingIndicator();
         try {
           data = await VideoRepository().getContentDetail(
-              contentId: !isHome! ? event!.eventId : event!.contentId);
+              contentId: contentId);
           quiz = await VideoRepository().getVideoQuiz(
-              contentId: !isHome! ? event!.eventId : event!.contentId);
+              contentId: contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
         } catch (ex) {
           LoadingIndicator(context: context).hideLoadingIndicator();
         }
+      
 
         List<Movie> movies = data[0];
         PaymentInfo paymentInfo = data[1];
         if (paymentInfo.isPurchased!) {
-          AutoRouter.of(context).push(VideoDetailRoute(
+          AutoRouter.of(context).push(
+            VideoDetailRoute(
               movies: movies,
               url: movies[0].hostUrl!,
               title: movies[0].contentName,
               isSerial: event!.isSerial == "1" ? true : false,
-              quiz: quiz,
+                quiz: quiz,  
+                contentId: contentId
             ),
           );
         } else {

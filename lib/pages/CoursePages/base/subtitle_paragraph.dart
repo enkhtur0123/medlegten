@@ -35,7 +35,6 @@ class _CueTexteState extends State<SubtitleParagraph> {
 
     for (int i1 = 0; i1 < widget.paragraph.words!.length; i1++) {
       CWord w = widget.paragraph.words![i1];
-
       if (widget.currentWord != null && //widget.currentWord!.word == w.word
           widget.currentWord!.id == w.id) {
         var splitted = widget.currentWord!.wordValue.split(' ');
@@ -120,10 +119,11 @@ class _CueTexteState extends State<SubtitleParagraph> {
           word.word,
           key: globalKey,
           style: const TextStyle(
-              fontFamily: 'Roboto',
-              color: colorPrimary,
-              fontSize: 18,
-              fontWeight: FontWeight.w800),
+            fontFamily: 'Roboto',
+            color: colorPrimary,
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ),
     );
@@ -147,7 +147,6 @@ class _CueTexteState extends State<SubtitleParagraph> {
           fontSize: 18,
           fontWeight: FontWeight.w400),
     );
-
     widget.wordWidgets[w] = Tuple2<GlobalKey, Widget>(globalKey, childWidget);
     return childWidget;
   }

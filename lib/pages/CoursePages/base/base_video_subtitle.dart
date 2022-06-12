@@ -1,6 +1,4 @@
 // ignore_for_file: implementation_imports
-import 'dart:io';
-
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +20,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       SubtitleParagraphCallback? pparagraphCallback,
       Function? bookMark,
       this.defaultColor,
+      this.isMemorize = false,
       this.isBookMark = false})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
@@ -35,6 +34,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final bool isBookMark;
   final Function? bookMark;
   final Color? defaultColor;
+  final bool? isMemorize;
 }
 
 TextStyle subtitleTextStyle = const TextStyle(
@@ -75,10 +75,19 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   @override
   void initState() {
-    paragraphs.add(CParagraph("-1", -1, "", "",
+    paragraphs.add(
+      CParagraph(
+        "-1",
+        -1,
+        "",
+        "",
         startTime: "0:0:0.0",
         endTime: widget.paragraphs.first.startTime,
-        words: [CWord('-1', '', '', false)]));
+        words: [
+          CWord('-1', '', '', false),
+        ],
+      ),
+    );
 
     paragraphs.addAll(widget.paragraphs);
     for (var element in paragraphs) {
@@ -229,7 +238,6 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                         //print('Here onTapDown $selectedWordParagraphIndex');
                         selectedRect = rect;
                         valueKeyList[cue] = valueKeyList[cue]! + 1;
-
                         widget.wordCallback!(selectedWord!, selectedRect!);
                         if (widget.videoPlayerController.value.isPlaying) {
                           widget.videoPlayerController.pause();
@@ -237,14 +245,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                         refreshCue.value = !refreshCue.value;
                         break;
                       }
-                      // else {
-                      //   widget.wordCallback!(null, Rect.zero);
-                      // }
                     }
                   }
-                  // else {
-                  //   widget.wordCallback!(null, Rect.zero);
-                  // }
                 }
               },
               child: SizedBox(
@@ -262,6 +264,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       //print('Here ScrollEndNotification $currentIndex');
                       isUser = 0;
                       //widget.videoPlayerController.removeListener(listener);
+
                       widget.videoPlayerController.seekTo(
                           getDuration(paragraphs[currentIndex].startTime!));
                       //widget.videoPlayerController.addListener(listener);
@@ -311,11 +314,12 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       },
                       childDelegate: ListWheelChildBuilderDelegate(
                         builder: (context, index) => buildParagraph(
-                            isMon.value,
-                            paragraphs[index],
-                            valueKeyList,
-                            selectedWord,
-                            index == currentIndex), //selectedIndex == index
+                          isMon.value,
+                          paragraphs[index],
+                          valueKeyList,
+                          selectedWord,
+                          index == currentIndex,
+                        ), //selectedIndex == index
                         childCount: paragraphs.length,
                       ),
                     ),

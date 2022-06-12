@@ -1,6 +1,7 @@
 import 'package:medlegten/models/video/category.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/level_event.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/models/video/quiz.dart';
@@ -152,8 +153,44 @@ class VideoRepository {
     try {
       final res =
           await HttpHelper().getUrl(url: 'ppv/PpvQuiz?contentId=$contentId');
+
       if (res['isSuccess']) {
         return VideoQuiz.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  ///Шалгалтын үр дүн буцаах
+  Future<dynamic> sentQuizResult(
+      {String? contentId, String? quizResult}) async {
+    try {
+      final res = await HttpHelper().getUrl(
+          url: 'ppv/PpvQuizResult?contentId=$contentId&quizResult=$quizResult');
+      if (res['isSuccess']) {
+        return res;
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future<VideoMemorizeWord> getMemorizeWord(
+      {String? contentId, String? isAll}) async {
+    try {
+      final res = await HttpHelper()
+          .getUrl(url: 'ppv/PpvMemorizeWord?contentId=$contentId&isAll=$isAll');
+      if (res['isSuccess']) {
+        return VideoMemorizeWord.fromJson(res);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);

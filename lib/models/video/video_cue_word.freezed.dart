@@ -22,8 +22,8 @@ VideoCueWord _$VideoCueWordFromJson(Map<String, dynamic> json) {
 class _$VideoCueWordTearOff {
   const _$VideoCueWordTearOff();
 
-  _VideoCueWord call(String wordId, String mainText, String wordValue,
-      String spaceNext, String ordering) {
+  _VideoCueWord call(String? wordId, String? mainText, String? wordValue,
+      String? spaceNext, String? ordering) {
     return _VideoCueWord(
       wordId,
       mainText,
@@ -43,11 +43,11 @@ const $VideoCueWord = _$VideoCueWordTearOff();
 
 /// @nodoc
 mixin _$VideoCueWord {
-  String get wordId => throw _privateConstructorUsedError;
-  String get mainText => throw _privateConstructorUsedError;
-  String get wordValue => throw _privateConstructorUsedError;
-  String get spaceNext => throw _privateConstructorUsedError;
-  String get ordering => throw _privateConstructorUsedError;
+  String? get wordId => throw _privateConstructorUsedError;
+  String? get mainText => throw _privateConstructorUsedError;
+  String? get wordValue => throw _privateConstructorUsedError;
+  String? get spaceNext => throw _privateConstructorUsedError;
+  String? get ordering => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -61,11 +61,11 @@ abstract class $VideoCueWordCopyWith<$Res> {
           VideoCueWord value, $Res Function(VideoCueWord) then) =
       _$VideoCueWordCopyWithImpl<$Res>;
   $Res call(
-      {String wordId,
-      String mainText,
-      String wordValue,
-      String spaceNext,
-      String ordering});
+      {String? wordId,
+      String? mainText,
+      String? wordValue,
+      String? spaceNext,
+      String? ordering});
 }
 
 /// @nodoc
@@ -88,23 +88,23 @@ class _$VideoCueWordCopyWithImpl<$Res> implements $VideoCueWordCopyWith<$Res> {
       wordId: wordId == freezed
           ? _value.wordId
           : wordId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       mainText: mainText == freezed
           ? _value.mainText
           : mainText // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       wordValue: wordValue == freezed
           ? _value.wordValue
           : wordValue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       spaceNext: spaceNext == freezed
           ? _value.spaceNext
           : spaceNext // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -117,11 +117,11 @@ abstract class _$VideoCueWordCopyWith<$Res>
       __$VideoCueWordCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String wordId,
-      String mainText,
-      String wordValue,
-      String spaceNext,
-      String ordering});
+      {String? wordId,
+      String? mainText,
+      String? wordValue,
+      String? spaceNext,
+      String? ordering});
 }
 
 /// @nodoc
@@ -146,23 +146,23 @@ class __$VideoCueWordCopyWithImpl<$Res> extends _$VideoCueWordCopyWithImpl<$Res>
       wordId == freezed
           ? _value.wordId
           : wordId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       mainText == freezed
           ? _value.mainText
           : mainText // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       wordValue == freezed
           ? _value.wordValue
           : wordValue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       spaceNext == freezed
           ? _value.spaceNext
           : spaceNext // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -177,15 +177,15 @@ class _$_VideoCueWord implements _VideoCueWord {
       _$$_VideoCueWordFromJson(json);
 
   @override
-  final String wordId;
+  final String? wordId;
   @override
-  final String mainText;
+  final String? mainText;
   @override
-  final String wordValue;
+  final String? wordValue;
   @override
-  final String spaceNext;
+  final String? spaceNext;
   @override
-  final String ordering;
+  final String? ordering;
 
   @override
   String toString() {
@@ -225,22 +225,22 @@ class _$_VideoCueWord implements _VideoCueWord {
 }
 
 abstract class _VideoCueWord implements VideoCueWord {
-  factory _VideoCueWord(String wordId, String mainText, String wordValue,
-      String spaceNext, String ordering) = _$_VideoCueWord;
+  factory _VideoCueWord(String? wordId, String? mainText, String? wordValue,
+      String? spaceNext, String? ordering) = _$_VideoCueWord;
 
   factory _VideoCueWord.fromJson(Map<String, dynamic> json) =
       _$_VideoCueWord.fromJson;
 
   @override
-  String get wordId;
+  String? get wordId;
   @override
-  String get mainText;
+  String? get mainText;
   @override
-  String get wordValue;
+  String? get wordValue;
   @override
-  String get spaceNext;
+  String? get spaceNext;
   @override
-  String get ordering;
+  String? get ordering;
   @override
   @JsonKey(ignore: true)
   _$VideoCueWordCopyWith<_VideoCueWord> get copyWith =>

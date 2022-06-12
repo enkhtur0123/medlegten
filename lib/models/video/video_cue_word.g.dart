@@ -8,11 +8,11 @@ part of 'video_cue_word.dart';
 
 _$_VideoCueWord _$$_VideoCueWordFromJson(Map<String, dynamic> json) =>
     _$_VideoCueWord(
-      json['wordId'] as String,
-      json['mainText'] as String,
-      json['wordValue'] as String,
-      json['spaceNext'] as String,
-      json['ordering'] as String,
+      json['wordId'] as String?,
+      json['mainText'] as String?,
+      json['wordValue'] as String?,
+      json['spaceNext'] as String?,
+      json['ordering'] as String?,
     );
 
 Map<String, dynamic> _$$_VideoCueWordToJson(_$_VideoCueWord instance) =>

@@ -6,11 +6,13 @@ class VideoHelper{
   static List<CParagraph> convert(List<VideoCueParagraph> videoCueParagraph) {
     List<CParagraph> retList = [];
     for (var cue in videoCueParagraph) {
-      retList.add(CParagraph(cue.cueId, int.parse(cue.ordering) - 1,
+      retList.add(
+        CParagraph(cue.cueId, int.parse(cue.ordering) - 1,
           cue.toLangTranslation, cue.fromLangTranslation,
           words: convertWords(cue.words),
           startTime: cue.startTime,
-          endTime: cue.endTime));
+            endTime: cue.endTime),
+      );
     }
     return retList;
   }
@@ -19,7 +21,8 @@ class VideoHelper{
     List<CWord> retList = [];
     for (var word in list) {
       retList.add(CWord(
-          word.wordId, word.mainText, word.wordValue, word.spaceNext == '0'));
+          word.wordId!, word.mainText!, word.wordValue!,
+          word.spaceNext == '0'));
     }
     return retList;
   }
