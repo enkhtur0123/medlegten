@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/subtitle_paragraph.dart';
@@ -14,15 +15,18 @@ import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
 
 abstract class BaseVideoSubtitlePage extends StatefulWidget {
-  const BaseVideoSubtitlePage(this.videoPlayerController, this.paragraphs,
-      {Key? key,
-      SubtitleWordCallback? pwordCallback,
-      SubtitleParagraphCallback? pparagraphCallback,
-      Function? bookMark,
-      this.defaultColor,
-      this.isMemorize = false,
-      this.isBookMark = false})
-      : wordCallback = pwordCallback,
+  const BaseVideoSubtitlePage(
+    this.videoPlayerController,
+    this.paragraphs, {
+    Key? key,
+    SubtitleWordCallback? pwordCallback,
+    SubtitleParagraphCallback? pparagraphCallback,
+    Function? bookMark,
+    this.defaultColor,
+    this.isMemorize = false,
+    this.isBookMark = false,
+    this.videoMemorizeWord,
+  })  : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
         bookMark = bookMark,
         super(key: key);
@@ -35,6 +39,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final Function? bookMark;
   final Color? defaultColor;
   final bool? isMemorize;
+  final VideoMemorizeWord? videoMemorizeWord;
 }
 
 TextStyle subtitleTextStyle = const TextStyle(
@@ -57,6 +62,11 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   Rect? selectedRect;
   CWord? selectedWord;
   int selectedWordParagraphIndex = -1;
+  String? currentParagraph;
+  bool? isMemorize;
+  VideoMemorizeWord? videoMemorizeWord;
+  CWord? memorizedWord;
+  ValueNotifier<bool>? memorize = ValueNotifier(false);
 
   void _listener() {
     //setMaxExtent();
@@ -75,6 +85,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   @override
   void initState() {
+    isMemorize = widget.isMemorize ?? false;
+    videoMemorizeWord = widget.videoMemorizeWord;
     paragraphs.add(
       CParagraph(
         "-1",
@@ -120,9 +132,25 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
             getDuration(element.startTime!) <= _duration &&
             getDuration(element.endTime!) > _duration);
         if (idx != null && prevCueId != idx.ordering) {
-          _fixedExtentScrollController.animateToItem(idx.ordering,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.linear);
+          if (isMemorize != null && isMemorize!) {
+            paragraphs[paragraphs.indexOf(idx)].words!.forEach((element) async {
+              if (videoMemorizeWord!.word!.toUpperCase() ==
+                  element.word.toUpperCase()) {
+                memorizedWord = element;
+                isMon.value = false;
+                refreshCue.value = !refreshCue.value;
+                currentIndex = paragraphs.indexOf(idx);
+                await Future.delayed(const Duration(milliseconds: 300));
+                wordDescriptionBottomSheet();
+                setState(() {});
+              }
+            });
+          }
+          _fixedExtentScrollController.animateToItem(
+            idx.ordering,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.linear,
+          );
           prevCueId = idx.ordering;
         }
       }
@@ -136,19 +164,62 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     super.dispose();
   }
 
-  Duration getDuration(String time) {
-    var splitted = time.split(':');
-    return Duration(
-      hours: int.parse(splitted[0]),
-      minutes: int.parse(splitted[1]),
-      seconds: int.parse(splitted[2].split('.')[0]),
-      milliseconds: int.parse(splitted[2].split('.')[1]),
-    );
+  void wordDescriptionBottomSheet({TapDownDetails? details}) {
+    if (widget.wordCallback != null && isMon.value == false) {
+      var position;
+      if (details != null) {
+        position = details.globalPosition;
+      }
+      if (currentIndex > -1 && currentIndex < paragraphs.length) {
+        CParagraph cue = paragraphs[currentIndex];
+        for (var entry in cueWidgets[cue]!.entries) {
+          Rect rect = entry.value.item1.globalPaintBounds!;
+          if ((position != null && rect.contains(position)) &&
+              (entry.key.wordValue != '')) {
+            currentSheetData(cue: cue, entry: entry, rect: rect);
+            break;
+          } else if (isMemorize!) {
+            currentSheetData(cue: cue, entry: entry, rect: rect);
+            break;
+          }
+        }
+      }
+    }
   }
+
+  currentSheetData(
+      {MapEntry<CWord, Tuple2<GlobalKey<State<StatefulWidget>>, Widget>>? entry,
+      Rect? rect,
+      CParagraph? cue}) {
+    selectedWord = !isMemorize! ? entry!.key : memorizedWord;
+    selectedWordParagraphIndex = currentIndex;
+    selectedRect = rect;
+    valueKeyList[cue!] = valueKeyList[cue]! + 1;
+    widget.wordCallback!(selectedWord!, selectedRect!);
+    if (widget.videoPlayerController.value.isPlaying && !isMemorize!) {
+      widget.videoPlayerController.pause();
+    }
+    refreshCue.value = !refreshCue.value;
+  }
+}
+
+Duration getDuration(String time) {
+  var splitted = time.split(':');
+  return Duration(
+    hours: int.parse(splitted[0]),
+    minutes: int.parse(splitted[1]),
+    seconds: int.parse(splitted[2].split('.')[0]),
+    milliseconds: int.parse(splitted[2].split('.')[1]),
+  );
 }
 
 mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     on BaseVideoSubtitleState<Page> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -203,8 +274,12 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       onTap: () {
                         widget.bookMark!();
                       },
-                      child: const Icon(CupertinoIcons.bookmark,
-                          color: Color(0xffC7C9D9), size: 30))
+                      child: const Icon(
+                        CupertinoIcons.bookmark,
+                        color: Color(0xffC7C9D9),
+                        size: 30,
+                      ),
+                    )
                   : Container()
             ],
           ),
@@ -215,39 +290,11 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                 if (widget.videoPlayerController.value.isPlaying) {
                   widget.videoPlayerController.pause();
                 }
-                // if (selectedCWord != null && selectedRect != null) {
-                //   widget.wordCallback!(selectedCWord!, selectedRect!);
-                //   refreshCue.value = !refreshCue.value;
-
-                //   selectedCWord = null;
-                //   selectedRect = null;
-                // }
               },
               onTapDown: (TapDownDetails details) {
+                isMemorize = false;
                 selectedWordParagraphIndex = -1;
-                if (widget.wordCallback != null && isMon.value == false) {
-                  var position = details.globalPosition;
-                  if (currentIndex > -1 && currentIndex < paragraphs.length) {
-                    var cue = paragraphs[currentIndex];
-                    for (var entry in cueWidgets[cue]!.entries) {
-                      var rect = entry.value.item1.globalPaintBounds!;
-                      if (rect.contains(position) &&
-                          (entry.key.wordValue != '')) {
-                        selectedWord = entry.key;
-                        selectedWordParagraphIndex = currentIndex;
-                        //print('Here onTapDown $selectedWordParagraphIndex');
-                        selectedRect = rect;
-                        valueKeyList[cue] = valueKeyList[cue]! + 1;
-                        widget.wordCallback!(selectedWord!, selectedRect!);
-                        if (widget.videoPlayerController.value.isPlaying) {
-                          widget.videoPlayerController.pause();
-                        }
-                        refreshCue.value = !refreshCue.value;
-                        break;
-                      }
-                    }
-                  }
-                }
+                wordDescriptionBottomSheet(details: details);
               },
               child: SizedBox(
                 height: maxExtent * 3 + 15,
@@ -293,10 +340,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       controller: _fixedExtentScrollController,
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
-                        //print('Here onSelectedItemChanged $currentIndex');
                         selectedWord = null;
-                        //print(
-                        //    'currentIndex: ${widget.paragraphs[index].engText}');
                         if (!widget.videoPlayerController.value.isPlaying &&
                             widget.paragraphCallback != null) {
                           widget.paragraphCallback!(paragraphs[index]);
@@ -309,7 +353,6 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                                   ? paragraphs[index]
                                   : null);
                         }
-
                         refreshCue.value = !refreshCue.value;
                       },
                       childDelegate: ListWheelChildBuilderDelegate(
@@ -349,8 +392,11 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                 paragraph,
                 currentIndex,
                 defaultColor: defaultColor,
+                isMemorize: isMemorize,
                 key: ValueKey<int>(valueKeyList[paragraph]!),
-                currentWord: isSelectedIndex ? selectedWord : null,
+                currentWord: !isMemorize!
+                    ? (isSelectedIndex ? selectedWord : null)
+                    : memorizedWord,
                 alignment: Alignment.center,
               )
             : getTextWidget(paragraph.engText, true, false);

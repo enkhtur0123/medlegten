@@ -73,7 +73,7 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
       ..setLooping(false)
       ..initialize().then((value) {
         if (isFirst!) {
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
               videoPlayerController!.play();
               isFirst = false;

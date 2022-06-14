@@ -32,7 +32,6 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
 
   late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false)
     ..addListener(_listener);
-
   void _listener() {
     setState(() {});
   }
@@ -127,14 +126,16 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   Widget innerBottonSheetWidget(CParagraph paragraph) {
     List<Widget> list = [];
 
-    list.add(const Text(
-      'Дүрмийн тайлбар',
-      style: TextStyle(
-          fontFamily: 'Roboto',
-          color: Color.fromRGBO(48, 53, 159, 1),
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-    ));
+    list.add(
+      const Text(
+        'Дүрмийн тайлбар',
+        style: TextStyle(
+            fontFamily: 'Roboto',
+            color: Color.fromRGBO(48, 53, 159, 1),
+            fontSize: 14,
+            fontWeight: FontWeight.w500),
+      ),
+    );
 
     list.add(
       Padding(

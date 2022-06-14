@@ -11,6 +11,7 @@ import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
 import 'package:medlegten/models/Unit/unit_mixed_video.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/models/video/quiz.dart';
@@ -44,6 +45,7 @@ import 'package:medlegten/pages/VideoPage/vocabulary_list.dart';
 import 'package:medlegten/pages/home.dart';
 
 import '../pages/VideoPage/quiz_widget.dart';
+import '../pages/VideoPage/video_memorize.dart';
 
 part 'app_router.gr.dart';
 
@@ -79,6 +81,7 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/promotion/detail', page: PromotionDetailPage),
     AutoRoute(path: '/web_view', page: WebViewPage),
     AutoRoute(path: '/video/quiz', page: VideoQuizPage),
+    AutoRoute(path: '/memorize', page: VideoMemorizePage)
     // QpayPage
   ],
 )

@@ -9,6 +9,7 @@ import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
+import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/services/custom_exception.dart';
@@ -19,18 +20,18 @@ import 'package:video_player/video_player.dart';
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
 
 abstract class BaseVideoPage extends StatefulWidget {
-  const BaseVideoPage(
-    this.videoUrl, {
-    Key? key,
-    this.moduleId,
-    this.title,
-    this.isCompleted,
-    this.isSerial,
-    this.movies,
-    this.quiz,
-    this.contentId,
-   
-  }) : super(key: key);
+  const BaseVideoPage(this.videoUrl,
+      {Key? key,
+      this.moduleId,
+      this.title,
+      this.isCompleted,
+      this.isSerial,
+      this.movies,
+      this.quiz,
+      this.contentId,
+      this.isMemorize = false,
+      this.videoMemorizeWord})
+      : super(key: key);
   final String videoUrl;
   final bool? isSerial;
   final String? moduleId;
@@ -39,7 +40,8 @@ abstract class BaseVideoPage extends StatefulWidget {
   final List<Movie>? movies;
   final VideoQuiz? quiz;
   final String? contentId;
-  
+  final bool? isMemorize;
+  final VideoMemorizeWord? videoMemorizeWord;
 }
 
 abstract class BaseVideoPageState<Page extends BaseVideoPage>
@@ -65,6 +67,7 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
         videoPlayerController!.value.isInitialized) {
       videoPlayerController!.dispose();
     }
+
     videoPlayerController = widget.videoUrl.startsWith('assets')
         ? VideoPlayerController.asset(widget.videoUrl)
         : VideoPlayerController.network(videoUrl);
@@ -76,6 +79,10 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
             WidgetsBinding.instance.addPostFrameCallback((_) {
               setState(() {
                 videoPlayerController!.play();
+                if (widget.isMemorize != null && widget.isMemorize!) {
+                  videoPlayerController!.seekTo(
+                      getDuration(widget.videoMemorizeWord!.startTime!));
+                }
                 isFirst = false;
               });
             });
@@ -118,75 +125,91 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       );
     }
-    list.add(Divider(
-      color: Colors.grey.shade300,
-      thickness: 1,
-    ));
+    list.add(
+      Divider(
+        color: Colors.grey.shade300,
+        thickness: 1,
+      ),
+    );
     list.add(addVerticalSpace(10));
     return Scaffold(
-        backgroundColor: ColorTable.color255_255_255,
-        body: Stack(children: [
-          Positioned(
-            top: unitHeaderHeight,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - unitHeaderHeight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: list,
+      backgroundColor: ColorTable.color255_255_255,
+      body: Stack(children: [
+        Positioned(
+          top: unitHeaderHeight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - unitHeaderHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: list,
+          ),
+        ),
+        Positioned(
+          width: MediaQuery.of(context).size.width,
+          height: unitHeaderHeight + 8,
+          child: UnitAppBar(
+            widget.title ?? "Undefined",
+            moduleId: moduleId,
+            isCompleted: widget.isCompleted,
+          ),
+        ),
+      ]),
+      bottomSheet: bottomSheetWidget(),
+      bottomNavigationBar: Row(
+        children: [
+          InkWell(
+            onTap: () async {
+              await videoPlayerController!.pause();
+              AutoRouter.of(context).push(
+                VideoQuizRoute(videoQuiz: widget.quiz, title: widget.title),
+              );
+            },
+            child: Container(
+              margin: const EdgeInsets.all(30),
+              child: Text(
+                "Exam",
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1!
+                    .copyWith(color: Colors.black),
+              ),
             ),
           ),
-          Positioned(
-            width: MediaQuery.of(context).size.width,
-            height: unitHeaderHeight + 8,
-            child: UnitAppBar(
-              widget.title ?? "Undefined",
-              moduleId: moduleId,
-              isCompleted: widget.isCompleted,
-            ),
-          ),
-        ]),
-        bottomSheet: bottomSheetWidget(),
-        bottomNavigationBar: Row(
-          children: [
-            InkWell(
-              onTap: () async {
-                await videoPlayerController!.pause();
+          InkWell(
+            onTap: () async {
+              memorizeWords().then((value) {
                 AutoRouter.of(context).push(
-                  VideoQuizRoute(videoQuiz: widget.quiz, title: widget.title),
+                  VideoMemorizeRoute(
+                    movies: widget.movies,
+                    url: widget.videoUrl,
+                    title: "Үг цээжлэх",
+                    isSerial: false,
+                    quiz: null,
+                    isMemorize: true,
+                    contentId: widget.contentId,
+                    videoMemorizeWord: value,
+                  ),
                 );
-              },
-              child: Container(
-                margin: const EdgeInsets.all(30),
-                child: Text(
-                  "Exam",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: Colors.black),
-                ),
+              });
+            },
+            child: Container(
+              margin: const EdgeInsets.all(30),
+              child: Text(
+                "Memorize",
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1!
+                    .copyWith(color: Colors.black),
               ),
             ),
-            InkWell(
-              onTap: () async {
-                memorizeWords();
-              },
-              child: Container(
-                margin: const EdgeInsets.all(30),
-                child: Text(
-                  "Memorize",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: Colors.black),
-                ),
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 
-  Future memorizeWords() async {
+  Future<VideoMemorizeWord> memorizeWords() async {
     LoadingIndicator(context: context).showLoadingIndicator();
     try {
       VideoMemorizeWord videoMemorizeWord =
@@ -194,16 +217,19 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         isAll: "1",
         contentId: widget.contentId,
       );
-      videoPlayerController!.seekTo(
-        getDuration(videoMemorizeWord.startTime!),
-      );
+      // videoPlayerController!.seekTo(
+      //   getDuration(videoMemorizeWord.startTime!),
+      // );
       LoadingIndicator(context: context).hideLoadingIndicator();
+      return videoMemorizeWord;
     } on CustomException catch (ex) {
       print(ex.toString());
       LoadingIndicator(context: context).hideLoadingIndicator();
+      throw CustomException(errorMsg: ex.errorMsg.toString());
     } catch (Ex) {
       print(Ex.toString());
       LoadingIndicator(context: context).hideLoadingIndicator();
+      throw CustomException(errorMsg: Ex.toString());
     }
   }
 
@@ -223,32 +249,32 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       height: 65,
       width: double.infinity,
       child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: widget.movies!.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                currentIndex = index;
-                onTapIndex(index);
-                setState(() {});
-              },
-              child: Container(
-                margin: const EdgeInsets.only(
-                    left: 10, bottom: 15, top: 15, right: 0),
-                padding: const EdgeInsets.only(left: 12, right: 12),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(8),
-                  ),
-                  border: Border.all(
-                      color: currentIndex == index
-                          ? Colors.transparent
-                          : const Color(0xffA8AFE5)),
-                  color: currentIndex == index ? colorPrimary : Colors.white,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemCount: widget.movies!.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              currentIndex = index;
+              onTapIndex(index);
+              setState(() {});
+            },
+            child: Container(
+              margin: const EdgeInsets.only(
+                  left: 10, bottom: 15, top: 15, right: 0),
+              padding: const EdgeInsets.only(left: 12, right: 12),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
                 ),
-                child: Center(
-                    child: Text(
+                border: Border.all(
+                    color: currentIndex == index
+                        ? Colors.transparent
+                        : const Color(0xffA8AFE5)),
+                color: currentIndex == index ? colorPrimary : Colors.white,
+              ),
+              child: Center(
+                child: Text(
                   (index + 1).toString(),
                   style: TextStyle(
                       color: currentIndex == index
@@ -258,10 +284,12 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
-                )),
+                ),
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 

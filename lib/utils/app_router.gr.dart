@@ -185,7 +185,8 @@ class _$AppRouter extends RootStackRouter {
               isSerial: args.isSerial,
               serialChange: args.serialChange,
               contentId: args.contentId,
-              quiz: args.quiz));
+              quiz: args.quiz,
+              isMemorize: args.isMemorize));
     },
     VideoVocabularyListRoute.name: (routeData) {
       final args = routeData.argsAs<VideoVocabularyListRouteArgs>(
@@ -241,6 +242,21 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData,
           child: VideoQuizPage(
               key: args.key, videoQuiz: args.videoQuiz, title: args.title));
+    },
+    VideoMemorizeRoute.name: (routeData) {
+      final args = routeData.argsAs<VideoMemorizeRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: VideoMemorizePage(args.url,
+              key: args.key,
+              movies: args.movies,
+              title: args.title,
+              isSerial: args.isSerial,
+              serialChange: args.serialChange,
+              contentId: args.contentId,
+              quiz: args.quiz,
+              isMemorize: args.isMemorize,
+              videoMemorizeWord: args.videoMemorizeWord));
     }
   };
 
@@ -279,7 +295,8 @@ class _$AppRouter extends RootStackRouter {
             path: '/blog/articledetail/article_detail_page'),
         RouteConfig(PromotionDetailRoute.name, path: '/promotion/detail'),
         RouteConfig(WebViewRoute.name, path: '/web_view'),
-        RouteConfig(VideoQuizRoute.name, path: '/video/quiz')
+        RouteConfig(VideoQuizRoute.name, path: '/video/quiz'),
+        RouteConfig(VideoMemorizeRoute.name, path: '/memorize')
       ];
 }
 
@@ -944,7 +961,8 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
       bool? isSerial,
       dynamic Function(int)? serialChange,
       String? contentId,
-      VideoQuiz? quiz})
+      VideoQuiz? quiz,
+      bool? isMemorize})
       : super(VideoDetailRoute.name,
             path: '/video/detail',
             args: VideoDetailRouteArgs(
@@ -955,7 +973,8 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
                 isSerial: isSerial,
                 serialChange: serialChange,
                 contentId: contentId,
-                quiz: quiz));
+                quiz: quiz,
+                isMemorize: isMemorize));
 
   static const String name = 'VideoDetailRoute';
 }
@@ -969,7 +988,8 @@ class VideoDetailRouteArgs {
       this.isSerial,
       this.serialChange,
       this.contentId,
-      this.quiz});
+      this.quiz,
+      this.isMemorize});
 
   final String url;
 
@@ -987,9 +1007,11 @@ class VideoDetailRouteArgs {
 
   final VideoQuiz? quiz;
 
+  final bool? isMemorize;
+
   @override
   String toString() {
-    return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange, contentId: $contentId, quiz: $quiz}';
+    return 'VideoDetailRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange, contentId: $contentId, quiz: $quiz, isMemorize: $isMemorize}';
   }
 }
 
@@ -1204,5 +1226,75 @@ class VideoQuizRouteArgs {
   @override
   String toString() {
     return 'VideoQuizRouteArgs{key: $key, videoQuiz: $videoQuiz, title: $title}';
+  }
+}
+
+/// generated route for
+/// [VideoMemorizePage]
+class VideoMemorizeRoute extends PageRouteInfo<VideoMemorizeRouteArgs> {
+  VideoMemorizeRoute(
+      {required String url,
+      Key? key,
+      List<Movie>? movies,
+      String? title,
+      bool? isSerial,
+      dynamic Function(int)? serialChange,
+      String? contentId,
+      VideoQuiz? quiz,
+      bool? isMemorize,
+      VideoMemorizeWord? videoMemorizeWord})
+      : super(VideoMemorizeRoute.name,
+            path: '/memorize',
+            args: VideoMemorizeRouteArgs(
+                url: url,
+                key: key,
+                movies: movies,
+                title: title,
+                isSerial: isSerial,
+                serialChange: serialChange,
+                contentId: contentId,
+                quiz: quiz,
+                isMemorize: isMemorize,
+                videoMemorizeWord: videoMemorizeWord));
+
+  static const String name = 'VideoMemorizeRoute';
+}
+
+class VideoMemorizeRouteArgs {
+  const VideoMemorizeRouteArgs(
+      {required this.url,
+      this.key,
+      this.movies,
+      this.title,
+      this.isSerial,
+      this.serialChange,
+      this.contentId,
+      this.quiz,
+      this.isMemorize,
+      this.videoMemorizeWord});
+
+  final String url;
+
+  final Key? key;
+
+  final List<Movie>? movies;
+
+  final String? title;
+
+  final bool? isSerial;
+
+  final dynamic Function(int)? serialChange;
+
+  final String? contentId;
+
+  final VideoQuiz? quiz;
+
+  final bool? isMemorize;
+
+  final VideoMemorizeWord? videoMemorizeWord;
+
+  @override
+  String toString() {
+    return 'VideoMemorizeRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange, contentId: $contentId, quiz: $quiz, isMemorize: $isMemorize, videoMemorizeWord: $videoMemorizeWord}';
   }
 }

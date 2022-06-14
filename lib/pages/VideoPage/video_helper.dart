@@ -11,7 +11,8 @@ class VideoHelper{
           cue.toLangTranslation, cue.fromLangTranslation,
           words: convertWords(cue.words),
           startTime: cue.startTime,
-            endTime: cue.endTime),
+          endTime: cue.endTime,
+        ),
       );
     }
     return retList;

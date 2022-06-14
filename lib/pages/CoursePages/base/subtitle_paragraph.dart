@@ -12,16 +12,20 @@ class SubtitleParagraph extends StatefulWidget {
   final Widget? tailWidget;
   final bool? selectParagraph;
   final Color defaultColor;
+  final bool? isMemorize;
   Map<CWord, Tuple2<GlobalKey, Widget>> wordWidgets = {};
 
-  SubtitleParagraph(this.paragraph, this.currentIndex,
-      {Key? key,
-      this.currentWord,
-      this.alignment,
-      this.tailWidget,
-      this.selectParagraph,
-      required this.defaultColor})
-      : super(key: key);
+  SubtitleParagraph(
+    this.paragraph,
+    this.currentIndex, {
+    Key? key,
+    this.currentWord,
+    this.alignment,
+    this.tailWidget,
+    this.selectParagraph,
+    this.isMemorize = false,
+    required this.defaultColor,
+  }) : super(key: key);
 
   @override
   _CueTexteState createState() => _CueTexteState();
@@ -32,6 +36,9 @@ class _CueTexteState extends State<SubtitleParagraph> {
   Widget build(BuildContext context) {
     //bool beforeSpace = false;
     Map<CWord, Widget> widgetList = {};
+    if (widget.isMemorize != null && widget.isMemorize!) {
+      // print(widget.currentWord);
+    }
 
     for (int i1 = 0; i1 < widget.paragraph.words!.length; i1++) {
       CWord w = widget.paragraph.words![i1];
@@ -135,6 +142,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
   Widget buildText(CWord w, bool? selectWord) {
     //, bool beforeSpace
     final globalKey = GlobalKey();
+
     var childWidget = Text(
       '${w.word}${w.spaceNext == true ? ' ' : ''}', // //'${beforeSpace ? ' ' : ''}$
       key: globalKey,
