@@ -57,6 +57,7 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
     super.initState();
     videoMemorizeWord = widget.videoMemorizeWord;
     movieId = widget.movies![0].movieId!;
+
     videoPlayerController!.addListener(() async {
       if (isMemorizeWord) {
         await videoPlayerController!
@@ -101,6 +102,7 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
                 }
               },
               isMemorize: true,
+              contentId: widget.contentId,
               videoMemorizeWord: videoMemorizeWord,
               bookMark: () {
                 AutoRouter.of(context).push(

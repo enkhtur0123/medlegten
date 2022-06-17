@@ -5,6 +5,9 @@ import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../models/video/movie.dart';
+import '../../models/video/quiz.dart';
+
 class VideoSubtitle extends BaseVideoSubtitlePage {
   const VideoSubtitle(VideoPlayerController videoPlayerController,
       List<CParagraph> paragraph, SubtitleWordCallback callback,
@@ -12,7 +15,12 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
       bool? isBookMark,
       Function? bookMark,
       bool? isMemorize,
-      VideoMemorizeWord? videoMemorizeWord})
+      String? contentId,
+      List<Movie>? movies,
+      String? videoUrl,
+      VideoMemorizeWord? videoMemorizeWord,
+      VideoQuiz? quiz,
+      String? title})
       : super(videoPlayerController, paragraph,
           pwordCallback: callback,
           key: key,
@@ -20,6 +28,12 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
           bookMark: bookMark,
           isMemorize: isMemorize,
           videoMemorizeWord: videoMemorizeWord,
+            quiz: quiz,
+            title: title,
+            contentId: contentId,
+            movies: movies,
+            videoUrl: videoUrl
+            
         );
 
   @override

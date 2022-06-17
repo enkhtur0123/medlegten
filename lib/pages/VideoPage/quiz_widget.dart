@@ -101,7 +101,6 @@ class VideoQuizPageState extends State<VideoQuizPage> {
           onTap: () {
             if (mode.value == 0) {
               mode.value = 1;
-              print(wrongCnt.value);
             } else {
               Navigator.pop(context, true);
             }
@@ -210,10 +209,8 @@ class VideoQuizPageState extends State<VideoQuizPage> {
       LoadingIndicator(context: context).hideLoadingIndicator();
     } on CustomException catch (ex) {
       LoadingIndicator(context: context).hideLoadingIndicator();
-      print(ex.toString());
     } catch (ex) {
       LoadingIndicator(context: context).hideLoadingIndicator();
-      print(ex.toString());
     }
   }
 

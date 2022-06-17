@@ -1,4 +1,5 @@
 // ignore_for_file: implementation_imports
+import 'package:auto_route/auto_route.dart';
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,29 +8,40 @@ import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
+import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/subtitle_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/exercise_option_dialog.dart';
 import 'package:medlegten/pages/VideoPage/options.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/utils/global.dart';
+import 'package:medlegten/widgets/loader.dart';
+import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../models/video/movie.dart';
+import '../../../repositories/video_repository.dart';
+import '../../../utils/app_router.dart';
+
 abstract class BaseVideoSubtitlePage extends StatefulWidget {
-  const BaseVideoSubtitlePage(
-    this.videoPlayerController,
-    this.paragraphs, {
-    Key? key,
-    SubtitleWordCallback? pwordCallback,
-    SubtitleParagraphCallback? pparagraphCallback,
-    Function? bookMark,
-    this.defaultColor,
-    this.isMemorize = false,
-    this.isBookMark = false,
-    this.videoMemorizeWord,
-  })  : wordCallback = pwordCallback,
+  const BaseVideoSubtitlePage(this.videoPlayerController, this.paragraphs,
+      {Key? key,
+      SubtitleWordCallback? pwordCallback,
+      SubtitleParagraphCallback? pparagraphCallback,
+      Function? bookMark,
+      this.defaultColor,
+      this.isMemorize = false,
+      this.isBookMark = false,
+      this.videoMemorizeWord,
+      this.contentId,
+      this.videoUrl,
+      this.movies,
+      this.quiz,
+      this.title})
+      : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
         bookMark = bookMark,
         super(key: key);
@@ -43,6 +55,11 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final Color? defaultColor;
   final bool? isMemorize;
   final VideoMemorizeWord? videoMemorizeWord;
+  final String? contentId;
+  final List<Movie>? movies;
+  final String? videoUrl;
+  final VideoQuiz? quiz;
+  final String? title;
 }
 
 TextStyle subtitleTextStyle = const TextStyle(
@@ -70,7 +87,6 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   VideoMemorizeWord? videoMemorizeWord;
   CWord? memorizedWord;
   ValueNotifier<bool>? memorize = ValueNotifier(false);
-
   List<MemorizeOptions> memorizeOptions = [
     MemorizeOptions(type: "1", name: "Бүх үг"),
     MemorizeOptions(type: "0", name: "Хадгалсан үг"),
@@ -421,8 +437,92 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     );
   }
 
-  exerciseNavigate({int? index}) {
-    print(index);
+  ///Нэмэлт дасгалийн сонголтууд
+  exerciseNavigate({int? index}) async {
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        VideoMemorizeWord? videoMemorizeWord;
+        try {
+          LoadingIndicator(context: context).showLoadingIndicator();
+          videoMemorizeWord = await memorizeWords();
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          AutoRouter.of(context).push(
+            VideoMemorizeRoute(
+              movies: widget.movies,
+              url: widget.videoUrl!,
+              title: "Үг цээжлэх",
+              isSerial: false,
+              quiz: null,
+              isMemorize: true,
+              contentId: widget.contentId,
+              videoMemorizeWord: videoMemorizeWord,
+            ),
+          );
+        } on CustomException catch (Ex) {
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: Ex.errorMsg.toString(),
+            ),
+          );
+        } catch (ex) {
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: ex.toString(),
+            ),
+          );
+        }
+
+        break;
+      case 2:
+        VideoQuiz? quiz;
+        await widget.videoPlayerController.pause();
+        try {
+          LoadingIndicator(context: context).showLoadingIndicator();
+          quiz =
+              await VideoRepository().getVideoQuiz(contentId: widget.contentId);
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          AutoRouter.of(context).push(
+            VideoQuizRoute(videoQuiz: quiz, title: "Шалгалт"),
+          );
+        } on CustomException catch (Ex) {
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: Ex.errorMsg.toString(),
+            ),
+          );
+        } catch (ex) {
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+            text: ex.toString(),
+          ));
+        }
+
+        break;
+    }
+  }
+
+  Future<VideoMemorizeWord> memorizeWords() async {
+    LoadingIndicator(context: context).showLoadingIndicator();
+    try {
+      VideoMemorizeWord videoMemorizeWord =
+          await VideoRepository().getMemorizeWord(
+        isAll: "1",
+        contentId: widget.contentId,
+      );
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      return videoMemorizeWord;
+    } on CustomException catch (ex) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      throw CustomException(errorMsg: ex.errorMsg.toString());
+    } catch (Ex) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      throw CustomException(errorMsg: Ex.toString());
+    }
   }
 
   /// Үг цээжлэх сонголт

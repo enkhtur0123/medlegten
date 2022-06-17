@@ -30,12 +30,11 @@ class LevelEventItem extends HookWidget {
     return GestureDetector(
       onTap: () async {
         List data = [];
-        VideoQuiz? quiz;
+     
         contentId = !isHome! ? event!.eventId : event!.contentId;
         LoadingIndicator(context: context).showLoadingIndicator();
         try {
           data = await VideoRepository().getContentDetail(contentId: contentId);
-          quiz = await VideoRepository().getVideoQuiz(contentId: contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
         } catch (ex) {
           LoadingIndicator(context: context).hideLoadingIndicator();
@@ -49,7 +48,7 @@ class LevelEventItem extends HookWidget {
                 url: movies[0].hostUrl!,
                 title: movies[0].contentName,
                 isSerial: event!.isSerial == "1" ? true : false,
-                quiz: quiz,
+               
                 contentId: contentId),
           );
         } else {

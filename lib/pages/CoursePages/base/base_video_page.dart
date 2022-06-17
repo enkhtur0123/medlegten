@@ -2,7 +2,6 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
@@ -12,10 +11,7 @@ import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
-import 'package:medlegten/repositories/video_repository.dart';
-import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/utils/app_router.dart';
-import 'package:medlegten/widgets/loader.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
@@ -157,81 +153,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       ]),
       bottomSheet: bottomSheetWidget(),
-      bottomNavigationBar: widget.isMemorize == null
-          ? Row(
-        children: [
-          InkWell(
-            onTap: () async {
-              await videoPlayerController!.pause();
-              AutoRouter.of(context).push(
-                VideoQuizRoute(videoQuiz: widget.quiz, title: widget.title),
-              );
-            },
-            child: Container(
-              margin: const EdgeInsets.all(30),
-              child: Text(
-                "Exam",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(color: Colors.black),
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () async {
-              memorizeWords().then((value) {
-                AutoRouter.of(context).push(
-                  VideoMemorizeRoute(
-                    movies: widget.movies,
-                    url: widget.videoUrl,
-                    title: "Үг цээжлэх",
-                    isSerial: false,
-                    quiz: null,
-                    isMemorize: true,
-                    contentId: widget.contentId,
-                    videoMemorizeWord: value,
-                  ),
-                );
-              });
-            },
-            child: Container(
-              margin: const EdgeInsets.all(30),
-              child: Text(
-                "Memorize",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(color: Colors.black),
-              ),
-            ),
-          ),
-        ],
-            )
-          : Container(
-              width: 0,
-              height: 0,
-            ),
     );
-  }
-
-  Future<VideoMemorizeWord> memorizeWords() async {
-    LoadingIndicator(context: context).showLoadingIndicator();
-    try {
-      VideoMemorizeWord videoMemorizeWord =
-          await VideoRepository().getMemorizeWord(
-        isAll: "1",
-        contentId: widget.contentId,
-      );
-      LoadingIndicator(context: context).hideLoadingIndicator();
-      return videoMemorizeWord;
-    } on CustomException catch (ex) {
-      LoadingIndicator(context: context).hideLoadingIndicator();
-      throw CustomException(errorMsg: ex.errorMsg.toString());
-    } catch (Ex) {
-      LoadingIndicator(context: context).hideLoadingIndicator();
-      throw CustomException(errorMsg: Ex.toString());
-    }
   }
 
   ///Video Player widget

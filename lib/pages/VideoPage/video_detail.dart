@@ -69,7 +69,7 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
         future: getVideoCueParagraph(),
         builder: (context, AsyncSnapshot<List<VideoCueParagraph>> snapshot) {
           if (snapshot.hasData) {
-            return VideoSubtitle(
+            return VideoSubtitle(  
               videoPlayerController!,
               VideoHelper.convert(snapshot.data!),
               (cword, pposition) {
@@ -79,6 +79,10 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
                   refreshNotifier.value = !refreshNotifier.value;
                 }
               },
+              movies: widget.movies,
+              contentId: widget.contentId,
+              videoMemorizeWord: widget.videoMemorizeWord,
+              videoUrl: widget.url,
               bookMark: () {
                 AutoRouter.of(context).push(
                   VideoVocabularyListRoute(movieId: movieId),
