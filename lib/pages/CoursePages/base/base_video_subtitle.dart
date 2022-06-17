@@ -3,6 +3,7 @@ import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
@@ -10,6 +11,8 @@ import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/subtitle_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
+import 'package:medlegten/pages/VideoPage/exercise_option_dialog.dart';
+import 'package:medlegten/pages/VideoPage/options.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:tuple/tuple.dart';
 import 'package:video_player/video_player.dart';
@@ -67,6 +70,13 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   VideoMemorizeWord? videoMemorizeWord;
   CWord? memorizedWord;
   ValueNotifier<bool>? memorize = ValueNotifier(false);
+
+  List<MemorizeOptions> memorizeOptions = [
+    MemorizeOptions(type: "1", name: "Бүх үг"),
+    MemorizeOptions(type: "0", name: "Хадгалсан үг"),
+  ];
+
+  int? memorizedCurrentIndex = 0;
 
   void _listener() {
     //setMaxExtent();
@@ -269,18 +279,58 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                   ),
                 ],
               ),
-              widget.isBookMark
-                  ? GestureDetector(
-                      onTap: () {
-                        widget.bookMark!();
-                      },
-                      child: const Icon(
-                        CupertinoIcons.bookmark,
-                        color: Color(0xffC7C9D9),
-                        size: 30,
-                      ),
+              widget.isMemorize != null && widget.isMemorize!
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: memorizeOptions.map((e) {
+                        return Flexible(
+                          flex: 1,
+                          child: memorizeOptionWidget(
+                              options: e, index: memorizeOptions.indexOf(e)),
+                        );
+                      }).toList(),
                     )
-                  : Container()
+                  : widget.isBookMark
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                int index;
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ExerciseOptionDialog();
+                                  },
+                                ).then((value) {
+                                  if (value != null) {
+                                    index = value;
+                                    exerciseNavigate(index: index);
+                                  }
+                                });
+                              },
+                              child: SvgPicture.asset(
+                                "assets/img/video/exam.svg",
+                                width: 30,
+                                height: 30,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                widget.bookMark!();
+                              },
+                              child: const Icon(
+                                CupertinoIcons.bookmark,
+                                color: Color(0xffC7C9D9),
+                                size: 30,
+                              ),
+                            )
+                          ],
+                        )
+                      : Container()
             ],
           ),
           Padding(
@@ -308,13 +358,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       }
                     } else if (scrollNotification is ScrollEndNotification &&
                         isUser == 1) {
-                      //print('Here ScrollEndNotification $currentIndex');
                       isUser = 0;
-                      //widget.videoPlayerController.removeListener(listener);
-
                       widget.videoPlayerController.seekTo(
                           getDuration(paragraphs[currentIndex].startTime!));
-                      //widget.videoPlayerController.addListener(listener);
                       if (!widget.videoPlayerController.value.isPlaying) {
                         widget.videoPlayerController.play();
                       }
@@ -333,7 +379,6 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                           const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
                       itemExtent: maxExtent,
                       useMagnifier: false,
-                      //overAndUnderCenterOpacity: 0.5,
                       diameterRatio: 50,
                       magnification: 1.01, // голын item нь илүү том харагдах
                       perspective: 0.001,
@@ -369,6 +414,48 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                   ),
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  exerciseNavigate({int? index}) {
+    print(index);
+  }
+
+  /// Үг цээжлэх сонголт
+  Widget memorizeOptionWidget({MemorizeOptions? options, int? index}) {
+    return InkWell(
+      onTap: () {
+        memorizedCurrentIndex = index;
+        setState(() {});
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            options!.name!,
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                  color: index == memorizedCurrentIndex
+                      ? colorPrimary
+                      : colorPrimary.withOpacity(0.3),
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Container(
+            height: 2,
+            width: 70,
+            decoration: BoxDecoration(
+              color: index == memorizedCurrentIndex
+                  ? colorPrimary
+                  : Colors.transparent,
             ),
           ),
         ],

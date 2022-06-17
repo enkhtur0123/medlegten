@@ -51,17 +51,27 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
   List<VideoCueParagraph>? videoCueParagraph;
   late String movieId;
   VideoMemorizeWord? videoMemorizeWord;
+  bool isMemorizeWord = false;
   @override
   void initState() {
     super.initState();
     videoMemorizeWord = widget.videoMemorizeWord;
     movieId = widget.movies![0].movieId!;
     videoPlayerController!.addListener(() async {
-      // if (videoPlayerController!.value.position
-      //         .compareTo(getDuration(widget.videoMemorizeWord!.endTime!)) ==
-      //     0) {
-      //   await videoPlayerController!.pause();
-      // }
+      if (isMemorizeWord) {
+        await videoPlayerController!
+            .seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
+        isMemorizeWord = false;
+        setState(() {});
+      }
+      if (videoPlayerController!.value.position.inSeconds ==
+          getDuration(widget.videoMemorizeWord!.endTime!).inSeconds) {
+        if (videoPlayerController != null) {
+          await videoPlayerController!.pause();
+          isMemorizeWord = true;
+          setState(() {});
+        }
+      }
       if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
         bottomIsVisible = false;
         word = null;
@@ -97,7 +107,7 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
                   VideoVocabularyListRoute(movieId: movieId),
                 );
               },
-              isBookMark: true,
+              isBookMark: false,
             );
           } else {
             return super.subtitleWidget();

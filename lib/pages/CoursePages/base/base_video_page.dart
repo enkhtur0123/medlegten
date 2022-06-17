@@ -2,6 +2,7 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
@@ -75,14 +76,14 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
       ..setLooping(false)
       ..initialize().then(
         (value) {
+          if (widget.isMemorize != null && widget.isMemorize!) {
+            videoPlayerController!
+                .seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
+          }
           if (isFirst!) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               setState(() {
                 videoPlayerController!.play();
-                if (widget.isMemorize != null && widget.isMemorize!) {
-                  videoPlayerController!.seekTo(
-                      getDuration(widget.videoMemorizeWord!.startTime!));
-                }
                 isFirst = false;
               });
             });
@@ -156,7 +157,8 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       ]),
       bottomSheet: bottomSheetWidget(),
-      bottomNavigationBar: Row(
+      bottomNavigationBar: widget.isMemorize == null
+          ? Row(
         children: [
           InkWell(
             onTap: () async {
@@ -205,7 +207,11 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
             ),
           ),
         ],
-      ),
+            )
+          : Container(
+              width: 0,
+              height: 0,
+            ),
     );
   }
 
@@ -217,17 +223,12 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         isAll: "1",
         contentId: widget.contentId,
       );
-      // videoPlayerController!.seekTo(
-      //   getDuration(videoMemorizeWord.startTime!),
-      // );
       LoadingIndicator(context: context).hideLoadingIndicator();
       return videoMemorizeWord;
     } on CustomException catch (ex) {
-      print(ex.toString());
       LoadingIndicator(context: context).hideLoadingIndicator();
       throw CustomException(errorMsg: ex.errorMsg.toString());
     } catch (Ex) {
-      print(Ex.toString());
       LoadingIndicator(context: context).hideLoadingIndicator();
       throw CustomException(errorMsg: Ex.toString());
     }

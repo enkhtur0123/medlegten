@@ -34,28 +34,23 @@ class LevelEventItem extends HookWidget {
         contentId = !isHome! ? event!.eventId : event!.contentId;
         LoadingIndicator(context: context).showLoadingIndicator();
         try {
-          data = await VideoRepository().getContentDetail(
-              contentId: contentId);
-          quiz = await VideoRepository().getVideoQuiz(
-              contentId: contentId);
+          data = await VideoRepository().getContentDetail(contentId: contentId);
+          quiz = await VideoRepository().getVideoQuiz(contentId: contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
         } catch (ex) {
           LoadingIndicator(context: context).hideLoadingIndicator();
         }
-      
-
         List<Movie> movies = data[0];
         PaymentInfo paymentInfo = data[1];
         if (paymentInfo.isPurchased!) {
           AutoRouter.of(context).push(
             VideoDetailRoute(
-              movies: movies,
-              url: movies[0].hostUrl!,
-              title: movies[0].contentName,
-              isSerial: event!.isSerial == "1" ? true : false,
-                quiz: quiz,  
-                contentId: contentId
-            ),
+                movies: movies,
+                url: movies[0].hostUrl!,
+                title: movies[0].contentName,
+                isSerial: event!.isSerial == "1" ? true : false,
+                quiz: quiz,
+                contentId: contentId),
           );
         } else {
           AutoRouter.of(context).push(
