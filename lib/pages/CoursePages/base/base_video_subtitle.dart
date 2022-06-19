@@ -40,7 +40,8 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       this.videoUrl,
       this.movies,
       this.quiz,
-      this.title})
+      this.title,
+      this.memorizeTypeBtn})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
         bookMark = bookMark,
@@ -60,6 +61,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final String? videoUrl;
   final VideoQuiz? quiz;
   final String? title;
+  final Function(String? type)? memorizeTypeBtn;
 }
 
 TextStyle subtitleTextStyle = const TextStyle(
@@ -82,7 +84,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   Rect? selectedRect;
   CWord? selectedWord;
   int selectedWordParagraphIndex = -1;
-  String? currentParagraph;
+
   bool? isMemorize;
   VideoMemorizeWord? videoMemorizeWord;
   CWord? memorizedWord;
@@ -92,7 +94,11 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     MemorizeOptions(type: "0", name: "Хадгалсан үг"),
   ];
 
-  int? memorizedCurrentIndex = 0;
+  bool isScroll = true;
+
+  int? memorizedOptionsCurrentIndex = 0;
+  String currentOption = "1";
+  CParagraph? currentParagraph;
 
   void _listener() {
     //setMaxExtent();
@@ -111,6 +117,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   @override
   void initState() {
+    isScroll = widget.isMemorize != null && widget.isMemorize! ? false : true;
     isMemorize = widget.isMemorize ?? false;
     videoMemorizeWord = widget.videoMemorizeWord;
     paragraphs.add(
@@ -150,7 +157,15 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     }
   }
 
-  videoPlayerListener() {
+  videoPlayerListener() async {
+    if (isMemorize != null &&
+        isMemorize! &&
+        widget.videoPlayerController.value.isPlaying) {
+      if (widget.videoPlayerController.value.position.inSeconds ==
+          getDuration(videoMemorizeWord!.endTime!).inSeconds) {
+        await widget.videoPlayerController.pause();
+      }
+    }
     if (widget.videoPlayerController.value.isPlaying) {
       if (isUser == -1) {
         var _duration = widget.videoPlayerController.value.position;
@@ -386,13 +401,15 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                   child: ClickableListWheelScrollView(
                     scrollController: _fixedExtentScrollController,
                     itemHeight: maxExtent,
+                    scrollOnTap: isScroll,
                     itemCount: paragraphs.length,
                     onItemTapCallback: (index) {
                       currentIndex = index;
                     },
                     child: ListWheelScrollView.useDelegate(
-                      physics:
-                          const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
+                      physics: !isScroll
+                          ? const NeverScrollableScrollPhysics()
+                          : const FixedExtentScrollPhysics(), // auto байрлалаа олоод зогсоно
                       itemExtent: maxExtent,
                       useMagnifier: false,
                       diameterRatio: 50,
@@ -509,9 +526,10 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
   Future<VideoMemorizeWord> memorizeWords() async {
     LoadingIndicator(context: context).showLoadingIndicator();
     try {
+      print(currentOption);
       VideoMemorizeWord videoMemorizeWord =
           await VideoRepository().getMemorizeWord(
-        isAll: "1",
+        isAll: currentOption,
         contentId: widget.contentId,
       );
       LoadingIndicator(context: context).hideLoadingIndicator();
@@ -525,11 +543,23 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     }
   }
 
+  Future getRandomCue() async {
+    videoMemorizeWord = await memorizeWords();
+    await widget.videoPlayerController.pause();
+    await widget.videoPlayerController
+        .seekTo(getDuration(videoMemorizeWord!.startTime!));
+    await widget.videoPlayerController.play();
+    setState(() {});
+  }
+
   /// Үг цээжлэх сонголт
   Widget memorizeOptionWidget({MemorizeOptions? options, int? index}) {
     return InkWell(
-      onTap: () {
-        memorizedCurrentIndex = index;
+      onTap: () async {
+        memorizedOptionsCurrentIndex = index;
+        currentOption = memorizeOptions[memorizedOptionsCurrentIndex!].type!;
+        widget.memorizeTypeBtn!(currentOption);
+        isMon.value = false;
         setState(() {});
       },
       child: Column(
@@ -540,7 +570,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
           Text(
             options!.name!,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                  color: index == memorizedCurrentIndex
+                  color: index == memorizedOptionsCurrentIndex
                       ? colorPrimary
                       : colorPrimary.withOpacity(0.3),
                   fontWeight: FontWeight.bold,
@@ -553,7 +583,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
             height: 2,
             width: 70,
             decoration: BoxDecoration(
-              color: index == memorizedCurrentIndex
+              color: index == memorizedOptionsCurrentIndex
                   ? colorPrimary
                   : Colors.transparent,
             ),

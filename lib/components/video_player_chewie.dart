@@ -9,11 +9,13 @@ class VideoPlayerChewie extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final double aspectRatio;
   final bool? autoPlay;
+  final bool onlyPause;
 
   const VideoPlayerChewie(
     this.videoPlayerController, {
     this.aspectRatio = 16 / 9,
-    this.autoPlay=true,
+    this.autoPlay = true,
+    this.onlyPause = false,
     Key? key,
   }) : super(key: key);
 
@@ -33,9 +35,11 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
       aspectRatio: widget.videoPlayerController.value.aspectRatio,
       allowFullScreen: false,
       allowMuting: false,
-      showControls: true,
+      // showControls: false,
       showControlsOnInitialize: false,
-      customControls: const ChewieCustomControls(),
+      customControls: ChewieCustomControls(
+        onlyPause: widget.onlyPause,
+      ),
       autoInitialize: false,
       // showOptions: false,
       allowPlaybackSpeedChanging: true,
@@ -56,10 +60,9 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
         );
       },
     );
-    if(!widget.autoPlay!){
+    if (!widget.autoPlay!) {
       _chewieController.pause();
     }
-   
   }
 
   @override

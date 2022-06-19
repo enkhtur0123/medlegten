@@ -8,7 +8,10 @@ import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/video_helper.dart';
 import 'package:medlegten/pages/VideoPage/video_subtitle.dart';
+import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/loader.dart';
 import '../../models/video/video_cue.dart';
 import '../../repositories/video_repository.dart';
 import '../CoursePages/base/cue_word_widget.dart';
@@ -51,28 +54,16 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
   List<VideoCueParagraph>? videoCueParagraph;
   late String movieId;
   VideoMemorizeWord? videoMemorizeWord;
-  bool isMemorizeWord = false;
+  String currentOption = "1";
+
+  GlobalKey<VideoSubtitleState> subtitleKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
     videoMemorizeWord = widget.videoMemorizeWord;
     movieId = widget.movies![0].movieId!;
-
     videoPlayerController!.addListener(() async {
-      if (isMemorizeWord) {
-        await videoPlayerController!
-            .seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
-        isMemorizeWord = false;
-        setState(() {});
-      }
-      if (videoPlayerController!.value.position.inSeconds ==
-          getDuration(widget.videoMemorizeWord!.endTime!).inSeconds) {
-        if (videoPlayerController != null) {
-          await videoPlayerController!.pause();
-          isMemorizeWord = true;
-          setState(() {});
-        }
-      }
       if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
         bottomIsVisible = false;
         word = null;
@@ -102,12 +93,17 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
                 }
               },
               isMemorize: true,
+              key: subtitleKey,
               contentId: widget.contentId,
               videoMemorizeWord: videoMemorizeWord,
               bookMark: () {
                 AutoRouter.of(context).push(
                   VideoVocabularyListRoute(movieId: movieId),
                 );
+              },
+              memorizeTypeBtn: (value) async {
+                currentOption = value!;
+               
               },
               isBookMark: false,
             );
@@ -134,10 +130,31 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
       backgroundColor: colorWhite,
       enableDrag: false,
       builder: (BuildContext context) {
-        return CueWordWidget(
-          word,
-          ppointerPosition: position,
-          isshadow: false,
+        return Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CueWordWidget(
+                word,
+                ppointerPosition: position,
+                isshadow: false,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    top: 0, left: 20, right: 20, bottom: 20),
+                child: CustomOutlinedButton(
+                  color: colorPrimary,
+                  text: "Цээжилсэн",
+                  onTap: () async {
+                    await subtitleKey.currentState!.getRandomCue();
+                  },
+                  fontSize: 18,
+                  height: 50,
+                ),
+              )
+            ],
+          ),
         );
       },
       onClosing: () {},

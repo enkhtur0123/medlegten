@@ -1,6 +1,4 @@
 // ignore_for_file: non_constant_identifier_names
-
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
@@ -11,7 +9,6 @@ import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
-import 'package:medlegten/utils/app_router.dart';
 import 'package:video_player/video_player.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
@@ -160,6 +157,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   Widget getVideoPlayerWidget() {
     return VideoPlayerChewie(
       videoPlayerController!,
+      onlyPause: widget.isMemorize != null && widget.isMemorize!,
     );
   }
 

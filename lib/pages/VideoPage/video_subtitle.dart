@@ -20,7 +20,8 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
       String? videoUrl,
       VideoMemorizeWord? videoMemorizeWord,
       VideoQuiz? quiz,
-      String? title})
+      String? title,
+      Function(String? type)? memorizeTypeBtn})
       : super(videoPlayerController, paragraph,
           pwordCallback: callback,
           key: key,
@@ -32,7 +33,8 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
             title: title,
             contentId: contentId,
             movies: movies,
-            videoUrl: videoUrl
+            videoUrl: videoUrl,
+            memorizeTypeBtn: memorizeTypeBtn
             
         );
 
