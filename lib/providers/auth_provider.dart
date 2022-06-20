@@ -234,7 +234,9 @@ class AuthViewModel extends StateNotifier<AuthState> {
     try {
       if (user == null) {
         LoginResult result = await facebookAuth!.login();
+
         fUser = await facebookAuth!.getUserData();
+        print(fUser.toString());
         if (result.status == LoginStatus.success) {
           AuthCredential credential =
               FacebookAuthProvider.credential(result.accessToken!.token);

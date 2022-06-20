@@ -404,7 +404,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                     scrollOnTap: isScroll,
                     itemCount: paragraphs.length,
                     onItemTapCallback: (index) {
-                      currentIndex = index;
+                      if (widget.isMemorize == null) {
+                        currentIndex = index;
+                      } 
                     },
                     child: ListWheelScrollView.useDelegate(
                       physics: !isScroll
@@ -518,7 +520,6 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
             text: ex.toString(),
           ));
         }
-
         break;
     }
   }
@@ -526,7 +527,6 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
   Future<VideoMemorizeWord> memorizeWords() async {
     LoadingIndicator(context: context).showLoadingIndicator();
     try {
-      print(currentOption);
       VideoMemorizeWord videoMemorizeWord =
           await VideoRepository().getMemorizeWord(
         isAll: currentOption,
