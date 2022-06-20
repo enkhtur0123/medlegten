@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
+import 'package:medlegten/pages/ProfilePages/mile_stone.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
@@ -34,6 +35,10 @@ class LandingProfile extends ConsumerWidget {
             children: [
               UserImageWithName(ref: ref),
               const SizedBox(
+                height: 30,
+              ),
+              MileStonePage(),
+              const SizedBox(
                 height: 15,
               ),
               Divider(
@@ -41,6 +46,8 @@ class LandingProfile extends ConsumerWidget {
                 height: 1,
                 color: const Color(0xffC7C9D9).withOpacity(0.2),
               ),
+
+           
               Container(
                 padding: const EdgeInsets.all(10),
                 child: const Text(
@@ -159,20 +166,20 @@ class LandingProfile extends ConsumerWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: Color(0xff1AE5EF), width: 3)),
             child: SizedBox(
-            width: 120,
-            height: 120,
-            child: CachedNetworkImage(
-              imageUrl: userInfo!.profileUrl ??
-                  'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg',
-              placeholder: (context, url) => CircleAvatar(
-                backgroundColor: Colors.grey.withOpacity(0.5),
-                radius: 26,
-              ),
-              imageBuilder: (context, image) => CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 26,
-                backgroundImage: image,
-              ),
+              width: 120,
+              height: 120,
+              child: CachedNetworkImage(
+                imageUrl: userInfo!.profileUrl ??
+                    'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg',
+                placeholder: (context, url) => CircleAvatar(
+                  backgroundColor: Colors.grey.withOpacity(0.5),
+                  radius: 26,
+                ),
+                imageBuilder: (context, image) => CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 26,
+                  backgroundImage: image,
+                ),
               ),
             ),
           ),
@@ -214,12 +221,10 @@ class LandingProfile extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 13),
               ),
+           
             ],
           ),
-       
-      
-        // TextButtonWidget(text: "Change profile", onTap: () {})
-      ],
+        ],
       ),
     );
   }

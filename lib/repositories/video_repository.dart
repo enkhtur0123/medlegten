@@ -202,7 +202,7 @@ class VideoRepository {
     }
   }
 
-  ///Хэрэглэгчийн түвшин
+  ///Хэрэглэгчийн түвшин авах
   Future<MileStone> getMileStone() async {
     try {
       final res = await HttpHelper().getUrl(url: 'ppv/Milestone');
