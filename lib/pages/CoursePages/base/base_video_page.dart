@@ -158,6 +158,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
     return VideoPlayerChewie(
       videoPlayerController!,
       onlyPause: widget.isMemorize != null && widget.isMemorize!,
+      videoMemorizeWord: widget.videoMemorizeWord,
     );
   }
 

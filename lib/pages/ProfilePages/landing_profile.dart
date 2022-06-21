@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
+import 'package:medlegten/pages/ProfilePages/mile_stone.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
@@ -34,6 +35,10 @@ class LandingProfile extends ConsumerWidget {
             children: [
               UserImageWithName(ref: ref),
               const SizedBox(
+                height: 30,
+              ),
+              MileStonePage(),
+              const SizedBox(
                 height: 15,
               ),
               Divider(
@@ -41,6 +46,8 @@ class LandingProfile extends ConsumerWidget {
                 height: 1,
                 color: const Color(0xffC7C9D9).withOpacity(0.2),
               ),
+
+           
               Container(
                 padding: const EdgeInsets.all(10),
                 child: const Text(
@@ -148,67 +155,77 @@ class LandingProfile extends ConsumerWidget {
 
   // ignore: non_constant_identifier_names
   Widget UserImageWithName({WidgetRef? ref}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        SizedBox(
-            width: 120,
-            height: 120,
-            child: CachedNetworkImage(
-              imageUrl: userInfo!.profileUrl ??
-                  'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg',
-              placeholder: (context, url) => CircleAvatar(
-                backgroundColor: Colors.grey.withOpacity(0.5),
-                radius: 26,
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Color(0xff1AE5EF), width: 3)),
+            child: SizedBox(
+              width: 120,
+              height: 120,
+              child: CachedNetworkImage(
+                imageUrl: userInfo!.profileUrl ??
+                    'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg',
+                placeholder: (context, url) => CircleAvatar(
+                  backgroundColor: Colors.grey.withOpacity(0.5),
+                  radius: 26,
+                ),
+                imageBuilder: (context, image) => CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 26,
+                  backgroundImage: image,
+                ),
               ),
-              imageBuilder: (context, image) => CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 26,
-                backgroundImage: image,
+            ),
+          ),
+          const SizedBox(
+            width: 30,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    userInfo?.firstName ?? "",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  const Icon(
+                    Icons.file_copy_outlined,
+                    color: Color(0xff30359F),
+                    size: 20,
+                  ),
+                ],
               ),
-            )),
-        const SizedBox(
-          height: 15,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              userInfo?.firstName ?? "",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            const Icon(
-              Icons.file_copy_outlined,
-              color: Color(0xff30359F),
-              size: 13,
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Text(
-          'ID: ${userInfo?.userId ?? ""}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold,
-              fontSize: 18),
-        ),
-        // TextButtonWidget(text: "Change profile", onTap: () {})
-      ],
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'ID: ${userInfo?.userId ?? ""}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13),
+              ),
+           
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

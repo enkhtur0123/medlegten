@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/chewie_custom_controls.dart';
 import 'package:medlegten/components/loading.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerChewie extends StatefulWidget {
@@ -10,12 +11,14 @@ class VideoPlayerChewie extends StatefulWidget {
   final double aspectRatio;
   final bool? autoPlay;
   final bool onlyPause;
+  final VideoMemorizeWord? videoMemorizeWord;
 
   const VideoPlayerChewie(
     this.videoPlayerController, {
     this.aspectRatio = 16 / 9,
     this.autoPlay = true,
     this.onlyPause = false,
+    this.videoMemorizeWord,
     Key? key,
   }) : super(key: key);
 
@@ -39,6 +42,7 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
       showControlsOnInitialize: false,
       customControls: ChewieCustomControls(
         onlyPause: widget.onlyPause,
+        videoMemorizeWord: widget.videoMemorizeWord,
       ),
       autoInitialize: false,
       // showOptions: false,
