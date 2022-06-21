@@ -96,7 +96,7 @@ class _GrammarTablePageState extends State<GrammarTablePage>
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       _counter.value++;
       show = true;
     });

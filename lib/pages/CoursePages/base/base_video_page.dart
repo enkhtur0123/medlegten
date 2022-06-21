@@ -74,7 +74,7 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
                 .seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
           }
           if (isFirst!) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
+            WidgetsBinding.instance!.addPostFrameCallback((_) {
               setState(() {
                 videoPlayerController!.play();
                 isFirst = false;
