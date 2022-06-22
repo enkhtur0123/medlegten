@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/models/video/mile_stone.dart';
+import 'package:medlegten/pages/ProfilePages/level_widget.dart';
 import 'package:medlegten/pages/ProfilePages/mile_stone.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/app_provider.dart';
@@ -11,20 +13,32 @@ import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import '../../utils/hex_color.dart';
 import 'report_items.dart';
 
 // ignore: must_be_immutable
-class LandingProfile extends ConsumerWidget {
+class LandingProfile extends HookConsumerWidget {
   LandingProfile({Key? key}) : super(key: key);
 
   final TextStyle textStyle = const TextStyle(color: Colors.black);
   MUserInfo? userInfo;
+  Color? currentStageColor;
+  MileStone? mileStone;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<int> wordCount = ref.watch(wordCountProvider);
     userInfo = ref.read(authProvider.notifier).userInfo;
-
+    var notifier = useState(false);
+    useEffect(() {
+      VideoRepository().getMileStone().then((value) {
+        currentStageColor = HexColor(value.mileStone!.singleWhere((element) => element.current == "1").color!);
+        mileStone = value;
+        notifier.value = !notifier.value;
+        notifier.dispose();
+      });
+      return null;
+    }, []);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -39,33 +53,20 @@ class LandingProfile extends ConsumerWidget {
               const SizedBox(
                 height: 30,
               ),
-              FutureBuilder(
-                  future: VideoRepository().getMileStone(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<MileStone> snapshot) {
-                    if (snapshot.hasData) {
-                      return MileStonePage(
-                        mileStone: snapshot.data,
-                        // isLast: snapshot.data!.mileStone!.indexOf(
-                        //         snapshot.data!.mileStone!.singleWhere(
-                        //             (element) => element.current == "1")) ==
-                        //     snapshot.data!.mileStone!.length,
-                        // currentIndex: snapshot.data!.mileStone!.indexOf(
-                        //   snapshot.data!.mileStone!
-                        //       .singleWhere((element) => element.current == "0"),
-                        // ),
-                      );
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return Container(
-                        height: 30,
-                        width: double.infinity,
-                        child: const Loading(),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }),
+              mileStone != null
+                  ? MileStonePage(
+                      mileStone: mileStone,
+                      isLast: mileStone!.mileStone!
+                              .indexOf(mileStone!.mileStone!.singleWhere((element) => element.current == "1")) ==
+                          mileStone!.mileStone!.length - 1,
+                      currentIndex: mileStone!.mileStone!.indexOf(
+                        mileStone!.mileStone!.singleWhere((element) => element.current == "1"),
+                      ),
+                    )
+                  : const SizedBox(
+                      height: 30,
+                      child: Loading(),
+                    ),
               const SizedBox(
                 height: 15,
               ),
@@ -78,10 +79,7 @@ class LandingProfile extends ConsumerWidget {
                 padding: const EdgeInsets.all(10),
                 child: const Text(
                   "Статистик",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
                 ),
               ),
               GridView.count(
@@ -180,7 +178,7 @@ class LandingProfile extends ConsumerWidget {
   }
 
   // ignore: non_constant_identifier_names
-  Widget UserImageWithName({WidgetRef? ref}) {
+  Widget UserImageWithName({WidgetRef? ref, ValueNotifier<bool>? notifier}) {
     return Container(
       margin: const EdgeInsets.only(top: 20),
       child: Row(
@@ -189,8 +187,9 @@ class LandingProfile extends ConsumerWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Color(0xff1AE5EF), width: 3)),
+              shape: BoxShape.circle,
+              border: Border.all(color: currentStageColor != null ? currentStageColor! : Colors.transparent, width: 3),
+            ),
             child: SizedBox(
               width: 120,
               height: 120,
@@ -210,7 +209,7 @@ class LandingProfile extends ConsumerWidget {
             ),
           ),
           const SizedBox(
-            width: 30,
+            width: 15,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -221,10 +220,7 @@ class LandingProfile extends ConsumerWidget {
                   Text(
                     userInfo?.firstName ?? "",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                    style: const TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   const SizedBox(
                     width: 5,
@@ -236,17 +232,22 @@ class LandingProfile extends ConsumerWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 'ID: ${userInfo?.userId ?? ""}',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13),
+                style: const TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.bold, fontSize: 13),
               ),
+              const SizedBox(
+                height: 50,
+              ),
+              mileStone != null
+                  ? LevelWidget(
+                      mileStone: mileStone,
+                    )
+                  : Container(),
             ],
           ),
         ],

@@ -3,11 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/mile_stone.dart';
 import 'package:medlegten/models/video/mile_stone_item.dart';
+import 'package:medlegten/utils/hex_color.dart';
 
 class MileStonePage extends StatefulWidget {
-  const MileStonePage(
-      {Key? key, this.mileStone, this.isLast = false, this.currentIndex = 0})
-      : super(key: key);
+  const MileStonePage({Key? key, this.mileStone, this.isLast = false, this.currentIndex = 0}) : super(key: key);
 
   final MileStone? mileStone;
   final bool? isLast;
@@ -21,46 +20,49 @@ class MileStonePage extends StatefulWidget {
 class MileStonePageState extends State<MileStonePage> {
   MileStoneItem? current;
   MileStoneItem? next;
+  Color? currentColor;
+  Color? nextColor;
+  MileStone? mileStone;
   @override
   void initState() {
     super.initState();
+    mileStone = widget.mileStone;
+    currentColor = HexColor(widget.mileStone!.mileStone![widget.currentIndex!].color!);
+    current = widget.mileStone!.mileStone![widget.currentIndex!];
+    if (!widget.isLast!) {
+      next = widget.mileStone!.mileStone![widget.currentIndex! + 1];
+      nextColor = HexColor(widget.mileStone!.mileStone![widget.currentIndex! + 1].color!);
+    }
+  
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Column(
         children: [
-          mileStoneItemWidget(context),
+          mileStoneItemWidget(context: context, title: "Мэддэг үг", icon: "memorize.svg", isKnownWord: true),
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            child:
+                mileStoneItemWidget(context: context, title: "Үзсэн контент", icon: "content.svg", isSeenContent: true),
+          )
+         
         ],
       ),
     );
   }
 
-  Widget mileStoneItemWidget(BuildContext? context) {
+  Widget mileStoneItemWidget(
+      {BuildContext? context, String? title, String? icon, bool? isKnownWord = false, bool? isSeenContent = false}) {
+    int wordNum = int.parse(current!.wordNum!);
+    int ppvNum = int.parse(current!.ppvNum!);
+    int nextStageCnt = isKnownWord! ? (wordNum - mileStone!.knowingWordCount) : (ppvNum - mileStone!.completedPpvCount);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            SvgPicture.asset(
-              "assets/img/video/memorize.svg",
-              width: 35,
-              height: 35,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              "Мэддэг үг",
-              style: Theme.of(context!).textTheme.subtitle1!.copyWith(
-                  color: colorPrimary,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18),
-            ),
-          ],
-        ),
+        header(icon: icon, title: title),
         const SizedBox(
           height: 10,
         ),
@@ -68,13 +70,27 @@ class MileStonePageState extends State<MileStonePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-                fit: FlexFit.tight,
-                flex: 3,
-                child: labelItemWidget(context: context)),
+              fit: FlexFit.tight,
+              flex: 3,
+              child: stageItemWidget(
+                context: context,
+                isKnownWord: isKnownWord,
+                isSeenContent: isSeenContent,
+                subTitle: isKnownWord ? "Одоо" : null,
+                color: currentColor,
+                value: isKnownWord ? mileStone!.knowingWordCount.toString() : mileStone!.knowingWordCount.toString(),
+              ),
+            ),
             Flexible(
               fit: FlexFit.tight,
               flex: 3,
-              child: labelItemWidget(context: context),
+              child: stageItemWidget(
+                  context: context,
+                  isKnownWord: isKnownWord,
+                  isSeenContent: isSeenContent,
+                  subTitle: isKnownWord ? "Дараагийн шат" : null,
+                  value: "+" + (nextStageCnt >= 0 ? nextStageCnt.toString() : "0"),
+                  color: nextColor ?? currentColor),
             ),
           ],
         )
@@ -82,45 +98,84 @@ class MileStonePageState extends State<MileStonePage> {
     );
   }
 
-  Widget labelItemWidget({BuildContext? context}) {
-    return Container(
+  ///Толгой хэсэг
+  Widget header({String? icon, String? title}) {
+    return Row(
+      children: [
+        SvgPicture.asset(
+          "assets/img/video/$icon",
+          width: 35,
+          height: 35,
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Text(
+          title!,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle1!
+              .copyWith(color: colorPrimary, fontWeight: FontWeight.w800, fontSize: 18),
+        ),
+      ],
+    );
+  }
+
+  /// Шугам татсан хэсгийн body хэсэг
+  Widget stageItemWidget({
+    BuildContext? context,
+    Color? color,
+    bool? isKnownWord = false,
+    bool? isSeenContent = false,
+    String? subTitle,
+    String? value = "",
+  }) {
+    return SizedBox(
       child: Row(
         children: [
           Container(
             margin: const EdgeInsets.only(left: 20),
             height: 70,
             width: 5,
-            decoration: const BoxDecoration(
-                color: Color(0xff1AE5EF),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+            decoration: BoxDecoration(color: color!, borderRadius: const BorderRadius.all(Radius.circular(10))),
           ),
           const SizedBox(
             width: 15,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Одоо",
-                style: Theme.of(context!)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(color: colorPrimary),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "2’700",
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                    color: Color(0xff1D2129), fontWeight: FontWeight.bold),
-              ),
-            ],
-          )
+          subTitle != null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      subTitle,
+                      style: Theme.of(context!).textTheme.subtitle1!.copyWith(color: colorPrimary),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        value!,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: const Color(0xff1D2129), fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                )
+              : SizedBox(
+                  child: Text(
+                    value!,
+                    style: Theme.of(context!)
+                        .textTheme
+                        .headline6!
+                        .copyWith(color: Color(0xff1D2129), fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                )
         ],
       ),
     );
   }
 }
-
