@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/models/video/mile_stone.dart';
+import 'package:medlegten/models/video/mile_stone_item.dart';
 
-class MileStonePage extends StatelessWidget {
-  const MileStonePage({Key? key}) : super(key: key);
+class MileStonePage extends StatefulWidget {
+  const MileStonePage(
+      {Key? key, this.mileStone, this.isLast = false, this.currentIndex = 0})
+      : super(key: key);
+
+  final MileStone? mileStone;
+  final bool? isLast;
+  final int? currentIndex;
+  @override
+  State<StatefulWidget> createState() {
+    return MileStonePageState();
+  }
+}
+
+class MileStonePageState extends State<MileStonePage> {
+  MileStoneItem? current;
+  MileStoneItem? next;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +53,7 @@ class MileStonePage extends StatelessWidget {
               width: 5,
             ),
             Text(
-              "Шинэ үг",
+              "Мэддэг үг",
               style: Theme.of(context!).textTheme.subtitle1!.copyWith(
                   color: colorPrimary,
                   fontWeight: FontWeight.w800,
@@ -102,3 +123,4 @@ class MileStonePage extends StatelessWidget {
     );
   }
 }
+

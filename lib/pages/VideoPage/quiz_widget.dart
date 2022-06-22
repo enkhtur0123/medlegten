@@ -33,10 +33,8 @@ class VideoQuizPageState extends State<VideoQuizPage> {
   void initState() {
     super.initState();
     _start = widget.videoQuiz!.quizDuration!;
-  
     startTimer();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,6 +196,7 @@ class VideoQuizPageState extends State<VideoQuizPage> {
 
   @override
   void dispose() {
+    _timer!.cancel();
     super.dispose();
   }
 
