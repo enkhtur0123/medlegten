@@ -150,6 +150,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       ]),
       bottomSheet: bottomSheetWidget(),
+      
     );
   }
 

@@ -14,6 +14,8 @@ _$_MileStoneItem _$$_MileStoneItemFromJson(Map<String, dynamic> json) =>
       json['ppvNum'] as String?,
       json['wordNum'] as String?,
       json['ordering'] as String?,
+      json['color'] as String?,
+      json['current'] as String?,
     );
 
 Map<String, dynamic> _$$_MileStoneItemToJson(_$_MileStoneItem instance) =>
@@ -24,4 +26,6 @@ Map<String, dynamic> _$$_MileStoneItemToJson(_$_MileStoneItem instance) =>
       'ppvNum': instance.ppvNum,
       'wordNum': instance.wordNum,
       'ordering': instance.ordering,
+      'color': instance.color,
+      'current': instance.current,
     };

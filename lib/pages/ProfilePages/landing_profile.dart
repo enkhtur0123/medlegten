@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
+import 'package:medlegten/models/video/mile_stone.dart';
 import 'package:medlegten/pages/ProfilePages/mile_stone.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'report_items.dart';
@@ -37,7 +39,33 @@ class LandingProfile extends ConsumerWidget {
               const SizedBox(
                 height: 30,
               ),
-              MileStonePage(),
+              FutureBuilder(
+                  future: VideoRepository().getMileStone(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<MileStone> snapshot) {
+                    if (snapshot.hasData) {
+                      return MileStonePage(
+                        mileStone: snapshot.data,
+                        // isLast: snapshot.data!.mileStone!.indexOf(
+                        //         snapshot.data!.mileStone!.singleWhere(
+                        //             (element) => element.current == "1")) ==
+                        //     snapshot.data!.mileStone!.length,
+                        // currentIndex: snapshot.data!.mileStone!.indexOf(
+                        //   snapshot.data!.mileStone!
+                        //       .singleWhere((element) => element.current == "0"),
+                        // ),
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return Container(
+                        height: 30,
+                        width: double.infinity,
+                        child: const Loading(),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
               const SizedBox(
                 height: 15,
               ),
@@ -46,8 +74,6 @@ class LandingProfile extends ConsumerWidget {
                 height: 1,
                 color: const Color(0xffC7C9D9).withOpacity(0.2),
               ),
-
-           
               Container(
                 padding: const EdgeInsets.all(10),
                 child: const Text(
@@ -156,7 +182,7 @@ class LandingProfile extends ConsumerWidget {
   // ignore: non_constant_identifier_names
   Widget UserImageWithName({WidgetRef? ref}) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +247,6 @@ class LandingProfile extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 13),
               ),
-           
             ],
           ),
         ],

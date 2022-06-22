@@ -23,7 +23,7 @@ class _$MileStoneItemTearOff {
   const _$MileStoneItemTearOff();
 
   _MileStoneItem call(String? id, String? name, String? desc, String? ppvNum,
-      String? wordNum, String? ordering) {
+      String? wordNum, String? ordering, String? color, String? current) {
     return _MileStoneItem(
       id,
       name,
@@ -31,6 +31,8 @@ class _$MileStoneItemTearOff {
       ppvNum,
       wordNum,
       ordering,
+      color,
+      current,
     );
   }
 
@@ -50,6 +52,8 @@ mixin _$MileStoneItem {
   String? get ppvNum => throw _privateConstructorUsedError;
   String? get wordNum => throw _privateConstructorUsedError;
   String? get ordering => throw _privateConstructorUsedError;
+  String? get color => throw _privateConstructorUsedError;
+  String? get current => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -68,7 +72,9 @@ abstract class $MileStoneItemCopyWith<$Res> {
       String? desc,
       String? ppvNum,
       String? wordNum,
-      String? ordering});
+      String? ordering,
+      String? color,
+      String? current});
 }
 
 /// @nodoc
@@ -88,6 +94,8 @@ class _$MileStoneItemCopyWithImpl<$Res>
     Object? ppvNum = freezed,
     Object? wordNum = freezed,
     Object? ordering = freezed,
+    Object? color = freezed,
+    Object? current = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -114,6 +122,14 @@ class _$MileStoneItemCopyWithImpl<$Res>
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
               as String?,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      current: current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -131,7 +147,9 @@ abstract class _$MileStoneItemCopyWith<$Res>
       String? desc,
       String? ppvNum,
       String? wordNum,
-      String? ordering});
+      String? ordering,
+      String? color,
+      String? current});
 }
 
 /// @nodoc
@@ -153,6 +171,8 @@ class __$MileStoneItemCopyWithImpl<$Res>
     Object? ppvNum = freezed,
     Object? wordNum = freezed,
     Object? ordering = freezed,
+    Object? color = freezed,
+    Object? current = freezed,
   }) {
     return _then(_MileStoneItem(
       id == freezed
@@ -179,6 +199,14 @@ class __$MileStoneItemCopyWithImpl<$Res>
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
               as String?,
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -186,8 +214,8 @@ class __$MileStoneItemCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MileStoneItem implements _MileStoneItem {
-  _$_MileStoneItem(
-      this.id, this.name, this.desc, this.ppvNum, this.wordNum, this.ordering);
+  _$_MileStoneItem(this.id, this.name, this.desc, this.ppvNum, this.wordNum,
+      this.ordering, this.color, this.current);
 
   factory _$_MileStoneItem.fromJson(Map<String, dynamic> json) =>
       _$$_MileStoneItemFromJson(json);
@@ -204,10 +232,14 @@ class _$_MileStoneItem implements _MileStoneItem {
   final String? wordNum;
   @override
   final String? ordering;
+  @override
+  final String? color;
+  @override
+  final String? current;
 
   @override
   String toString() {
-    return 'MileStoneItem(id: $id, name: $name, desc: $desc, ppvNum: $ppvNum, wordNum: $wordNum, ordering: $ordering)';
+    return 'MileStoneItem(id: $id, name: $name, desc: $desc, ppvNum: $ppvNum, wordNum: $wordNum, ordering: $ordering, color: $color, current: $current)';
   }
 
   @override
@@ -220,7 +252,9 @@ class _$_MileStoneItem implements _MileStoneItem {
             const DeepCollectionEquality().equals(other.desc, desc) &&
             const DeepCollectionEquality().equals(other.ppvNum, ppvNum) &&
             const DeepCollectionEquality().equals(other.wordNum, wordNum) &&
-            const DeepCollectionEquality().equals(other.ordering, ordering));
+            const DeepCollectionEquality().equals(other.ordering, ordering) &&
+            const DeepCollectionEquality().equals(other.color, color) &&
+            const DeepCollectionEquality().equals(other.current, current));
   }
 
   @override
@@ -231,7 +265,9 @@ class _$_MileStoneItem implements _MileStoneItem {
       const DeepCollectionEquality().hash(desc),
       const DeepCollectionEquality().hash(ppvNum),
       const DeepCollectionEquality().hash(wordNum),
-      const DeepCollectionEquality().hash(ordering));
+      const DeepCollectionEquality().hash(ordering),
+      const DeepCollectionEquality().hash(color),
+      const DeepCollectionEquality().hash(current));
 
   @JsonKey(ignore: true)
   @override
@@ -245,8 +281,15 @@ class _$_MileStoneItem implements _MileStoneItem {
 }
 
 abstract class _MileStoneItem implements MileStoneItem {
-  factory _MileStoneItem(String? id, String? name, String? desc, String? ppvNum,
-      String? wordNum, String? ordering) = _$_MileStoneItem;
+  factory _MileStoneItem(
+      String? id,
+      String? name,
+      String? desc,
+      String? ppvNum,
+      String? wordNum,
+      String? ordering,
+      String? color,
+      String? current) = _$_MileStoneItem;
 
   factory _MileStoneItem.fromJson(Map<String, dynamic> json) =
       _$_MileStoneItem.fromJson;
@@ -263,6 +306,10 @@ abstract class _MileStoneItem implements MileStoneItem {
   String? get wordNum;
   @override
   String? get ordering;
+  @override
+  String? get color;
+  @override
+  String? get current;
   @override
   @JsonKey(ignore: true)
   _$MileStoneItemCopyWith<_MileStoneItem> get copyWith =>
