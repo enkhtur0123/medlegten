@@ -186,10 +186,11 @@ class VideoRepository {
   }
 
   Future<VideoMemorizeWord> getMemorizeWord(
-      {String? contentId, String? isAll}) async {
+      {String? contentId, String? isAll, String? lastWordId}) async {
     try {
       final res = await HttpHelper()
-          .getUrl(url: 'ppv/PpvMemorizeWord?contentId=$contentId&isAll=$isAll');
+          .getUrl(url: 'ppv/PpvMemorizeWord/$contentId/$isAll/$lastWordId');
+      // print('ppv/PpvMemorizeWord/$contentId/$isAll/$lastWordId');
       if (res['isSuccess']) {
         return VideoMemorizeWord.fromJson(res);
       } else {

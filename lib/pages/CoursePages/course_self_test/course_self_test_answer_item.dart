@@ -64,7 +64,10 @@ class CourseSelfAnswerItem extends HookWidget {
                     border: Border.all(
                         color: getBorderColor(
                             answer: e,
-                            selectedAnswerId: selectedAnswerId.value))),
+                    selectedAnswerId: selectedAnswerId.value,
+                  ),
+                ),
+              ),
                 child: Text(
                   e.answer!,
                   style: style,
@@ -73,7 +76,8 @@ class CourseSelfAnswerItem extends HookWidget {
               ),
             ),
           );
-        }).toList());
+      }).toList(),
+    );
   }
 
   setCnt({QuizAnswer? answer, String? selectedAnswerId}) {
@@ -101,10 +105,6 @@ class CourseSelfAnswerItem extends HookWidget {
       if (answer!.isTrue == '1') {
         color = Colors.greenAccent;
       }
-      // if (answer.isTrue == '1' && selectedAnswerId == answer.answerId) {
-      //   correctCnt!.value++;
-      //   print(correctCnt!.value);
-      // }
       if (selectedAnswerId == answer.answerId && answer.isTrue == '0') {
         color = Colors.redAccent;
       }

@@ -99,6 +99,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   int? memorizedOptionsCurrentIndex = 0;
   String currentOption = "1";
   CParagraph? currentParagraph;
+  String? lastWordId = "0";
+  var idx;
 
   void _listener() {
     //setMaxExtent();
@@ -169,23 +171,12 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
     if (widget.videoPlayerController.value.isPlaying) {
       if (isUser == -1) {
         var _duration = widget.videoPlayerController.value.position;
-        var idx = paragraphs.firstWhereOrNull((element) =>
+        idx = paragraphs.firstWhereOrNull((element) =>
             getDuration(element.startTime!) <= _duration &&
             getDuration(element.endTime!) > _duration);
         if (idx != null && prevCueId != idx.ordering) {
           if (isMemorize != null && isMemorize!) {
-            paragraphs[paragraphs.indexOf(idx)].words!.forEach((element) async {
-              if (videoMemorizeWord!.word!.toUpperCase() ==
-                  element.word.toUpperCase()) {
-                memorizedWord = element;
-                isMon.value = false;
-                refreshCue.value = !refreshCue.value;
-                currentIndex = paragraphs.indexOf(idx);
-                await Future.delayed(const Duration(milliseconds: 300));
-                wordDescriptionBottomSheet();
-                setState(() {});
-              }
-            });
+            memorizeHighlight();
           }
           _fixedExtentScrollController.animateToItem(
             idx.ordering,
@@ -196,6 +187,21 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
         }
       }
     }
+  }
+
+  memorizeHighlight() {
+    paragraphs[paragraphs.indexOf(idx)].words!.forEach((element) async {
+      if (videoMemorizeWord!.word!.toUpperCase() ==
+          element.word.toUpperCase()) {
+        memorizedWord = element;
+        isMon.value = false;
+        refreshCue.value = !refreshCue.value;
+        currentIndex = paragraphs.indexOf(idx);
+        await Future.delayed(const Duration(milliseconds: 300));
+        wordDescriptionBottomSheet();
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -406,7 +412,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                     onItemTapCallback: (index) {
                       if (widget.isMemorize == null) {
                         currentIndex = index;
-                      } 
+                      }
                     },
                     child: ListWheelScrollView.useDelegate(
                       physics: !isScroll
@@ -505,7 +511,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
               await VideoRepository().getVideoQuiz(contentId: widget.contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
           AutoRouter.of(context).push(
-            VideoQuizRoute(videoQuiz: quiz, title: "Шалгалт"),
+            VideoQuizRoute(
+                videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
           );
         } on CustomException catch (Ex) {
           LoadingIndicator(context: context).hideLoadingIndicator();
@@ -531,7 +538,11 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
           await VideoRepository().getMemorizeWord(
         isAll: currentOption,
         contentId: widget.contentId,
+        lastWordId: lastWordId,
       );
+      memorizeHighlight();
+      isMemorize = true;
+      lastWordId = videoMemorizeWord.wordId;
       LoadingIndicator(context: context).hideLoadingIndicator();
       return videoMemorizeWord;
     } on CustomException catch (ex) {
@@ -543,7 +554,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
     }
   }
 
-  Future getRandomCue() async {
+  Future getRandomCue({String? lastWordId}) async {
     videoMemorizeWord = await memorizeWords();
     await widget.videoPlayerController.pause();
     await widget.videoPlayerController

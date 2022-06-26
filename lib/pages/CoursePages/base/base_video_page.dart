@@ -7,6 +7,7 @@ import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
+import 'package:medlegten/pages/CoursePages/Unit_listening/answer_item.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:video_player/video_player.dart';
@@ -14,18 +15,19 @@ import 'package:video_player/video_player.dart';
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
 
 abstract class BaseVideoPage extends StatefulWidget {
-  const BaseVideoPage(this.videoUrl,
-      {Key? key,
-      this.moduleId,
-      this.title,
-      this.isCompleted,
-      this.isSerial,
-      this.movies,
-      this.quiz,
-      this.contentId,
-      this.isMemorize = false,
-      this.videoMemorizeWord})
-      : super(key: key);
+  const BaseVideoPage(
+    this.videoUrl, {
+    Key? key,
+    this.moduleId,
+    this.title,
+    this.isCompleted,
+    this.isSerial,
+    this.movies,
+    this.quiz,
+    this.contentId,
+    this.isMemorize = false,
+    this.videoMemorizeWord,
+  }) : super(key: key);
   final String videoUrl;
   final bool? isSerial;
   final String? moduleId;
@@ -68,13 +70,14 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
     videoPlayerController!
       ..setLooping(false)
       ..initialize().then(
-        (value) {
+        (value) async {
           if (widget.isMemorize != null && widget.isMemorize!) {
             videoPlayerController!
                 .seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
+            // await videoPlayerController!.setLooping(true);
           }
           if (isFirst!) {
-            WidgetsBinding.instance!.addPostFrameCallback((_) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               setState(() {
                 videoPlayerController!.play();
                 isFirst = false;
@@ -150,7 +153,6 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       ]),
       bottomSheet: bottomSheetWidget(),
-      
     );
   }
 

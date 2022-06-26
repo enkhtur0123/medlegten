@@ -1,21 +1,27 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/Landing/quiz_question.dart';
 import 'package:medlegten/models/video/quiz.dart';
-import 'package:medlegten/pages/VideoPage/answer_item.dart';
+import 'package:medlegten/pages/VideoPage/video_answer_item.dart';
+
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/dialog/custom_popup.dart';
 import 'package:medlegten/widgets/loader.dart';
+import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
 // ignore: must_be_immutable
 class VideoQuizPage extends StatefulWidget {
-  VideoQuizPage({Key? key, this.videoQuiz, this.title}) : super(key: key);
+  VideoQuizPage({Key? key, this.videoQuiz, this.title, this.contentId})
+      : super(key: key);
 
   VideoQuiz? videoQuiz;
   String? title;
+  String? contentId;
 
   @override
   State<StatefulWidget> createState() {
@@ -29,12 +35,23 @@ class VideoQuizPageState extends State<VideoQuizPage> {
   int _start = 0;
   List<QuizQuestion> totalQuestion = [];
   ValueNotifier<int> wrongCnt = ValueNotifier(0);
+
+  ///Зөв хариултыг тоолох
+  ValueNotifier<Set<String>> contextCorrectAnswerIds = ValueNotifier(Set());
+  ValueNotifier<Set<String>> vocCorrectAnswerIds = ValueNotifier(Set());
+  ValueNotifier<int> clickCnts = ValueNotifier(0);
+  int totalQuestionCnt = 0;
+  bool isPass = false;
+
   @override
   void initState() {
     super.initState();
     _start = widget.videoQuiz!.quizDuration!;
+    totalQuestionCnt = widget.videoQuiz!.contextQuiz!.length +
+        widget.videoQuiz!.vocQuiz!.length;
     startTimer();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,13 +90,16 @@ class VideoQuizPageState extends State<VideoQuizPage> {
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: getQuizWidget(
-                  questions: widget.videoQuiz!.contextQuiz,
-                  isContextQuiz: true),
+                questions: widget.videoQuiz!.contextQuiz,
+                isContextQuiz: true,
+              ),
             ),
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: getQuizWidget(
-                  questions: widget.videoQuiz!.vocQuiz, isContextQuiz: false),
+                questions: widget.videoQuiz!.vocQuiz,
+                isContextQuiz: false,
+              ),
             ),
             const SizedBox(
               height: 30,
@@ -97,7 +117,22 @@ class VideoQuizPageState extends State<VideoQuizPage> {
           height: 50,
           onTap: () {
             if (mode.value == 0) {
-              mode.value = 1;
+              if (clickCnts.value != 0) {
+                print((contextCorrectAnswerIds.value.length +
+                    vocCorrectAnswerIds.value.length));
+                isPass = ((contextCorrectAnswerIds.value.length +
+                            vocCorrectAnswerIds.value.length) ==
+                        totalQuestionCnt ||
+                    (contextCorrectAnswerIds.value.length +
+                            vocCorrectAnswerIds.value.length) ==
+                        totalQuestionCnt - 1);
+                mode.value = 1;
+                sentResult(result: isPass ? "1" : "0");
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+                  text: "Хариултаа сонгоно уу",
+                ));
+              }
             } else {
               Navigator.pop(context, true);
             }
@@ -168,7 +203,10 @@ class VideoQuizPageState extends State<VideoQuizPage> {
                   AnsWerItem(
                     quizAnswer: e.answers,
                     mode: mode,
-                    wrongCnt: wrongCnt,
+                    clickCnts: clickCnts,
+                    correctAnswerds: isContextQuiz
+                        ? contextCorrectAnswerIds
+                        : vocCorrectAnswerIds,
                   )
                 ],
               ),
@@ -203,7 +241,23 @@ class VideoQuizPageState extends State<VideoQuizPage> {
   Future sentResult({String? result}) async {
     LoadingIndicator(context: context).showLoadingIndicator();
     try {
-      await VideoRepository().sentQuizResult(quizResult: result);
+      await VideoRepository()
+          .sentQuizResult(quizResult: result, contentId: widget.contentId)
+          .then(
+        (value) async {
+          _timer!.cancel();
+          await showDialog(
+              context: context,
+              builder: (context) {
+                return CustomPopUpDialog(
+                  isAlert: !isPass,
+                  isSuccess: isPass,
+                  title: isPass ? "Амжилттай" : "Амжилтгүй",
+                  body: isPass ? "Та тэнцлээ" : "Та тэнцсэнгүй",
+                );
+              });
+        },
+      );
       LoadingIndicator(context: context).hideLoadingIndicator();
     } on CustomException catch (ex) {
       LoadingIndicator(context: context).hideLoadingIndicator();
@@ -211,17 +265,22 @@ class VideoQuizPageState extends State<VideoQuizPage> {
       LoadingIndicator(context: context).hideLoadingIndicator();
     }
   }
-
+  
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         if (_start == 0) {
-          // sentResult(result: "1");
-          setState(() {
-            timer.cancel();
-          });
+          timer.cancel();
+          isPass = ((contextCorrectAnswerIds.value.length +
+                      vocCorrectAnswerIds.value.length) ==
+                  totalQuestionCnt ||
+              (contextCorrectAnswerIds.value.length +
+                      vocCorrectAnswerIds.value.length) ==
+                  totalQuestionCnt - 1);
+          sentResult(result: isPass ? "1" : "0");
+          setState(() {});
         } else {
           setState(() {
             _start--;

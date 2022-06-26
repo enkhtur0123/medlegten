@@ -241,7 +241,10 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: VideoQuizPage(
-              key: args.key, videoQuiz: args.videoQuiz, title: args.title));
+              key: args.key,
+              videoQuiz: args.videoQuiz,
+              title: args.title,
+              contentId: args.contentId));
     },
     VideoMemorizeRoute.name: (routeData) {
       final args = routeData.argsAs<VideoMemorizeRouteArgs>();
@@ -1205,17 +1208,22 @@ class WebViewRouteArgs {
 /// generated route for
 /// [VideoQuizPage]
 class VideoQuizRoute extends PageRouteInfo<VideoQuizRouteArgs> {
-  VideoQuizRoute({Key? key, VideoQuiz? videoQuiz, String? title})
+  VideoQuizRoute(
+      {Key? key, VideoQuiz? videoQuiz, String? title, String? contentId})
       : super(VideoQuizRoute.name,
             path: '/video/quiz',
             args: VideoQuizRouteArgs(
-                key: key, videoQuiz: videoQuiz, title: title));
+                key: key,
+                videoQuiz: videoQuiz,
+                title: title,
+                contentId: contentId));
 
   static const String name = 'VideoQuizRoute';
 }
 
 class VideoQuizRouteArgs {
-  const VideoQuizRouteArgs({this.key, this.videoQuiz, this.title});
+  const VideoQuizRouteArgs(
+      {this.key, this.videoQuiz, this.title, this.contentId});
 
   final Key? key;
 
@@ -1223,9 +1231,11 @@ class VideoQuizRouteArgs {
 
   final String? title;
 
+  final String? contentId;
+
   @override
   String toString() {
-    return 'VideoQuizRouteArgs{key: $key, videoQuiz: $videoQuiz, title: $title}';
+    return 'VideoQuizRouteArgs{key: $key, videoQuiz: $videoQuiz, title: $title, contentId: $contentId}';
   }
 }
 

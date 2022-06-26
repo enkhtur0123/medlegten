@@ -78,7 +78,9 @@ class MileStonePageState extends State<MileStonePage> {
                 isSeenContent: isSeenContent,
                 subTitle: isKnownWord ? "Одоо" : null,
                 color: currentColor,
-                value: isKnownWord ? mileStone!.knowingWordCount.toString() : mileStone!.knowingWordCount.toString(),
+                value: isKnownWord
+                    ? mileStone!.knowingWordCount.toString()
+                    : mileStone!.completedPpvCount.toString(),
               ),
             ),
             Flexible(

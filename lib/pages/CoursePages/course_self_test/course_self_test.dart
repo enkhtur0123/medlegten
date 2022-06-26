@@ -76,7 +76,8 @@ class CourseSelfTestPage extends HookWidget {
                                   correctCnt: correctCnt,
                                   clickCnt: clickCnts,
                                   correctAnswerds: correctAnswerIds,
-                                ))
+                              ),
+                            )
                             .toList(),
                       )
                     : const Loading()),
@@ -96,7 +97,8 @@ class CourseSelfTestPage extends HookWidget {
                     setSelfTestResult(
                         correctCnt: correctCnt.value,
                         snapshot: snapshot,
-                        context: context);
+                      context: context,
+                    );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Хариултаа сонгоно уу",));
                   }
