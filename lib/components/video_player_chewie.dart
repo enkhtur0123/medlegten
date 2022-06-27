@@ -28,11 +28,12 @@ class VideoPlayerChewie extends StatefulWidget {
 
 class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
   late ChewieController _chewieController;
+  VideoMemorizeWord? videoMemorizeWord;
 
   @override
   void initState() {
     super.initState();
-
+    if (widget.videoMemorizeWord != null) videoMemorizeWord = widget.videoMemorizeWord!;
     _chewieController = ChewieController(
       videoPlayerController: widget.videoPlayerController,
       aspectRatio: widget.videoPlayerController.value.aspectRatio,
@@ -42,7 +43,7 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
       showControlsOnInitialize: false,
       customControls: ChewieCustomControls(
         onlyPause: widget.onlyPause,
-        videoMemorizeWord: widget.videoMemorizeWord,
+        videoMemorizeWord: videoMemorizeWord,
       ),
       autoInitialize: false,
       // showOptions: false,

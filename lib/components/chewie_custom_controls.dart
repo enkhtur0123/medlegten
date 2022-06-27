@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/chewie_animated_play_button.dart';
 import 'package:medlegten/components/chewie_center_play_button.dart';
 import 'package:medlegten/components/chewie_colors.dart';
 import 'package:medlegten/components/chewie_progressbar.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
-import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:video_player/video_player.dart';
+
+import '../pages/CoursePages/base/base_video_subtitle.dart';
 
 class ChewieCustomControls extends StatefulWidget {
   const ChewieCustomControls({Key? key, this.onlyPause, this.videoMemorizeWord})
@@ -481,14 +483,17 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
         if (isFinished) {
           controller.seekTo(const Duration());
         }
-        controller.seekTo(controller.value.position);
+      
         if (widget.onlyPause != null && widget.onlyPause!) {
-          // controller.seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
+          await controller.seekTo(
+            getDuration(
+              GetStorage().read("start_time"),
+            ),
+          );
+        } else {
+          controller.seekTo(controller.value.position);
         }
         controller.play();
-        // if (widget.onlyPause != null && widget.onlyPause!)
-       
-
       }
     }
     setState(() {});

@@ -7,7 +7,6 @@ import 'package:medlegten/components/video_player_chewie.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
-import 'package:medlegten/pages/CoursePages/Unit_listening/answer_item.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:video_player/video_player.dart';

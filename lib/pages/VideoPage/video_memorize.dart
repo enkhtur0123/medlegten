@@ -8,16 +8,14 @@ import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/video_helper.dart';
 import 'package:medlegten/pages/VideoPage/video_subtitle.dart';
-import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
-import 'package:medlegten/widgets/loader.dart';
 import '../../models/video/video_cue.dart';
 import '../../repositories/video_repository.dart';
 import '../CoursePages/base/cue_word_widget.dart';
 
 class VideoMemorizePage extends BaseVideoPage {
-  VideoMemorizePage(
+  const VideoMemorizePage(
     this.url, {
     Key? key,
     this.movies,
@@ -45,8 +43,7 @@ class VideoMemorizePage extends BaseVideoPage {
   }
 }
 
-class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
-    with BaseVideoMixin {
+class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage> with BaseVideoMixin {
   CWord? word;
   Rect position = Rect.zero;
   bool bottomIsVisible = false;
@@ -95,7 +92,7 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
               isMemorize: true,
               key: subtitleKey,
               contentId: widget.contentId,
-              videoMemorizeWord: videoMemorizeWord,
+              videoMemorizeWord: widget.videoMemorizeWord,
               bookMark: () {
                 AutoRouter.of(context).push(
                   VideoVocabularyListRoute(movieId: movieId),
@@ -103,7 +100,6 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
               },
               memorizeTypeBtn: (value) async {
                 currentOption = value!;
-               
               },
               isBookMark: false,
             );
@@ -122,7 +118,8 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
       valueListenable: refreshNotifier,
     );
   }
-
+  
+  
   Widget _showBottomSheet(context, CWord? word, Rect position) {
     if (word == null) return const SizedBox(height: 1);
     bottomIsVisible = true;
@@ -141,8 +138,7 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage>
                 isshadow: false,
               ),
               Container(
-                margin: const EdgeInsets.only(
-                    top: 0, left: 20, right: 20, bottom: 20),
+                margin: const EdgeInsets.only(top: 0, left: 20, right: 20, bottom: 20),
                 child: CustomOutlinedButton(
                   color: colorPrimary,
                   text: "Цээжилсэн",

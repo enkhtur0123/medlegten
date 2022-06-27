@@ -5,6 +5,7 @@ import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
@@ -44,6 +45,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       this.memorizeTypeBtn})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
+        // ignore: prefer_initializing_formals
         bookMark = bookMark,
         super(key: key);
 
@@ -64,11 +66,9 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final Function(String? type)? memorizeTypeBtn;
 }
 
-TextStyle subtitleTextStyle = const TextStyle(
-    color: colorBlack, fontSize: 18, fontWeight: FontWeight.w400);
+TextStyle subtitleTextStyle = const TextStyle(color: colorBlack, fontSize: 18, fontWeight: FontWeight.w400);
 
-abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
-    extends State<Page> {
+abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extends State<Page> {
   int currentIndex = -1;
   int isUser = -1;
   late Color defaultColor;
@@ -101,7 +101,6 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   CParagraph? currentParagraph;
   String? lastWordId = "0";
   var idx;
-
   void _listener() {
     //setMaxExtent();
     setState(() {});
@@ -112,9 +111,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   }
 
   void setMaxExtent() {
-    maxExtent = BaseCueHelper().getMaxHeight(paragraphs, !isMon.value,
-            subtitleTextStyle, GlobalValues.screenWidth - 80) +
-        10;
+    maxExtent =
+        BaseCueHelper().getMaxHeight(paragraphs, !isMon.value, subtitleTextStyle, GlobalValues.screenWidth - 80) + 10;
   }
 
   @override
@@ -160,20 +158,18 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   }
 
   videoPlayerListener() async {
-    if (isMemorize != null &&
-        isMemorize! &&
-        widget.videoPlayerController.value.isPlaying) {
-      if (widget.videoPlayerController.value.position.inSeconds ==
-          getDuration(videoMemorizeWord!.endTime!).inSeconds) {
+    /// Үг цээжлэх үед зогсох хугацаа
+    if ((isMemorize != null && isMemorize!) ||
+        widget.videoMemorizeWord != null && widget.videoPlayerController.value.isPlaying) {
+      if (widget.videoPlayerController.value.position.inSeconds == getDuration(videoMemorizeWord!.endTime!).inSeconds) {
         await widget.videoPlayerController.pause();
       }
     }
     if (widget.videoPlayerController.value.isPlaying) {
       if (isUser == -1) {
         var _duration = widget.videoPlayerController.value.position;
-        idx = paragraphs.firstWhereOrNull((element) =>
-            getDuration(element.startTime!) <= _duration &&
-            getDuration(element.endTime!) > _duration);
+        idx = paragraphs.firstWhereOrNull(
+            (element) => getDuration(element.startTime!) <= _duration && getDuration(element.endTime!) > _duration);
         if (idx != null && prevCueId != idx.ordering) {
           if (isMemorize != null && isMemorize!) {
             memorizeHighlight();
@@ -191,8 +187,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
 
   memorizeHighlight() {
     paragraphs[paragraphs.indexOf(idx)].words!.forEach((element) async {
-      if (videoMemorizeWord!.word!.toUpperCase() ==
-          element.word.toUpperCase()) {
+      if (videoMemorizeWord!.word!.toUpperCase() == element.word.toUpperCase()) {
         memorizedWord = element;
         isMon.value = false;
         refreshCue.value = !refreshCue.value;
@@ -221,8 +216,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
         CParagraph cue = paragraphs[currentIndex];
         for (var entry in cueWidgets[cue]!.entries) {
           Rect rect = entry.value.item1.globalPaintBounds!;
-          if ((position != null && rect.contains(position)) &&
-              (entry.key.wordValue != '')) {
+          if ((position != null && rect.contains(position)) && (entry.key.wordValue != '')) {
             currentSheetData(cue: cue, entry: entry, rect: rect);
             break;
           } else if (isMemorize!) {
@@ -235,9 +229,7 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
   }
 
   currentSheetData(
-      {MapEntry<CWord, Tuple2<GlobalKey<State<StatefulWidget>>, Widget>>? entry,
-      Rect? rect,
-      CParagraph? cue}) {
+      {MapEntry<CWord, Tuple2<GlobalKey<State<StatefulWidget>>, Widget>>? entry, Rect? rect, CParagraph? cue}) {
     selectedWord = !isMemorize! ? entry!.key : memorizedWord;
     selectedWordParagraphIndex = currentIndex;
     selectedRect = rect;
@@ -260,8 +252,7 @@ Duration getDuration(String time) {
   );
 }
 
-mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
-    on BaseVideoSubtitleState<Page> {
+mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSubtitleState<Page> {
   @override
   void initState() {
     super.initState();
@@ -283,17 +274,13 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       isMon.value = false;
                     },
                     style: OutlinedButton.styleFrom(
-                      backgroundColor: isMon.value
-                          ? ColorTable.color48_53_159.withOpacity(.5)
-                          : ColorTable.color48_53_159,
+                      backgroundColor:
+                          isMon.value ? ColorTable.color48_53_159.withOpacity(.5) : ColorTable.color48_53_159,
                     ),
                     child: const Text(
                       'Eng',
-                      style: TextStyle(
-                          color: colorWhite,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          fontFamily: 'Roboto'),
+                      style:
+                          TextStyle(color: colorWhite, fontWeight: FontWeight.w500, fontSize: 14, fontFamily: 'Roboto'),
                     ),
                   ),
                   addHorizontalSpace(10),
@@ -302,16 +289,12 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       isMon.value = true;
                     },
                     style: OutlinedButton.styleFrom(
-                        backgroundColor: isMon.value
-                            ? ColorTable.color48_53_159
-                            : ColorTable.color48_53_159.withOpacity(.5)),
+                        backgroundColor:
+                            isMon.value ? ColorTable.color48_53_159 : ColorTable.color48_53_159.withOpacity(.5)),
                     child: const Text(
                       'Mon',
-                      style: TextStyle(
-                          color: colorWhite,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          fontFamily: 'Roboto'),
+                      style:
+                          TextStyle(color: colorWhite, fontWeight: FontWeight.w500, fontSize: 14, fontFamily: 'Roboto'),
                     ),
                   ),
                 ],
@@ -322,8 +305,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       children: memorizeOptions.map((e) {
                         return Flexible(
                           flex: 1,
-                          child: memorizeOptionWidget(
-                              options: e, index: memorizeOptions.indexOf(e)),
+                          child: memorizeOptionWidget(options: e, index: memorizeOptions.indexOf(e)),
                         );
                       }).toList(),
                     )
@@ -393,11 +375,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       } else if (isUser == 0) {
                         isUser = -1;
                       }
-                    } else if (scrollNotification is ScrollEndNotification &&
-                        isUser == 1) {
+                    } else if (scrollNotification is ScrollEndNotification && isUser == 1) {
                       isUser = 0;
-                      widget.videoPlayerController.seekTo(
-                          getDuration(paragraphs[currentIndex].startTime!));
+                      widget.videoPlayerController.seekTo(getDuration(paragraphs[currentIndex].startTime!));
                       if (!widget.videoPlayerController.value.isPlaying) {
                         widget.videoPlayerController.play();
                       }
@@ -427,17 +407,13 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
                         selectedWord = null;
-                        if (!widget.videoPlayerController.value.isPlaying &&
-                            widget.paragraphCallback != null) {
+                        if (!widget.videoPlayerController.value.isPlaying && widget.paragraphCallback != null) {
                           widget.paragraphCallback!(paragraphs[index]);
                         }
 
-                        if (paragraphs[index].grammarIsHighLighted != null &&
-                            widget.paragraphCallback != null) {
+                        if (paragraphs[index].grammarIsHighLighted != null && widget.paragraphCallback != null) {
                           widget.paragraphCallback!(
-                              paragraphs[index].grammarIsHighLighted == "1"
-                                  ? paragraphs[index]
-                                  : null);
+                              paragraphs[index].grammarIsHighLighted == "1" ? paragraphs[index] : null);
                         }
                         refreshCue.value = !refreshCue.value;
                       },
@@ -507,12 +483,10 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
         await widget.videoPlayerController.pause();
         try {
           LoadingIndicator(context: context).showLoadingIndicator();
-          quiz =
-              await VideoRepository().getVideoQuiz(contentId: widget.contentId);
+          quiz = await VideoRepository().getVideoQuiz(contentId: widget.contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
           AutoRouter.of(context).push(
-            VideoQuizRoute(
-                videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
+            VideoQuizRoute(videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
           );
         } on CustomException catch (Ex) {
           LoadingIndicator(context: context).hideLoadingIndicator();
@@ -534,12 +508,12 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
   Future<VideoMemorizeWord> memorizeWords() async {
     LoadingIndicator(context: context).showLoadingIndicator();
     try {
-      VideoMemorizeWord videoMemorizeWord =
-          await VideoRepository().getMemorizeWord(
+      VideoMemorizeWord videoMemorizeWord = await VideoRepository().getMemorizeWord(
         isAll: currentOption,
         contentId: widget.contentId,
         lastWordId: lastWordId,
       );
+      await GetStorage().write("start_time", videoMemorizeWord.startTime);
       memorizeHighlight();
       isMemorize = true;
       lastWordId = videoMemorizeWord.wordId;
@@ -557,8 +531,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
   Future getRandomCue({String? lastWordId}) async {
     videoMemorizeWord = await memorizeWords();
     await widget.videoPlayerController.pause();
-    await widget.videoPlayerController
-        .seekTo(getDuration(videoMemorizeWord!.startTime!));
+    await widget.videoPlayerController.seekTo(getDuration(videoMemorizeWord!.startTime!));
     await widget.videoPlayerController.play();
     setState(() {});
   }
@@ -581,9 +554,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
           Text(
             options!.name!,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                  color: index == memorizedOptionsCurrentIndex
-                      ? colorPrimary
-                      : colorPrimary.withOpacity(0.3),
+                  color: index == memorizedOptionsCurrentIndex ? colorPrimary : colorPrimary.withOpacity(0.3),
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -594,9 +565,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
             height: 2,
             width: 70,
             decoration: BoxDecoration(
-              color: index == memorizedOptionsCurrentIndex
-                  ? colorPrimary
-                  : Colors.transparent,
+              color: index == memorizedOptionsCurrentIndex ? colorPrimary : Colors.transparent,
             ),
           ),
         ],
@@ -605,11 +574,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
   }
 
   Widget buildParagraph(
-      bool isMon,
-      CParagraph paragraph,
-      Map<CParagraph, int> valueKeyList,
-      CWord? selectedWord,
-      bool isSelectedIndex) {
+      bool isMon, CParagraph paragraph, Map<CParagraph, int> valueKeyList, CWord? selectedWord, bool isSelectedIndex) {
     if (!valueKeyList.containsKey(paragraph)) {
       valueKeyList[paragraph] = 0;
     }
@@ -622,9 +587,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                 defaultColor: defaultColor,
                 isMemorize: isMemorize,
                 key: ValueKey<int>(valueKeyList[paragraph]!),
-                currentWord: !isMemorize!
-                    ? (isSelectedIndex ? selectedWord : null)
-                    : memorizedWord,
+                currentWord: !isMemorize! ? (isSelectedIndex ? selectedWord : null) : memorizedWord,
                 alignment: Alignment.center,
               )
             : getTextWidget(paragraph.engText, true, false);
@@ -640,14 +603,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
       child: Text(
         caption,
         style: isSelected
-            ? TextStyle(
-                color: colorBlack,
-                fontSize: isMon ? 16 : 18,
-                fontWeight: FontWeight.w400)
-            : TextStyle(
-                color: defaultColor,
-                fontSize: isMon ? 16 : 18,
-                fontWeight: FontWeight.w400),
+            ? TextStyle(color: colorBlack, fontSize: isMon ? 16 : 18, fontWeight: FontWeight.w400)
+            : TextStyle(color: defaultColor, fontSize: isMon ? 16 : 18, fontWeight: FontWeight.w400),
         textAlign: TextAlign.center,
       ),
     );
