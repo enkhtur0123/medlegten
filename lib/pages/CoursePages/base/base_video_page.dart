@@ -76,7 +76,7 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
             // await videoPlayerController!.setLooping(true);
           }
           if (isFirst!) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
+            WidgetsBinding.instance!.addPostFrameCallback((_) {
               setState(() {
                 videoPlayerController!.play();
                 isFirst = false;
