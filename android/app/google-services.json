@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "79251626405",
+    "project_id": "lingos-3e3b4",
+    "storage_bucket": "lingos-3e3b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79251626405:android:a17e8c2742e91a9d11f04c",
+        "android_client_info": {
+          "package_name": "mn.svp.lingos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79251626405-8j310dna7jeg5etfhol5fn0b73tkt3nq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mn.svp.lingos",
+            "certificate_hash": "00a83bf9169281fe43f44d054aad08c7c1a3158f"
+          }
+        },
+        {
+          "client_id": "79251626405-ff79jaiuhpg114bbri31s0cn7o0uq0ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mn.svp.lingos",
+            "certificate_hash": "cde51db82e332dd398666ff608cb8756ac1e7f25"
+          }
+        },
+        {
+          "client_id": "79251626405-sljtt545o5gvdaf29qfqmsagr3mvq4qs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mn.svp.lingos",
+            "certificate_hash": "570341f16ab048be653c075d7b652135d9b31448"
+          }
+        },
+        {
+          "client_id": "79251626405-t3oi05vb0jo24qp2csutul9viaih18ek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKIobrS2l3PaCwkRvimQiHgSU7dquJc3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79251626405-3h748i8ttvrd59gg292sl6ggegtr86lh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "79251626405-n982k211gnnt6tmui809v5o54d8l1lru.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "mn.svp.lingos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
