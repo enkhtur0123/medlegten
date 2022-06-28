@@ -220,7 +220,7 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
             : Row(
                 children: [
                   _buildPlayPause(controller),
-                  _buildPosition(iconColor),
+                  // _buildPosition(iconColor),
                 ],
               ),
       ),

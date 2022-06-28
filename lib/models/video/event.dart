@@ -14,6 +14,8 @@ class Event with _$Event {
     // bool isPurchased,
     String? levelId,
     String? vocabularyCount,
+    String? vocabularyKnow,
+    String? isCompleted,
     String? imgUrl,
     String? intro,
     String? isSerial,

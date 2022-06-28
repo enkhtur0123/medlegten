@@ -30,6 +30,8 @@ class _$EventTearOff {
       String? categoryName,
       String? levelId,
       String? vocabularyCount,
+      String? vocabularyKnow,
+      String? isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -42,6 +44,8 @@ class _$EventTearOff {
       categoryName,
       levelId,
       vocabularyCount,
+      vocabularyKnow,
+      isCompleted,
       imgUrl,
       intro,
       isSerial,
@@ -67,6 +71,8 @@ mixin _$Event {
       throw _privateConstructorUsedError; // bool isPurchased,
   String? get levelId => throw _privateConstructorUsedError;
   String? get vocabularyCount => throw _privateConstructorUsedError;
+  String? get vocabularyKnow => throw _privateConstructorUsedError;
+  String? get isCompleted => throw _privateConstructorUsedError;
   String? get imgUrl => throw _privateConstructorUsedError;
   String? get intro => throw _privateConstructorUsedError;
   String? get isSerial => throw _privateConstructorUsedError;
@@ -89,6 +95,8 @@ abstract class $EventCopyWith<$Res> {
       String? categoryName,
       String? levelId,
       String? vocabularyCount,
+      String? vocabularyKnow,
+      String? isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -112,6 +120,8 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
     Object? categoryName = freezed,
     Object? levelId = freezed,
     Object? vocabularyCount = freezed,
+    Object? vocabularyKnow = freezed,
+    Object? isCompleted = freezed,
     Object? imgUrl = freezed,
     Object? intro = freezed,
     Object? isSerial = freezed,
@@ -146,6 +156,14 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
               as String?,
+      vocabularyKnow: vocabularyKnow == freezed
+          ? _value.vocabularyKnow
+          : vocabularyKnow // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as String?,
       imgUrl: imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
@@ -179,6 +197,8 @@ abstract class _$EventCopyWith<$Res> implements $EventCopyWith<$Res> {
       String? categoryName,
       String? levelId,
       String? vocabularyCount,
+      String? vocabularyKnow,
+      String? isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -203,6 +223,8 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
     Object? categoryName = freezed,
     Object? levelId = freezed,
     Object? vocabularyCount = freezed,
+    Object? vocabularyKnow = freezed,
+    Object? isCompleted = freezed,
     Object? imgUrl = freezed,
     Object? intro = freezed,
     Object? isSerial = freezed,
@@ -237,6 +259,14 @@ class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
               as String?,
+      vocabularyKnow == freezed
+          ? _value.vocabularyKnow
+          : vocabularyKnow // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as String?,
       imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
@@ -268,6 +298,8 @@ class _$_Event implements _Event {
       this.categoryName,
       this.levelId,
       this.vocabularyCount,
+      this.vocabularyKnow,
+      this.isCompleted,
       this.imgUrl,
       this.intro,
       this.isSerial,
@@ -291,6 +323,10 @@ class _$_Event implements _Event {
   @override
   final String? vocabularyCount;
   @override
+  final String? vocabularyKnow;
+  @override
+  final String? isCompleted;
+  @override
   final String? imgUrl;
   @override
   final String? intro;
@@ -301,7 +337,7 @@ class _$_Event implements _Event {
 
   @override
   String toString() {
-    return 'Event(contentId: $contentId, contentName: $contentName, eventId: $eventId, eventName: $eventName, categoryName: $categoryName, levelId: $levelId, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, runTime: $runTime)';
+    return 'Event(contentId: $contentId, contentName: $contentName, eventId: $eventId, eventName: $eventName, categoryName: $categoryName, levelId: $levelId, vocabularyCount: $vocabularyCount, vocabularyKnow: $vocabularyKnow, isCompleted: $isCompleted, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, runTime: $runTime)';
   }
 
   @override
@@ -319,6 +355,10 @@ class _$_Event implements _Event {
             const DeepCollectionEquality().equals(other.levelId, levelId) &&
             const DeepCollectionEquality()
                 .equals(other.vocabularyCount, vocabularyCount) &&
+            const DeepCollectionEquality()
+                .equals(other.vocabularyKnow, vocabularyKnow) &&
+            const DeepCollectionEquality()
+                .equals(other.isCompleted, isCompleted) &&
             const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
             const DeepCollectionEquality().equals(other.intro, intro) &&
             const DeepCollectionEquality().equals(other.isSerial, isSerial) &&
@@ -335,6 +375,8 @@ class _$_Event implements _Event {
       const DeepCollectionEquality().hash(categoryName),
       const DeepCollectionEquality().hash(levelId),
       const DeepCollectionEquality().hash(vocabularyCount),
+      const DeepCollectionEquality().hash(vocabularyKnow),
+      const DeepCollectionEquality().hash(isCompleted),
       const DeepCollectionEquality().hash(imgUrl),
       const DeepCollectionEquality().hash(intro),
       const DeepCollectionEquality().hash(isSerial),
@@ -360,6 +402,8 @@ abstract class _Event implements Event {
       String? categoryName,
       String? levelId,
       String? vocabularyCount,
+      String? vocabularyKnow,
+      String? isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -381,6 +425,10 @@ abstract class _Event implements Event {
   String? get levelId;
   @override
   String? get vocabularyCount;
+  @override
+  String? get vocabularyKnow;
+  @override
+  String? get isCompleted;
   @override
   String? get imgUrl;
   @override

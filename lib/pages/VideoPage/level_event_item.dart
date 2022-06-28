@@ -1,21 +1,21 @@
-import 'dart:math';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
-import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/utils/time_convert_helper.dart';
 import 'package:medlegten/widgets/icon_with_text_widget.dart';
 import 'package:medlegten/widgets/loader.dart';
 
+// ignore: must_be_immutable
 class LevelEventItem extends HookWidget {
   LevelEventItem({Key? key, this.event, this.edgeInsets, this.isHome = false})
       : super(key: key);
@@ -30,7 +30,6 @@ class LevelEventItem extends HookWidget {
     return GestureDetector(
       onTap: () async {
         List data = [];
-     
         contentId = !isHome! ? event!.eventId : event!.contentId;
         LoadingIndicator(context: context).showLoadingIndicator();
         try {
@@ -48,7 +47,6 @@ class LevelEventItem extends HookWidget {
                 url: movies[0].hostUrl!,
                 title: movies[0].contentName,
                 isSerial: event!.isSerial == "1" ? true : false,
-               
                 contentId: contentId),
           );
         } else {
@@ -116,12 +114,90 @@ class LevelEventItem extends HookWidget {
             ),
           ),
         ),
+
+        ///Үзсэн эсэх
+        event!.isCompleted == "1"
+            ? Positioned.fill(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 5, bottom: 5, left: 10, right: 10),
+                    margin: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: const Color(0xff000000).withOpacity(0.5),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5))),
+                    child: Text(
+                      "Үзсэн",
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(color: Colors.white, fontSize: 15),
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
+
+        ///Сурах ёстой үг
+        event.isCompleted != "1"
+            ? Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                      margin: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(18))),
+                      child: learnWordCntWidget(context: context)),
+                ),
+              )
+            : Container(),
         Positioned.fill(
           child: Align(
             alignment: Alignment.center,
             child: SvgPicture.asset("assets/svg/player.svg"),
           ),
         ),
+      ],
+    );
+  }
+
+  Widget learnWordCntWidget({BuildContext? context}) {
+    // int cnt =
+    //     int.parse(event!.vocabularyCount!) - int.parse(event!.vocabularyKnow!);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(
+            top: 5,
+            bottom: 5,
+            left: 10,
+            right: 5,
+          ),
+          child: Text(
+            "Шинэ үг :",
+            style: Theme.of(context!).textTheme.subtitle1!.copyWith(
+                color: colorPrimary, fontSize: 13, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+          decoration: const BoxDecoration(
+              color: secondaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(18))),
+          child: Text(
+            "1000",
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .copyWith(color: Colors.white, fontSize: 13),
+          ),
+        )
       ],
     );
   }

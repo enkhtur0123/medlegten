@@ -163,7 +163,6 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       videoMemorizeWord: widget.videoMemorizeWord,
     );
   }
-
   ///Get Serial Widget
   Widget getSerialWidget() {
     return Container(
