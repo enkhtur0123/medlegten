@@ -203,6 +203,13 @@ class _$AppRouter extends RootStackRouter {
               args.isOnlyShowResult,
               key: args.key));
     },
+    SonsgolRoute.name: (routeData) {
+      final args = routeData.argsAs<SonsgolRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: SonsgolPage(args.url, args.title,
+              key: args.key, data: args.data, contentId: args.contentId));
+    },
     ArticleVerticalRoute.name: (routeData) {
       final args = routeData.argsAs<ArticleVerticalRouteArgs>(
           orElse: () => const ArticleVerticalRouteArgs());
@@ -293,6 +300,7 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(VideoVocabularyListRoute.name,
             path: '/video/vocabulary_list'),
         RouteConfig(UnitTestRoute.name, path: '/unit_test_page'),
+        RouteConfig(SonsgolRoute.name, path: '/sonsgol'),
         RouteConfig(ArticleVerticalRoute.name, path: '/blog/all'),
         RouteConfig(ArticleRoute.name,
             path: '/blog/articledetail/article_detail_page'),
@@ -964,7 +972,7 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
       bool? isSerial,
       dynamic Function(int)? serialChange,
       String? contentId,
-      VideoQuiz? quiz,
+      dynamic quiz,
       bool? isMemorize})
       : super(VideoDetailRoute.name,
             path: '/video/detail',
@@ -1008,7 +1016,7 @@ class VideoDetailRouteArgs {
 
   final String? contentId;
 
-  final VideoQuiz? quiz;
+  final dynamic quiz;
 
   final bool? isMemorize;
 
@@ -1085,6 +1093,51 @@ class UnitTestRouteArgs {
   @override
   String toString() {
     return 'UnitTestRouteArgs{moduleTypeId: $moduleTypeId, moduleId: $moduleId, unitTitle: $unitTitle, isOnlyShowResult: $isOnlyShowResult, key: $key}';
+  }
+}
+
+/// generated route for
+/// [SonsgolPage]
+class SonsgolRoute extends PageRouteInfo<SonsgolRouteArgs> {
+  SonsgolRoute(
+      {required String url,
+      required String? title,
+      Key? key,
+      Sonsgol? data,
+      String? contentId})
+      : super(SonsgolRoute.name,
+            path: '/sonsgol',
+            args: SonsgolRouteArgs(
+                url: url,
+                title: title,
+                key: key,
+                data: data,
+                contentId: contentId));
+
+  static const String name = 'SonsgolRoute';
+}
+
+class SonsgolRouteArgs {
+  const SonsgolRouteArgs(
+      {required this.url,
+      required this.title,
+      this.key,
+      this.data,
+      this.contentId});
+
+  final String url;
+
+  final String? title;
+
+  final Key? key;
+
+  final Sonsgol? data;
+
+  final String? contentId;
+
+  @override
+  String toString() {
+    return 'SonsgolRouteArgs{url: $url, title: $title, key: $key, data: $data, contentId: $contentId}';
   }
 }
 

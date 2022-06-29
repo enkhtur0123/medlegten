@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
 import '../widgets/dialog/custom_popup.dart';
+
 // ignore: must_be_immutable
-class CustomAppBar extends ConsumerStatefulWidget
-    implements PreferredSizeWidget {
+class CustomAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   String? text;
   WidgetRef? ref;
   CustomAppBar({Key? key, this.text, this.ref}) : super(key: key);
@@ -17,8 +17,7 @@ class CustomAppBar extends ConsumerStatefulWidget
   }
 
   @override
-  Size get preferredSize =>
-      Size.fromHeight(ref!.read(appbarProvider.notifier).appBarState.height!);
+  Size get preferredSize => Size.fromHeight(ref!.read(appbarProvider.notifier).appBarState.height!);
 }
 
 class CustomAppBarState extends ConsumerState<CustomAppBar> {
@@ -69,8 +68,7 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
                           fit: BoxFit.contain,
                         ),
                         Text(
-                          ref.read(appbarProvider.notifier).appBarState.text ??
-                              "",
+                          ref.read(appbarProvider.notifier).appBarState.text ?? "",
                           style: const TextStyle(
                               color: Color(0xffC7C9D9),
                               fontSize: 14,

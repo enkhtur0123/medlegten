@@ -26,9 +26,7 @@ class CourseSelfTestPage extends HookWidget {
     List<QuizQuestionEx> sortedList = [];
     var result = await LandingRepository().getSelfQuiz();
     quizId?.value = result!.quizId;
-    var _sortedList = result!.questions
-      ..sort(
-          (a, b) => int.parse(a.ordering!).compareTo(int.parse(b.ordering!)));
+    var _sortedList = result!.questions..sort((a, b) => int.parse(a.ordering!).compareTo(int.parse(b.ordering!)));
     for (var e in _sortedList) {
       sortedList.add(QuizQuestionEx(e));
     }
@@ -52,11 +50,8 @@ class CourseSelfTestPage extends HookWidget {
           addVerticalSpace(20),
           Text(
             'Өөрийгөө үнэлэх тест'.toUpperCase(),
-            style: const TextStyle(
-                color: colorPrimary,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w700,
-                fontSize: 16),
+            style:
+                const TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontWeight: FontWeight.w700, fontSize: 16),
           ),
           addVerticalSpace(10),
           const Divider(
@@ -69,13 +64,14 @@ class CourseSelfTestPage extends HookWidget {
                 child: snapshot.hasData
                     ? Column(
                         children: snapshot.data!
-                            .map((question) => CourseSelfTestQuestion(
-                                  question,
-                                  mode: mode.value,
-                                  check: check,
-                                  correctCnt: correctCnt,
-                                  clickCnt: clickCnts,
-                                  correctAnswerds: correctAnswerIds,
+                            .map(
+                              (question) => CourseSelfTestQuestion(
+                                question,
+                                mode: mode.value,
+                                check: check,
+                                correctCnt: correctCnt,
+                                clickCnt: clickCnts,
+                                correctAnswerds: correctAnswerIds,
                               ),
                             )
                             .toList(),
@@ -95,12 +91,14 @@ class CourseSelfTestPage extends HookWidget {
                   if (clickCnts.value != 0) {
                     mode.value = 1;
                     setSelfTestResult(
-                        correctCnt: correctCnt.value,
-                        snapshot: snapshot,
+                      correctCnt: correctCnt.value,
+                      snapshot: snapshot,
                       context: context,
                     );
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(MySnackBar(text: "Хариултаа сонгоно уу",));
+                    ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+                      text: "Хариултаа сонгоно уу",
+                    ));
                   }
                 } else {
                   AutoRouter.of(context).pop();
@@ -113,20 +111,13 @@ class CourseSelfTestPage extends HookWidget {
     );
   }
 
-  setSelfTestResult(
-      {int? correctCnt,
-      AsyncSnapshot<List<QuizQuestionEx>>? snapshot,
-      BuildContext? context}) async {
+  setSelfTestResult({int? correctCnt, AsyncSnapshot<List<QuizQuestionEx>>? snapshot, BuildContext? context}) async {
     Map<String, dynamic> data = {
       "quizId": quizId?.value.toString(),
-      "correctCount": correctAnswerIds.value.isNotEmpty
-          ? (correctAnswerIds.value.length).toString()
-          : 0.toString(),
-      "incorrectCount": (snapshot!.data!.length -
-              (correctAnswerIds.value.isNotEmpty
-                  ? correctAnswerIds.value.length - 1
-                  : 0))
-          .toString()
+      "correctCount": correctAnswerIds.value.isNotEmpty ? (correctAnswerIds.value.length).toString() : 0.toString(),
+      "incorrectCount":
+          (snapshot!.data!.length - (correctAnswerIds.value.isNotEmpty ? correctAnswerIds.value.length - 1 : 0))
+              .toString()
     };
     // print(data.toString());
     var result;
@@ -141,17 +132,13 @@ class CourseSelfTestPage extends HookWidget {
       showDialog(
           context: context!,
           builder: (BuildContext context) {
-            return const CustomPopUpDialog(
-                title: "Амжилттай",
-                body: "Хүсэлт амжилттай илгээгдлээ",
-                isSuccess: true);
+            return const CustomPopUpDialog(title: "Амжилттай", body: "Хүсэлт амжилттай илгээгдлээ", isSuccess: true);
           });
     } else {
       showDialog(
           context: context!,
           builder: (context) {
-            return const CustomPopUpDialog(
-                title: "Амжилтгүй", body: "", isError: true);
+            return const CustomPopUpDialog(title: "Амжилтгүй", body: "", isError: true);
           });
     }
   }

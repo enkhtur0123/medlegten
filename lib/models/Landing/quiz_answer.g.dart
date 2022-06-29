@@ -6,8 +6,7 @@ part of 'quiz_answer.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_QuizAnswer _$$_QuizAnswerFromJson(Map<String, dynamic> json) =>
-    _$_QuizAnswer(
+_$_QuizAnswer _$$_QuizAnswerFromJson(Map<String, dynamic> json) => _$_QuizAnswer(
       json['answerId'] as String?,
       json['answer'] as String?,
       json['isTrue'] as String?,
@@ -15,8 +14,7 @@ _$_QuizAnswer _$$_QuizAnswerFromJson(Map<String, dynamic> json) =>
       json['isCorrect'] as bool?,
     );
 
-Map<String, dynamic> _$$_QuizAnswerToJson(_$_QuizAnswer instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_QuizAnswerToJson(_$_QuizAnswer instance) => <String, dynamic>{
       'answerId': instance.answerId,
       'answer': instance.answer,
       'isTrue': instance.isTrue,

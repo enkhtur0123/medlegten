@@ -70,8 +70,7 @@ class MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
           var app = MaterialApp.router(
             color: Colors.white,
             key: GlobalKeys.navigatorKey,
-            routerDelegate: _appRouter.delegate(
-                navigatorObservers: () => [AutoRouteObserver()]),
+            routerDelegate: _appRouter.delegate(navigatorObservers: () => [AutoRouteObserver()]),
             routeInformationParser: _appRouter.defaultRouteParser(),
             routeInformationProvider: PlatformRouteInformationProvider(
               initialRouteInformation: const RouteInformation(

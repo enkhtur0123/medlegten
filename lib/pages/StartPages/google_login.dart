@@ -16,12 +16,10 @@ class GoogleLogin extends ConsumerWidget {
         Buttons.Google,
         padding: const EdgeInsets.all(10),
         elevation: 4,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
         onPressed: () {
           if (_authState != AuthState.Authorized) {
-            WidgetsBinding.instance?.addPostFrameCallback(
-                (_) => ref.read(authProvider.notifier).loginGoogle());
+            WidgetsBinding.instance?.addPostFrameCallback((_) => ref.read(authProvider.notifier).loginGoogle());
           }
         },
       ),

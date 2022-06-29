@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/movie.dart';
-import 'package:medlegten/models/video/quiz.dart';
+import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
@@ -10,21 +10,22 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/video_subtitle.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:video_player/video_player.dart';
 
 import 'video_helper.dart';
 
 class VideoDetailPage extends BaseVideoPage {
-  const VideoDetailPage(this.url,
-      {Key? key,
-      this.movies,
-      this.title,
-      this.isSerial,
-      this.serialChange,
-      this.contentId,
+  const VideoDetailPage(
+    this.url, {
+    Key? key,
+    this.movies,
+    this.title,
+    this.isSerial,
+    this.serialChange,
+    this.contentId,
     this.quiz,
     this.isMemorize,
-  })
-      : super(url, isSerial: isSerial, movies: movies, key: key);
+  }) : super(url, isSerial: isSerial, movies: movies, key: key);
   final String url;
   final String? contentId;
   final List<Movie>? movies;
@@ -38,8 +39,8 @@ class VideoDetailPage extends BaseVideoPage {
     return VideoDetailPageState();
   }
 }
-class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
-    with BaseVideoMixin {
+
+class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage> with BaseVideoMixin {
   CWord? word;
   Rect position = Rect.zero;
   bool bottomIsVisible = false;
@@ -69,7 +70,7 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
         future: getVideoCueParagraph(),
         builder: (context, AsyncSnapshot<List<VideoCueParagraph>> snapshot) {
           if (snapshot.hasData) {
-            return VideoSubtitle(  
+            return VideoSubtitle(
               videoPlayerController!,
               VideoHelper.convert(snapshot.data!),
               (cword, pposition) {
@@ -83,6 +84,19 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
               contentId: widget.contentId,
               videoMemorizeWord: widget.videoMemorizeWord,
               videoUrl: widget.url,
+              sonsgol: () async {
+                videoPlayerController!.pause();
+                Sonsgol data;
+                data = await VideoRepository().getSonsgol(movieId: widget.movies![0].contentId!);
+                AutoRouter.of(context).push(
+                  SonsgolRoute(
+                    data: data,
+                    url: widget.url,
+                    title: 'Сонсгол шалгах',
+                    contentId: widget.movies![0].contentId!,
+                  ),
+                );
+              },
               bookMark: () {
                 AutoRouter.of(context).push(
                   VideoVocabularyListRoute(movieId: movieId),

@@ -53,8 +53,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
               isGoogle: isGoogle!,
               googleSignInAccount: googleSignInAccount,
               isApple: isApple!,
-              userIdentifier:
-                  authorizationCredentialAppleID?.userIdentifier ?? null,
+              userIdentifier: authorizationCredentialAppleID?.userIdentifier ?? null,
               credentialAppleID: authorizationCredentialAppleID,
               fUser: fUser);
           _login();
@@ -140,17 +139,13 @@ class AuthViewModel extends StateNotifier<AuthState> {
       if (user == null) {
         googleSignInAccount = await googleSignIn!.signIn();
         // print(googleSignInAccount.toString());
-        GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount!.authentication;
+        GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
         AuthCredential credential = GoogleAuthProvider.credential(
-            accessToken: googleSignInAuthentication.accessToken,
-            idToken: googleSignInAuthentication.idToken);
+            accessToken: googleSignInAuthentication.accessToken, idToken: googleSignInAuthentication.idToken);
         _auth.signInWithCredential(credential);
       } else {
-        await LoginRepository().fetchLoginInfo(
-            user: user,
-            isGoogle: isGoogle!,
-            googleSignInAccount: googleSignInAccount);
+        await LoginRepository()
+            .fetchLoginInfo(user: user, isGoogle: isGoogle!, googleSignInAccount: googleSignInAccount);
         _login();
       }
     } catch (e) {
@@ -196,8 +191,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
     changeStatus(AuthState.Authorizing);
     try {
       if (user == null) {
-        authorizationCredentialAppleID =
-            await SignInWithApple.getAppleIDCredential(
+        authorizationCredentialAppleID = await SignInWithApple.getAppleIDCredential(
           scopes: [
             AppleIDAuthorizationScopes.email,
             AppleIDAuthorizationScopes.fullName,
@@ -238,16 +232,14 @@ class AuthViewModel extends StateNotifier<AuthState> {
         fUser = await facebookAuth!.getUserData();
         print(fUser.toString());
         if (result.status == LoginStatus.success) {
-          AuthCredential credential =
-              FacebookAuthProvider.credential(result.accessToken!.token);
+          AuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.token);
           await _auth.signInWithCredential(credential);
         } else {
           dioRepository.snackBar(result.message!);
           changeStatus(AuthState.UnAuthorized);
         }
       } else {
-        await LoginRepository()
-            .fetchLoginInfo(user: user, isGoogle: isGoogle!, fUser: fUser);
+        await LoginRepository().fetchLoginInfo(user: user, isGoogle: isGoogle!, fUser: fUser);
         _login();
       }
     } catch (e) {

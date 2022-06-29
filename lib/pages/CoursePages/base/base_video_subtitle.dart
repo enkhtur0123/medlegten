@@ -10,6 +10,8 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/quiz.dart';
+import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/subtitle_paragraph.dart';
@@ -27,6 +29,10 @@ import '../../../models/video/movie.dart';
 import '../../../repositories/video_repository.dart';
 import '../../../utils/app_router.dart';
 
+import 'package:medlegten/utils/global.dart';
+import 'package:tuple/tuple.dart';
+import 'package:video_player/video_player.dart';
+
 abstract class BaseVideoSubtitlePage extends StatefulWidget {
   const BaseVideoSubtitlePage(this.videoPlayerController, this.paragraphs,
       {Key? key,
@@ -42,7 +48,8 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       this.movies,
       this.quiz,
       this.title,
-      this.memorizeTypeBtn})
+      this.memorizeTypeBtn,
+      this.sonsgol})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
         // ignore: prefer_initializing_formals
@@ -64,6 +71,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final VideoQuiz? quiz;
   final String? title;
   final Function(String? type)? memorizeTypeBtn;
+  final Function? sonsgol;
 }
 
 TextStyle subtitleTextStyle = const TextStyle(color: colorBlack, fontSize: 18, fontWeight: FontWeight.w400);

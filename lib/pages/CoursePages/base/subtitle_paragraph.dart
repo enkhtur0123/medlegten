@@ -46,16 +46,13 @@ class _CueTexteState extends State<SubtitleParagraph> {
           widget.currentWord!.id == w.id) {
         var splitted = widget.currentWord!.wordValue.split(' ');
         for (int i2 = 0; i2 < splitted.length; i2++) {
-          if (splitted[i2].toLowerCase() ==
-              widget.currentWord!.word.toLowerCase()) {
-            widgetList[widget.currentWord!] =
-                buildTextElevated(widget.currentWord!);
+          if (splitted[i2].toLowerCase() == widget.currentWord!.word.toLowerCase()) {
+            widgetList[widget.currentWord!] = buildTextElevated(widget.currentWord!);
           } else {
             for (int i3 = i2; i3 < 10; i3++) {
               if (widget.paragraph.words!.length > i1 + i3) {
                 var wordForward = widget.paragraph.words![i1 + i3];
-                if (wordForward.word.toLowerCase() ==
-                    splitted[i2].toLowerCase()) {
+                if (wordForward.word.toLowerCase() == splitted[i2].toLowerCase()) {
                   widgetList[wordForward] = buildTextElevated(wordForward);
                   //skip.add(wordForward);
                   break;
@@ -63,8 +60,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
               }
               if (i1 - i3 > -1) {
                 var wordBackward = widget.paragraph.words![i1 - i3];
-                if (wordBackward.word.toLowerCase() ==
-                    splitted[i2].toLowerCase()) {
+                if (wordBackward.word.toLowerCase() == splitted[i2].toLowerCase()) {
                   widgetList[wordBackward] = buildTextElevated(wordBackward);
                   //skip.add(wordBackward);
                   break;
@@ -76,8 +72,7 @@ class _CueTexteState extends State<SubtitleParagraph> {
         //beforeSpace = true;
       } else {
         if (!widgetList.containsKey(w)) {
-          widgetList[w] =
-              buildText(w, widget.selectParagraph); //, beforeSpace);
+          widgetList[w] = buildText(w, widget.selectParagraph); //, beforeSpace);
           //beforeSpace = false;
         }
       }
@@ -95,17 +90,14 @@ class _CueTexteState extends State<SubtitleParagraph> {
       final globalKey = GlobalKey();
       var childWidget = Container(key: globalKey, child: widget.tailWidget!);
       var cword = CWord('-1', '-1', '-1', false);
-      widget.wordWidgets[cword] =
-          Tuple2<GlobalKey, Widget>(globalKey, childWidget);
+      widget.wordWidgets[cword] = Tuple2<GlobalKey, Widget>(globalKey, childWidget);
       widgetList[cword] = childWidget;
     }
 
     return Align(
       alignment: widget.alignment ?? Alignment.center,
       child: Wrap(
-        alignment: widget.alignment == Alignment.center
-            ? WrapAlignment.center
-            : WrapAlignment.start,
+        alignment: widget.alignment == Alignment.center ? WrapAlignment.center : WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: widgetList.entries.map((e) => e.value).toList(),
       ),
@@ -134,24 +126,20 @@ class _CueTexteState extends State<SubtitleParagraph> {
         ),
       ),
     );
-    widget.wordWidgets[word] =
-        Tuple2<GlobalKey, Widget>(globalKey, childWidget);
+    widget.wordWidgets[word] = Tuple2<GlobalKey, Widget>(globalKey, childWidget);
     return childWidget;
   }
 
   Widget buildText(CWord w, bool? selectWord) {
     //, bool beforeSpace
     final globalKey = GlobalKey();
-
     var childWidget = Text(
       '${w.word}${w.spaceNext == true ? ' ' : ''}', // //'${beforeSpace ? ' ' : ''}$
       key: globalKey,
       style: TextStyle(
           color: widget.currentIndex == widget.paragraph.ordering
               ? colorBlack
-              : (selectWord != null
-                  ? (selectWord ? colorBlack : widget.defaultColor)
-                  : widget.defaultColor),
+              : (selectWord != null ? (selectWord ? colorBlack : widget.defaultColor) : widget.defaultColor),
           fontSize: 18,
           fontWeight: FontWeight.w400),
     );

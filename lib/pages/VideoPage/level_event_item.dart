@@ -17,8 +17,7 @@ import 'package:medlegten/widgets/loader.dart';
 
 // ignore: must_be_immutable
 class LevelEventItem extends HookWidget {
-  LevelEventItem({Key? key, this.event, this.edgeInsets, this.isHome = false})
-      : super(key: key);
+  LevelEventItem({Key? key, this.event, this.edgeInsets, this.isHome = false}) : super(key: key);
 
   final Event? event;
   final EdgeInsets? edgeInsets;
@@ -62,8 +61,7 @@ class LevelEventItem extends HookWidget {
       },
       child: Container(
         height: MediaQuery.of(context).size.width * 0.58,
-        margin:
-            edgeInsets ?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
+        margin: edgeInsets ?? const EdgeInsets.only(left: 15, top: 15, bottom: 20),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           boxShadow: [
@@ -121,19 +119,14 @@ class LevelEventItem extends HookWidget {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Container(
-                    padding: const EdgeInsets.only(
-                        top: 5, bottom: 5, left: 10, right: 10),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                     margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                         color: const Color(0xff000000).withOpacity(0.5),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5))),
+                        borderRadius: const BorderRadius.all(Radius.circular(5))),
                     child: Text(
                       "Үзсэн",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Colors.white, fontSize: 15),
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.white, fontSize: 15),
                     ),
                   ),
                 ),
@@ -147,9 +140,8 @@ class LevelEventItem extends HookWidget {
                   alignment: Alignment.bottomRight,
                   child: Container(
                       margin: const EdgeInsets.all(5),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(18))),
+                      decoration:
+                          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(18))),
                       child: learnWordCntWidget(context: context)),
                 ),
               )
@@ -180,22 +172,18 @@ class LevelEventItem extends HookWidget {
           ),
           child: Text(
             "Шинэ үг :",
-            style: Theme.of(context!).textTheme.subtitle1!.copyWith(
-                color: colorPrimary, fontSize: 13, fontWeight: FontWeight.bold),
+            style: Theme.of(context!)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: colorPrimary, fontSize: 13, fontWeight: FontWeight.bold),
           ),
         ),
         Container(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-          decoration: const BoxDecoration(
-              color: secondaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(18))),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+          decoration: const BoxDecoration(color: secondaryColor, borderRadius: BorderRadius.all(Radius.circular(18))),
           child: Text(
             "1000",
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall!
-                .copyWith(color: Colors.white, fontSize: 13),
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white, fontSize: 13),
           ),
         )
       ],
@@ -214,10 +202,7 @@ class LevelEventItem extends HookWidget {
           child: Text(
             !isHome! ? event.eventName ?? "" : event.contentName ?? "",
             style: const TextStyle(
-                color: Color(0xff333333),
-                fontSize: 14,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.normal),
+                color: Color(0xff333333), fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal),
             textAlign: TextAlign.start,
           ),
         ),
@@ -270,8 +255,7 @@ class LevelEventItem extends HookWidget {
   }
 
 // ignore: non_constant_identifier_names
-  Widget InfoItemWidget(
-      {IconData? iconData, String? text, bool? isSvg = false}) {
+  Widget InfoItemWidget({IconData? iconData, String? text, bool? isSvg = false}) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -289,10 +273,7 @@ class LevelEventItem extends HookWidget {
           text!,
           maxLines: 2,
           style: const TextStyle(
-              color: Color(0xff828282),
-              fontSize: 10,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.normal),
+              color: Color(0xff828282), fontSize: 10, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal),
         )
       ],
     );

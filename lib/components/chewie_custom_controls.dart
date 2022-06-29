@@ -13,8 +13,7 @@ import 'package:video_player/video_player.dart';
 import '../pages/CoursePages/base/base_video_subtitle.dart';
 
 class ChewieCustomControls extends StatefulWidget {
-  const ChewieCustomControls({Key? key, this.onlyPause, this.videoMemorizeWord})
-      : super(key: key);
+  const ChewieCustomControls({Key? key, this.onlyPause, this.videoMemorizeWord}) : super(key: key);
   final bool? onlyPause;
   final VideoMemorizeWord? videoMemorizeWord;
   @override
@@ -23,8 +22,7 @@ class ChewieCustomControls extends StatefulWidget {
   }
 }
 
-class _ChewieCustomControlsState extends State<ChewieCustomControls>
-    with SingleTickerProviderStateMixin {
+class _ChewieCustomControlsState extends State<ChewieCustomControls> with SingleTickerProviderStateMixin {
   late VideoPlayerValue _latestValue;
   double? _latestVolume;
   bool _hideStuff = true;
@@ -71,8 +69,7 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
             ? '00'
             : '0$seconds';
 
-    final formattedTime =
-        '${hoursString == '00' ? '' : '$hoursString:'}$minutesString:$secondsString';
+    final formattedTime = '${hoursString == '00' ? '' : '$hoursString:'}$minutesString:$secondsString';
 
     return formattedTime;
   }
@@ -201,19 +198,11 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
             ? Row(
                 children: <Widget>[
                   _buildPlayPause(controller),
-                  if (chewieController.isLive)
-                    const Expanded(child: Text('LIVE'))
-                  else
-                    _buildPosition(iconColor),
-                  if (chewieController.isLive)
-                    const SizedBox()
-                  else
-                    _buildProgressBar(),
+                  if (chewieController.isLive) const Expanded(child: Text('LIVE')) else _buildPosition(iconColor),
+                  if (chewieController.isLive) const SizedBox() else _buildProgressBar(),
                   _buildSubtitleToggle(),
-                  if (chewieController.allowPlaybackSpeedChanging)
-                    _buildSpeedButton(controller),
-                  if (chewieController.allowMuting)
-                    _buildMuteButton(controller),
+                  if (chewieController.allowPlaybackSpeedChanging) _buildSpeedButton(controller),
+                  if (chewieController.allowMuting) _buildMuteButton(controller),
                   if (chewieController.allowFullScreen) _buildExpandButton(),
                 ],
               )
@@ -242,9 +231,7 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
           ),
           child: Center(
             child: Icon(
-              chewieController.isFullScreen
-                  ? Icons.fullscreen_exit
-                  : Icons.fullscreen,
+              chewieController.isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
             ),
           ),
         ),
@@ -275,8 +262,7 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
           }
         },
         child: CustomCenterPlayButton(
-          backgroundColor:
-              colorPrimary, //Theme.of(context).dialogBackgroundColor,
+          backgroundColor: colorPrimary, //Theme.of(context).dialogBackgroundColor,
           isFinished: isFinished,
           isPlaying: controller.value.isPlaying,
           show: !_latestValue.isPlaying && !_dragging,
@@ -409,9 +395,7 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
         ),
         child: Icon(
           Icons.subtitles,
-          color: _subtitleOn
-              ? Theme.of(context).colorScheme.secondary
-              : Colors.grey[700],
+          color: _subtitleOn ? Theme.of(context).colorScheme.secondary : Colors.grey[700],
         ),
       ),
     );
@@ -457,8 +441,7 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
       _hideStuff = true;
 
       chewieController.toggleFullScreen();
-      _showAfterExpandCollapseTimer =
-          Timer(const Duration(milliseconds: 300), () {
+      _showAfterExpandCollapseTimer = Timer(const Duration(milliseconds: 300), () {
         setState(() {
           _cancelAndRestartTimer();
         });
@@ -483,7 +466,7 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
         if (isFinished) {
           controller.seekTo(const Duration());
         }
-      
+
         if (widget.onlyPause != null && widget.onlyPause!) {
           await controller.seekTo(
             getDuration(

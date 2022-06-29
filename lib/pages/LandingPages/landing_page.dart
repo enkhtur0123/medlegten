@@ -28,8 +28,7 @@ class LandingPage extends ConsumerStatefulWidget {
   }
 }
 
-class LandingPageState extends ConsumerState<LandingPage>
-    with SingleTickerProviderStateMixin {
+class LandingPageState extends ConsumerState<LandingPage> with SingleTickerProviderStateMixin {
   TabController? tabController;
   // ignore: prefer_final_fields
   ValueNotifier<int>? _index = ValueNotifier(0);
@@ -46,9 +45,7 @@ class LandingPageState extends ConsumerState<LandingPage>
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
     LoginRepository().getAppVersion().then((value) {
-      ref
-          .read(appProvider.notifier)
-          .changeState(value: VersionState(version: value));
+      ref.read(appProvider.notifier).changeState(value: VersionState(version: value));
       checkVersion(version: value);
     });
     changeAppBarData(
@@ -67,8 +64,7 @@ class LandingPageState extends ConsumerState<LandingPage>
               height: 120,
               appbarProvider: appbarProvider,
               authProvider: authProvider,
-              text:
-                  "${ref.read(appbarProvider.notifier).appBarState.appBarData?.homePageText ?? ""} 👋\n");
+              text: "${ref.read(appbarProvider.notifier).appBarState.appBarData?.homePageText ?? ""} 👋\n");
         }
         if (tabController!.index == 1) {
           changeAppBarData(
@@ -76,8 +72,7 @@ class LandingPageState extends ConsumerState<LandingPage>
               height: 120,
               appbarProvider: appbarProvider,
               authProvider: authProvider,
-              text:
-                  "${ref.read(appbarProvider.notifier).appBarState.appBarData?.coursePageText ?? ""} ✍️");
+              text: "${ref.read(appbarProvider.notifier).appBarState.appBarData?.coursePageText ?? ""} ✍️");
         }
         if (tabController!.index == 2) {
           changeAppBarData(
@@ -85,12 +80,7 @@ class LandingPageState extends ConsumerState<LandingPage>
               height: 120,
               appbarProvider: appbarProvider,
               authProvider: authProvider,
-              text: ref
-                      .read(appbarProvider.notifier)
-                      .appBarState
-                      .appBarData
-                      ?.ppvPageText ??
-                  "");
+              text: ref.read(appbarProvider.notifier).appBarState.appBarData?.ppvPageText ?? "");
         }
         if (tabController!.index == 3) {
           changeAppBarData(
@@ -98,20 +88,11 @@ class LandingPageState extends ConsumerState<LandingPage>
               height: 120,
               appbarProvider: appbarProvider,
               authProvider: authProvider,
-              text: ref
-                      .read(appbarProvider.notifier)
-                      .appBarState
-                      .appBarData
-                      ?.articlePageText ??
-                  "");
+              text: ref.read(appbarProvider.notifier).appBarState.appBarData?.articlePageText ?? "");
         }
         if (tabController!.index == 4) {
           changeAppBarData(
-              ref: ref,
-              height: 120,
-              appbarProvider: appbarProvider,
-              authProvider: authProvider,
-              text: "Have fun!");
+              ref: ref, height: 120, appbarProvider: appbarProvider, authProvider: authProvider, text: "Have fun!");
         }
       }
     });
@@ -130,12 +111,8 @@ class LandingPageState extends ConsumerState<LandingPage>
               isBtn: true,
               body: "Та аппликейшнаа шинэчилнэ үү",
               onTap: () async {
-                if (await canLaunch(Platform.isIOS
-                    ? version.iosUrl ?? ""
-                    : version.androidUrl ?? "")) {
-                  launch(Platform.isIOS
-                      ? version.iosUrl ?? ""
-                      : version.androidUrl ?? "");
+                if (await canLaunch(Platform.isIOS ? version.iosUrl ?? "" : version.androidUrl ?? "")) {
+                  launch(Platform.isIOS ? version.iosUrl ?? "" : version.androidUrl ?? "");
                 }
               },
             );
@@ -173,28 +150,23 @@ class LandingPageState extends ConsumerState<LandingPage>
         tabs: [
           getTab(
               index: 0,
-              imgUrl:
-                  "assets/img/Landing/${0 == _index!.value ? "selected" : "unselected"}/home.svg",
+              imgUrl: "assets/img/Landing/${0 == _index!.value ? "selected" : "unselected"}/home.svg",
               text: "Нүүр"),
           getTab(
               index: 1,
-              imgUrl:
-                  "assets/img/Landing/${1 == _index!.value ? "selected" : "unselected"}/course.svg",
+              imgUrl: "assets/img/Landing/${1 == _index!.value ? "selected" : "unselected"}/course.svg",
               text: "Хөтөлбөр"),
           getTab(
               index: 2,
-              imgUrl:
-                  "assets/img/Landing/${2 == _index!.value ? "selected" : "unselected"}/video.svg",
+              imgUrl: "assets/img/Landing/${2 == _index!.value ? "selected" : "unselected"}/video.svg",
               text: "Видео"),
           getTab(
               index: 3,
-              imgUrl:
-                  "assets/img/Landing/${3 == _index!.value ? "selected" : "unselected"}/blog.svg",
+              imgUrl: "assets/img/Landing/${3 == _index!.value ? "selected" : "unselected"}/blog.svg",
               text: "Нийтлэл"),
           getTab(
               index: 4,
-              imgUrl:
-                  "assets/img/Landing/${4 == _index!.value ? "selected" : "unselected"}/user.svg",
+              imgUrl: "assets/img/Landing/${4 == _index!.value ? "selected" : "unselected"}/user.svg",
               text: "Миний"),
         ],
         onTap: (index) {

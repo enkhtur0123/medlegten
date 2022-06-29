@@ -9,8 +9,8 @@ import '../../models/video/movie.dart';
 import '../../models/video/quiz.dart';
 
 class VideoSubtitle extends BaseVideoSubtitlePage {
-  const VideoSubtitle(VideoPlayerController videoPlayerController,
-      List<CParagraph> paragraph, SubtitleWordCallback callback,
+  const VideoSubtitle(
+      VideoPlayerController videoPlayerController, List<CParagraph> paragraph, SubtitleWordCallback callback,
       {Key? key,
       bool? isBookMark,
       Function? bookMark,
@@ -22,25 +22,26 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
       VideoQuiz? quiz,
       String? title,
       Function(String? type)? memorizeTypeBtn})
-      : super(videoPlayerController, paragraph,
+      : super(
+          videoPlayerController,
+          paragraph,
           pwordCallback: callback,
           key: key,
           isBookMark: true,
           bookMark: bookMark,
           isMemorize: isMemorize,
           videoMemorizeWord: videoMemorizeWord,
-            quiz: quiz,
-            title: title,
-            contentId: contentId,
-            movies: movies,
-            videoUrl: videoUrl,
-            memorizeTypeBtn: memorizeTypeBtn
-            
+          quiz: quiz,
+          title: title,
+          contentId: contentId,
+          movies: movies,
+          videoUrl: videoUrl,
+          memorizeTypeBtn: memorizeTypeBtn,
+          sonsgol: sonsgol,
         );
 
   @override
-   VideoSubtitleState createState() => VideoSubtitleState();
+  VideoSubtitleState createState() => VideoSubtitleState();
 }
-class VideoSubtitleState
-    extends BaseVideoSubtitleState<VideoSubtitle>
-    with BaseVideoSubtitleMixin {}
+
+class VideoSubtitleState extends BaseVideoSubtitleState<VideoSubtitle> with BaseVideoSubtitleMixin {}

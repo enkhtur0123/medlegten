@@ -6,11 +6,7 @@ import 'package:medlegten/repositories/video_repository.dart';
 // ignore: must_be_immutable
 class LevelVideoListPage extends StatefulWidget {
   LevelVideoListPage(
-      {Key? key,
-      this.levelId,
-      required this.categoryName,
-      required this.isCategorySearch,
-      this.categoryId})
+      {Key? key, this.levelId, required this.categoryName, required this.isCategorySearch, this.categoryId})
       : super(key: key);
   String? levelId;
   String? categoryName;
@@ -48,9 +44,7 @@ class LevelVideoListPageState extends State<LevelVideoListPage> {
       body: events!.isNotEmpty
           ? NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo.metrics.pixels ==
-                        scrollInfo.metrics.maxScrollExtent &&
-                    !isLoadMore) {
+                if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent && !isLoadMore) {
                   isLoadMore = true;
                   currentPageNumber++;
                   onLoadMore();
@@ -67,8 +61,7 @@ class LevelVideoListPageState extends State<LevelVideoListPage> {
                     width: double.infinity,
                     height: MediaQuery.of(context).size.width * 0.5,
                     child: LevelEventItem(
-                      edgeInsets:
-                          const EdgeInsets.only(left: 15, right: 15, top: 10),
+                      edgeInsets: const EdgeInsets.only(left: 15, right: 15, top: 10),
                       event: events![index],
                     ),
                   );
@@ -81,15 +74,11 @@ class LevelVideoListPageState extends State<LevelVideoListPage> {
 
   Future<void> onLoadMore() async {
     if (widget.isCategorySearch!) {
-      events!.addAll(await VideoRepository().categorySearch(
-          categoryId: widget.categoryId,
-          pageNumber: currentPageNumber,
-          pageSize: pageSize));
+      events!.addAll(await VideoRepository()
+          .categorySearch(categoryId: widget.categoryId, pageNumber: currentPageNumber, pageSize: pageSize));
     } else {
-      events!.addAll(await VideoRepository().getLevelAllEvent(
-          level_id: widget.levelId,
-          pageNumber: currentPageNumber,
-          pageSize: pageSize));
+      events!.addAll(await VideoRepository()
+          .getLevelAllEvent(level_id: widget.levelId, pageNumber: currentPageNumber, pageSize: pageSize));
     }
     isLoadMore = false;
     setState(() {});

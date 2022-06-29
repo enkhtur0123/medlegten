@@ -8,7 +8,7 @@ import 'package:medlegten/themes/style.dart';
 class CategoryPage extends HookWidget {
   CategoryPage({Key? key, this.category, this.onTap}) : super(key: key);
   List<Category>? category;
-  Function(String categoryId,String categoryName)? onTap;
+  Function(String categoryId, String categoryName)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +23,13 @@ class CategoryPage extends HookWidget {
           return GestureDetector(
             onTap: () {
               selectedId.value = e.id!;
-              onTap!(e.id!,e.name!);
+              onTap!(e.id!, e.name!);
             },
             child: Container(
               margin: const EdgeInsets.only(left: 10),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: selectedId.value == e.id
-                    ? const Color(0xff7864FE)
-                    : Colors.white,
+                color: selectedId.value == e.id ? const Color(0xff7864FE) : Colors.white,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(20),
                 ),
@@ -50,9 +48,7 @@ class CategoryPage extends HookWidget {
                     e.name!,
                     style: TextStyle(
                         fontSize: 10,
-                        color: selectedId.value == e.id
-                            ? Colors.white
-                            : const Color(0xff343C44),
+                        color: selectedId.value == e.id ? Colors.white : const Color(0xff343C44),
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.normal),
                     textAlign: TextAlign.center,

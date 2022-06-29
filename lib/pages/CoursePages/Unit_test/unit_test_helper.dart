@@ -14,36 +14,20 @@ class ExamQuestionEx {
         item.typeText,
         item.segmentId,
         item.segmentName,
-        item.answers
-            .map((e) =>
-                AnswerWrapper(e.answerId!, e.answer!, e.isTrue!, e.ordering!))
-            .toList());
+        item.answers.map((e) => AnswerWrapper(e.answerId!, e.answer!, e.isTrue!, e.ordering!)).toList());
   }
 
-  ExamQuestionEx.fromResult(ExamResultQuestion item, String segmentName,
-      String totalPercent, String ordering) {
-    selectedAnswerId = item.answers
-        .firstWhereOrNull((element) => element.isChoosen == true)!
-        .answerId;
+  ExamQuestionEx.fromResult(ExamResultQuestion item, String segmentName, String totalPercent, String ordering) {
+    selectedAnswerId = item.answers.firstWhereOrNull((element) => element.isChoosen == true)!.answerId;
 
-    quizQuestion = QuestionWrapper(
-        totalPercent,
-        item.question,
-        ordering,
-        '0',
-        '',
-        '',
-        segmentName,
-        item.answers
-            .map((e) => AnswerWrapper(
-                e.answerId, e.answer, e.isTrue ? '1' : '0', e.ordering))
-            .toList());
+    quizQuestion = QuestionWrapper(totalPercent, item.question, ordering, '0', '', '', segmentName,
+        item.answers.map((e) => AnswerWrapper(e.answerId, e.answer, e.isTrue ? '1' : '0', e.ordering)).toList());
   }
 }
 
 class QuestionWrapper {
-  QuestionWrapper(this.questionId, this.question, this.ordering, this.type,
-      this.typeText, this.segmentId, this.segmentName, this.answers);
+  QuestionWrapper(this.questionId, this.question, this.ordering, this.type, this.typeText, this.segmentId,
+      this.segmentName, this.answers);
   String questionId;
   String question;
   String ordering;

@@ -14,12 +14,10 @@ class _VideoPlayerControllerHook extends Hook<VideoPlayerController> {
   final String url;
 
   @override
-  HookState<VideoPlayerController, Hook<VideoPlayerController>> createState() =>
-      _VideoPlayerControllerHookState();
+  HookState<VideoPlayerController, Hook<VideoPlayerController>> createState() => _VideoPlayerControllerHookState();
 }
 
-class _VideoPlayerControllerHookState
-    extends HookState<VideoPlayerController, _VideoPlayerControllerHook> {
+class _VideoPlayerControllerHookState extends HookState<VideoPlayerController, _VideoPlayerControllerHook> {
   late VideoPlayerController controller;
 
   @override
@@ -28,9 +26,8 @@ class _VideoPlayerControllerHookState
   @override
   void initHook() {
     super.initHook();
-    controller = hook.url.startsWith('assets')
-        ? VideoPlayerController.asset(hook.url)
-        : VideoPlayerController.network(hook.url);
+    controller =
+        hook.url.startsWith('assets') ? VideoPlayerController.asset(hook.url) : VideoPlayerController.network(hook.url);
 
     controller
       ..setLooping(false)

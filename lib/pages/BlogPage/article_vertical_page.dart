@@ -5,12 +5,7 @@ import 'package:medlegten/repositories/article_repository.dart';
 
 // ignore: must_be_immutable
 class ArticleVerticalPage extends StatefulWidget {
-  ArticleVerticalPage(
-      {Key? key,
-      this.title,
-      this.typeId,
-      this.isArticleSearch = false,
-      this.searchValue})
+  ArticleVerticalPage({Key? key, this.title, this.typeId, this.isArticleSearch = false, this.searchValue})
       : super(key: key);
   String? title;
   String? typeId;
@@ -48,9 +43,7 @@ class ArticleVerticalPageState extends State<ArticleVerticalPage> {
               margin: const EdgeInsets.all(20),
               child: NotificationListener(
                 onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo.metrics.pixels ==
-                          scrollInfo.metrics.maxScrollExtent &&
-                      !isLoadMore) {
+                  if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent && !isLoadMore) {
                     pageNumber++;
                     isLoadMore = true;
                     widget.isArticleSearch = widget.isArticleSearch;
@@ -78,13 +71,11 @@ class ArticleVerticalPageState extends State<ArticleVerticalPage> {
 
   void onLoadMore() async {
     if (!widget.isArticleSearch!) {
-      articles!.addAll(await ArticleRepository().getAllArticle(
-          typeId: widget.typeId, pageNumber: pageNumber, pageSize: pageSize));
+      articles!.addAll(
+          await ArticleRepository().getAllArticle(typeId: widget.typeId, pageNumber: pageNumber, pageSize: pageSize));
     } else {
-      articles!.addAll(await ArticleRepository().searchArticle(
-          searchValue: widget.searchValue,
-          pageNumber: pageNumber,
-          pageSize: pageSize));
+      articles!.addAll(await ArticleRepository()
+          .searchArticle(searchValue: widget.searchValue, pageNumber: pageNumber, pageSize: pageSize));
     }
     isLoadMore = false;
     setState(() {});

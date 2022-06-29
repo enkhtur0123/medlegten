@@ -17,12 +17,10 @@ class FacebookLogin extends ConsumerWidget {
           Buttons.FacebookNew,
           padding: const EdgeInsets.all(15),
           elevation: 4,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8))),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
           onPressed: () {
             if (_authState != AuthState.Authorized) {
-              WidgetsBinding.instance?.addPostFrameCallback(
-                  (_) => ref.read(authProvider.notifier).loginFacebook());
+              WidgetsBinding.instance?.addPostFrameCallback((_) => ref.read(authProvider.notifier).loginFacebook());
             }
           },
         ));

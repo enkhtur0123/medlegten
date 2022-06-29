@@ -16,25 +16,16 @@ class CourseSelfTestQuestion extends HookWidget {
 
   ValueNotifier<Set<String>>? correctAnswerds;
   CourseSelfTestQuestion(this.quizQuestionEx,
-      {Key? key,
-      this.mode = 0,
-      this.check,
-      required this.correctCnt,
-      required this.clickCnt,
-      this.correctAnswerds})
+      {Key? key, this.mode = 0, this.check, required this.correctCnt, required this.clickCnt, this.correctAnswerds})
       : super(key: key);
 
   final style = const TextStyle(
-      color: Color.fromRGBO(51, 51, 51, 1),
-      fontFamily: 'Roboto',
-      fontSize: 15,
-      fontWeight: FontWeight.w400);
+      color: Color.fromRGBO(51, 51, 51, 1), fontFamily: 'Roboto', fontSize: 15, fontWeight: FontWeight.w400);
 
   @override
   Widget build(BuildContext context) {
     var sortedAnswers = quizQuestionEx.quizQuestion.answers!
-      ..sort(
-          (a, b) => int.parse(a.ordering!).compareTo(int.parse(b.ordering!)));
+      ..sort((a, b) => int.parse(a.ordering!).compareTo(int.parse(b.ordering!)));
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(

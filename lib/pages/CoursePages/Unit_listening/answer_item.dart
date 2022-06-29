@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -32,13 +31,9 @@ class AnsWerItem extends HookWidget {
               alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 10),
               height: 52,
-              padding:
-                  const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
               decoration: BoxDecoration(
-                border: Border.all(
-                    color: getBorderColor(
-                        quizAnswer: e,
-                        selectedAnswerId: selectedAnswerId.value)!),
+                border: Border.all(color: getBorderColor(quizAnswer: e, selectedAnswerId: selectedAnswerId.value)!),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
@@ -49,9 +44,7 @@ class AnsWerItem extends HookWidget {
                 ],
                 color: mode!.value == 1
                     ? Colors.white
-                    : getBackgroundColor(
-                        quizAnswer: e,
-                        selectedAnswerId: selectedAnswerId.value),
+                    : getBackgroundColor(quizAnswer: e, selectedAnswerId: selectedAnswerId.value),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(20),
                 ),
@@ -63,10 +56,7 @@ class AnsWerItem extends HookWidget {
                 softWrap: true,
                 maxFontSize: 15,
                 style: const TextStyle(
-                    color: Color(0xff333333),
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 15),
+                    color: Color(0xff333333), fontStyle: FontStyle.normal, fontWeight: FontWeight.normal, fontSize: 15),
               ),
             ),
           ),
@@ -89,9 +79,7 @@ class AnsWerItem extends HookWidget {
     if (mode!.value == 1) {
       if (quizAnswer!.isTrue == "0") {
         color = Colors.greenAccent;
-      } else if (selectedAnswerId != null &&
-          quizAnswer.answerId == selectedAnswerId &&
-          quizAnswer.isTrue == "1") {
+      } else if (selectedAnswerId != null && quizAnswer.answerId == selectedAnswerId && quizAnswer.isTrue == "1") {
         color = Colors.redAccent;
       }
     } else {

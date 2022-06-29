@@ -22,8 +22,8 @@ QuizQuestion _$QuizQuestionFromJson(Map<String, dynamic> json) {
 class _$QuizQuestionTearOff {
   const _$QuizQuestionTearOff();
 
-  _QuizQuestion call(String? questionId, String? question, String? ordering,
-      String? type, String? typeText, List<QuizAnswer>? answers) {
+  _QuizQuestion call(String? questionId, String? question, String? ordering, String? type, String? typeText,
+      List<QuizAnswer>? answers) {
     return _QuizQuestion(
       questionId,
       question,
@@ -53,14 +53,12 @@ mixin _$QuizQuestion {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $QuizQuestionCopyWith<QuizQuestion> get copyWith =>
-      throw _privateConstructorUsedError;
+  $QuizQuestionCopyWith<QuizQuestion> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $QuizQuestionCopyWith<$Res> {
-  factory $QuizQuestionCopyWith(
-          QuizQuestion value, $Res Function(QuizQuestion) then) =
+  factory $QuizQuestionCopyWith(QuizQuestion value, $Res Function(QuizQuestion) then) =
       _$QuizQuestionCopyWithImpl<$Res>;
   $Res call(
       {String? questionId,
@@ -118,10 +116,8 @@ class _$QuizQuestionCopyWithImpl<$Res> implements $QuizQuestionCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$QuizQuestionCopyWith<$Res>
-    implements $QuizQuestionCopyWith<$Res> {
-  factory _$QuizQuestionCopyWith(
-          _QuizQuestion value, $Res Function(_QuizQuestion) then) =
+abstract class _$QuizQuestionCopyWith<$Res> implements $QuizQuestionCopyWith<$Res> {
+  factory _$QuizQuestionCopyWith(_QuizQuestion value, $Res Function(_QuizQuestion) then) =
       __$QuizQuestionCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -136,8 +132,7 @@ abstract class _$QuizQuestionCopyWith<$Res>
 /// @nodoc
 class __$QuizQuestionCopyWithImpl<$Res> extends _$QuizQuestionCopyWithImpl<$Res>
     implements _$QuizQuestionCopyWith<$Res> {
-  __$QuizQuestionCopyWithImpl(
-      _QuizQuestion _value, $Res Function(_QuizQuestion) _then)
+  __$QuizQuestionCopyWithImpl(_QuizQuestion _value, $Res Function(_QuizQuestion) _then)
       : super(_value, (v) => _then(v as _QuizQuestion));
 
   @override
@@ -184,11 +179,9 @@ class __$QuizQuestionCopyWithImpl<$Res> extends _$QuizQuestionCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_QuizQuestion implements _QuizQuestion {
-  _$_QuizQuestion(this.questionId, this.question, this.ordering, this.type,
-      this.typeText, this.answers);
+  _$_QuizQuestion(this.questionId, this.question, this.ordering, this.type, this.typeText, this.answers);
 
-  factory _$_QuizQuestion.fromJson(Map<String, dynamic> json) =>
-      _$$_QuizQuestionFromJson(json);
+  factory _$_QuizQuestion.fromJson(Map<String, dynamic> json) => _$$_QuizQuestionFromJson(json);
 
   @override
   final String? questionId;
@@ -213,8 +206,7 @@ class _$_QuizQuestion implements _QuizQuestion {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _QuizQuestion &&
-            const DeepCollectionEquality()
-                .equals(other.questionId, questionId) &&
+            const DeepCollectionEquality().equals(other.questionId, questionId) &&
             const DeepCollectionEquality().equals(other.question, question) &&
             const DeepCollectionEquality().equals(other.ordering, ordering) &&
             const DeepCollectionEquality().equals(other.type, type) &&
@@ -234,8 +226,7 @@ class _$_QuizQuestion implements _QuizQuestion {
 
   @JsonKey(ignore: true)
   @override
-  _$QuizQuestionCopyWith<_QuizQuestion> get copyWith =>
-      __$QuizQuestionCopyWithImpl<_QuizQuestion>(this, _$identity);
+  _$QuizQuestionCopyWith<_QuizQuestion> get copyWith => __$QuizQuestionCopyWithImpl<_QuizQuestion>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -244,16 +235,10 @@ class _$_QuizQuestion implements _QuizQuestion {
 }
 
 abstract class _QuizQuestion implements QuizQuestion {
-  factory _QuizQuestion(
-      String? questionId,
-      String? question,
-      String? ordering,
-      String? type,
-      String? typeText,
+  factory _QuizQuestion(String? questionId, String? question, String? ordering, String? type, String? typeText,
       List<QuizAnswer>? answers) = _$_QuizQuestion;
 
-  factory _QuizQuestion.fromJson(Map<String, dynamic> json) =
-      _$_QuizQuestion.fromJson;
+  factory _QuizQuestion.fromJson(Map<String, dynamic> json) = _$_QuizQuestion.fromJson;
 
   @override
   String? get questionId;
@@ -269,6 +254,5 @@ abstract class _QuizQuestion implements QuizQuestion {
   List<QuizAnswer>? get answers;
   @override
   @JsonKey(ignore: true)
-  _$QuizQuestionCopyWith<_QuizQuestion> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$QuizQuestionCopyWith<_QuizQuestion> get copyWith => throw _privateConstructorUsedError;
 }

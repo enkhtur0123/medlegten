@@ -4,12 +4,13 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/components/video_player_chewie.dart';
-import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
-import 'package:medlegten/models/video/quiz.dart';
-import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
+import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../../models/video/memorize_word.dart';
+import '../../../models/video/quiz.dart';
 
 //https://pbhoomi190.medium.com/creating-a-base-screen-in-flutter-using-an-abstract-class-and-mixin-3c0001b74c8c
 
@@ -26,6 +27,7 @@ abstract class BaseVideoPage extends StatefulWidget {
     this.contentId,
     this.isMemorize = false,
     this.videoMemorizeWord,
+    this.data,
   }) : super(key: key);
   final String videoUrl;
   final bool? isSerial;
@@ -37,10 +39,10 @@ abstract class BaseVideoPage extends StatefulWidget {
   final String? contentId;
   final bool? isMemorize;
   final VideoMemorizeWord? videoMemorizeWord;
+  final Sonsgol? data;
 }
 
-abstract class BaseVideoPageState<Page extends BaseVideoPage>
-    extends State<Page> {
+abstract class BaseVideoPageState<Page extends BaseVideoPage> extends State<Page> {
   VideoPlayerController? videoPlayerController;
   String? moduleId;
   bool? isFirst = true;
@@ -58,11 +60,9 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
     } else {
       videoUrl = widget.videoUrl;
     }
-    if (videoPlayerController != null &&
-        videoPlayerController!.value.isInitialized) {
+    if (videoPlayerController != null && videoPlayerController!.value.isInitialized) {
       videoPlayerController!.dispose();
     }
-
     videoPlayerController = widget.videoUrl.startsWith('assets')
         ? VideoPlayerController.asset(widget.videoUrl)
         : VideoPlayerController.network(videoUrl);
@@ -71,8 +71,7 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
       ..initialize().then(
         (value) async {
           if (widget.isMemorize != null && widget.isMemorize!) {
-            videoPlayerController!
-                .seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
+            videoPlayerController!.seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
             // await videoPlayerController!.setLooping(true);
           }
           if (isFirst!) {
@@ -110,6 +109,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         list.add(getSerialWidget());
       }
       list.add(subtitleWidget());
+      list.add(getSonsgolCue());
     } else {
       list.add(
         const AspectRatio(
@@ -152,6 +152,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       ]),
       bottomSheet: bottomSheetWidget(),
+      bottomNavigationBar: bottomNavigationWidget(),
     );
   }
 
@@ -163,6 +164,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       videoMemorizeWord: widget.videoMemorizeWord,
     );
   }
+
   ///Get Serial Widget
   Widget getSerialWidget() {
     return Container(
@@ -183,26 +185,20 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
               setState(() {});
             },
             child: Container(
-              margin: const EdgeInsets.only(
-                  left: 10, bottom: 15, top: 15, right: 0),
+              margin: const EdgeInsets.only(left: 10, bottom: 15, top: 15, right: 0),
               padding: const EdgeInsets.only(left: 12, right: 12),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(
                   Radius.circular(8),
                 ),
-                border: Border.all(
-                    color: currentIndex == index
-                        ? Colors.transparent
-                        : const Color(0xffA8AFE5)),
+                border: Border.all(color: currentIndex == index ? Colors.transparent : const Color(0xffA8AFE5)),
                 color: currentIndex == index ? colorPrimary : Colors.white,
               ),
               child: Center(
                 child: Text(
                   (index + 1).toString(),
                   style: TextStyle(
-                      color: currentIndex == index
-                          ? Colors.white
-                          : const Color(0xffA8AFE5),
+                      color: currentIndex == index ? Colors.white : const Color(0xffA8AFE5),
                       fontSize: 15,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.bold),
@@ -239,6 +235,14 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   }
 
   Widget appBarTailWidget() {
+    return const SizedBox(height: 1);
+  }
+
+  Widget getSonsgolCue() {
+    return const SizedBox(height: 1);
+  }
+
+  Widget bottomNavigationWidget() {
     return const SizedBox(height: 1);
   }
 }

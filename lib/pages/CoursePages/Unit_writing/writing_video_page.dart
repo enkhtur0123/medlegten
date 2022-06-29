@@ -11,8 +11,7 @@ import '../unit/unit_module_completed_btn.dart';
 typedef SubVideoCallback = void Function(int callIndex, bool next);
 
 class WritingVideoPage extends StatefulWidget {
-  const WritingVideoPage(this.unitWriting, this.unitTitle,
-      {Key? key, this.moduleId, this.isCompleted})
+  const WritingVideoPage(this.unitWriting, this.unitTitle, {Key? key, this.moduleId, this.isCompleted})
       : super(key: key);
 
   final UnitWriting unitWriting;
@@ -62,8 +61,7 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
 
 //
   initVideoPlayer(String videoUrl) {
-    if (videoPlayerController != null &&
-        videoPlayerController!.value.isInitialized) {
+    if (videoPlayerController != null && videoPlayerController!.value.isInitialized) {
       videoPlayerController!.pause();
       //videoPlayerController!.dispose();
       //videoPlayerController = null;
@@ -80,8 +78,7 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
             });
           });
         } else {
-          if (videoPlayerController!.value.duration ==
-              videoPlayerController!.value.position) {
+          if (videoPlayerController!.value.duration == videoPlayerController!.value.position) {
             videoPlayerController!.seekTo(const Duration(seconds: 0));
           }
           setState(() {
@@ -145,7 +142,7 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
             unCompleteBtn: () {},
             isCompleted: widget.isCompleted,
             margin: const EdgeInsets.all(13),
-            edgeInsets: const EdgeInsets.only(left: 15,right: 15,top: 5,bottom: 5),
+            edgeInsets: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
           ),
         ],
       ),
@@ -154,8 +151,7 @@ class _WritingVideoPageState extends State<WritingVideoPage> {
       body: SingleChildScrollView(
         controller: _homeController,
         physics: MediaQuery.of(context).viewInsets.bottom > 0
-            ? const ClampingScrollPhysics(
-                parent: NeverScrollableScrollPhysics())
+            ? const ClampingScrollPhysics(parent: NeverScrollableScrollPhysics())
             : const NeverScrollableScrollPhysics(),
         child: ConstrainedBox(
             constraints: BoxConstraints(

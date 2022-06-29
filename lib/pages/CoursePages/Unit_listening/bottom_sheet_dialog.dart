@@ -7,12 +7,7 @@ import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 // ignore: must_be_immutable
 class ListenQuizWidget extends StatefulWidget {
-  ListenQuizWidget(
-      {Key? key,
-      this.listeningQuiz,
-      this.randomColors,
-      this.currentIndex,
-      this.heardIndex})
+  ListenQuizWidget({Key? key, this.listeningQuiz, this.randomColors, this.currentIndex, this.heardIndex})
       : super(key: key);
 
   ListeningQuiz? listeningQuiz;
@@ -42,26 +37,20 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
               margin: const EdgeInsets.only(left: 20),
               width: 45,
               height: 45,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(colors: widget.randomColors!)),
+              decoration: BoxDecoration(shape: BoxShape.circle, gradient: LinearGradient(colors: widget.randomColors!)),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10, bottom: 20, top: 20),
               child: Text(
                 "Сонсгол ${widget.currentIndex! + 1}:\n${widget.listeningQuiz!.listening.cue[widget.currentIndex!].title}",
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 15, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
               ),
             ),
           ],
         ),
         Container(
           height: 1,
-          decoration:
-              BoxDecoration(border: Border.all(width: 1, color: Colors.white)),
+          decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.white)),
         ),
         const SizedBox(
           height: 20,
@@ -69,9 +58,7 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
         Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
-                children: widget.listeningQuiz!.listening
-                    .cue[widget.currentIndex!].questions
-                    .map((e) {
+                children: widget.listeningQuiz!.listening.cue[widget.currentIndex!].questions.map((e) {
               return Container(
                   margin: const EdgeInsets.only(top: 15),
                   child: Column(
@@ -123,8 +110,7 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
               onTap: () {
                 if (mode.value == 0) {
                   mode.value = 1;
-                  widget.heardIndex!(int.parse(widget.listeningQuiz!.listening
-                      .cue[widget.currentIndex!].cueId));
+                  widget.heardIndex!(int.parse(widget.listeningQuiz!.listening.cue[widget.currentIndex!].cueId));
                 } else {
                   Navigator.pop(context, true);
                 }

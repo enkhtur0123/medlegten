@@ -67,8 +67,7 @@ mixin _$Event {
   String? get contentName => throw _privateConstructorUsedError;
   String? get eventId => throw _privateConstructorUsedError;
   String? get eventName => throw _privateConstructorUsedError;
-  String? get categoryName =>
-      throw _privateConstructorUsedError; // bool isPurchased,
+  String? get categoryName => throw _privateConstructorUsedError; // bool isPurchased,
   String? get levelId => throw _privateConstructorUsedError;
   String? get vocabularyCount => throw _privateConstructorUsedError;
   String? get vocabularyKnow => throw _privateConstructorUsedError;
@@ -85,8 +84,7 @@ mixin _$Event {
 
 /// @nodoc
 abstract class $EventCopyWith<$Res> {
-  factory $EventCopyWith(Event value, $Res Function(Event) then) =
-      _$EventCopyWithImpl<$Res>;
+  factory $EventCopyWith(Event value, $Res Function(Event) then) = _$EventCopyWithImpl<$Res>;
   $Res call(
       {String? contentId,
       String? contentName,
@@ -186,8 +184,7 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$EventCopyWith<$Res> implements $EventCopyWith<$Res> {
-  factory _$EventCopyWith(_Event value, $Res Function(_Event) then) =
-      __$EventCopyWithImpl<$Res>;
+  factory _$EventCopyWith(_Event value, $Res Function(_Event) then) = __$EventCopyWithImpl<$Res>;
   @override
   $Res call(
       {String? contentId,
@@ -206,10 +203,8 @@ abstract class _$EventCopyWith<$Res> implements $EventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
-    implements _$EventCopyWith<$Res> {
-  __$EventCopyWithImpl(_Event _value, $Res Function(_Event) _then)
-      : super(_value, (v) => _then(v as _Event));
+class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res> implements _$EventCopyWith<$Res> {
+  __$EventCopyWithImpl(_Event _value, $Res Function(_Event) _then) : super(_value, (v) => _then(v as _Event));
 
   @override
   _Event get _value => super._value as _Event;
@@ -305,8 +300,7 @@ class _$_Event implements _Event {
       this.isSerial,
       this.runTime);
 
-  factory _$_Event.fromJson(Map<String, dynamic> json) =>
-      _$$_EventFromJson(json);
+  factory _$_Event.fromJson(Map<String, dynamic> json) => _$$_EventFromJson(json);
 
   @override
   final String? contentId;
@@ -346,19 +340,14 @@ class _$_Event implements _Event {
         (other.runtimeType == runtimeType &&
             other is _Event &&
             const DeepCollectionEquality().equals(other.contentId, contentId) &&
-            const DeepCollectionEquality()
-                .equals(other.contentName, contentName) &&
+            const DeepCollectionEquality().equals(other.contentName, contentName) &&
             const DeepCollectionEquality().equals(other.eventId, eventId) &&
             const DeepCollectionEquality().equals(other.eventName, eventName) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryName, categoryName) &&
+            const DeepCollectionEquality().equals(other.categoryName, categoryName) &&
             const DeepCollectionEquality().equals(other.levelId, levelId) &&
-            const DeepCollectionEquality()
-                .equals(other.vocabularyCount, vocabularyCount) &&
-            const DeepCollectionEquality()
-                .equals(other.vocabularyKnow, vocabularyKnow) &&
-            const DeepCollectionEquality()
-                .equals(other.isCompleted, isCompleted) &&
+            const DeepCollectionEquality().equals(other.vocabularyCount, vocabularyCount) &&
+            const DeepCollectionEquality().equals(other.vocabularyKnow, vocabularyKnow) &&
+            const DeepCollectionEquality().equals(other.isCompleted, isCompleted) &&
             const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
             const DeepCollectionEquality().equals(other.intro, intro) &&
             const DeepCollectionEquality().equals(other.isSerial, isSerial) &&
@@ -384,8 +373,7 @@ class _$_Event implements _Event {
 
   @JsonKey(ignore: true)
   @override
-  _$EventCopyWith<_Event> get copyWith =>
-      __$EventCopyWithImpl<_Event>(this, _$identity);
+  _$EventCopyWith<_Event> get copyWith => __$EventCopyWithImpl<_Event>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {

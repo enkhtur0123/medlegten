@@ -9,8 +9,7 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/utils/global.dart';
 
 class MixedVideoPage extends BaseVideoPage {
-  const MixedVideoPage(this.unitMixedVideo, this.url,
-      {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
+  const MixedVideoPage(this.unitMixedVideo, this.url, {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
       : super(url, key: key, title: unitTitle, isCompleted: isCompleted);
 
   final UnitMixedVideo unitMixedVideo;
@@ -23,15 +22,13 @@ class MixedVideoPage extends BaseVideoPage {
   _MixedVideoPageState createState() => _MixedVideoPageState();
 }
 
-class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
-    with BaseVideoMixin {
+class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage> with BaseVideoMixin {
   CParagraph? paragraph;
   CWord? word;
   Rect position = Rect.zero;
   bool bottomIsVisible = false;
 
-  late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false)
-    ..addListener(_listener);
+  late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false)..addListener(_listener);
   void _listener() {
     setState(() {});
   }
@@ -62,9 +59,7 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
 
   @override
   Widget subtitleWidget() {
-    return MixedVideoSubtitle(
-        videoPlayerController!, MixedVideohelper.convert(widget.unitMixedVideo),
-        (val) {
+    return MixedVideoSubtitle(videoPlayerController!, MixedVideohelper.convert(widget.unitMixedVideo), (val) {
       paragraph = val;
       word = null;
       refreshNotifier.value = !refreshNotifier.value;
@@ -105,8 +100,7 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
     );
   }
 
-  Widget _showBottomSheetParagraph(
-      BuildContext context, CParagraph? paragraph) {
+  Widget _showBottomSheetParagraph(BuildContext context, CParagraph? paragraph) {
     if (paragraph == null) return const SizedBox(height: 1);
 
     return BottomSheet(
@@ -130,23 +124,16 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
       const Text(
         'Дүрмийн тайлбар',
         style: TextStyle(
-            fontFamily: 'Roboto',
-            color: Color.fromRGBO(48, 53, 159, 1),
-            fontSize: 14,
-            fontWeight: FontWeight.w500),
+            fontFamily: 'Roboto', color: Color.fromRGBO(48, 53, 159, 1), fontSize: 14, fontWeight: FontWeight.w500),
       ),
     );
-
     list.add(
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
           paragraph.grammarDescription ?? 'NO DATA',
           style: const TextStyle(
-              fontFamily: 'Roboto',
-              color: Color.fromRGBO(120, 100, 254, 1),
-              fontSize: 14,
-              fontWeight: FontWeight.w500),
+              fontFamily: 'Roboto', color: Color.fromRGBO(120, 100, 254, 1), fontSize: 14, fontWeight: FontWeight.w500),
         ),
       ),
     );

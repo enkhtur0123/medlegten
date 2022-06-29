@@ -6,6 +6,8 @@ import 'package:medlegten/models/video/mile_stone.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/models/video/quiz.dart';
+import 'package:medlegten/models/video/journey.dart';
+import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/models/video/video_vocabulary.dart';
 import 'package:medlegten/models/video/video_vocabulary_word.dart';
@@ -14,12 +16,10 @@ import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class VideoRepository {
-  Future<List<Event>> categorySearch(
-      {String? categoryId, int? pageNumber, int? pageSize}) async {
+  Future<List<Event>> categorySearch({String? categoryId, int? pageNumber, int? pageSize}) async {
     try {
-      final res = await HttpHelper().getUrl(
-          url:
-              '/ppv/CategoryAll/$categoryId?pageNumber=$pageNumber&pageSize=$pageSize');
+      final res =
+          await HttpHelper().getUrl(url: '/ppv/CategoryAll/$categoryId?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
         if (res['events'] == null) {
           return [];
@@ -53,6 +53,41 @@ class VideoRepository {
     }
   }
 
+  Future<List<Journey>> getJourney() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'ppv/JourneyPPV');
+      // print(res);
+      if (res['isSuccess']) {
+        var list = res['events'] as List;
+        return list.map((i) => Journey.fromJson(i)).toList();
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      print(e);
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future<Sonsgol> getSonsgol({required String? movieId}) async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'ppv/PpvListeningCue?contentId=$movieId');
+      //print(res);
+      if (res['isSuccess']) {
+        return Sonsgol.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      print(e);
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
   Future<List<LevelEvent>> getLevelEvent() async {
     try {
       final res = await HttpHelper().getUrl(url: 'ppv/GettingStart');
@@ -70,12 +105,9 @@ class VideoRepository {
   }
 
   // ignore: non_constant_identifier_names
-  Future<List<Event>> getLevelAllEvent(
-      {String? level_id, int? pageNumber, int? pageSize}) async {
+  Future<List<Event>> getLevelAllEvent({String? level_id, int? pageNumber, int? pageSize}) async {
     try {
-      final res = await HttpHelper().getUrl(
-          url:
-              'ppv/LevelAll/$level_id?pageNumber=$pageNumber&pageSize=$pageSize');
+      final res = await HttpHelper().getUrl(url: 'ppv/LevelAll/$level_id?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
         var list = res['events'] as List;
         return list.map((i) => Event.fromJson(i)).toList();
@@ -89,10 +121,9 @@ class VideoRepository {
     }
   }
 
-  Future<List<dynamic>> getContentDetail({String? contentId}) async {
+  Future<List<dynamic>> getContentDetail({String? contentId, String? eventId}) async {
     try {
-      final res =
-          await HttpHelper().getUrl(url: 'ppv/ContentDetial/$contentId');
+      final res = await HttpHelper().getUrl(url: 'ppv/ContentDetial/$contentId');
       PaymentInfo paymentInfo = PaymentInfo.fromJson(res['paymentInfo']);
       if (res['isSuccess']) {
         var list = res['movies'] as List;
@@ -111,6 +142,7 @@ class VideoRepository {
   Future<List<VideoCueParagraph>> getMovieCue({String? movieId}) async {
     try {
       final res = await HttpHelper().getUrl(url: 'ppv/Movie/$movieId');
+      //print(res);
       if (res['isSuccess']) {
         var list = res['cue'] as List;
         return list.map((i) => VideoCueParagraph.fromJson(i)).toList();
@@ -125,12 +157,10 @@ class VideoRepository {
     }
   }
 
-  Future getVideoVocabulary(
-      {int? pageNumber, int? pageSize, int? mode, String? movieId}) async {
+  Future getVideoVocabulary({int? pageNumber, int? pageSize, int? mode, String? movieId}) async {
     try {
-      final res = await HttpHelper().getUrl(
-          url:
-              'ppv/Movie/Vocabulary/$movieId/$mode?pageNumber=$pageNumber&pageSize=$pageSize');
+      final res = await HttpHelper()
+          .getUrl(url: 'ppv/Movie/Vocabulary/$movieId/$mode?pageNumber=$pageNumber&pageSize=$pageSize');
       if (res['isSuccess']) {
         if (res['words'] != null) {
           var list = res['words'] as List;
@@ -152,8 +182,7 @@ class VideoRepository {
   ///Шалгалт
   Future<VideoQuiz> getVideoQuiz({String? contentId}) async {
     try {
-      final res =
-          await HttpHelper().getUrl(url: 'ppv/PpvQuiz?contentId=$contentId');
+      final res = await HttpHelper().getUrl(url: 'ppv/PpvQuiz?contentId=$contentId');
 
       if (res['isSuccess']) {
         return VideoQuiz.fromJson(res);
@@ -168,11 +197,9 @@ class VideoRepository {
   }
 
   ///Шалгалтын үр дүн буцаах
-  Future<dynamic> sentQuizResult(
-      {String? contentId, String? quizResult}) async {
+  Future<dynamic> sentQuizResult({String? contentId, String? quizResult}) async {
     try {
-      final res = await HttpHelper().getUrl(
-          url: 'ppv/PpvQuizResult?contentId=$contentId&quizResult=$quizResult');
+      final res = await HttpHelper().getUrl(url: 'ppv/PpvQuizResult?contentId=$contentId&quizResult=$quizResult');
       if (res['isSuccess']) {
         return res;
       } else {
@@ -185,11 +212,9 @@ class VideoRepository {
     }
   }
 
-  Future<VideoMemorizeWord> getMemorizeWord(
-      {String? contentId, String? isAll, String? lastWordId}) async {
+  Future<VideoMemorizeWord> getMemorizeWord({String? contentId, String? isAll, String? lastWordId}) async {
     try {
-      final res = await HttpHelper()
-          .getUrl(url: 'ppv/PpvMemorizeWord/$contentId/$isAll/$lastWordId');
+      final res = await HttpHelper().getUrl(url: 'ppv/PpvMemorizeWord/$contentId/$isAll/$lastWordId');
       // print('ppv/PpvMemorizeWord/$contentId/$isAll/$lastWordId');
       if (res['isSuccess']) {
         return VideoMemorizeWord.fromJson(res);

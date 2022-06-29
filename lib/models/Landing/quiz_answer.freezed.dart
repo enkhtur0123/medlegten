@@ -22,8 +22,13 @@ QuizAnswer _$QuizAnswerFromJson(Map<String, dynamic> json) {
 class _$QuizAnswerTearOff {
   const _$QuizAnswerTearOff();
 
+<<<<<<< HEAD
   _QuizAnswer call(String? answerId, String? answer, String? isTrue,
       String? ordering, bool? isCorrect) {
+=======
+  _QuizAnswer call(String answerId, String answer, String isTrue,
+      String ordering, bool? isCorrect) {
+>>>>>>> origin/bat
     return _QuizAnswer(
       answerId,
       answer,
@@ -43,10 +48,17 @@ const $QuizAnswer = _$QuizAnswerTearOff();
 
 /// @nodoc
 mixin _$QuizAnswer {
+<<<<<<< HEAD
   String? get answerId => throw _privateConstructorUsedError;
   String? get answer => throw _privateConstructorUsedError;
   String? get isTrue => throw _privateConstructorUsedError;
   String? get ordering => throw _privateConstructorUsedError;
+=======
+  String get answerId => throw _privateConstructorUsedError;
+  String get answer => throw _privateConstructorUsedError;
+  String get isTrue => throw _privateConstructorUsedError;
+  String get ordering => throw _privateConstructorUsedError;
+>>>>>>> origin/bat
   bool? get isCorrect => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,10 +73,17 @@ abstract class $QuizAnswerCopyWith<$Res> {
           QuizAnswer value, $Res Function(QuizAnswer) then) =
       _$QuizAnswerCopyWithImpl<$Res>;
   $Res call(
+<<<<<<< HEAD
       {String? answerId,
       String? answer,
       String? isTrue,
       String? ordering,
+=======
+      {String answerId,
+      String answer,
+      String isTrue,
+      String ordering,
+>>>>>>> origin/bat
       bool? isCorrect});
 }
 
@@ -88,6 +107,7 @@ class _$QuizAnswerCopyWithImpl<$Res> implements $QuizAnswerCopyWith<$Res> {
       answerId: answerId == freezed
           ? _value.answerId
           : answerId // ignore: cast_nullable_to_non_nullable
+<<<<<<< HEAD
               as String?,
       answer: answer == freezed
           ? _value.answer
@@ -101,6 +121,21 @@ class _$QuizAnswerCopyWithImpl<$Res> implements $QuizAnswerCopyWith<$Res> {
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
               as String?,
+=======
+              as String,
+      answer: answer == freezed
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
+      isTrue: isTrue == freezed
+          ? _value.isTrue
+          : isTrue // ignore: cast_nullable_to_non_nullable
+              as String,
+      ordering: ordering == freezed
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
+              as String,
+>>>>>>> origin/bat
       isCorrect: isCorrect == freezed
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
