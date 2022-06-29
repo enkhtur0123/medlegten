@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/movie.dart';
+import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';

@@ -972,7 +972,7 @@ class VideoDetailRoute extends PageRouteInfo<VideoDetailRouteArgs> {
       bool? isSerial,
       dynamic Function(int)? serialChange,
       String? contentId,
-      dynamic quiz,
+      VideoQuiz? quiz,
       bool? isMemorize})
       : super(VideoDetailRoute.name,
             path: '/video/detail',
@@ -1016,7 +1016,7 @@ class VideoDetailRouteArgs {
 
   final String? contentId;
 
-  final dynamic quiz;
+  final VideoQuiz? quiz;
 
   final bool? isMemorize;
 

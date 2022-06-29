@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:medlegten/models/Landing/quiz_answer.dart';
+
+import '../../../models/Landing/quiz_answer.dart';
+
 
 // ignore: must_be_immutable
 class CourseSelfAnswerItem extends HookWidget {

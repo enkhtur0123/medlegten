@@ -26,6 +26,7 @@ class AnsWerItem extends HookWidget {
           flex: 3,
           child: GestureDetector(
             onTap: () {
+              
               selectedAnswerId.value = e.answerId!;
             },
             child: Container(

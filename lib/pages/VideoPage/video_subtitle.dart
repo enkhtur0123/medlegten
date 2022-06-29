@@ -21,7 +21,8 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
       VideoMemorizeWord? videoMemorizeWord,
       VideoQuiz? quiz,
       String? title,
-      Function(String? type)? memorizeTypeBtn})
+      Function(String? type)? memorizeTypeBtn,
+      Function? sonsgol})
       : super(
           videoPlayerController,
           paragraph,
