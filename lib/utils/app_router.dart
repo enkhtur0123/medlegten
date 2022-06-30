@@ -1,20 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
-import 'package:medlegten/models/Landing/article_info.dart';
-import 'package:medlegten/models/Landing/course_info.dart';
-import 'package:medlegten/models/Landing/course_unit.dart';
-import 'package:medlegten/models/Starting/onboarding.dart';
-import 'package:medlegten/models/Unit/reading.dart';
-import 'package:medlegten/models/Unit/unit_conversation_video.dart';
-import 'package:medlegten/models/Unit/unit_grammar.dart';
-import 'package:medlegten/models/Unit/unit_introduction_video.dart';
-import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
-import 'package:medlegten/models/Unit/unit_mixed_video.dart';
-import 'package:medlegten/models/Unit/unit_writing.dart';
-import 'package:medlegten/models/video/memorize_word.dart';
-import 'package:medlegten/models/video/movie.dart';
-import 'package:medlegten/models/video/payment_info.dart';
-import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/BlogPage/ArticleDetail/article_detail_page.dart';
 import 'package:medlegten/pages/BlogPage/article_vertical_page.dart';
 import 'package:medlegten/pages/CoursePages/Unit_conversationVideo/conversation_video_page.dart';
@@ -39,6 +23,7 @@ import 'package:medlegten/pages/StartPages/onboarding_page.dart';
 import 'package:medlegten/pages/StartPages/start.dart';
 import 'package:medlegten/pages/StartPages/web_view.dart';
 import 'package:medlegten/pages/VideoPage/level_video_list.dart';
+import 'package:medlegten/pages/VideoPage/sonsgol.dart';
 
 import 'package:medlegten/pages/VideoPage/video_detail.dart';
 import 'package:medlegten/pages/VideoPage/vocabulary_list.dart';
@@ -75,6 +60,7 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/video/detail', page: VideoDetailPage),
     AutoRoute(path: '/video/vocabulary_list', page: VideoVocabularyListPage),
     AutoRoute(path: '/unit_test_page', page: UnitTestPage),
+    AutoRoute(path: '/sonsgol', page: SonsgolPage),
     AutoRoute(path: '/blog/all', page: ArticleVerticalPage),
     AutoRoute(
         path: '/blog/articledetail/article_detail_page', page: ArticlePage),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
+import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
@@ -10,6 +11,7 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/video_subtitle.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:video_player/video_player.dart';
 
 import 'video_helper.dart';
 
@@ -83,6 +85,20 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
               contentId: widget.contentId,
               videoMemorizeWord: widget.videoMemorizeWord,
               videoUrl: widget.url,
+               sonsgol: () async {
+                videoPlayerController!.pause();
+                Sonsgol data;
+                data = await VideoRepository()
+                    .getSonsgol(movieId: widget.movies![0].contentId!);
+                AutoRouter.of(context).push(
+                  SonsgolRoute(
+                    data: data,
+                    url: widget.url,
+                    title: 'Сонсгол шалгах',
+                    contentId: widget.movies![0].contentId!,
+                  ),
+                );
+              },
               bookMark: () {
                 AutoRouter.of(context).push(
                   VideoVocabularyListRoute(movieId: movieId),

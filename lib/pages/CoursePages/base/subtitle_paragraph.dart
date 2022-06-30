@@ -142,7 +142,6 @@ class _CueTexteState extends State<SubtitleParagraph> {
   Widget buildText(CWord w, bool? selectWord) {
     //, bool beforeSpace
     final globalKey = GlobalKey();
-
     var childWidget = Text(
       '${w.word}${w.spaceNext == true ? ' ' : ''}', // //'${beforeSpace ? ' ' : ''}$
       key: globalKey,

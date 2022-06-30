@@ -84,7 +84,6 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
   Rect? selectedRect;
   CWord? selectedWord;
   int selectedWordParagraphIndex = -1;
-
   bool? isMemorize;
   VideoMemorizeWord? videoMemorizeWord;
   CWord? memorizedWord;

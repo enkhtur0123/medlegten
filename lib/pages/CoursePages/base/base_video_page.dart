@@ -1,4 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
@@ -8,6 +7,7 @@ import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
+import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:video_player/video_player.dart';
 
@@ -26,6 +26,7 @@ abstract class BaseVideoPage extends StatefulWidget {
     this.contentId,
     this.isMemorize = false,
     this.videoMemorizeWord,
+      this.data,
   }) : super(key: key);
   final String videoUrl;
   final bool? isSerial;
@@ -37,6 +38,7 @@ abstract class BaseVideoPage extends StatefulWidget {
   final String? contentId;
   final bool? isMemorize;
   final VideoMemorizeWord? videoMemorizeWord;
+  final Sonsgol? data;
 }
 
 abstract class BaseVideoPageState<Page extends BaseVideoPage>
@@ -62,7 +64,6 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
         videoPlayerController!.value.isInitialized) {
       videoPlayerController!.dispose();
     }
-
     videoPlayerController = widget.videoUrl.startsWith('assets')
         ? VideoPlayerController.asset(widget.videoUrl)
         : VideoPlayerController.network(videoUrl);
@@ -110,6 +111,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         list.add(getSerialWidget());
       }
       list.add(subtitleWidget());
+      list.add(getSonsgolCue());
     } else {
       list.add(
         const AspectRatio(
@@ -152,6 +154,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
         ),
       ]),
       bottomSheet: bottomSheetWidget(),
+      bottomNavigationBar: bottomNavigationWidget(),
     );
   }
 
@@ -239,6 +242,14 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   }
 
   Widget appBarTailWidget() {
+    return const SizedBox(height: 1);
+  }
+
+  Widget getSonsgolCue() {
+    return const SizedBox(height: 1);
+  }
+
+  Widget bottomNavigationWidget() {
     return const SizedBox(height: 1);
   }
 }

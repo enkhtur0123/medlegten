@@ -32,7 +32,7 @@ class ArticleVerticalPageState extends State<ArticleVerticalPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       onLoadMore();
     });
   }

@@ -4,7 +4,6 @@ import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:video_player/video_player.dart';
-
 import '../../models/video/movie.dart';
 import '../../models/video/quiz.dart';
 
@@ -34,8 +33,8 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
             contentId: contentId,
             movies: movies,
             videoUrl: videoUrl,
-            memorizeTypeBtn: memorizeTypeBtn
-            
+            memorizeTypeBtn: memorizeTypeBtn,
+            sonsgol: sonsgol
         );
 
   @override
