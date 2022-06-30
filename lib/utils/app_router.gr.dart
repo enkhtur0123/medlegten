@@ -208,7 +208,10 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: SonsgolPage(args.url, args.title,
-              key: args.key, data: args.data, contentId: args.contentId));
+              key: args.key,
+              data: args.data,
+              contentId: args.contentId,
+              isListening: args.isListening));
     },
     ArticleVerticalRoute.name: (routeData) {
       final args = routeData.argsAs<ArticleVerticalRouteArgs>(
@@ -1104,7 +1107,8 @@ class SonsgolRoute extends PageRouteInfo<SonsgolRouteArgs> {
       required String? title,
       Key? key,
       Sonsgol? data,
-      String? contentId})
+      String? contentId,
+      bool? isListening})
       : super(SonsgolRoute.name,
             path: '/sonsgol',
             args: SonsgolRouteArgs(
@@ -1112,7 +1116,8 @@ class SonsgolRoute extends PageRouteInfo<SonsgolRouteArgs> {
                 title: title,
                 key: key,
                 data: data,
-                contentId: contentId));
+                contentId: contentId,
+                isListening: isListening));
 
   static const String name = 'SonsgolRoute';
 }
@@ -1123,7 +1128,8 @@ class SonsgolRouteArgs {
       required this.title,
       this.key,
       this.data,
-      this.contentId});
+      this.contentId,
+      this.isListening});
 
   final String url;
 
@@ -1135,9 +1141,11 @@ class SonsgolRouteArgs {
 
   final String? contentId;
 
+  final bool? isListening;
+
   @override
   String toString() {
-    return 'SonsgolRouteArgs{url: $url, title: $title, key: $key, data: $data, contentId: $contentId}';
+    return 'SonsgolRouteArgs{url: $url, title: $title, key: $key, data: $data, contentId: $contentId, isListening: $isListening}';
   }
 }
 

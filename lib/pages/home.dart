@@ -16,8 +16,7 @@ class HomePage extends ConsumerWidget {
         home = const LandingPage();
         AutoRouter.of(context).pop();
         break;
-      case AuthState.AuthorizedAge:
-      
+      case AuthState.AuthorizedAge:  
         home = const AgePage();
         AutoRouter.of(context).pop();
         break;

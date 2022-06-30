@@ -85,20 +85,9 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
               contentId: widget.contentId,
               videoMemorizeWord: widget.videoMemorizeWord,
               videoUrl: widget.url,
-               sonsgol: () async {
-                videoPlayerController!.pause();
-                Sonsgol data;
-                data = await VideoRepository()
-                    .getSonsgol(movieId: widget.movies![0].contentId!);
-                AutoRouter.of(context).push(
-                  SonsgolRoute(
-                    data: data,
-                    url: widget.url,
-                    title: 'Сонсгол шалгах',
-                    contentId: widget.movies![0].contentId!,
-                  ),
-                );
-              },
+              //  sonsgol: () async {
+
+              // },
               bookMark: () {
                 AutoRouter.of(context).push(
                   VideoVocabularyListRoute(movieId: movieId),

@@ -1,8 +1,4 @@
 // ignore_for_file: unrelated_type_equality_checks
-
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/wide_button.dart';
@@ -19,11 +15,13 @@ class SonsgolPage extends BaseVideoPage {
     Key? key,
     this.data,
     this.contentId,
+    this.isListening
   }) : super(url, isSerial: false, movies: null, key: key);
   final Sonsgol? data;
   final String url;
   final String? title;
   final String? contentId;
+  final bool? isListening;
 
   @override
   State<StatefulWidget> createState() {
@@ -56,26 +54,19 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
     super.initState();
     data = widget.data;
     _initLists();
-
-    bool isStarted = false;
-
     videoPlayerController!.addListener(() async {
-      if (!isStarted) {
-        await videoPlayerController!.seekTo(getDuration(data!.startTime!));
-        isStarted = true;
-      }
-
+    
       if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
         bottomIsVisible = false;
         word = null;
         refreshNotifier.value = !refreshNotifier.value;
       }
-
-      if (videoPlayerController!.value.position >=
-          getDuration(data!.endTime!)) {
+      //// Төгсгөл handle
+      if (videoPlayerController!.value.position.inSeconds ==
+          getDuration(data!.endTime!).inSeconds) {
         await videoPlayerController!.pause();
-        isStarted = false;
-        videoPlayerController!.setLooping(true);
+      
+        // videoPlayerController!.setLooping(true);
       }
     });
   }
@@ -125,10 +116,6 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
               index: i, ug: data!.words[i].mainText, state: textState[i])));
         }
       }
-
-      print(data!.words.length);
-      print(xaxa.length);
-
       if (xaxa.length > 0 && xaxa.length < 6) {
         for (int i = 0; i < 1; i++) {
           var bi =
@@ -153,10 +140,6 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                       isSuccess: true);
                 });
           }
-          // print(xaxa[d].ug);
-          // print(xaxa[d].state);
-          // print(textState[d]);
-          // print('too=' + too.toString());
         }
       }
 
@@ -184,10 +167,6 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                       isSuccess: true);
                 });
           }
-          // print(xaxa[i].ug);
-          // print(xaxa[i].state);
-          // print(textState[i]);
-          // print('too=' + too.toString());
         }
       }
       if (xaxa.length > 8) {
@@ -214,10 +193,6 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                       isSuccess: true);
                 });
           }
-
-          // print(xaxa[i].ug);
-          // print(xaxa[i].state);
-          // print('too=' + too.toString());
         }
       }
 
@@ -256,8 +231,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                 margin: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 width: double.infinity,
-                child: Flexible(
-                  child: Wrap(
+                child: Wrap(
                     alignment: WrapAlignment.center,
                     children: data!.words.asMap().keys.toList().map((i) {
                       if (data!.words[i].wordValue.toString() == '') {
@@ -279,26 +253,15 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                         );
                       } else {
                         Color _borderColor = Colors.black26;
-                        Color _fillColor = Colors.black26;
-                        // if (i == 0) {
-                        //   _focusNode.requestFocus();
-                        // }
-
+                      Color _fillColor = Colors.black26;
                         controllers[i].addListener(() {
                           if (controllers[i].text.length ==
                               data!.words[i].mainText.length) {
                             if (controllers[i].text.toLowerCase() !=
-                                data!.words[i].mainText.toLowerCase()) {
-                              // controllers[i].text = data!.words[i].mainText;
-                              // setState(() {
-                              //   textState[i] = 2;
-                              // });
-
-                              // refreshNotifier.value = !refreshNotifier.value;
+                              data!.words[i].mainText.toLowerCase()) {
                             }
                           }
-                        });
-
+                      });
                         nodes.add(fdsfd(
                             focusNode: focusNodes[i],
                             index: currentIndex,
@@ -319,21 +282,15 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                               } else {
                                 textState[i] = 1;
                                 focusNodes[i].nextFocus();
-                              }
-                              print(textState.toList().toString());
-                              print(data!.words[i].mainText);
+                            }
                             },
                             enableInteractiveSelection: false,
                             onChanged: (value) {
-                              currentIndex = i;
-
+                            currentIndex = i;
                               if (value.toLowerCase() ==
-                                  data!.words[i].mainText.toLowerCase()) {
-                                //print(value);
-                                //print(data!.words[i].mainText);
+                                data!.words[i].mainText.toLowerCase()) {
                                 if (bsan[i] == false) {
-                                  too++;
-                                  //print(too);
+                                too++;
                                   focusNodes[i].nextFocus();
                                   setState(() {
                                     textState[i] = 1;
@@ -364,9 +321,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                                 setState(() {
                                   textState[i] = 2;
                                 });
-                              } else {
-                                print(textState[i]);
-                                print(data!.words[i].mainText);
+                            } else {
                               }
                             },
                             controller: controllers[i],
@@ -383,7 +338,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                               fillColor: _fillColor,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Colors.black26,
                                   width: 1.0,
                                 ),
@@ -406,7 +361,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
                       }
                     }).toList(),
                   ),
-                ),
+                
               ),
             ]),
       ),
@@ -416,11 +371,12 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage>
   @override
   Widget bottomNavigationWidget() {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: WideButton(
           "Өөрчлөх", ColorTable.color120_100_254, ColorTable.color255_255_255,
           () async {
         data = await VideoRepository().getSonsgol(movieId: widget.contentId!);
+        await videoPlayerController!.seekTo(getDuration(data!.startTime!));
         setState(() {
           _initLists();
         });

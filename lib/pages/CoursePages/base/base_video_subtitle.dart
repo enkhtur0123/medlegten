@@ -10,6 +10,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/quiz.dart';
+import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/pages/CoursePages/base/base_cue_helper.dart';
 import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/subtitle_paragraph.dart';
@@ -42,7 +43,8 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       this.movies,
       this.quiz,
       this.title,
-      this.memorizeTypeBtn})
+      this.memorizeTypeBtn,
+      this.sonsgol})
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
         // ignore: prefer_initializing_formals
@@ -64,11 +66,14 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final VideoQuiz? quiz;
   final String? title;
   final Function(String? type)? memorizeTypeBtn;
+  final Function? sonsgol;
 }
 
-TextStyle subtitleTextStyle = const TextStyle(color: colorBlack, fontSize: 18, fontWeight: FontWeight.w400);
+TextStyle subtitleTextStyle = const TextStyle(
+    color: colorBlack, fontSize: 18, fontWeight: FontWeight.w400);
 
-abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extends State<Page> {
+abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage>
+    extends State<Page> {
   int currentIndex = -1;
   int isUser = -1;
   late Color defaultColor;
@@ -101,7 +106,6 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
   String? lastWordId = "0";
   var idx;
   void _listener() {
-    //setMaxExtent();
     setState(() {});
   }
 
@@ -110,8 +114,9 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
   }
 
   void setMaxExtent() {
-    maxExtent =
-        BaseCueHelper().getMaxHeight(paragraphs, !isMon.value, subtitleTextStyle, GlobalValues.screenWidth - 80) + 10;
+    maxExtent = BaseCueHelper().getMaxHeight(paragraphs, !isMon.value,
+            subtitleTextStyle, GlobalValues.screenWidth - 80) +
+        10;
   }
 
   @override
@@ -132,17 +137,13 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
         ],
       ),
     );
-
     paragraphs.addAll(widget.paragraphs);
     for (var element in paragraphs) {
       element.ordering = element.ordering + 1;
     }
-
     defaultColor = widget.defaultColor ?? Colors.grey.shade400;
     _fixedExtentScrollController = FixedExtentScrollController();
-
     widget.videoPlayerController.addListener(videoPlayerListener);
-    //_fixedExtentScrollController.addListener(scrollerListener);
     setMaxExtent();
     super.initState();
   }
@@ -159,16 +160,19 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
   videoPlayerListener() async {
     /// Үг цээжлэх үед зогсох хугацаа
     if ((isMemorize != null && isMemorize!) ||
-        widget.videoMemorizeWord != null && widget.videoPlayerController.value.isPlaying) {
-      if (widget.videoPlayerController.value.position.inSeconds == getDuration(videoMemorizeWord!.endTime!).inSeconds) {
+        widget.videoMemorizeWord != null &&
+            widget.videoPlayerController.value.isPlaying) {
+      if (widget.videoPlayerController.value.position.inSeconds ==
+          getDuration(videoMemorizeWord!.endTime!).inSeconds) {
         await widget.videoPlayerController.pause();
       }
     }
     if (widget.videoPlayerController.value.isPlaying) {
       if (isUser == -1) {
         var _duration = widget.videoPlayerController.value.position;
-        idx = paragraphs.firstWhereOrNull(
-            (element) => getDuration(element.startTime!) <= _duration && getDuration(element.endTime!) > _duration);
+        idx = paragraphs.firstWhereOrNull((element) =>
+            getDuration(element.startTime!) <= _duration &&
+            getDuration(element.endTime!) > _duration);
         if (idx != null && prevCueId != idx.ordering) {
           if (isMemorize != null && isMemorize!) {
             memorizeHighlight();
@@ -186,7 +190,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
 
   memorizeHighlight() {
     paragraphs[paragraphs.indexOf(idx)].words!.forEach((element) async {
-      if (videoMemorizeWord!.word!.toUpperCase() == element.word.toUpperCase()) {
+      if (videoMemorizeWord!.word!.toUpperCase() ==
+          element.word.toUpperCase()) {
         memorizedWord = element;
         isMon.value = false;
         refreshCue.value = !refreshCue.value;
@@ -215,7 +220,8 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
         CParagraph cue = paragraphs[currentIndex];
         for (var entry in cueWidgets[cue]!.entries) {
           Rect rect = entry.value.item1.globalPaintBounds!;
-          if ((position != null && rect.contains(position)) && (entry.key.wordValue != '')) {
+          if ((position != null && rect.contains(position)) &&
+              (entry.key.wordValue != '')) {
             currentSheetData(cue: cue, entry: entry, rect: rect);
             break;
           } else if (isMemorize!) {
@@ -228,7 +234,9 @@ abstract class BaseVideoSubtitleState<Page extends BaseVideoSubtitlePage> extend
   }
 
   currentSheetData(
-      {MapEntry<CWord, Tuple2<GlobalKey<State<StatefulWidget>>, Widget>>? entry, Rect? rect, CParagraph? cue}) {
+      {MapEntry<CWord, Tuple2<GlobalKey<State<StatefulWidget>>, Widget>>? entry,
+      Rect? rect,
+      CParagraph? cue}) {
     selectedWord = !isMemorize! ? entry!.key : memorizedWord;
     selectedWordParagraphIndex = currentIndex;
     selectedRect = rect;
@@ -251,7 +259,8 @@ Duration getDuration(String time) {
   );
 }
 
-mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSubtitleState<Page> {
+mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
+    on BaseVideoSubtitleState<Page> {
   @override
   void initState() {
     super.initState();
@@ -273,13 +282,17 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
                       isMon.value = false;
                     },
                     style: OutlinedButton.styleFrom(
-                      backgroundColor:
-                          isMon.value ? ColorTable.color48_53_159.withOpacity(.5) : ColorTable.color48_53_159,
+                      backgroundColor: isMon.value
+                          ? ColorTable.color48_53_159.withOpacity(.5)
+                          : ColorTable.color48_53_159,
                     ),
                     child: const Text(
                       'Eng',
-                      style:
-                          TextStyle(color: colorWhite, fontWeight: FontWeight.w500, fontSize: 14, fontFamily: 'Roboto'),
+                      style: TextStyle(
+                          color: colorWhite,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          fontFamily: 'Roboto'),
                     ),
                   ),
                   addHorizontalSpace(10),
@@ -288,12 +301,16 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
                       isMon.value = true;
                     },
                     style: OutlinedButton.styleFrom(
-                        backgroundColor:
-                            isMon.value ? ColorTable.color48_53_159 : ColorTable.color48_53_159.withOpacity(.5)),
+                        backgroundColor: isMon.value
+                            ? ColorTable.color48_53_159
+                            : ColorTable.color48_53_159.withOpacity(.5)),
                     child: const Text(
                       'Mon',
-                      style:
-                          TextStyle(color: colorWhite, fontWeight: FontWeight.w500, fontSize: 14, fontFamily: 'Roboto'),
+                      style: TextStyle(
+                          color: colorWhite,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          fontFamily: 'Roboto'),
                     ),
                   ),
                 ],
@@ -304,7 +321,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
                       children: memorizeOptions.map((e) {
                         return Flexible(
                           flex: 1,
-                          child: memorizeOptionWidget(options: e, index: memorizeOptions.indexOf(e)),
+                          child: memorizeOptionWidget(
+                              options: e, index: memorizeOptions.indexOf(e)),
                         );
                       }).toList(),
                     )
@@ -314,6 +332,7 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
                           children: [
                             InkWell(
                               onTap: () async {
+                                await widget.videoPlayerController.pause();
                                 int index;
                                 await showDialog(
                                   context: context,
@@ -374,9 +393,11 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
                       } else if (isUser == 0) {
                         isUser = -1;
                       }
-                    } else if (scrollNotification is ScrollEndNotification && isUser == 1) {
+                    } else if (scrollNotification is ScrollEndNotification &&
+                        isUser == 1) {
                       isUser = 0;
-                      widget.videoPlayerController.seekTo(getDuration(paragraphs[currentIndex].startTime!));
+                      widget.videoPlayerController.seekTo(
+                          getDuration(paragraphs[currentIndex].startTime!));
                       if (!widget.videoPlayerController.value.isPlaying) {
                         widget.videoPlayerController.play();
                       }
@@ -406,13 +427,17 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
                       onSelectedItemChanged: (index) {
                         currentIndex = index;
                         selectedWord = null;
-                        if (!widget.videoPlayerController.value.isPlaying && widget.paragraphCallback != null) {
+                        if (!widget.videoPlayerController.value.isPlaying &&
+                            widget.paragraphCallback != null) {
                           widget.paragraphCallback!(paragraphs[index]);
                         }
 
-                        if (paragraphs[index].grammarIsHighLighted != null && widget.paragraphCallback != null) {
+                        if (paragraphs[index].grammarIsHighLighted != null &&
+                            widget.paragraphCallback != null) {
                           widget.paragraphCallback!(
-                              paragraphs[index].grammarIsHighLighted == "1" ? paragraphs[index] : null);
+                              paragraphs[index].grammarIsHighLighted == "1"
+                                  ? paragraphs[index]
+                                  : null);
                         }
                         refreshCue.value = !refreshCue.value;
                       },
@@ -441,6 +466,37 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
   exerciseNavigate({int? index}) async {
     switch (index) {
       case 0:
+        Sonsgol data;
+        try {
+          LoadingIndicator(context: context).showLoadingIndicator();
+          data = await VideoRepository()
+              .getSonsgol(movieId: widget.movies![0].contentId!);
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          AutoRouter.of(context).push(
+            SonsgolRoute(
+              data: data,
+              url: widget.videoUrl!,
+              title: 'Сонсгол шалгах',
+              contentId: widget.movies![0].contentId!,
+              isListening: true,
+            ),
+          );
+        } on CustomException catch (Ex) {
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: Ex.errorMsg.toString(),
+            ),
+          );
+        } catch (ex) {
+          LoadingIndicator(context: context).hideLoadingIndicator();
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: ex.toString(),
+            ),
+          );
+        }
+
         break;
       case 1:
         VideoMemorizeWord? videoMemorizeWord;
@@ -475,17 +531,18 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
             ),
           );
         }
-
         break;
       case 2:
         VideoQuiz? quiz;
         await widget.videoPlayerController.pause();
         try {
           LoadingIndicator(context: context).showLoadingIndicator();
-          quiz = await VideoRepository().getVideoQuiz(contentId: widget.contentId);
+          quiz =
+              await VideoRepository().getVideoQuiz(contentId: widget.contentId);
           LoadingIndicator(context: context).hideLoadingIndicator();
           AutoRouter.of(context).push(
-            VideoQuizRoute(videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
+            VideoQuizRoute(
+                videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
           );
         } on CustomException catch (Ex) {
           LoadingIndicator(context: context).hideLoadingIndicator();
@@ -507,7 +564,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
   Future<VideoMemorizeWord> memorizeWords() async {
     LoadingIndicator(context: context).showLoadingIndicator();
     try {
-      VideoMemorizeWord videoMemorizeWord = await VideoRepository().getMemorizeWord(
+      VideoMemorizeWord videoMemorizeWord =
+          await VideoRepository().getMemorizeWord(
         isAll: currentOption,
         contentId: widget.contentId,
         lastWordId: lastWordId,
@@ -530,7 +588,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
   Future getRandomCue({String? lastWordId}) async {
     videoMemorizeWord = await memorizeWords();
     await widget.videoPlayerController.pause();
-    await widget.videoPlayerController.seekTo(getDuration(videoMemorizeWord!.startTime!));
+    await widget.videoPlayerController
+        .seekTo(getDuration(videoMemorizeWord!.startTime!));
     await widget.videoPlayerController.play();
     setState(() {});
   }
@@ -553,7 +612,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
           Text(
             options!.name!,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                  color: index == memorizedOptionsCurrentIndex ? colorPrimary : colorPrimary.withOpacity(0.3),
+                  color: index == memorizedOptionsCurrentIndex
+                      ? colorPrimary
+                      : colorPrimary.withOpacity(0.3),
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -564,7 +625,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
             height: 2,
             width: 70,
             decoration: BoxDecoration(
-              color: index == memorizedOptionsCurrentIndex ? colorPrimary : Colors.transparent,
+              color: index == memorizedOptionsCurrentIndex
+                  ? colorPrimary
+                  : Colors.transparent,
             ),
           ),
         ],
@@ -573,7 +636,11 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
   }
 
   Widget buildParagraph(
-      bool isMon, CParagraph paragraph, Map<CParagraph, int> valueKeyList, CWord? selectedWord, bool isSelectedIndex) {
+      bool isMon,
+      CParagraph paragraph,
+      Map<CParagraph, int> valueKeyList,
+      CWord? selectedWord,
+      bool isSelectedIndex) {
     if (!valueKeyList.containsKey(paragraph)) {
       valueKeyList[paragraph] = 0;
     }
@@ -586,7 +653,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
                 defaultColor: defaultColor,
                 isMemorize: isMemorize,
                 key: ValueKey<int>(valueKeyList[paragraph]!),
-                currentWord: !isMemorize! ? (isSelectedIndex ? selectedWord : null) : memorizedWord,
+                currentWord: !isMemorize!
+                    ? (isSelectedIndex ? selectedWord : null)
+                    : memorizedWord,
                 alignment: Alignment.center,
               )
             : getTextWidget(paragraph.engText, true, false);
@@ -602,8 +671,14 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage> on BaseVideoSub
       child: Text(
         caption,
         style: isSelected
-            ? TextStyle(color: colorBlack, fontSize: isMon ? 16 : 18, fontWeight: FontWeight.w400)
-            : TextStyle(color: defaultColor, fontSize: isMon ? 16 : 18, fontWeight: FontWeight.w400),
+            ? TextStyle(
+                color: colorBlack,
+                fontSize: isMon ? 16 : 18,
+                fontWeight: FontWeight.w400)
+            : TextStyle(
+                color: defaultColor,
+                fontSize: isMon ? 16 : 18,
+                fontWeight: FontWeight.w400),
         textAlign: TextAlign.center,
       ),
     );

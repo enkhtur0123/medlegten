@@ -26,7 +26,8 @@ abstract class BaseVideoPage extends StatefulWidget {
     this.contentId,
     this.isMemorize = false,
     this.videoMemorizeWord,
-      this.data,
+    this.data,
+    this.isListening = false,
   }) : super(key: key);
   final String videoUrl;
   final bool? isSerial;
@@ -39,6 +40,7 @@ abstract class BaseVideoPage extends StatefulWidget {
   final bool? isMemorize;
   final VideoMemorizeWord? videoMemorizeWord;
   final Sonsgol? data;
+  final bool? isListening;
 }
 
 abstract class BaseVideoPageState<Page extends BaseVideoPage>
@@ -71,13 +73,18 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
       ..setLooping(false)
       ..initialize().then(
         (value) async {
-          if (widget.isMemorize != null && widget.isMemorize!) {
+          if ((widget.isMemorize != null && widget.isMemorize!) ||
+              (widget.isListening != null && widget.isListening!)) {
             videoPlayerController!
-                .seekTo(getDuration(widget.videoMemorizeWord!.startTime!));
+                .seekTo(
+              getDuration(widget.isMemorize!
+                  ? widget.videoMemorizeWord!.startTime!
+                  : widget.data!.startTime!),
+            );
             // await videoPlayerController!.setLooping(true);
           }
           if (isFirst!) {
-            WidgetsBinding.instance!.addPostFrameCallback((_) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               setState(() {
                 videoPlayerController!.play();
                 isFirst = false;
@@ -162,10 +169,12 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
   Widget getVideoPlayerWidget() {
     return VideoPlayerChewie(
       videoPlayerController!,
-      onlyPause: widget.isMemorize != null && widget.isMemorize!,
+      onlyPause: (widget.isMemorize != null && widget.isMemorize!) ||
+          (widget.isListening != null && widget.isListening!),
       videoMemorizeWord: widget.videoMemorizeWord,
     );
   }
+
   ///Get Serial Widget
   Widget getSerialWidget() {
     return Container(

@@ -15,7 +15,8 @@ import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
 // ignore: must_be_immutable
 class VideoQuizPage extends StatefulWidget {
-  VideoQuizPage({Key? key, this.videoQuiz, this.title, this.contentId}) : super(key: key);
+  VideoQuizPage({Key? key, this.videoQuiz, this.title, this.contentId})
+      : super(key: key);
 
   VideoQuiz? videoQuiz;
   String? title;
@@ -45,8 +46,12 @@ class VideoQuizPageState extends State<VideoQuizPage> {
   void initState() {
     super.initState();
     _start = widget.videoQuiz!.quizDuration!;
-    totalQuestionCnt = widget.videoQuiz!.contextQuiz!.length + widget.videoQuiz!.vocQuiz!.length;
-    startTimer();
+    totalQuestionCnt = widget.videoQuiz!.contextQuiz!.length +
+        widget.videoQuiz!.vocQuiz!.length;
+    if (_start != 0) {
+      startTimer();
+    }
+
   }
 
   @override
@@ -78,7 +83,8 @@ class VideoQuizPageState extends State<VideoQuizPage> {
           children: <Widget>[
             Container(
               height: 1,
-              decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.white)),
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.white)),
             ),
             const SizedBox(
               height: 20,
@@ -114,9 +120,12 @@ class VideoQuizPageState extends State<VideoQuizPage> {
           onTap: () {
             if (mode.value == 0) {
               if (clickCnts.value != 0) {
-                isPass = ((contextCorrectAnswerIds.value.length + vocCorrectAnswerIds.value.length) ==
+                isPass = ((contextCorrectAnswerIds.value.length +
+                            vocCorrectAnswerIds.value.length) ==
                         totalQuestionCnt ||
-                    (contextCorrectAnswerIds.value.length + vocCorrectAnswerIds.value.length) == totalQuestionCnt - 1);
+                    (contextCorrectAnswerIds.value.length +
+                            vocCorrectAnswerIds.value.length) ==
+                        totalQuestionCnt - 1);
                 mode.value = 1;
                 // print(contextCorrectAnswerIds.value.length + vocCorrectAnswerIds.value.length);
                 sentResult(result: isPass ? "1" : "0");
@@ -139,10 +148,17 @@ class VideoQuizPageState extends State<VideoQuizPage> {
     return Column(
       children: [
         Container(
-          margin: isContextQuiz! ? const EdgeInsets.all(0) : const EdgeInsets.only(top: 25),
+          margin: isContextQuiz!
+              ? const EdgeInsets.all(0)
+              : const EdgeInsets.only(top: 25),
           child: Text(
-            isContextQuiz ? "Агуулгын асуулт".toUpperCase() : "Үгсийн сангийн асуулт".toUpperCase(),
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.black),
+            isContextQuiz
+                ? "Агуулгын асуулт".toUpperCase()
+                : "Үгсийн сангийн асуулт".toUpperCase(),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.black),
           ),
         ),
         Column(
@@ -189,7 +205,9 @@ class VideoQuizPageState extends State<VideoQuizPage> {
                     quizAnswer: e.answers,
                     mode: mode,
                     clickCnts: clickCnts,
-                    correctAnswerds: isContextQuiz ? contextCorrectAnswerIds : vocCorrectAnswerIds,
+                    correctAnswerds: isContextQuiz
+                        ? contextCorrectAnswerIds
+                        : vocCorrectAnswerIds,
                   )
                 ],
               ),
@@ -224,7 +242,9 @@ class VideoQuizPageState extends State<VideoQuizPage> {
   Future sentResult({String? result}) async {
     LoadingIndicator(context: context).showLoadingIndicator();
     try {
-      await VideoRepository().sentQuizResult(quizResult: result, contentId: widget.contentId).then(
+      await VideoRepository()
+          .sentQuizResult(quizResult: result, contentId: widget.contentId)
+          .then(
         (value) async {
           _timer!.cancel();
           await showDialog(
@@ -252,10 +272,14 @@ class VideoQuizPageState extends State<VideoQuizPage> {
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
-        if (_start == 0) {
+        if (_start == 0 && widget.videoQuiz!.quizDuration != 0) {
           timer.cancel();
-          isPass = ((contextCorrectAnswerIds.value.length + vocCorrectAnswerIds.value.length) == totalQuestionCnt ||
-              (contextCorrectAnswerIds.value.length + vocCorrectAnswerIds.value.length) == totalQuestionCnt - 1);
+          isPass = ((contextCorrectAnswerIds.value.length +
+                      vocCorrectAnswerIds.value.length) ==
+                  totalQuestionCnt ||
+              (contextCorrectAnswerIds.value.length +
+                      vocCorrectAnswerIds.value.length) ==
+                  totalQuestionCnt - 1);
           // print(contextCorrectAnswerIds.value.length + vocCorrectAnswerIds.value.length);
           mode.value = 1;
           sentResult(result: isPass ? "1" : "0");

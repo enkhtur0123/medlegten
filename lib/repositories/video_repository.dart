@@ -1,3 +1,4 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/models/video/category.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/models/video/journey.dart';
@@ -80,7 +81,9 @@ class VideoRepository {
           .getUrl(url: 'ppv/PpvListeningCue?contentId=$movieId');
       //print(res);
       if (res['isSuccess']) {
-        return Sonsgol.fromJson(res);
+        Sonsgol sonsgol = Sonsgol.fromJson(res);
+        await GetStorage().write("start_time", sonsgol.startTime);
+        return sonsgol;
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);

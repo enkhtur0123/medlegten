@@ -141,7 +141,7 @@ class LevelEventItem extends HookWidget {
             : Container(),
 
         ///Сурах ёстой үг
-        event.isCompleted != "1"
+        event.isCompleted == "1"
             ? Positioned.fill(
                 child: Align(
                   alignment: Alignment.bottomRight,

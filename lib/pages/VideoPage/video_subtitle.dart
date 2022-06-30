@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlegten/models/video/memorize_word.dart';
+import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/pages/CoursePages/base/base_paragraph.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_subtitle.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
@@ -20,7 +21,8 @@ class VideoSubtitle extends BaseVideoSubtitlePage {
       VideoMemorizeWord? videoMemorizeWord,
       VideoQuiz? quiz,
       String? title,
-      Function(String? type)? memorizeTypeBtn})
+      Function(String? type)? memorizeTypeBtn,
+      Function? sonsgol})
       : super(videoPlayerController, paragraph,
           pwordCallback: callback,
           key: key,
