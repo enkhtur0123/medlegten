@@ -33,8 +33,10 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const LoginPage());
     },
     AgeRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<AgeRouteArgs>(orElse: () => const AgeRouteArgs());
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const AgePage());
+          routeData: routeData, child: AgePage(key: args.key));
     },
     StartRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -357,10 +359,22 @@ class LoginRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [AgePage]
-class AgeRoute extends PageRouteInfo<void> {
-  const AgeRoute() : super(AgeRoute.name, path: '/age');
+class AgeRoute extends PageRouteInfo<AgeRouteArgs> {
+  AgeRoute({Key? key})
+      : super(AgeRoute.name, path: '/age', args: AgeRouteArgs(key: key));
 
   static const String name = 'AgeRoute';
+}
+
+class AgeRouteArgs {
+  const AgeRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AgeRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
