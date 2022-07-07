@@ -61,7 +61,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
         refreshNotifier.value = !refreshNotifier.value;
       }
 
-      if (videoPlayerController!.value.position.inSeconds == getDuration(data!.endTime!).inSeconds) {
+      if (videoPlayerController!.value.position >= getDuration(data!.endTime!)) {
         await videoPlayerController!.pause();
       }
     });
@@ -294,6 +294,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
       child: WideButton("Өөрчлөх", ColorTable.color120_100_254, ColorTable.color255_255_255, () async {
         data = await VideoRepository().getSonsgol(movieId: widget.contentId!);
         await videoPlayerController!.seekTo(getDuration(data!.startTime!));
+        await videoPlayerController!.play();
         setState(() {
           _initLists();
         });
