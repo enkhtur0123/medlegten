@@ -69,14 +69,14 @@ abstract class BaseVideoPageState<Page extends BaseVideoPage>
     videoPlayerController = widget.videoUrl.startsWith('assets')
         ? VideoPlayerController.asset(widget.videoUrl)
         : VideoPlayerController.network(videoUrl);
+
     videoPlayerController!
       ..setLooping(false)
       ..initialize().then(
         (value) async {
           if ((widget.isMemorize != null && widget.isMemorize!) ||
               (widget.isListening != null && widget.isListening!)) {
-            videoPlayerController!
-                .seekTo(
+            videoPlayerController!.seekTo(
               getDuration(widget.isMemorize!
                   ? widget.videoMemorizeWord!.startTime!
                   : widget.data!.startTime!),
@@ -116,6 +116,7 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
       list.add(addVerticalSpace(10));
       if (widget.isSerial ?? false) {
         list.add(getSerialWidget());
+        setVideoController(videoPlayerController!);
       }
       list.add(subtitleWidget());
       list.add(getSonsgolCue());
@@ -230,6 +231,10 @@ mixin BaseVideoMixin<Page extends BaseVideoPage> on BaseVideoPageState<Page> {
 
   onTapIndex(int index) {
     return index;
+  }
+
+  setVideoController(VideoPlayerController controller) {
+    return controller;
   }
 
   Duration getDuration(String time) {

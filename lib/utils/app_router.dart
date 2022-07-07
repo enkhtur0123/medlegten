@@ -41,6 +41,7 @@ import 'package:medlegten/pages/VideoPage/level_video_list.dart';
 import 'package:medlegten/pages/VideoPage/sonsgol.dart';
 
 import 'package:medlegten/pages/VideoPage/video_detail.dart';
+import 'package:medlegten/pages/VideoPage/video_payment_page.dart';
 import 'package:medlegten/pages/VideoPage/vocabulary_list.dart';
 import 'package:medlegten/pages/home.dart';
 
@@ -84,7 +85,8 @@ part 'app_router.gr.dart';
     AutoRoute(path: '/promotion/detail', page: PromotionDetailPage),
     AutoRoute(path: '/web_view', page: WebViewPage),
     AutoRoute(path: '/video/quiz', page: VideoQuizPage),
-    AutoRoute(path: '/memorize', page: VideoMemorizePage)
+    AutoRoute(path: '/memorize', page: VideoMemorizePage),
+    AutoRoute(path: '/video/payment', page: VideoPaymentPage)
     // QpayPage
   ],
 )

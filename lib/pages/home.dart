@@ -13,11 +13,13 @@ class HomePage extends ConsumerWidget {
     Widget home;
     switch (_authState) {
       case AuthState.Authorized:
+        // home = AgePage();
+        // AutoRouter.of(context).pop();
         home = const LandingPage();
         AutoRouter.of(context).pop();
         break;
       case AuthState.AuthorizedAge:  
-        home = const AgePage();
+        home = AgePage();
         AutoRouter.of(context).pop();
         break;
       case AuthState.Authorizing:

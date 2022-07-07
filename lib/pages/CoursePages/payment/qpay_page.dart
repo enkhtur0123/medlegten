@@ -20,7 +20,8 @@ class QpayPage extends HookWidget {
       this.price,
       this.paymentType = "",
       this.paymentInfo,
-      required this.isCourse})
+      required this.isCourse,
+      this.month})
       : super(key: key);
 
   CourseInfo? courseInfo;
@@ -30,6 +31,7 @@ class QpayPage extends HookWidget {
   String? paymentType;
   PaymentInfo? paymentInfo;
   bool? isCourse;
+  String? month;
   ValueNotifier isCall = ValueNotifier(false);
 
   Future<List<dynamic>> createInvoice() async {
@@ -37,8 +39,9 @@ class QpayPage extends HookWidget {
       "paymentType": paymentType,
       "productId": isCourse! ? courseInfo!.courseId : paymentInfo!.productId,
       "price": price,
-      "couponCode": couponCode,
-      "promoId": ""
+      "couponCode": couponCode ?? "",
+      "promoId": "",
+      "month": !isCourse! ? month : "",
     };
     List<dynamic> list =
         await CoursePaymentRepository().createInvoice(body: body);

@@ -93,7 +93,7 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage> with 
               key: subtitleKey,
               contentId: widget.contentId,
               videoMemorizeWord: widget.videoMemorizeWord,
-              bookMark: () {
+              quizBtn: () {
                 AutoRouter.of(context).push(
                   VideoVocabularyListRoute(movieId: movieId),
                 );

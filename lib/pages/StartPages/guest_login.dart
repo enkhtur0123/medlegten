@@ -14,7 +14,7 @@ class GuestLogin extends ConsumerWidget {
         child: MaterialButton(
           elevation: 5,
           onPressed: () {
-            WidgetsBinding.instance?.addPostFrameCallback((_) async {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
               ref.read(authProvider.notifier).loginGuest();
             });
           },

@@ -13,13 +13,14 @@ class AppleLogin extends ConsumerWidget {
       width: double.infinity,
       child: SignInButton(
         Buttons.Apple,
+        text: "Apple эрхээр нэвтрэх",
         padding: const EdgeInsets.all(16),
         elevation: 4,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8))),
         onPressed: () async {
            if (_authState != AuthState.Authorized) {
-              WidgetsBinding.instance?.addPostFrameCallback(
+            WidgetsBinding.instance.addPostFrameCallback(
                   (_) => ref.read(authProvider.notifier).loginApple());
             }
         },

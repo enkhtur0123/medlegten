@@ -33,7 +33,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       {Key? key,
       SubtitleWordCallback? pwordCallback,
       SubtitleParagraphCallback? pparagraphCallback,
-      Function? bookMark,
+      Function? quizBtn,
       this.defaultColor,
       this.isMemorize = false,
       this.isBookMark = false,
@@ -48,7 +48,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
       : wordCallback = pwordCallback,
         paragraphCallback = pparagraphCallback,
         // ignore: prefer_initializing_formals
-        bookMark = bookMark,
+        quizBtn = quizBtn,
         super(key: key);
 
   final List<CParagraph> paragraphs;
@@ -56,7 +56,7 @@ abstract class BaseVideoSubtitlePage extends StatefulWidget {
   final SubtitleWordCallback? wordCallback;
   final SubtitleParagraphCallback? paragraphCallback;
   final bool isBookMark;
-  final Function? bookMark;
+  final Function? quizBtn;
   final Color? defaultColor;
   final bool? isMemorize;
   final VideoMemorizeWord? videoMemorizeWord;
@@ -347,9 +347,10 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                                 });
                               },
                               child: SvgPicture.asset(
-                                "assets/img/video/exam.svg",
-                                width: 30,
-                                height: 30,
+                                "assets/img/video/settings.svg",
+                                width: 40,
+                                height: 40,
+                                color: const Color(0xffC7C9D9),
                               ),
                             ),
                             const SizedBox(
@@ -357,12 +358,13 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                             ),
                             GestureDetector(
                               onTap: () {
-                                widget.bookMark!();
+                                widget.quizBtn!();
                               },
-                              child: const Icon(
-                                CupertinoIcons.bookmark,
-                                color: Color(0xffC7C9D9),
-                                size: 30,
+                              child: SvgPicture.asset(
+                                "assets/img/video/quiz.svg",
+                                width: 35,
+                                height: 35,
+                                color: const Color(0xffC7C9D9),
                               ),
                             )
                           ],
@@ -533,30 +535,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
         }
         break;
       case 2:
-        VideoQuiz? quiz;
-        await widget.videoPlayerController.pause();
-        try {
-          LoadingIndicator(context: context).showLoadingIndicator();
-          quiz =
-              await VideoRepository().getVideoQuiz(contentId: widget.contentId);
-          LoadingIndicator(context: context).hideLoadingIndicator();
-          AutoRouter.of(context).push(
-            VideoQuizRoute(
-                videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
-          );
-        } on CustomException catch (Ex) {
-          LoadingIndicator(context: context).hideLoadingIndicator();
-          ScaffoldMessenger.of(context).showSnackBar(
-            MySnackBar(
-              text: Ex.errorMsg.toString(),
-            ),
-          );
-        } catch (ex) {
-          LoadingIndicator(context: context).hideLoadingIndicator();
-          ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
-            text: ex.toString(),
-          ));
-        }
+        AutoRouter.of(context).push(
+          VideoVocabularyListRoute(movieId: widget.movies![0].movieId!),
+        );
         break;
     }
   }

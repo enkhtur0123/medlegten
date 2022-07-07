@@ -22,8 +22,14 @@ PaymentInfo _$PaymentInfoFromJson(Map<String, dynamic> json) {
 class _$PaymentInfoTearOff {
   const _$PaymentInfoTearOff();
 
-  _PaymentInfo call(bool? isPurchased, String? isExpireDate, String? productId,
-      String? productName, String? productDesc, String? price) {
+  _PaymentInfo call(
+      bool? isPurchased,
+      String? isExpireDate,
+      String? productId,
+      String? productName,
+      String? productDesc,
+      String? price,
+      List<Price> prices) {
     return _PaymentInfo(
       isPurchased,
       isExpireDate,
@@ -31,6 +37,7 @@ class _$PaymentInfoTearOff {
       productName,
       productDesc,
       price,
+      prices,
     );
   }
 
@@ -50,6 +57,7 @@ mixin _$PaymentInfo {
   String? get productName => throw _privateConstructorUsedError;
   String? get productDesc => throw _privateConstructorUsedError;
   String? get price => throw _privateConstructorUsedError;
+  List<Price> get prices => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -68,7 +76,8 @@ abstract class $PaymentInfoCopyWith<$Res> {
       String? productId,
       String? productName,
       String? productDesc,
-      String? price});
+      String? price,
+      List<Price> prices});
 }
 
 /// @nodoc
@@ -87,6 +96,7 @@ class _$PaymentInfoCopyWithImpl<$Res> implements $PaymentInfoCopyWith<$Res> {
     Object? productName = freezed,
     Object? productDesc = freezed,
     Object? price = freezed,
+    Object? prices = freezed,
   }) {
     return _then(_value.copyWith(
       isPurchased: isPurchased == freezed
@@ -113,6 +123,10 @@ class _$PaymentInfoCopyWithImpl<$Res> implements $PaymentInfoCopyWith<$Res> {
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as String?,
+      prices: prices == freezed
+          ? _value.prices
+          : prices // ignore: cast_nullable_to_non_nullable
+              as List<Price>,
     ));
   }
 }
@@ -130,7 +144,8 @@ abstract class _$PaymentInfoCopyWith<$Res>
       String? productId,
       String? productName,
       String? productDesc,
-      String? price});
+      String? price,
+      List<Price> prices});
 }
 
 /// @nodoc
@@ -151,6 +166,7 @@ class __$PaymentInfoCopyWithImpl<$Res> extends _$PaymentInfoCopyWithImpl<$Res>
     Object? productName = freezed,
     Object? productDesc = freezed,
     Object? price = freezed,
+    Object? prices = freezed,
   }) {
     return _then(_PaymentInfo(
       isPurchased == freezed
@@ -177,6 +193,10 @@ class __$PaymentInfoCopyWithImpl<$Res> extends _$PaymentInfoCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as String?,
+      prices == freezed
+          ? _value.prices
+          : prices // ignore: cast_nullable_to_non_nullable
+              as List<Price>,
     ));
   }
 }
@@ -185,7 +205,7 @@ class __$PaymentInfoCopyWithImpl<$Res> extends _$PaymentInfoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PaymentInfo implements _PaymentInfo {
   _$_PaymentInfo(this.isPurchased, this.isExpireDate, this.productId,
-      this.productName, this.productDesc, this.price);
+      this.productName, this.productDesc, this.price, this.prices);
 
   factory _$_PaymentInfo.fromJson(Map<String, dynamic> json) =>
       _$$_PaymentInfoFromJson(json);
@@ -202,10 +222,12 @@ class _$_PaymentInfo implements _PaymentInfo {
   final String? productDesc;
   @override
   final String? price;
+  @override
+  final List<Price> prices;
 
   @override
   String toString() {
-    return 'PaymentInfo(isPurchased: $isPurchased, isExpireDate: $isExpireDate, productId: $productId, productName: $productName, productDesc: $productDesc, price: $price)';
+    return 'PaymentInfo(isPurchased: $isPurchased, isExpireDate: $isExpireDate, productId: $productId, productName: $productName, productDesc: $productDesc, price: $price, prices: $prices)';
   }
 
   @override
@@ -222,7 +244,8 @@ class _$_PaymentInfo implements _PaymentInfo {
                 .equals(other.productName, productName) &&
             const DeepCollectionEquality()
                 .equals(other.productDesc, productDesc) &&
-            const DeepCollectionEquality().equals(other.price, price));
+            const DeepCollectionEquality().equals(other.price, price) &&
+            const DeepCollectionEquality().equals(other.prices, prices));
   }
 
   @override
@@ -233,7 +256,8 @@ class _$_PaymentInfo implements _PaymentInfo {
       const DeepCollectionEquality().hash(productId),
       const DeepCollectionEquality().hash(productName),
       const DeepCollectionEquality().hash(productDesc),
-      const DeepCollectionEquality().hash(price));
+      const DeepCollectionEquality().hash(price),
+      const DeepCollectionEquality().hash(prices));
 
   @JsonKey(ignore: true)
   @override
@@ -253,7 +277,8 @@ abstract class _PaymentInfo implements PaymentInfo {
       String? productId,
       String? productName,
       String? productDesc,
-      String? price) = _$_PaymentInfo;
+      String? price,
+      List<Price> prices) = _$_PaymentInfo;
 
   factory _PaymentInfo.fromJson(Map<String, dynamic> json) =
       _$_PaymentInfo.fromJson;
@@ -270,6 +295,8 @@ abstract class _PaymentInfo implements PaymentInfo {
   String? get productDesc;
   @override
   String? get price;
+  @override
+  List<Price> get prices;
   @override
   @JsonKey(ignore: true)
   _$PaymentInfoCopyWith<_PaymentInfo> get copyWith =>

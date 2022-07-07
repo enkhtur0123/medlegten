@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/quiz.dart';
-import 'package:medlegten/models/video/sonsgol.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
@@ -11,22 +11,25 @@ import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/video_subtitle.dart';
 import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/loader.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../services/custom_exception.dart';
+import '../../widgets/snackbar/custom_snackbar.dart';
 import 'video_helper.dart';
 
 class VideoDetailPage extends BaseVideoPage {
-  const VideoDetailPage(this.url,
-      {Key? key,
-      this.movies,
-      this.title,
-      this.isSerial,
-      this.serialChange,
-      this.contentId,
+  const VideoDetailPage(
+    this.url, {
+    Key? key,
+    this.movies,
+    this.title,
+    this.isSerial,
+    this.serialChange,
+    this.contentId,
     this.quiz,
     this.isMemorize,
-  })
-      : super(url, isSerial: isSerial, movies: movies, key: key);
+  }) : super(url, isSerial: isSerial, movies: movies, key: key);
   final String url;
   final String? contentId;
   final List<Movie>? movies;
@@ -40,6 +43,7 @@ class VideoDetailPage extends BaseVideoPage {
     return VideoDetailPageState();
   }
 }
+
 class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
     with BaseVideoMixin {
   CWord? word;
@@ -48,17 +52,13 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
   late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false);
   List<VideoCueParagraph>? videoCueParagraph;
   late String movieId;
+  VideoMemorizeWord? videoMemorizeWord;
   @override
   void initState() {
     super.initState();
+    videoMemorizeWord = widget.videoMemorizeWord;
     movieId = widget.movies![0].movieId!;
-    videoPlayerController!.addListener(() {
-      if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
-        bottomIsVisible = false;
-        word = null;
-        refreshNotifier.value = !refreshNotifier.value;
-      }
-    });
+    setVideoListener(videoPlayerController!);
   }
 
   Future<List<VideoCueParagraph>> getVideoCueParagraph() async {
@@ -71,7 +71,7 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
         future: getVideoCueParagraph(),
         builder: (context, AsyncSnapshot<List<VideoCueParagraph>> snapshot) {
           if (snapshot.hasData) {
-            return VideoSubtitle(  
+            return VideoSubtitle(
               videoPlayerController!,
               VideoHelper.convert(snapshot.data!),
               (cword, pposition) {
@@ -83,15 +83,10 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
               },
               movies: widget.movies,
               contentId: widget.contentId,
-              videoMemorizeWord: widget.videoMemorizeWord,
+              videoMemorizeWord: videoMemorizeWord,
               videoUrl: widget.url,
-              //  sonsgol: () async {
-
-              // },
-              bookMark: () {
-                AutoRouter.of(context).push(
-                  VideoVocabularyListRoute(movieId: movieId),
-                );
+              quizBtn: () {
+                quiz();
               },
               isBookMark: true,
             );
@@ -101,11 +96,54 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
         });
   }
 
+  void quiz() async {
+    VideoQuiz? quiz;
+    await videoPlayerController!.pause();
+    try {
+      LoadingIndicator(context: context).showLoadingIndicator();
+      quiz = await VideoRepository().getVideoQuiz(contentId: widget.contentId);
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      AutoRouter.of(context).push(
+        VideoQuizRoute(
+            videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
+      );
+    } on CustomException catch (Ex) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      ScaffoldMessenger.of(context).showSnackBar(
+        MySnackBar(
+          text: Ex.errorMsg.toString(),
+        ),
+      );
+    } catch (ex) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+        text: ex.toString(),
+      ));
+    }
+  }
+
   @override
   onTapIndex(int index) {
     movieId = widget.movies![index].movieId!;
     super.subtitleWidget();
     super.initVideoPlayer(changedUrl: widget.movies![index].hostUrl);
+  }
+
+  @override
+  setVideoController(VideoPlayerController controller) {
+    videoPlayerController = controller;
+    setVideoListener(videoPlayerController!);
+    setState(() {});
+  }
+
+  setVideoListener(VideoPlayerController controller) {
+    controller.addListener(() {
+      if (controller.value.isPlaying && bottomIsVisible) {
+        bottomIsVisible = false;
+        word = null;
+        refreshNotifier.value = !refreshNotifier.value;
+      }
+    });
   }
 
   @override

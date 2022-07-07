@@ -51,13 +51,11 @@ class LevelEventItem extends HookWidget {
           );
         } else {
           AutoRouter.of(context).push(
-            PaymentRoute(
-                courseInfo: null,
-                paymentType: "1002",
-                contendId: paymentInfo.productId,
-                isCourse: false,
-                paymentInfo: paymentInfo),
+            VideoPaymentRoute(
+              paymentInfo: paymentInfo,
+            ),
           );
+      
         }
       },
       child: Container(
@@ -141,19 +139,20 @@ class LevelEventItem extends HookWidget {
             : Container(),
 
         ///Сурах ёстой үг
-        event.isCompleted == "1"
+        event.isCompleted != "1"
             ? Positioned.fill(
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
-                      margin: const EdgeInsets.all(5),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(18))),
-                      child: learnWordCntWidget(context: context)),
+                    margin: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(18))),
+                    child: learnWordCntWidget(context: context),
+                  ),
                 ),
               )
-            : Container(),
+            : SizedBox(),
         Positioned.fill(
           child: Align(
             alignment: Alignment.center,
@@ -165,9 +164,8 @@ class LevelEventItem extends HookWidget {
   }
 
   Widget learnWordCntWidget({BuildContext? context}) {
-    // int cnt =
-    //     int.parse(event!.vocabularyCount!) - int.parse(event!.vocabularyKnow!);
-
+    int cnt =
+        int.parse(event!.vocabularyCount!) - int.parse(event!.vocabularyKnow!);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -191,7 +189,7 @@ class LevelEventItem extends HookWidget {
               color: secondaryColor,
               borderRadius: BorderRadius.all(Radius.circular(18))),
           child: Text(
-            "1000",
+            cnt.toString(),
             style: Theme.of(context)
                 .textTheme
                 .titleSmall!

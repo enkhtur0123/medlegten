@@ -14,6 +14,9 @@ _$_PaymentInfo _$$_PaymentInfoFromJson(Map<String, dynamic> json) =>
       json['productName'] as String?,
       json['productDesc'] as String?,
       json['price'] as String?,
+      (json['prices'] as List<dynamic>)
+          .map((e) => Price.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_PaymentInfoToJson(_$_PaymentInfo instance) =>
@@ -24,4 +27,5 @@ Map<String, dynamic> _$$_PaymentInfoToJson(_$_PaymentInfo instance) =>
       'productName': instance.productName,
       'productDesc': instance.productDesc,
       'price': instance.price,
+      'prices': instance.prices,
     };

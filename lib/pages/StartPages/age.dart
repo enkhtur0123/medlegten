@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -9,9 +10,75 @@ import 'package:medlegten/providers/auth_provider.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+class CustomPicker extends CommonPickerModel {
+  String digits(int value, int length) {
+    return '$value'.padLeft(length, "0");
+  }
+
+  CustomPicker({DateTime? currentTime, LocaleType? locale})
+      : super(locale: locale) {
+    this.currentTime = currentTime ?? DateTime.now();
+    setLeftIndex(this.currentTime.hour);
+    setMiddleIndex(this.currentTime.minute);
+    setRightIndex(this.currentTime.second);
+  }
+
+  @override
+  String? leftStringAtIndex(int index) {
+    if (index >= 0 && index < 24) {
+      return digits(index, 2);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  String? middleStringAtIndex(int index) {
+    if (index >= 0 && index < 60) {
+      return digits(index, 2);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  String? rightStringAtIndex(int index) {
+    if (index >= 0 && index < 60) {
+      return digits(index, 2);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  String leftDivider() {
+    return "|";
+  }
+
+  @override
+  String rightDivider() {
+    return "|";
+  }
+
+  @override
+  List<int> layoutProportions() {
+    return [1, 2, 1];
+  }
+
+  @override
+  DateTime finalTime() {
+    return currentTime.isUtc
+        ? DateTime.utc(currentTime.year, currentTime.month, currentTime.day,
+            currentLeftIndex(), currentMiddleIndex(), currentRightIndex())
+        : DateTime(currentTime.year, currentTime.month, currentTime.day,
+            currentLeftIndex(), currentMiddleIndex(), currentRightIndex());
+  }
+}
 
 class AgePage extends HookConsumerWidget {
-  const AgePage({Key? key}) : super(key: key);
+  AgePage({Key? key}) : super(key: key);
+
+  DateTime now = new DateTime.now();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,7 +136,26 @@ class AgePage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: OutlinedButton(
                   onPressed: () {
-                    _showMaterialDialog(context, selectedDate);
+                    DatePicker.showDatePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime(1900, 1, 1),
+                        maxTime: DateTime(now.year - 6, now.month, now.day),
+                        theme: const DatePickerTheme(
+                            headerColor: Colors.black12,
+                            backgroundColor: Colors.white,
+                            itemStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                            doneStyle:
+                                TextStyle(color: Colors.white, fontSize: 16)),
+                        onChanged: (date) {
+                      selectedDate.value =
+                          DateFormat("yyyy-MM-dd").format(date).toString();
+                    }, onConfirm: (date) {
+                      selectedDate.value =
+                          DateFormat("yyyy-MM-dd").format(date).toString();
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                   child: Row(children: [
                     Text(selectedDate.value,
@@ -92,6 +178,15 @@ class AgePage extends HookConsumerWidget {
                   ),
                 ),
               ),
+              addVerticalSpace(20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Text(
+                  'Хэрэглэгчийн насны  мэдээлэл нь насны бүлгийн сонирхолд нийцсэн контент санал болгоход ашиглагдах болно',
+                  style: TEXT_THEME_DEFAULT.headline3,
+                  textAlign: TextAlign.center,
+                ),
+              ),
               const Spacer(),
               WideButton('Үргэлжлүүлэх', colorSecondary, colorWhite, () {
                 if (selectedDate.value == 'Төрсөн он сар өдөр') {
@@ -107,15 +202,7 @@ class AgePage extends HookConsumerWidget {
                           .changeStatus(AuthState.Authorized));
                 }
               }),
-              addVerticalSpace(20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text(
-                  'Таны оруулсан хувийн мэдээлэл нь цаашид зөвхөн таны сургалтын хөтөлбөрт зориулагдан ашиглагдах болно',
-                  style: TEXT_THEME_DEFAULT.headline3,
-                  textAlign: TextAlign.center,
-                ),
-              )
+              addVerticalSpace(50),
             ],
           )
         ],
@@ -146,7 +233,10 @@ class AgePage extends HookConsumerWidget {
             actions: [
               Center(
                 child: TextButton(
-                  child: const Text("Сонгох",style: TextStyle(color: Colors.white),),
+                  child: const Text(
+                    "Сонгох",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   onPressed: () {
                     selectedDateNotifier.value =
                         DateFormat('yyyy-MM-dd').format(selectedDate);

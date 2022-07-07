@@ -5,12 +5,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
 
+// ignore: must_be_immutable
 class ExerciseOptionDialog extends HookConsumerWidget {
   List<Option> options = [
     Option(icon: "listen.svg", text: "Сонсгол шалгах", index: 0),
     Option(icon: "memorize.svg", text: "Үг цээжлэх", index: 1),
-    Option(icon: "quiz.svg", text: "Шалгалт", index: 2),
+    Option(icon: "list.svg", text: "Үгсийн сан", index: 2),
   ];
+
+  ExerciseOptionDialog({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BackdropFilter(

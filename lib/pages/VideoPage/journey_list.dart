@@ -35,9 +35,9 @@ class JourneyPage extends HookWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Санал болгох',
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold),
@@ -118,7 +118,7 @@ class JourneyPage extends HookWidget {
                           Flexible(
                             flex: 5,
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   top: 15, left: 15, bottom: 15),
                               child: ClipRRect(
                                 borderRadius:
@@ -139,7 +139,7 @@ class JourneyPage extends HookWidget {
                               child: Column(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         top: 15,
                                         bottom: 4,
                                         left: 10,
@@ -158,7 +158,7 @@ class JourneyPage extends HookWidget {
                                   Container(
                                     height: 64,
                                     width: double.infinity,
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         top: 5, bottom: 5, left: 10, right: 15),
                                     child: Text(
                                       journeys![position].eventName!,
@@ -167,7 +167,7 @@ class JourneyPage extends HookWidget {
                                   ),
                                   Container(
                                     width: double.infinity,
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         top: 4, bottom: 0, left: 10, right: 15),
                                     child: Row(
                                       children: [
@@ -203,7 +203,7 @@ class JourneyPage extends HookWidget {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         top: 5, bottom: 0, left: 10, right: 15),
                                     width: double.infinity,
                                     child: IconWithTextWidget(

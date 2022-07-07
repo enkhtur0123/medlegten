@@ -1,4 +1,5 @@
 import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/models/coupon.dart';
 import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
@@ -17,6 +18,22 @@ class CoursePaymentRepository {
       // print(res);
       if (res['isSuccess']) {
         return res;
+      } else {
+        return null;
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
+    }
+  }
+
+  Future<Coupon?> checkContentCouponCode(
+      {String? couponCode, PaymentInfo? paymentInfo, bool? isCourse}) async {
+    try {
+      var res = await HttpHelper().getUrl(
+          url: 'ppv/Coupon/${paymentInfo!.productId}/${couponCode ?? ""}');
+      // print(res);
+      if (res['isSuccess']) {
+        return Coupon.fromJson(res['coupon']);
       } else {
         return null;
       }

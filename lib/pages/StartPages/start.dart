@@ -100,6 +100,36 @@ class StartPage extends StatelessWidget {
                       const Spacer(
                         flex: 2,
                       ),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: 'Та шинэ хэрэглэгч үү?',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color: Color(0xff828282),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  ' Нэвтрэх товч дээр дарж  сошиал хаягаараа  бүртгүүлнэ үү.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(
+                        flex: 2,
+                      ),
+
                     ],
                   ),
                 ),

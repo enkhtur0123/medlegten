@@ -15,13 +15,14 @@ class FacebookLogin extends ConsumerWidget {
         width: double.infinity,
         child: SignInButton(
           Buttons.FacebookNew,
+          text: "Facebook эрхээр нэвтрэх",
           padding: const EdgeInsets.all(15),
           elevation: 4,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
           onPressed: () {
             if (_authState != AuthState.Authorized) {
-              WidgetsBinding.instance?.addPostFrameCallback(
+              WidgetsBinding.instance.addPostFrameCallback(
                   (_) => ref.read(authProvider.notifier).loginFacebook());
             }
           },

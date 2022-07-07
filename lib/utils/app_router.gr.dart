@@ -33,8 +33,10 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const LoginPage());
     },
     AgeRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<AgeRouteArgs>(orElse: () => const AgeRouteArgs());
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const AgePage());
+          routeData: routeData, child: AgePage(key: args.key));
     },
     StartRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -142,7 +144,9 @@ class _$AppRouter extends RootStackRouter {
               paymentType: args.paymentType,
               contendId: args.contendId,
               paymentInfo: args.paymentInfo,
-              isCourse: args.isCourse));
+              isCourse: args.isCourse,
+              videoPrice: args.videoPrice,
+              subscribtionCnt: args.subscribtionCnt));
     },
     QpayRoute.name: (routeData) {
       final args = routeData.argsAs<QpayRouteArgs>();
@@ -155,7 +159,8 @@ class _$AppRouter extends RootStackRouter {
               price: args.price,
               paymentType: args.paymentType,
               paymentInfo: args.paymentInfo,
-              isCourse: args.isCourse));
+              isCourse: args.isCourse,
+              month: args.month));
     },
     VocabularyListRoute.name: (routeData) {
       final args = routeData.argsAs<VocabularyListRouteArgs>();
@@ -270,6 +275,14 @@ class _$AppRouter extends RootStackRouter {
               quiz: args.quiz,
               isMemorize: args.isMemorize,
               videoMemorizeWord: args.videoMemorizeWord));
+    },
+    VideoPaymentRoute.name: (routeData) {
+      final args = routeData.argsAs<VideoPaymentRouteArgs>(
+          orElse: () => const VideoPaymentRouteArgs());
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child:
+              VideoPaymentPage(key: args.key, paymentInfo: args.paymentInfo));
     }
   };
 
@@ -310,7 +323,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(PromotionDetailRoute.name, path: '/promotion/detail'),
         RouteConfig(WebViewRoute.name, path: '/web_view'),
         RouteConfig(VideoQuizRoute.name, path: '/video/quiz'),
-        RouteConfig(VideoMemorizeRoute.name, path: '/memorize')
+        RouteConfig(VideoMemorizeRoute.name, path: '/memorize'),
+        RouteConfig(VideoPaymentRoute.name, path: '/video/payment')
       ];
 }
 
@@ -357,10 +371,22 @@ class LoginRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [AgePage]
-class AgeRoute extends PageRouteInfo<void> {
-  const AgeRoute() : super(AgeRoute.name, path: '/age');
+class AgeRoute extends PageRouteInfo<AgeRouteArgs> {
+  AgeRoute({Key? key})
+      : super(AgeRoute.name, path: '/age', args: AgeRouteArgs(key: key));
 
   static const String name = 'AgeRoute';
+}
+
+class AgeRouteArgs {
+  const AgeRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AgeRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -794,7 +820,9 @@ class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
       String? paymentType,
       String? contendId,
       PaymentInfo? paymentInfo,
-      required bool? isCourse})
+      required bool? isCourse,
+      double? videoPrice,
+      int? subscribtionCnt})
       : super(PaymentRoute.name,
             path: '/payment',
             args: PaymentRouteArgs(
@@ -803,7 +831,9 @@ class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
                 paymentType: paymentType,
                 contendId: contendId,
                 paymentInfo: paymentInfo,
-                isCourse: isCourse));
+                isCourse: isCourse,
+                videoPrice: videoPrice,
+                subscribtionCnt: subscribtionCnt));
 
   static const String name = 'PaymentRoute';
 }
@@ -815,7 +845,9 @@ class PaymentRouteArgs {
       this.paymentType,
       this.contendId,
       this.paymentInfo,
-      required this.isCourse});
+      required this.isCourse,
+      this.videoPrice,
+      this.subscribtionCnt});
 
   final Key? key;
 
@@ -829,9 +861,13 @@ class PaymentRouteArgs {
 
   final bool? isCourse;
 
+  final double? videoPrice;
+
+  final int? subscribtionCnt;
+
   @override
   String toString() {
-    return 'PaymentRouteArgs{key: $key, courseInfo: $courseInfo, paymentType: $paymentType, contendId: $contendId, paymentInfo: $paymentInfo, isCourse: $isCourse}';
+    return 'PaymentRouteArgs{key: $key, courseInfo: $courseInfo, paymentType: $paymentType, contendId: $contendId, paymentInfo: $paymentInfo, isCourse: $isCourse, videoPrice: $videoPrice, subscribtionCnt: $subscribtionCnt}';
   }
 }
 
@@ -845,7 +881,8 @@ class QpayRoute extends PageRouteInfo<QpayRouteArgs> {
       String? price,
       String? paymentType = "",
       PaymentInfo? paymentInfo,
-      required bool? isCourse})
+      required bool? isCourse,
+      String? month})
       : super(QpayRoute.name,
             path: '/qpay',
             args: QpayRouteArgs(
@@ -855,7 +892,8 @@ class QpayRoute extends PageRouteInfo<QpayRouteArgs> {
                 price: price,
                 paymentType: paymentType,
                 paymentInfo: paymentInfo,
-                isCourse: isCourse));
+                isCourse: isCourse,
+                month: month));
 
   static const String name = 'QpayRoute';
 }
@@ -868,7 +906,8 @@ class QpayRouteArgs {
       this.price,
       this.paymentType = "",
       this.paymentInfo,
-      required this.isCourse});
+      required this.isCourse,
+      this.month});
 
   final Key? key;
 
@@ -884,9 +923,11 @@ class QpayRouteArgs {
 
   final bool? isCourse;
 
+  final String? month;
+
   @override
   String toString() {
-    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price, paymentType: $paymentType, paymentInfo: $paymentInfo, isCourse: $isCourse}';
+    return 'QpayRouteArgs{key: $key, courseInfo: $courseInfo, couponCode: $couponCode, price: $price, paymentType: $paymentType, paymentInfo: $paymentInfo, isCourse: $isCourse, month: $month}';
   }
 }
 
@@ -1367,5 +1408,29 @@ class VideoMemorizeRouteArgs {
   @override
   String toString() {
     return 'VideoMemorizeRouteArgs{url: $url, key: $key, movies: $movies, title: $title, isSerial: $isSerial, serialChange: $serialChange, contentId: $contentId, quiz: $quiz, isMemorize: $isMemorize, videoMemorizeWord: $videoMemorizeWord}';
+  }
+}
+
+/// generated route for
+/// [VideoPaymentPage]
+class VideoPaymentRoute extends PageRouteInfo<VideoPaymentRouteArgs> {
+  VideoPaymentRoute({Key? key, PaymentInfo? paymentInfo})
+      : super(VideoPaymentRoute.name,
+            path: '/video/payment',
+            args: VideoPaymentRouteArgs(key: key, paymentInfo: paymentInfo));
+
+  static const String name = 'VideoPaymentRoute';
+}
+
+class VideoPaymentRouteArgs {
+  const VideoPaymentRouteArgs({this.key, this.paymentInfo});
+
+  final Key? key;
+
+  final PaymentInfo? paymentInfo;
+
+  @override
+  String toString() {
+    return 'VideoPaymentRouteArgs{key: $key, paymentInfo: $paymentInfo}';
   }
 }

@@ -16,6 +16,8 @@ class PaymentPage extends StatefulWidget {
   final String? contendId;
   final PaymentInfo? paymentInfo;
   final bool? isCourse;
+  final double? videoPrice;
+  final int? subscribtionCnt;
 
   // ignore: prefer_const_constructors_in_immutables
   PaymentPage(
@@ -24,7 +26,9 @@ class PaymentPage extends StatefulWidget {
       this.paymentType,
       this.contendId,
       this.paymentInfo,
-      required this.isCourse})
+      required this.isCourse,
+      this.videoPrice,
+      this.subscribtionCnt})
       : super(key: key);
 
   @override
@@ -84,7 +88,10 @@ class PaymentState extends State<PaymentPage> {
                         borderColor: isSuccess ? Colors.green : Colors.red,
                         labelColor: Colors.black,
                         key: GlobalKey<FormFieldState>(),
-                        suffix: Container(width: 0,height: 0,),
+                        suffix: Container(
+                          width: 0,
+                          height: 0,
+                        ),
                         controller: controller,
                         isBordered: true,
                         labelText: "Купон код",
@@ -105,7 +112,11 @@ class PaymentState extends State<PaymentPage> {
                         height: 50,
                         text: "шалгах",
                         onTap: () async {
-                          checkCouponCode();
+                          if (widget.isCourse!) {
+                            checkCouponCode();
+                          } else {
+                            checkContentCouponCode();
+                          }
                         },
                       ),
                     ),
@@ -122,9 +133,16 @@ class PaymentState extends State<PaymentPage> {
                         price: price ??
                             (widget.isCourse!
                                 ? widget.courseInfo!.price
-                                : widget.paymentInfo!.price),
+                                : widget.paymentInfo!.prices
+                                    .singleWhere((element) =>
+                                        int.parse(element.month) ==
+                                        widget.subscribtionCnt)
+                                    .price),
                         paymentType: widget.paymentType,
-                        paymentInfo: widget.paymentInfo),
+                        paymentInfo: widget.paymentInfo,
+                        month: !widget.isCourse!
+                            ? widget.subscribtionCnt.toString()
+                            : ""),
                   );
                 },
                 child: getPaymentFunction(
@@ -168,10 +186,11 @@ class PaymentState extends State<PaymentPage> {
     LoadingIndicator(context: context).showLoadingIndicator();
     CoursePaymentRepository()
         .checkCouponCode(
-            courseInfo: widget.courseInfo,
-            couponCode: controller.text.toString(),
-            paymentInfo: widget.paymentInfo,
-            isCourse: widget.isCourse)
+      courseInfo: widget.courseInfo,
+      couponCode: controller.text.toString(),
+      paymentInfo: widget.paymentInfo,
+      isCourse: widget.isCourse,
+    )
         .then((value) {
       LoadingIndicator(context: context).hideLoadingIndicator();
       if (value != null) {
@@ -263,5 +282,61 @@ class PaymentState extends State<PaymentPage> {
         ],
       ),
     );
+  }
+
+  void checkContentCouponCode() {
+    LoadingIndicator(context: context).showLoadingIndicator();
+    CoursePaymentRepository()
+        .checkContentCouponCode(
+      couponCode: controller.text.toString(),
+      paymentInfo: widget.paymentInfo,
+      isCourse: widget.isCourse,
+    )
+        .then((value) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      if (value != null) {
+        couponCode = value.couponCode;
+        price = value.price;
+        isSuccess = true;
+        keyboardHide();
+        couponNode.unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+
+        if (widget.subscribtionCnt == int.parse(value.month)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: "Уг купон кодыг ашиглах боломжтой байна.",
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: "Купон код буруу байна",
+            ),
+          );
+        }
+
+        setState(() {});
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          MySnackBar(
+            text: "Купон кодоо шалгана уу",
+          ),
+        );
+        isSuccess = false;
+        keyboardHide();
+        setState(() {});
+      }
+    }).catchError((onError) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      ScaffoldMessenger.of(context).showSnackBar(
+        MySnackBar(
+          text: "Купон кодоо шалгана уу",
+        ),
+      );
+      keyboardHide();
+      isSuccess = false;
+      setState(() {});
+    });
   }
 }
