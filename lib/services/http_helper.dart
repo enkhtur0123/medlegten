@@ -118,7 +118,7 @@ class HttpHelper {
 
 Future<String> getToken() async {
   String token = GetStorage().read('token') ?? '';
-  //print(token);
+  print(token);
   if (token != '') {
     return token;
   } else {

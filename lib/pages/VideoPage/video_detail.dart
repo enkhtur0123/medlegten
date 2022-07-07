@@ -86,6 +86,7 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
               videoMemorizeWord: videoMemorizeWord,
               videoUrl: widget.url,
               quizBtn: () {
+                
                 quiz();
               },
               isBookMark: true,

@@ -7,6 +7,7 @@ import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/models/video/quiz.dart';
 import 'package:medlegten/models/video/sonsgol.dart';
+import 'package:medlegten/models/video/title_text.dart';
 import 'package:medlegten/models/video/video_cue.dart';
 import 'package:medlegten/models/video/video_vocabulary.dart';
 import 'package:medlegten/models/video/video_vocabulary_word.dart';
@@ -253,6 +254,22 @@ class VideoRepository {
       final res = await HttpHelper().getUrl(url: 'ppv/Milestone');
       if (res['isSuccess']) {
         return MileStone.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  ///Хэрэглэгчийн түвшин авах
+  Future<TitleText> getVideoTitle() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'UserInfo/Title');
+      if (res['isSuccess']) {
+        return TitleText.fromJson(res['titleText']);
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);

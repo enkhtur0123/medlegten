@@ -242,13 +242,31 @@ class LevelEventItem extends HookWidget {
                           : ""),
                 ),
                 Flexible(
-                  fit: FlexFit.loose,
+                    fit: FlexFit.loose,
                   flex: 2,
-                  child: IconWithTextWidget(
-                    iconData: CupertinoIcons.layers_alt,
-                    text: event.vocabularyCount,
-                    fontSize: 10,
-                  ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/img/video/list.svg",
+                          width: 15,
+                          height: 15,
+                          color: Color(0xff828282),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          event.vocabularyCount.toString(),
+                          style: const TextStyle(
+                              color: Color(0xff828282),
+                              fontSize: 10,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    )
+                  
+                
                 ),
                 Flexible(
                   fit: FlexFit.loose,

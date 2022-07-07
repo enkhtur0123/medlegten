@@ -2,7 +2,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:collection/src/iterable_extensions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_storage/get_storage.dart';
@@ -322,7 +321,9 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                         return Flexible(
                           flex: 1,
                           child: memorizeOptionWidget(
-                              options: e, index: memorizeOptions.indexOf(e)),
+                            options: e,
+                            index: memorizeOptions.indexOf(e),
+                          ),
                         );
                       }).toList(),
                     )
@@ -346,12 +347,11 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                                   }
                                 });
                               },
-                              child: SvgPicture.asset(
-                                "assets/img/video/settings.svg",
-                                width: 40,
-                                height: 40,
-                                color: const Color(0xffC7C9D9),
-                              ),
+                              child: const Icon(
+                                Icons.expand_circle_down_outlined,
+                                color: Color(0xffC7C9D9),
+                                size: 27,
+                              ), 
                             ),
                             const SizedBox(
                               width: 10,
@@ -362,8 +362,8 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                               },
                               child: SvgPicture.asset(
                                 "assets/img/video/quiz.svg",
-                                width: 35,
-                                height: 35,
+                                width: 30,
+                                height: 30,
                                 color: const Color(0xffC7C9D9),
                               ),
                             )

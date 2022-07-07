@@ -291,7 +291,8 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
   Widget bottomNavigationWidget() {
     return Container(
       margin: const EdgeInsets.only(bottom: 30),
-      child: WideButton("Өөрчлөх", ColorTable.color120_100_254, ColorTable.color255_255_255, () async {
+      child: WideButton("Дараагийн үг", ColorTable.color120_100_254,
+          ColorTable.color255_255_255, () async {
         data = await VideoRepository().getSonsgol(movieId: widget.contentId!);
         await videoPlayerController!.seekTo(getDuration(data!.startTime!));
         await videoPlayerController!.play();

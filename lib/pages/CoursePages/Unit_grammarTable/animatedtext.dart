@@ -15,7 +15,7 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget> {
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _fontSize = _first ? 16 : 20;
         _first = !_first;

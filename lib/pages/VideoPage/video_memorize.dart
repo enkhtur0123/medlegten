@@ -141,7 +141,7 @@ class VideoMemorizePageState extends BaseVideoPageState<VideoMemorizePage> with 
                 margin: const EdgeInsets.only(top: 0, left: 20, right: 20, bottom: 20),
                 child: CustomOutlinedButton(
                   color: colorPrimary,
-                  text: "Цээжилсэн",
+                  text: "Дараагийн үг",
                   onTap: () async {
                     await subtitleKey.currentState!.getRandomCue();
                   },

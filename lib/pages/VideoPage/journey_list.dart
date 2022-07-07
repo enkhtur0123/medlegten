@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -139,20 +140,17 @@ class JourneyPage extends HookWidget {
                               child: Column(
                                 children: [
                                   Container(
+                                    alignment: Alignment.centerLeft,
                                     padding: const EdgeInsets.only(
                                         top: 15,
                                         bottom: 4,
                                         left: 10,
-                                        right: 15),
-                                    width: double.infinity,
-                                    child: IconWithTextWidget(
-                                      iconData: CupertinoIcons.layers_alt,
-                                      text: (int.parse(journeys![position]
-                                                  .vocabularyCount!) -
-                                              int.parse(journeys![position]
-                                                  .vocabularyKnow!))
-                                          .toString(),
-                                      fontSize: 10,
+                                      right: 15,
+                                    ),
+                                    child: AutoSizeText(
+                                      journeys![position].eventName!,
+                                      textAlign: TextAlign.left,
+                                      maxLines: 3,
                                     ),
                                   ),
                                   Container(
@@ -161,8 +159,13 @@ class JourneyPage extends HookWidget {
                                     padding: const EdgeInsets.only(
                                         top: 5, bottom: 5, left: 10, right: 15),
                                     child: Text(
-                                      journeys![position].eventName!,
-                                      textAlign: TextAlign.left,
+                                      "Шинэ үг: ${int.parse(journeys![position].vocabularyCount!) - int.parse(journeys![position].vocabularyKnow!)}",
+                                      style: const TextStyle(
+                                        color: Color(0xff828282),
+                                        fontSize: 15,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                     ),
                                   ),
                                   Container(

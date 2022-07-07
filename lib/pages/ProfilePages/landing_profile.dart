@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/loading.dart';
+import 'package:medlegten/models/Starting/active_service.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/models/video/mile_stone.dart';
 import 'package:medlegten/pages/ProfilePages/level_widget.dart';
@@ -10,7 +12,9 @@ import 'package:medlegten/pages/ProfilePages/mile_stone.dart';
 import 'package:medlegten/pages/ProfilePages/report_item.dart';
 import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/utils/date_time_formatter.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import '../../utils/hex_color.dart';
@@ -32,7 +36,9 @@ class LandingProfile extends HookConsumerWidget {
     var notifier = useState(false);
     useEffect(() {
       VideoRepository().getMileStone().then((value) {
-        currentStageColor = HexColor(value.mileStone!.singleWhere((element) => element.current == "1").color!);
+        currentStageColor = HexColor(value.mileStone!
+            .singleWhere((element) => element.current == "1")
+            .color!);
         mileStone = value;
         notifier.value = !notifier.value;
         notifier.dispose();
@@ -56,11 +62,13 @@ class LandingProfile extends HookConsumerWidget {
               mileStone != null
                   ? MileStonePage(
                       mileStone: mileStone,
-                      isLast: mileStone!.mileStone!
-                              .indexOf(mileStone!.mileStone!.singleWhere((element) => element.current == "1")) ==
+                      isLast: mileStone!.mileStone!.indexOf(
+                              mileStone!.mileStone!.singleWhere(
+                                  (element) => element.current == "1")) ==
                           mileStone!.mileStone!.length - 1,
                       currentIndex: mileStone!.mileStone!.indexOf(
-                        mileStone!.mileStone!.singleWhere((element) => element.current == "1"),
+                        mileStone!.mileStone!
+                            .singleWhere((element) => element.current == "1"),
                       ),
                     )
                   : const SizedBox(
@@ -75,37 +83,40 @@ class LandingProfile extends HookConsumerWidget {
                 height: 1,
                 color: const Color(0xffC7C9D9).withOpacity(0.2),
               ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  "Статистик",
-                  style: TextStyle(fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
-                ),
-              ),
-              GridView.count(
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(10),
-                childAspectRatio: 16 / 14,
-                shrinkWrap: true,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                children: items.map((item) {
-                  switch (item.reportType!) {
-                    case ReportType.common:
-                      return getReportItemWidget(e: item);
-                    case ReportType.vocabulary:
-                      return wordCount.when(
-                        loading: () => const Loading(),
-                        error: (err, stack) => Text('Error: $err'),
-                        data: (data) {
-                          item.body = '$data';
-                          return getReportItemWidget(e: item);
-                        },
-                      ); //
-                  }
-                }).toList(),
-              ),
+              FutureBuilder(
+                  future: LoginRepository().getActiveService(),
+                  builder:
+                      (context, AsyncSnapshot<List<ActiveService>> snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text(
+                            "Үйлчилгээний хугацаа",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                            children: snapshot.data!.map((e) {
+                              return activeServiceItem(
+                                  activeService: e, context: context);
+                            }).toList(),
+                          )
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
               Container(
                 margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
                 child: CustomOutlinedButton(
@@ -131,6 +142,37 @@ class LandingProfile extends HookConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget activeServiceItem(
+      {ActiveService? activeService, BuildContext? context}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            activeService!.productName,
+            style: const TextStyle(
+              fontSize: 14,
+              fontStyle: FontStyle.normal,
+              color: colorPrimary,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            MyDateTimeFormatter(date: activeService.expireDate, noTime: true)
+                .toDateTime()
+                .toString()
+                .split(" ")[0],
+            style: Theme.of(context!).textTheme.subtitle1!.copyWith(
+                  color: const Color(0xffA8AFE5),
+                  fontSize: 14,
+                ),
+          ),
+        ],
       ),
     );
   }
@@ -188,7 +230,11 @@ class LandingProfile extends HookConsumerWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: currentStageColor != null ? currentStageColor! : Colors.transparent, width: 3),
+              border: Border.all(
+                  color: currentStageColor != null
+                      ? currentStageColor!
+                      : Colors.transparent,
+                  width: 3),
             ),
             child: SizedBox(
               width: 120,
@@ -220,7 +266,10 @@ class LandingProfile extends HookConsumerWidget {
                   Text(
                     userInfo?.firstName ?? "",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.bold, fontSize: 20),
+                    style: const TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                   ),
                   const SizedBox(
                     width: 5,
@@ -238,7 +287,10 @@ class LandingProfile extends HookConsumerWidget {
               Text(
                 'ID: ${userInfo?.userId ?? ""}',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.bold, fontSize: 13),
+                style: const TextStyle(
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13),
               ),
               const SizedBox(
                 height: 50,

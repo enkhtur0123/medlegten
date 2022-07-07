@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/models/Starting/active_service.dart';
 import 'package:medlegten/models/Starting/muser_info.dart';
 import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/models/Starting/version.dart';
@@ -208,6 +209,26 @@ class LoginRepository implements ILoginRepository {
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
+
+
+///active service
+  Future<List<ActiveService>> getActiveService() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'UserInfo/ActiveService');
+      if (res['isSuccess']) {
+        var list = res['services'] as List;
+        return list.map((i) => ActiveService.fromJson(i)).toList();
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: (res['resultMessage']));
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+
 
   // Future<String> getUserInfoBirthDate() async {
   //   try {

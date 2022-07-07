@@ -10,6 +10,7 @@ import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import '../../models/video/price.dart';
 import '../../utils/app_router.dart';
 
+// ignore: must_be_immutable
 class VideoPaymentPage extends HookConsumerWidget {
   VideoPaymentPage({Key? key, this.paymentInfo}) : super(key: key);
 
@@ -67,7 +68,7 @@ class VideoPaymentPage extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "1 сарын эрх",
+                  durationText(price.month),
                   style: TextStyle(
                       color: const Color(0xff5E5E61).withOpacity(0.8),
                       fontSize: 15,
@@ -135,5 +136,19 @@ class VideoPaymentPage extends HookConsumerWidget {
         ],
       ),
     );
+  }
+
+  durationText(String text) {
+    switch (text) {
+      case "1":
+        return "1 сарын эрх";
+      case "3":
+        return "1 улирлын эрх";
+      case "6":
+        return "Хагас жилийн эрх";
+      case "12":
+        return "1 жилийн эрх";
+    }
+    return "";
   }
 }

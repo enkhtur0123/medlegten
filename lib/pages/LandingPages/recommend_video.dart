@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:medlegten/models/video/event.dart';
+import 'package:medlegten/models/video/title_text.dart';
 
 import 'package:medlegten/pages/VideoPage/level_event_item.dart';
+import 'package:medlegten/repositories/video_repository.dart';
 
 // ignore: must_be_immutable
 class RecommendVideos extends HookWidget {
@@ -20,16 +22,24 @@ class RecommendVideos extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: const Text(
-              "Санал болгох видеонууд",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
+          FutureBuilder(
+              future: VideoRepository().getVideoTitle(),
+              builder: (context, AsyncSnapshot<TitleText> snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      snapshot.data!.startPageTitle,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
           Container(
             alignment: Alignment.topLeft,
             width: double.infinity,
