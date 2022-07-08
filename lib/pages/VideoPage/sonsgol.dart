@@ -201,7 +201,9 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
               children: data!.words.asMap().keys.toList().map((i) {
                 if (data!.words[i].wordValue == '' || textState[i] == 1) {
                   return Padding(
-                    padding: EdgeInsets.only(top: 12, left: 5, right: 5),
+                    padding: data!.words[i].spaceNext == "0"
+                        ? EdgeInsets.only(top: 12, right: 10)
+                        : EdgeInsets.only(top: 12, right: 0),
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -209,7 +211,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
                         children: [
                           Text(
                             data!.words[i].mainText.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -221,7 +223,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
                   Color _fillColor = Colors.black26;
 
                   return Container(
-                    padding: EdgeInsets.only(left: 2, right: 2),
+                    padding: data!.words[i].spaceNext == "0" ? EdgeInsets.only(right: 10) : EdgeInsets.only(right: 0),
                     alignment: Alignment.center,
                     width: data!.words[i].mainText.length.toDouble() * 24,
                     child: TextFormField(
