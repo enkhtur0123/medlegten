@@ -48,6 +48,12 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
   List<int> selectedList = [];
   List<int> randomItems = [];
 
+  List congratsText = [
+    "Хэл сурах амархан байгаа биз",
+    "Мундаг байна, үргэлжлүүлээд байгаарай",
+    "Том зорилгынхоо төлөө урагшаа, үргэлжлүүлээд байгаарай",
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -146,7 +152,8 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const CustomPopUpDialog(title: "Awesome", body: "You have did it", isSuccess: true);
+              var randomText = (congratsText.toList()..shuffle()).first;
+              return CustomPopUpDialog(title: "Баяр хүргье!", body: randomText.toString(), isSuccess: true);
             });
       }
 
@@ -169,10 +176,20 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
             child: Container(
               padding: const EdgeInsets.only(left: 15, top: 10, right: 15, bottom: 20),
               alignment: Alignment.topRight,
-              child: Text(
-                'Тусламж авах',
-                style: TextStyle(color: Colors.black45),
-              ),
+              child: helpCheck == false
+                  ? const Text(
+                      'Тусламж авах',
+                      style: TextStyle(
+                        color: Colors.black45,
+                      ),
+                    )
+                  : const Text(
+                      'Тусламж авах',
+                      style: TextStyle(
+                        color: Colors.black45,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
             ),
           ),
           Container(
@@ -184,7 +201,9 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
               children: data!.words.asMap().keys.toList().map((i) {
                 if (data!.words[i].wordValue == '' || textState[i] == 1) {
                   return Padding(
-                    padding: EdgeInsets.only(top: 12, left: 5, right: 5),
+                    padding: data!.words[i].spaceNext == "0"
+                        ? EdgeInsets.only(top: 12, right: 10)
+                        : EdgeInsets.only(top: 12, right: 0),
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -192,7 +211,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
                         children: [
                           Text(
                             data!.words[i].mainText.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -204,7 +223,7 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
                   Color _fillColor = Colors.black26;
 
                   return Container(
-                    padding: EdgeInsets.only(left: 2, right: 2),
+                    padding: data!.words[i].spaceNext == "0" ? EdgeInsets.only(right: 10) : EdgeInsets.only(right: 0),
                     alignment: Alignment.center,
                     width: data!.words[i].mainText.length.toDouble() * 24,
                     child: TextFormField(
@@ -225,8 +244,9 @@ class SonsgolPageState extends BaseVideoPageState<SonsgolPage> with BaseVideoMix
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const CustomPopUpDialog(
-                                      title: "Awesome", body: "You have did it", isSuccess: true);
+                                  var randomText = (congratsText.toList()..shuffle()).first;
+                                  return CustomPopUpDialog(
+                                      title: "Баяр хүргье!", body: randomText.toString(), isSuccess: true);
                                 }).then((value) {
                               too = 0;
                               setState(() {});
