@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlegten/models/video/journey.dart';
 import 'package:medlegten/models/video/movie.dart';
 import 'package:medlegten/models/video/payment_info.dart';
@@ -19,9 +20,9 @@ class JourneyPage extends HookWidget {
   List<Journey>? journeys;
 
   final bool? isHome;
+  String? contentId = "";
 
-  PageController pageController =
-      PageController(initialPage: 0, viewportFraction: 0.85);
+  PageController pageController = PageController(initialPage: 0, viewportFraction: 0.85);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,10 +39,7 @@ class JourneyPage extends HookWidget {
                 children: [
                   const Text(
                     'Санал болгох',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 14, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -63,17 +61,13 @@ class JourneyPage extends HookWidget {
                   return GestureDetector(
                     onTap: () async {
                       List data = [];
+                      contentId = !isHome! ? journeys![position].eventId : journeys![position].eventId;
                       LoadingIndicator(context: context).showLoadingIndicator();
                       try {
-                        data = await VideoRepository().getContentDetail(
-                            contentId: !isHome!
-                                ? journeys![position].eventId
-                                : journeys![position].eventId);
-                        LoadingIndicator(context: context)
-                            .hideLoadingIndicator();
+                        data = await VideoRepository().getContentDetail(contentId: contentId);
+                        LoadingIndicator(context: context).hideLoadingIndicator();
                       } catch (ex) {
-                        LoadingIndicator(context: context)
-                            .hideLoadingIndicator();
+                        LoadingIndicator(context: context).hideLoadingIndicator();
                       }
 
                       List<Movie> movies = data[0];
@@ -83,24 +77,19 @@ class JourneyPage extends HookWidget {
                             movies: movies,
                             url: movies[0].hostUrl!,
                             title: movies[0].contentName,
-                            isSerial: journeys![position].isSerial == "1"
-                                ? true
-                                : false));
+                            isSerial: journeys![position].isSerial == "1" ? true : false,
+                            contentId: contentId));
                       } else {
                         AutoRouter.of(context).push(
-                          PaymentRoute(
-                              courseInfo: null,
-                              paymentType: "1002",
-                              contendId: paymentInfo.productId,
-                              isCourse: false,
-                              paymentInfo: paymentInfo),
+                          VideoPaymentRoute(
+                            paymentInfo: paymentInfo,
+                          ),
                         );
                       }
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
@@ -111,25 +100,21 @@ class JourneyPage extends HookWidget {
                         ],
                         color: Colors.white,
                       ),
-                      margin:
-                          const EdgeInsets.only(top: 20, bottom: 15, left: 15),
+                      margin: const EdgeInsets.only(top: 20, bottom: 15, left: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Flexible(
                             flex: 5,
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  top: 15, left: 15, bottom: 15),
+                              padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
                               child: ClipRRect(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(5)),
+                                borderRadius: const BorderRadius.all(Radius.circular(5)),
                                 child: CachedNetworkImage(
                                   imageUrl: journeys![position].imgUrl ?? "",
                                   fit: BoxFit.cover,
                                   width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.35,
+                                  height: MediaQuery.of(context).size.width * 0.35,
                                 ),
                               ),
                             ),
@@ -140,11 +125,12 @@ class JourneyPage extends HookWidget {
                               child: Column(
                                 children: [
                                   Container(
+                                    height: 49,
                                     alignment: Alignment.centerLeft,
                                     padding: const EdgeInsets.only(
-                                        top: 15,
-                                        bottom: 4,
-                                        left: 10,
+                                      top: 15,
+                                      bottom: 4,
+                                      left: 10,
                                       right: 15,
                                     ),
                                     child: AutoSizeText(
@@ -154,10 +140,9 @@ class JourneyPage extends HookWidget {
                                     ),
                                   ),
                                   Container(
-                                    height: 64,
+                                    height: 60,
                                     width: double.infinity,
-                                    padding: const EdgeInsets.only(
-                                        top: 5, bottom: 5, left: 10, right: 15),
+                                    padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 15),
                                     child: Text(
                                       "Шинэ үг: ${int.parse(journeys![position].vocabularyCount!) - int.parse(journeys![position].vocabularyKnow!)}",
                                       style: const TextStyle(
@@ -170,8 +155,7 @@ class JourneyPage extends HookWidget {
                                   ),
                                   Container(
                                     width: double.infinity,
-                                    padding: const EdgeInsets.only(
-                                        top: 4, bottom: 0, left: 10, right: 15),
+                                    padding: const EdgeInsets.only(top: 4, bottom: 0, left: 10, right: 15),
                                     child: Row(
                                       children: [
                                         Flexible(
@@ -179,35 +163,42 @@ class JourneyPage extends HookWidget {
                                           child: IconWithTextWidget(
                                               iconData: Icons.access_time_sharp,
                                               fontSize: 10,
-                                              text: journeys![position]
-                                                              .runTime !=
-                                                          null &&
-                                                      journeys![position]
-                                                              .runTime !=
-                                                          ""
-                                                  ? TimeConvertHelper()
-                                                      .timeConvert(
-                                                      time: int.parse(
-                                                          journeys![position]
-                                                              .runTime!),
+                                              text: journeys![position].runTime != null &&
+                                                      journeys![position].runTime != ""
+                                                  ? TimeConvertHelper().timeConvert(
+                                                      time: int.parse(journeys![position].runTime!),
                                                     )
                                                   : ""),
                                         ),
                                         Flexible(
                                           fit: FlexFit.tight,
-                                          child: IconWithTextWidget(
-                                            iconData: CupertinoIcons.layers_alt,
-                                            text: journeys![position]
-                                                .vocabularyCount,
-                                            fontSize: 10,
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/img/video/list.svg",
+                                                width: 15,
+                                                height: 15,
+                                                color: Color(0xff828282),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                journeys![position].vocabularyCount.toString(),
+                                                style: const TextStyle(
+                                                    color: Color(0xff828282),
+                                                    fontSize: 10,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight: FontWeight.normal),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 5, bottom: 0, left: 10, right: 15),
+                                    padding: const EdgeInsets.only(top: 5, bottom: 0, left: 10, right: 15),
                                     width: double.infinity,
                                     child: IconWithTextWidget(
                                       iconData: Icons.category_outlined,

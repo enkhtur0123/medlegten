@@ -12,12 +12,10 @@ import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class LandingRepository {
-  Future<LastSeenUnitInfo> getLastSeenUnitInfo(
-      {String? unitId, String? moduleId, String? moduleTypeId}) async {
+  Future<LastSeenUnitInfo> getLastSeenUnitInfo({String? unitId, String? moduleId, String? moduleTypeId}) async {
     //  await  GetStorage().remove("token");
     try {
-      final res = await HttpHelper()
-          .getUrl(url: 'Course/LastSeenUnitModule/$unitId/$moduleId');
+      final res = await HttpHelper().getUrl(url: 'Course/LastSeenUnitModule/$unitId/$moduleId');
       if (res['isSuccess']) {
         return LastSeenUnitInfo.fromJson(res);
       } else {
@@ -65,7 +63,7 @@ class LandingRepository {
   Future<List<CourseInfo>?> getCourseList() async {
     try {
       final res = await HttpHelper().getUrl(url: 'Course');
-      print(res);
+      // print(res);
       if (res['isSuccess']) {
         var list = res['courseList'] as List;
         return list.map((i) => CourseInfo.fromJson(i)).toList();
@@ -157,8 +155,7 @@ class LandingRepository {
   Future<dynamic> setCourseSelfTestHistory({Map<String, dynamic>? body}) async {
     // print(body);
     try {
-      final res = await HttpHelper()
-          .postUrl(url: 'Course/SelfQuiz/SetHistory', body: body);
+      final res = await HttpHelper().postUrl(url: 'Course/SelfQuiz/SetHistory', body: body);
       // print(res);
       if (res['isSuccess']) {
         return res;
