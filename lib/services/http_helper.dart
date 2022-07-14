@@ -59,12 +59,13 @@ class HttpHelper {
     dio.options.headers['Authorization'] = access_token;
     try {
       var response = await dio.get(url!);
+      // print(response.data);
       return response.data;
     } on DioError catch (ex) {
       print(ex.message.toString());
       throw CustomException(errorMsg: ex.message.toString());
     } catch (ex) {
-      // print(ex.toString());
+      print(ex.toString());
       throw CustomException(errorMsg: ex.toString());
     }
   }
