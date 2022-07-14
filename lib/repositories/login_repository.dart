@@ -210,8 +210,7 @@ class LoginRepository implements ILoginRepository {
     }
   }
 
-
-///active service
+  ///active service
   Future<List<ActiveService>> getActiveService() async {
     try {
       final res = await HttpHelper().getUrl(url: 'UserInfo/ActiveService');
@@ -228,7 +227,21 @@ class LoginRepository implements ILoginRepository {
     }
   }
 
-
+  ///cance account
+  Future<bool> cancelAccount() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'UserInfo/CancelAccount');
+      if (res['isSuccess']) {
+        return true;
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: (res['resultMessage']));
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
 
   // Future<String> getUserInfoBirthDate() async {
   //   try {

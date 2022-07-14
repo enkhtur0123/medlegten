@@ -13,6 +13,7 @@ class Movie with _$Movie {
       String? levelId,
       String? levelName,
       String? vocabularyCount,
+      String isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,

@@ -17,6 +17,9 @@ import 'package:medlegten/repositories/video_repository.dart';
 import 'package:medlegten/utils/date_time_formatter.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/dialog/confirm_dialog.dart';
+import 'package:medlegten/widgets/dialog/custom_popup.dart';
+import 'package:medlegten/widgets/loader.dart';
 import '../../utils/hex_color.dart';
 import 'report_items.dart';
 
@@ -135,6 +138,40 @@ class LandingProfile extends HookConsumerWidget {
               Text(
                 "Апп хувилбар  " + AppProperties.version,
                 textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              InkWell(
+                onTap: () async {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ConfirmDialog(
+                          isAlert: true,
+                          text:
+                              "Та өөрийн хэрэглэгчийн бүртгэл устгаснаар суралцсан хичээлийн түүх, худалдан авсан үйлчилгээ болон түүх, сошиал хаягтай холбоотой мэдээллүүд бүрэн устах бөгөөд дахин сэргээгдэх боломжгүйг анхаарна уу.",
+                        );
+                      }).then((value) async {
+                    if (value != null && value) {
+                      try {
+                        LoadingIndicator(context: context)
+                            .showLoadingIndicator();
+                        await LoginRepository().cancelAccount();
+                        LoadingIndicator(context: context)
+                            .hideLoadingIndicator();
+                        ref.read(authProvider.notifier).logoff();
+                      } catch (Ex) {
+                        LoadingIndicator(context: context)
+                            .hideLoadingIndicator();
+                      }
+                    }
+                  });
+                },
+                child: const Text(
+                  "Хэрэглэгчийн бүртгэл устгах ",
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(
                 height: 15,
@@ -285,7 +322,7 @@ class LandingProfile extends HookConsumerWidget {
                 height: 10,
               ),
               Text(
-                'ID: ${userInfo?.userId ?? ""}',
+                'Хэрэглэгчийн дугаар: ${userInfo?.userId ?? ""}',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontStyle: FontStyle.normal,

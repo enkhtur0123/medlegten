@@ -101,6 +101,18 @@ class ConfirmDialog extends HookWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
+                  child: CustomOutlinedButton(
+                color: secondaryColor,
+                height: 40,
+                text: "Тийм",
+                onTap: () {
+                  Navigator.pop(context, true);
+                },
+              )),
+              const SizedBox(
+                width: 15,
+              ),
+              Expanded(
                 child: CustomOutlinedButton(
                   color: secondaryColor,
                   height: 40,
@@ -110,18 +122,8 @@ class ConfirmDialog extends HookWidget {
                   },
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
-              Expanded(
-                  child: CustomOutlinedButton(
-                color: secondaryColor,
-                height: 40,
-                text: "Тийм",
-                onTap: () {
-                  Navigator.pop(context, true);
-                },
-              )),
+
+             
             ],
           ),
         )

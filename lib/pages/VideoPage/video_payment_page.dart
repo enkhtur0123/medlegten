@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/models/video/payment_info.dart';
@@ -24,19 +25,46 @@ class VideoPaymentPage extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("Төлбөр"),
       ),
-      body: Container(
-        margin: const EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: paymentInfo!.prices.map((e) {
-            return itemWidget(price: e, context: context);
-          }).toList(),
-        ),
-      ),
+        body: !GetStorage().hasData("isGuest")
+            ? SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: Column(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: paymentInfo!.prices.map((e) {
+                          return itemWidget(price: e, context: context);
+                        }).toList(),
+                      ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      Text(
+                        "Та өөрт тохирох үйлчилгээг худалдан авснаар бэлтгэгдсэн видео контентуудыг тухайн хугацаанд хязгааргүй үзэх боломжтой.",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(color: Colors.grey),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Center(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  child: const Text(
+                    "Зочин эрхээр худалдан авалт хийх боломжгүй тул өөрийн жинхэнэ бүртгэлийг ашиглана уу. Үүний тулд баруун доор байрлах 'Миний' цэс дээр даран орж 'Гарах' товч дээр дараад системээс гарна. Facebook, Gmail болон Apple эрхээр нэвтрэнэ үү.",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
     );
   }
-
   Widget itemWidget({Price? price, BuildContext? context}) {
     double monthPrice = (int.parse(price!.price) / int.parse(price.month));
     return Container(

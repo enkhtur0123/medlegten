@@ -131,13 +131,16 @@ class CustomPopUpDialog extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             isBtn
-                ? CustomOutlinedButton(
+                ? Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    child: CustomOutlinedButton(
                     color: colorPrimary,
-                    text: "тэгье",
+                      text: btnText ?? "тэгье",
                     onTap: () {
                       onTap!();
                       // Navigator.pop(context, true);
                     },
+                    ),
                   )
                 : Container()
           ],

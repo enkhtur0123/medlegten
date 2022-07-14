@@ -10,7 +10,9 @@ import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/VideoPage/video_subtitle.dart';
 import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 import 'package:medlegten/widgets/loader.dart';
 import 'package:video_player/video_player.dart';
 
@@ -86,8 +88,14 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
               videoMemorizeWord: videoMemorizeWord,
               videoUrl: widget.url,
               quizBtn: () {
-                
-                quiz();
+                if (widget.movies![0].isCompleted == "1") {
+                  ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+                    text:
+                        "Та аль хэдийн шалгалтандаа тэнцсэн байна. Дахин өгөх шаардлагагүй",
+                  ));
+                } else {
+                  quiz();
+                }
               },
               isBookMark: true,
             );
@@ -98,16 +106,107 @@ class VideoDetailPageState extends BaseVideoPageState<VideoDetailPage>
   }
 
   void quiz() async {
-    VideoQuiz? quiz;
     await videoPlayerController!.pause();
+    VideoQuiz? quiz;
     try {
       LoadingIndicator(context: context).showLoadingIndicator();
       quiz = await VideoRepository().getVideoQuiz(contentId: widget.contentId);
       LoadingIndicator(context: context).hideLoadingIndicator();
-      AutoRouter.of(context).push(
-        VideoQuizRoute(
-            videoQuiz: quiz, title: "Шалгалт", contentId: widget.contentId),
-      );
+      if (quiz.errorCode == "204") {
+        ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
+          text: quiz.resultMessage,
+        ));
+      } else {
+        await showModalBottomSheet<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+              padding: const EdgeInsets.all(20),
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Шалгалт'.toUpperCase(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: colorPrimary),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Үргэлжлэх хугацаа:${quiz!.quizDuration} сек',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: colorPrimary, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "• Агуулгын асуулт: ${quiz.contextQuiz!.length}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontSize: 18),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "• Үгсийн сангийн асуулт:  ${quiz.vocQuiz!.length}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 10, right: 10),
+                    child: CustomOutlinedButton(
+                      height: 40,
+                      color: secondaryColor,
+                      text: "Эхлэх",
+                      onTap: () async {
+                        try {
+                          await VideoRepository().sentQuizResult(
+                              contentId: widget.contentId, quizResult: "2");
+                          Navigator.pop(context, true);
+                        } catch (ex) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            MySnackBar(
+                              text: ex.toString(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ).then((value) async {
+          if (value != null && value) {
+            AutoRouter.of(context).push(
+              VideoQuizRoute(
+                  videoQuiz: quiz,
+                  title: "Шалгалт",
+                  contentId: widget.contentId),
+            );
+          }
+        });
+      }
     } on CustomException catch (Ex) {
       LoadingIndicator(context: context).hideLoadingIndicator();
       ScaffoldMessenger.of(context).showSnackBar(

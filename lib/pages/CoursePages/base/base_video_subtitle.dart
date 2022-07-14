@@ -332,27 +332,27 @@ mixin BaseVideoSubtitleMixin<Page extends BaseVideoSubtitlePage>
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             InkWell(
-                              onTap: () async {
-                                await widget.videoPlayerController.pause();
-                                int index;
-                                await showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return ExerciseOptionDialog();
-                                  },
-                                ).then((value) {
-                                  if (value != null) {
-                                    index = value;
-                                    exerciseNavigate(index: index);
-                                  }
-                                });
-                              },
-                              child: const Icon(
-                                Icons.expand_circle_down_outlined,
-                                color: Color(0xffC7C9D9),
-                                size: 27,
-                              ), 
-                            ),
+                                onTap: () async {
+                                  await widget.videoPlayerController.pause();
+                                  int index;
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return ExerciseOptionDialog();
+                                    },
+                                  ).then((value) {
+                                    if (value != null) {
+                                      index = value;
+                                      exerciseNavigate(index: index);
+                                    }
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  "assets/img/video/settings.svg",
+                                  color: Color(0xffC7C9D9),
+                                  width: 24,
+                                  height: 24,
+                                )),
                             const SizedBox(
                               width: 10,
                             ),

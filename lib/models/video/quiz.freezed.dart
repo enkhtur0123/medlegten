@@ -22,10 +22,12 @@ VideoQuiz _$VideoQuizFromJson(Map<String, dynamic> json) {
 class _$VideoQuizTearOff {
   const _$VideoQuizTearOff();
 
-  _VideoQuiz call(int? quizDuration, List<QuizQuestion>? contextQuiz,
-      List<QuizQuestion>? vocQuiz) {
+  _VideoQuiz call(String errorCode, int? quizDuration, String? resultMessage,
+      List<QuizQuestion>? contextQuiz, List<QuizQuestion>? vocQuiz) {
     return _VideoQuiz(
+      errorCode,
       quizDuration,
+      resultMessage,
       contextQuiz,
       vocQuiz,
     );
@@ -41,7 +43,9 @@ const $VideoQuiz = _$VideoQuizTearOff();
 
 /// @nodoc
 mixin _$VideoQuiz {
+  String get errorCode => throw _privateConstructorUsedError;
   int? get quizDuration => throw _privateConstructorUsedError;
+  String? get resultMessage => throw _privateConstructorUsedError;
   List<QuizQuestion>? get contextQuiz => throw _privateConstructorUsedError;
   List<QuizQuestion>? get vocQuiz => throw _privateConstructorUsedError;
 
@@ -56,7 +60,9 @@ abstract class $VideoQuizCopyWith<$Res> {
   factory $VideoQuizCopyWith(VideoQuiz value, $Res Function(VideoQuiz) then) =
       _$VideoQuizCopyWithImpl<$Res>;
   $Res call(
-      {int? quizDuration,
+      {String errorCode,
+      int? quizDuration,
+      String? resultMessage,
       List<QuizQuestion>? contextQuiz,
       List<QuizQuestion>? vocQuiz});
 }
@@ -71,15 +77,25 @@ class _$VideoQuizCopyWithImpl<$Res> implements $VideoQuizCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? errorCode = freezed,
     Object? quizDuration = freezed,
+    Object? resultMessage = freezed,
     Object? contextQuiz = freezed,
     Object? vocQuiz = freezed,
   }) {
     return _then(_value.copyWith(
+      errorCode: errorCode == freezed
+          ? _value.errorCode
+          : errorCode // ignore: cast_nullable_to_non_nullable
+              as String,
       quizDuration: quizDuration == freezed
           ? _value.quizDuration
           : quizDuration // ignore: cast_nullable_to_non_nullable
               as int?,
+      resultMessage: resultMessage == freezed
+          ? _value.resultMessage
+          : resultMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       contextQuiz: contextQuiz == freezed
           ? _value.contextQuiz
           : contextQuiz // ignore: cast_nullable_to_non_nullable
@@ -99,7 +115,9 @@ abstract class _$VideoQuizCopyWith<$Res> implements $VideoQuizCopyWith<$Res> {
       __$VideoQuizCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? quizDuration,
+      {String errorCode,
+      int? quizDuration,
+      String? resultMessage,
       List<QuizQuestion>? contextQuiz,
       List<QuizQuestion>? vocQuiz});
 }
@@ -115,15 +133,25 @@ class __$VideoQuizCopyWithImpl<$Res> extends _$VideoQuizCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? errorCode = freezed,
     Object? quizDuration = freezed,
+    Object? resultMessage = freezed,
     Object? contextQuiz = freezed,
     Object? vocQuiz = freezed,
   }) {
     return _then(_VideoQuiz(
+      errorCode == freezed
+          ? _value.errorCode
+          : errorCode // ignore: cast_nullable_to_non_nullable
+              as String,
       quizDuration == freezed
           ? _value.quizDuration
           : quizDuration // ignore: cast_nullable_to_non_nullable
               as int?,
+      resultMessage == freezed
+          ? _value.resultMessage
+          : resultMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       contextQuiz == freezed
           ? _value.contextQuiz
           : contextQuiz // ignore: cast_nullable_to_non_nullable
@@ -139,13 +167,18 @@ class __$VideoQuizCopyWithImpl<$Res> extends _$VideoQuizCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_VideoQuiz implements _VideoQuiz {
-  _$_VideoQuiz(this.quizDuration, this.contextQuiz, this.vocQuiz);
+  _$_VideoQuiz(this.errorCode, this.quizDuration, this.resultMessage,
+      this.contextQuiz, this.vocQuiz);
 
   factory _$_VideoQuiz.fromJson(Map<String, dynamic> json) =>
       _$$_VideoQuizFromJson(json);
 
   @override
+  final String errorCode;
+  @override
   final int? quizDuration;
+  @override
+  final String? resultMessage;
   @override
   final List<QuizQuestion>? contextQuiz;
   @override
@@ -153,7 +186,7 @@ class _$_VideoQuiz implements _VideoQuiz {
 
   @override
   String toString() {
-    return 'VideoQuiz(quizDuration: $quizDuration, contextQuiz: $contextQuiz, vocQuiz: $vocQuiz)';
+    return 'VideoQuiz(errorCode: $errorCode, quizDuration: $quizDuration, resultMessage: $resultMessage, contextQuiz: $contextQuiz, vocQuiz: $vocQuiz)';
   }
 
   @override
@@ -161,8 +194,11 @@ class _$_VideoQuiz implements _VideoQuiz {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _VideoQuiz &&
+            const DeepCollectionEquality().equals(other.errorCode, errorCode) &&
             const DeepCollectionEquality()
                 .equals(other.quizDuration, quizDuration) &&
+            const DeepCollectionEquality()
+                .equals(other.resultMessage, resultMessage) &&
             const DeepCollectionEquality()
                 .equals(other.contextQuiz, contextQuiz) &&
             const DeepCollectionEquality().equals(other.vocQuiz, vocQuiz));
@@ -171,7 +207,9 @@ class _$_VideoQuiz implements _VideoQuiz {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(errorCode),
       const DeepCollectionEquality().hash(quizDuration),
+      const DeepCollectionEquality().hash(resultMessage),
       const DeepCollectionEquality().hash(contextQuiz),
       const DeepCollectionEquality().hash(vocQuiz));
 
@@ -187,14 +225,22 @@ class _$_VideoQuiz implements _VideoQuiz {
 }
 
 abstract class _VideoQuiz implements VideoQuiz {
-  factory _VideoQuiz(int? quizDuration, List<QuizQuestion>? contextQuiz,
+  factory _VideoQuiz(
+      String errorCode,
+      int? quizDuration,
+      String? resultMessage,
+      List<QuizQuestion>? contextQuiz,
       List<QuizQuestion>? vocQuiz) = _$_VideoQuiz;
 
   factory _VideoQuiz.fromJson(Map<String, dynamic> json) =
       _$_VideoQuiz.fromJson;
 
   @override
+  String get errorCode;
+  @override
   int? get quizDuration;
+  @override
+  String? get resultMessage;
   @override
   List<QuizQuestion>? get contextQuiz;
   @override

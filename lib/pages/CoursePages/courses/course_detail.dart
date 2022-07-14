@@ -11,7 +11,6 @@ import 'package:medlegten/pages/CoursePages/unit/unit_card.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:video_player/video_player.dart';
 import 'course_introduction_widget.dart';
-
 class CourseDetailPage extends StatefulWidget {
   const CourseDetailPage(this.courseInfo, {Key? key}) : super(key: key);
 

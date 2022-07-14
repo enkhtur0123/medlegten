@@ -30,6 +30,7 @@ class _$MovieTearOff {
       String? levelId,
       String? levelName,
       String? vocabularyCount,
+      String isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -45,6 +46,7 @@ class _$MovieTearOff {
       levelId,
       levelName,
       vocabularyCount,
+      isCompleted,
       imgUrl,
       intro,
       isSerial,
@@ -72,6 +74,7 @@ mixin _$Movie {
   String? get levelId => throw _privateConstructorUsedError;
   String? get levelName => throw _privateConstructorUsedError;
   String? get vocabularyCount => throw _privateConstructorUsedError;
+  String get isCompleted => throw _privateConstructorUsedError;
   String? get imgUrl => throw _privateConstructorUsedError;
   String? get intro => throw _privateConstructorUsedError;
   String? get isSerial => throw _privateConstructorUsedError;
@@ -97,6 +100,7 @@ abstract class $MovieCopyWith<$Res> {
       String? levelId,
       String? levelName,
       String? vocabularyCount,
+      String isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -123,6 +127,7 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
     Object? levelId = freezed,
     Object? levelName = freezed,
     Object? vocabularyCount = freezed,
+    Object? isCompleted = freezed,
     Object? imgUrl = freezed,
     Object? intro = freezed,
     Object? isSerial = freezed,
@@ -160,6 +165,10 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
               as String?,
+      isCompleted: isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as String,
       imgUrl: imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
@@ -205,6 +214,7 @@ abstract class _$MovieCopyWith<$Res> implements $MovieCopyWith<$Res> {
       String? levelId,
       String? levelName,
       String? vocabularyCount,
+      String isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -232,6 +242,7 @@ class __$MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res>
     Object? levelId = freezed,
     Object? levelName = freezed,
     Object? vocabularyCount = freezed,
+    Object? isCompleted = freezed,
     Object? imgUrl = freezed,
     Object? intro = freezed,
     Object? isSerial = freezed,
@@ -269,6 +280,10 @@ class __$MovieCopyWithImpl<$Res> extends _$MovieCopyWithImpl<$Res>
           ? _value.vocabularyCount
           : vocabularyCount // ignore: cast_nullable_to_non_nullable
               as String?,
+      isCompleted == freezed
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as String,
       imgUrl == freezed
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
@@ -312,6 +327,7 @@ class _$_Movie implements _Movie {
       this.levelId,
       this.levelName,
       this.vocabularyCount,
+      this.isCompleted,
       this.imgUrl,
       this.intro,
       this.isSerial,
@@ -338,6 +354,8 @@ class _$_Movie implements _Movie {
   @override
   final String? vocabularyCount;
   @override
+  final String isCompleted;
+  @override
   final String? imgUrl;
   @override
   final String? intro;
@@ -354,7 +372,7 @@ class _$_Movie implements _Movie {
 
   @override
   String toString() {
-    return 'Movie(contentId: $contentId, contentName: $contentName, categoryId: $categoryId, categoryName: $categoryName, levelId: $levelId, levelName: $levelName, vocabularyCount: $vocabularyCount, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, hostUrl: $hostUrl, hostType: $hostType, runTime: $runTime, movieId: $movieId)';
+    return 'Movie(contentId: $contentId, contentName: $contentName, categoryId: $categoryId, categoryName: $categoryName, levelId: $levelId, levelName: $levelName, vocabularyCount: $vocabularyCount, isCompleted: $isCompleted, imgUrl: $imgUrl, intro: $intro, isSerial: $isSerial, hostUrl: $hostUrl, hostType: $hostType, runTime: $runTime, movieId: $movieId)';
   }
 
   @override
@@ -373,6 +391,8 @@ class _$_Movie implements _Movie {
             const DeepCollectionEquality().equals(other.levelName, levelName) &&
             const DeepCollectionEquality()
                 .equals(other.vocabularyCount, vocabularyCount) &&
+            const DeepCollectionEquality()
+                .equals(other.isCompleted, isCompleted) &&
             const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
             const DeepCollectionEquality().equals(other.intro, intro) &&
             const DeepCollectionEquality().equals(other.isSerial, isSerial) &&
@@ -392,6 +412,7 @@ class _$_Movie implements _Movie {
       const DeepCollectionEquality().hash(levelId),
       const DeepCollectionEquality().hash(levelName),
       const DeepCollectionEquality().hash(vocabularyCount),
+      const DeepCollectionEquality().hash(isCompleted),
       const DeepCollectionEquality().hash(imgUrl),
       const DeepCollectionEquality().hash(intro),
       const DeepCollectionEquality().hash(isSerial),
@@ -420,6 +441,7 @@ abstract class _Movie implements Movie {
       String? levelId,
       String? levelName,
       String? vocabularyCount,
+      String isCompleted,
       String? imgUrl,
       String? intro,
       String? isSerial,
@@ -444,6 +466,8 @@ abstract class _Movie implements Movie {
   String? get levelName;
   @override
   String? get vocabularyCount;
+  @override
+  String get isCompleted;
   @override
   String? get imgUrl;
   @override

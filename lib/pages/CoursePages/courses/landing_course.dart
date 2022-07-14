@@ -29,7 +29,7 @@ class LandingCourseState extends ConsumerState<LandingCourse> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (GetStorage().hasData("isGuest")) {
         await showDialog(
             barrierDismissible: true,

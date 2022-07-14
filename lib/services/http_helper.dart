@@ -61,7 +61,7 @@ class HttpHelper {
       var response = await dio.get(url!);
       return response.data;
     } on DioError catch (ex) {
-      // print(ex.error.toString());
+      print(ex.message.toString());
       throw CustomException(errorMsg: ex.message.toString());
     } catch (ex) {
       // print(ex.toString());

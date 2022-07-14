@@ -7,7 +7,9 @@ part of 'quiz.dart';
 // **************************************************************************
 
 _$_VideoQuiz _$$_VideoQuizFromJson(Map<String, dynamic> json) => _$_VideoQuiz(
+      json['errorCode'] as String,
       json['quizDuration'] as int?,
+      json['resultMessage'] as String?,
       (json['contextQuiz'] as List<dynamic>?)
           ?.map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -18,7 +20,9 @@ _$_VideoQuiz _$$_VideoQuizFromJson(Map<String, dynamic> json) => _$_VideoQuiz(
 
 Map<String, dynamic> _$$_VideoQuizToJson(_$_VideoQuiz instance) =>
     <String, dynamic>{
+      'errorCode': instance.errorCode,
       'quizDuration': instance.quizDuration,
+      'resultMessage': instance.resultMessage,
       'contextQuiz': instance.contextQuiz,
       'vocQuiz': instance.vocQuiz,
     };

@@ -108,6 +108,7 @@ class MileStonePageState extends State<MileStonePage> {
           "assets/img/video/$icon",
           width: 35,
           height: 35,
+          color: colorPrimary,
         ),
         const SizedBox(
           width: 5,

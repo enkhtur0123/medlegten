@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/models/video/event.dart';
 import 'package:medlegten/pages/VideoPage/level_event_item.dart';
 import 'package:medlegten/repositories/video_repository.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 // ignore: must_be_immutable
 class LevelVideoListPage extends StatefulWidget {
@@ -80,16 +81,21 @@ class LevelVideoListPageState extends State<LevelVideoListPage> {
   }
 
   Future<void> onLoadMore() async {
+    LoadingIndicator(context: context).showLoadingIndicator();
     if (widget.isCategorySearch!) {
       events!.addAll(await VideoRepository().categorySearch(
           categoryId: widget.categoryId,
           pageNumber: currentPageNumber,
-          pageSize: pageSize));
+            pageSize: pageSize),
+      );
+      LoadingIndicator(context: context).hideLoadingIndicator();
     } else {
       events!.addAll(await VideoRepository().getLevelAllEvent(
           level_id: widget.levelId,
           pageNumber: currentPageNumber,
-          pageSize: pageSize));
+            pageSize: pageSize),
+      );
+      LoadingIndicator(context: context).hideLoadingIndicator();
     }
     isLoadMore = false;
     setState(() {});

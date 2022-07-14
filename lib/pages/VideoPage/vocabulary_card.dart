@@ -152,39 +152,39 @@ class VocabularyCart extends HookWidget {
                   ],
                 ),
               ),
-              Flexible(
-                flex: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    getMedneMedehgui(toggleMedneMedehgui.value, true, () async {
-                      //MEDNE
-                      UnitRepository()
-                          .setWordKnow(wordInfo.wordId, 0)
-                          .then((value) {
-                        if (value == 'success') {
-                          toggleMedneMedehgui.value =
-                              !toggleMedneMedehgui.value;
-                        }
-                      });
-                    }),
-                    addVerticalSpace(15),
-                    getMedneMedehgui(toggleMedneMedehgui.value == false, false,
-                        () async {
-                      //MEDEHGUI
-                      UnitRepository()
-                          .setWordKnow(wordInfo.wordId, 1)
-                          .then((value) {
-                        if (value == 'success') {
-                          toggleMedneMedehgui.value =
-                              !toggleMedneMedehgui.value;
-                        }
-                      });
-                    }),
-                  ],
-                ),
-              ),
+              // Flexible(
+              //   flex: 3,
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.end,
+              //     children: [
+              //       getMedneMedehgui(toggleMedneMedehgui.value, true, () async {
+              //         //MEDNE
+              //         UnitRepository()
+              //             .setWordKnow(wordInfo.wordId, 0)
+              //             .then((value) {
+              //           if (value == 'success') {
+              //             toggleMedneMedehgui.value =
+              //                 !toggleMedneMedehgui.value;
+              //           }
+              //         });
+              //       }),
+              //       addVerticalSpace(15),
+              //       getMedneMedehgui(toggleMedneMedehgui.value == false, false,
+              //           () async {
+              //         //MEDEHGUI
+              //         UnitRepository()
+              //             .setWordKnow(wordInfo.wordId, 1)
+              //             .then((value) {
+              //           if (value == 'success') {
+              //             toggleMedneMedehgui.value =
+              //                 !toggleMedneMedehgui.value;
+              //           }
+              //         });
+              //       }),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

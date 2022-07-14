@@ -7,7 +7,9 @@ part 'quiz.g.dart';
 @freezed
 class VideoQuiz with _$VideoQuiz {
   factory VideoQuiz(
+    String errorCode,
     int? quizDuration,
+    String? resultMessage,
     List<QuizQuestion>? contextQuiz,
     List<QuizQuestion>? vocQuiz,
   ) = _VideoQuiz;
