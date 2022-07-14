@@ -7,6 +7,7 @@ import 'package:medlegten/pages/CoursePages/base/clip_shadow.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
 import 'package:medlegten/pages/CoursePages/base/message.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
+import 'package:just_audio/just_audio.dart';
 
 class CueWordWidget extends StatefulWidget {
   const CueWordWidget(this.word,
@@ -32,6 +33,29 @@ class CueWordWidget extends StatefulWidget {
 
 class _CueWordWidgetState extends State<CueWordWidget> {
   String bookMarkResult = '';
+  late AudioPlayer _player;
+
+  @override
+  void initState() {
+    super.initState();
+    _player = AudioPlayer();
+  }
+
+  Future<void> _play(String url) async {
+    try {
+      await _player.setUrl(url, preload: true);
+      _player.play();
+    } catch (e) {
+      // Catch load errors: 404, invalid url...
+      // print("Error loading audio source: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +152,28 @@ class _CueWordWidgetState extends State<CueWordWidget> {
           ],
         ),
       );
+
+      if (cueWord.rootWordInfo.translation != null) {
+        for (var translation in cueWord.rootWordInfo.translation!) {
+          {
+            list.add(Text(
+              translation.trTypeShortName,
+              style: const TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, 1),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+            ));
+            list.add(Text(
+              translation.trText,
+              style: const TextStyle(
+                  color: Color.fromRGBO(48, 53, 159, .6),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
+            ));
+            list.add(addVerticalSpace(10));
+          }
+        }
+      }
     }
 
     for (var translation in cueWord.translation) {
@@ -201,13 +247,18 @@ class _CueWordWidgetState extends State<CueWordWidget> {
                     ),
                   ),
                 ),
-                IconButton(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  onPressed: () => {},
-                  icon: const Icon(
-                    Icons.volume_up_outlined,
-                    color: Color.fromRGBO(48, 53, 159, 0.8),
-                    size: 28.0,
+                Visibility(
+                  visible: cueWord.pronunciationUrl != '',
+                  child: IconButton(
+                    padding: const EdgeInsets.only(bottom: 2),
+                    onPressed: () async {
+                      await _play(cueWord.pronunciationUrl);
+                    },
+                    icon: const Icon(
+                      Icons.volume_up_outlined,
+                      color: Color.fromRGBO(48, 53, 159, 0.8),
+                      size: 28.0,
+                    ),
                   ),
                 ),
                 Expanded(child: Container()),
@@ -231,6 +282,7 @@ class _CueWordWidgetState extends State<CueWordWidget> {
           ),
           Expanded(
             child: ListView.builder(
+              padding: const EdgeInsets.all(0),
               shrinkWrap: true,
               itemCount: list.length,
               //separatorBuilder: (BuildContext context, int index) =>

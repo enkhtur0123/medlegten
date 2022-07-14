@@ -9,7 +9,9 @@ import 'package:medlegten/pages/CoursePages/courses/course_cart.dart';
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/TextButton.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 class CourseList extends HookWidget {
   CourseList({Key? key}) : super(key: key);
@@ -24,7 +26,7 @@ class CourseList extends HookWidget {
         addVerticalSpace(10),
         Align(
             alignment: Alignment.topLeft,
-            child: TextButtonWidget(text: 'Courses', onTap: () {})),
+            child: TextButtonWidget(text: 'Хөтөлбөрүүд', onTap: () {})),
         addVerticalSpace(5),
         FutureBuilder<List<CourseInfo>?>(
           future: LandingRepository().getCourseList(),
@@ -40,11 +42,25 @@ class CourseList extends HookWidget {
                           courseInfo,
                           onTap: (String id) async {
                             if (!courseInfo.isCreatedPlan) {
+                              LoadingIndicator(context: context)
+                                  .showLoadingIndicator();
                               await CourseRepository()
-                                  .setCoursePlan(id: courseInfo.courseId);
+                                  .setCoursePlan(id: courseInfo.courseId)
+                                  .then((value) {
+                                LoadingIndicator(context: context)
+                                    .hideLoadingIndicator();
+                                if (value != null) {
+                                  AutoRouter.of(context).push(CourseDetailRoute(
+                                      courseInfo: courseInfo));
+                                }
+                              }).catchError((onError) {
+                                LoadingIndicator(context: context)
+                                    .hideLoadingIndicator();
+                              });
+                            } else {
+                              AutoRouter.of(context).push(
+                                  CourseDetailRoute(courseInfo: courseInfo));
                             }
-                            AutoRouter.of(context).push(
-                                CourseDetailRoute(courseInfo: courseInfo));
                           },
                         ))
                     .toList(),
@@ -53,7 +69,9 @@ class CourseList extends HookWidget {
             } else if (snapshot.hasError) {
               return const Loading();
             } else {
-              return const Loading();
+              return SizedBox(
+                  height: GlobalValues.screenHeight / 3,
+                  child: const Loading());
             }
           },
         ),

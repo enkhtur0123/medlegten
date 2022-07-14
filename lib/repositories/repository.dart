@@ -15,6 +15,7 @@ class Repository {
     _dio.options.connectTimeout = 10000;
     _dio.options.receiveTimeout = 10000;
   }
+
   snackBar(msg) => Fluttertoast.showToast(
       msg: msg, gravity: ToastGravity.SNACKBAR, toastLength: Toast.LENGTH_LONG);
 

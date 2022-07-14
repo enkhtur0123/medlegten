@@ -8,10 +8,11 @@ part of 'quiz_answer.dart';
 
 _$_QuizAnswer _$$_QuizAnswerFromJson(Map<String, dynamic> json) =>
     _$_QuizAnswer(
-      json['answerId'] as String,
-      json['answer'] as String,
-      json['isTrue'] as String,
-      json['ordering'] as String,
+      json['answerId'] as String?,
+      json['answer'] as String?,
+      json['isTrue'] as String?,
+      json['ordering'] as String?,
+      json['isCorrect'] as bool?,
     );
 
 Map<String, dynamic> _$$_QuizAnswerToJson(_$_QuizAnswer instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$_QuizAnswerToJson(_$_QuizAnswer instance) =>
       'answer': instance.answer,
       'isTrue': instance.isTrue,
       'ordering': instance.ordering,
+      'isCorrect': instance.isCorrect,
     };

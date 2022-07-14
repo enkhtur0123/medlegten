@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/loading.dart';
 import 'dart:math';
-
+import 'package:measure_size/measure_size.dart';
 import 'package:medlegten/utils/global.dart';
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {
@@ -12,6 +12,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   int index = 0;
   String imgUrl;
   String titleText;
+  double measureSize = 0;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -25,54 +26,54 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
           children: [
             titleWidget(shrinkPercentage),
             pictureWidget(shrinkPercentage, constraints),
+            dividerWidget(shrinkPercentage),
           ],
         ),
       );
     });
   }
 
+  Widget dividerWidget(double shrinkPercentage) {
+    return Opacity(
+      opacity: shrinkPercentage,
+      child: Container(
+        padding: EdgeInsets.only(top: minExtent - 2),
+        height: minExtent,
+        width: double.infinity,
+        child: Divider(
+          color: const Color.fromRGBO(199, 201, 217, 0.4),
+          endIndent: 400 * (1 - shrinkPercentage),
+          indent: 400 * (1 - shrinkPercentage),
+          thickness: 1,
+        ),
+      ),
+    );
+  }
+
   Widget titleWidget(double shrinkPercentage) {
     var fontSize = max(14.0, 18.0 * (1 - shrinkPercentage));
     return Container(
-      //color: Colors.amber,
       height: minExtent,
       width: double.infinity,
       padding: EdgeInsets.only(
-        left: -1 *
-            min(
-              -20,
-              -100 * shrinkPercentage,
-            ),
+        top: 5,
+        left: -1 * min(0, -110 * shrinkPercentage),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Center(
-              child: Text(
-                titleText,
-                style: TextStyle(
-                  color: colorPrimary,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w700,
-                  fontSize: fontSize,
-                ),
-              ),
+      child: Center(
+        child: MeasureSize(
+          onChange: (Size newSize) {
+            measureSize = newSize.width;
+          },
+          child: Text(
+            titleText,
+            style: TextStyle(
+              color: colorPrimary,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w700,
+              fontSize: fontSize,
             ),
           ),
-          Opacity(
-            opacity: 1 - shrinkPercentage,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.bookmark_outline_sharp,
-                color: Color.fromRGBO(48, 53, 159, 0.8),
-                size: 28.0,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -92,9 +93,9 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
             -1 *
                 min(
                   0,
-                  -100 * shrinkPercentage,
+                  -140 * shrinkPercentage,
                 ),
-            min(minExtent, minExtent * (1 - shrinkPercentage) + 20),
+            min(minExtent, minExtent * (1 - shrinkPercentage) + 60),
             0,
             -1 *
                 min(

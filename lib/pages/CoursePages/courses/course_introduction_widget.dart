@@ -1,10 +1,9 @@
 import 'package:expandable/expandable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/common/widget_functions.dart';
-import 'package:medlegten/components/icon_text.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/widgets/icon_with_text_widget.dart';
 
 class CourseIntroWidget extends StatelessWidget {
   CourseIntroWidget({Key? key, this.courseInfo}) : super(key: key);
@@ -17,12 +16,14 @@ class CourseIntroWidget extends StatelessWidget {
       child: ExpandablePanel(
         header: Text(
           courseInfo!.courseName,
-          style: TextStyle(color: colorPrimary, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w500),
+          style: const TextStyle(
+              color: colorPrimary,
+              fontFamily: 'Roboto',
+              fontSize: 16,
+              fontWeight: FontWeight.w500),
         ),
         collapsed: Column(
-          children: [
-            getIntroWidget()
-          ],
+          children: [getIntroWidget()],
         ),
         expanded: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +32,7 @@ class CourseIntroWidget extends StatelessWidget {
             addVerticalSpace(20),
             Text(
               courseInfo!.shortDesc,
-              style: TextStyle(color: colorBlack, height: 1.5),
+              style: const TextStyle(color: colorBlack, height: 1.5),
               textAlign: TextAlign.start,
               softWrap: true,
             )
@@ -44,11 +45,11 @@ class CourseIntroWidget extends StatelessWidget {
   Widget getIntroWidget() {
     return Row(
       children: [
-        const IconText(Icons.remove_red_eye_outlined, '1233 views'),
+        IconWithTextWidget(
+            iconData: Icons.shopping_cart, text: courseInfo!.purchaseCount),
         addHorizontalSpace(20),
-        const IconText(CupertinoIcons.heart, '456 Likes'),
-        addHorizontalSpace(20),
-        IconText(Icons.timer, courseInfo!.hours + " цаг"),
+        IconWithTextWidget(
+            iconData: Icons.timer, text: courseInfo!.hours + " цаг"),
       ],
     );
   }

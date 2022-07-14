@@ -18,7 +18,7 @@ class ReadingHelper {
     for (var cue in reading.cue) {
       if (cue.words.isNotEmpty) {
         retList.add(CParagraph(cue.cueId, int.parse(cue.ordering),
-            cue.fromLangTranslation, cue.toLangTranslation,
+            cue.toLangTranslation, cue.fromLangTranslation,
             grammarDescription: cue.grammarDescription,
             grammarIsHighLighted: cue.grammarIsHighLighted,
             words: convertWords(cue.words)));

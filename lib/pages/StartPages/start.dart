@@ -4,6 +4,7 @@ import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/wide_button.dart';
 import 'package:medlegten/repositories/login_repository.dart';
 import 'package:medlegten/utils/app_router.dart';
+import 'package:medlegten/widgets/loader.dart';
 
 import 'medlegten_vertical.dart';
 
@@ -39,13 +40,13 @@ class StartPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             height: 1),
-                        text: 'LEARN FOREIGN LANGUAGE',
+                        text: 'LEARN FOREIGN LANGUAGES',
                         width: 83.52),
                     const SizedBox(
                       height: 5,
                     ),
                     const Text(
-                      'by Entertaining Way',
+                      'in Entertaining Ways',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color.fromRGBO(48, 53, 159, 1),
@@ -76,9 +77,7 @@ class StartPage extends StatelessWidget {
                       const Spacer(
                         flex: 2,
                       ),
-                      WideButton(
-                          "Нэвтрэх",
-                          ColorTable.color120_100_254,
+                      WideButton("Нэвтрэх", ColorTable.color120_100_254,
                           ColorTable.color255_255_255, () {
                         AutoRouter.of(context).push(const LoginRoute());
                       }),
@@ -86,19 +85,51 @@ class StartPage extends StatelessWidget {
                         flex: 1,
                       ),
                       WideButton(
-                          "Мэдлэгтэн гэж юу вэ?",
+                          "Lingos гэж юу вэ?",
                           ColorTable.color255_255_255,
                           ColorTable.color120_100_254, () async {
-                        final onboardingList =
-                            await LoginRepository().getOnboardingInfo();
-                        if (onboardingList != null) {
-                          AutoRouter.of(context).push(
-                              OnboardingRoute(onboardingList: onboardingList));
-                        }
+                        showLoading(context: context, isLoad: true);
+                        LoginRepository().getOnboardingInfo().then((value) {
+                          showLoading(context: context, isLoad: false);
+                          AutoRouter.of(context)
+                              .push(OnboardingRoute(onboardingList: value!));
+                        }).catchError((onError) {
+                          showLoading(context: context, isLoad: false);
+                        });
                       }),
                       const Spacer(
                         flex: 2,
                       ),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: 'Та шинэ хэрэглэгч үү?',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  color: Color(0xff828282),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  ' Нэвтрэх товч дээр дарж  сошиал хаягаараа  бүртгүүлнэ үү.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(
+                        flex: 2,
+                      ),
+
                     ],
                   ),
                 ),
@@ -108,5 +139,13 @@ class StartPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  showLoading({bool? isLoad, BuildContext? context}) {
+    if (isLoad!) {
+      LoadingIndicator(context: context).showLoadingIndicator();
+    } else {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+    }
   }
 }

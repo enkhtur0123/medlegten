@@ -1,7 +1,10 @@
+import 'package:medlegten/models/Landing/app_bar_data.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Landing/course_unit_module_list.dart';
 import 'package:medlegten/models/Landing/customer_review.dart';
+import 'package:medlegten/models/Landing/last_seen.dart';
+import 'package:medlegten/models/Landing/last_seen_unit_info.dart';
 import 'package:medlegten/models/Landing/quiz_history.dart';
 import 'package:medlegten/models/Landing/self_quiz.dart';
 import 'package:medlegten/repositories/repository.dart';
@@ -9,6 +12,39 @@ import 'package:medlegten/services/custom_exception.dart';
 import 'package:medlegten/services/http_helper.dart';
 
 class LandingRepository {
+  Future<LastSeenUnitInfo> getLastSeenUnitInfo(
+      {String? unitId, String? moduleId, String? moduleTypeId}) async {
+    //  await  GetStorage().remove("token");
+    try {
+      final res = await HttpHelper()
+          .getUrl(url: 'Course/LastSeenUnitModule/$unitId/$moduleId');
+      if (res['isSuccess']) {
+        return LastSeenUnitInfo.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future<LastSeen> getLastSeen() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'UserInfo/LastSeen');
+      if (res['isSuccess']) {
+        return LastSeen.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
   Future<List<CourseUnitModuleList>?> getCourseUnitModuleList(String id) async {
     try {
       final res = await HttpHelper().getUrl(url: 'Course/UnitModule/$id');
@@ -29,6 +65,7 @@ class LandingRepository {
   Future<List<CourseInfo>?> getCourseList() async {
     try {
       final res = await HttpHelper().getUrl(url: 'Course');
+      //print(res);
       if (res['isSuccess']) {
         var list = res['courseList'] as List;
         return list.map((i) => CourseInfo.fromJson(i)).toList();
@@ -54,7 +91,7 @@ class LandingRepository {
         throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
@@ -118,14 +155,19 @@ class LandingRepository {
 
   //// Шалгалтын мэдээлэл хадгалах сервис
   Future<dynamic> setCourseSelfTestHistory({Map<String, dynamic>? body}) async {
+    // print(body);
     try {
       final res = await HttpHelper()
           .postUrl(url: 'Course/SelfQuiz/SetHistory', body: body);
+      // print(res);
       if (res['isSuccess']) {
         return res;
       } else {
-        throw CustomException(errorMsg: res['resultMessage']);
+        dioRepository.snackBar(res['resultMessage']);
       }
+    } on CustomException catch (ex) {
+      dioRepository.snackBar(ex.toString().toUpperCase());
+      throw CustomException(errorMsg: ex.toString());
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString());
@@ -138,6 +180,24 @@ class LandingRepository {
       final res = await HttpHelper().getUrl(url: 'Course/SelfQuiz/History');
       if (res['isSuccess']) {
         return res;
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        throw CustomException(errorMsg: res['resultMessage']);
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString());
+    }
+  }
+
+  //// Мэдээлэл авах
+  Future<AppBarData> getAppbarData() async {
+    try {
+      final res = await HttpHelper().getUrl(url: 'UserInfo/AppBar');
+      AppBarData appBarData = AppBarData.fromJson(res['appBarText']);
+
+      if (res['isSuccess']) {
+        return appBarData;
       } else {
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);

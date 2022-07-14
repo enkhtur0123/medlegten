@@ -22,8 +22,15 @@ CourseUnit _$CourseUnitFromJson(Map<String, dynamic> json) {
 class _$CourseUnitTearOff {
   const _$CourseUnitTearOff();
 
-  _CourseUnit call(String unitId, String courseId, String unitNumber,
-      String unitName, String hasTrial, String minToWatch, bool isCompleted) {
+  _CourseUnit call(
+      String unitId,
+      String courseId,
+      String unitNumber,
+      String unitName,
+      String hasTrial,
+      String minToWatch,
+      bool openUnit,
+      bool isCompleted) {
     return _CourseUnit(
       unitId,
       courseId,
@@ -31,6 +38,7 @@ class _$CourseUnitTearOff {
       unitName,
       hasTrial,
       minToWatch,
+      openUnit,
       isCompleted,
     );
   }
@@ -51,6 +59,7 @@ mixin _$CourseUnit {
   String get unitName => throw _privateConstructorUsedError;
   String get hasTrial => throw _privateConstructorUsedError;
   String get minToWatch => throw _privateConstructorUsedError;
+  bool get openUnit => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -71,6 +80,7 @@ abstract class $CourseUnitCopyWith<$Res> {
       String unitName,
       String hasTrial,
       String minToWatch,
+      bool openUnit,
       bool isCompleted});
 }
 
@@ -90,6 +100,7 @@ class _$CourseUnitCopyWithImpl<$Res> implements $CourseUnitCopyWith<$Res> {
     Object? unitName = freezed,
     Object? hasTrial = freezed,
     Object? minToWatch = freezed,
+    Object? openUnit = freezed,
     Object? isCompleted = freezed,
   }) {
     return _then(_value.copyWith(
@@ -117,6 +128,10 @@ class _$CourseUnitCopyWithImpl<$Res> implements $CourseUnitCopyWith<$Res> {
           ? _value.minToWatch
           : minToWatch // ignore: cast_nullable_to_non_nullable
               as String,
+      openUnit: openUnit == freezed
+          ? _value.openUnit
+          : openUnit // ignore: cast_nullable_to_non_nullable
+              as bool,
       isCompleted: isCompleted == freezed
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
@@ -138,6 +153,7 @@ abstract class _$CourseUnitCopyWith<$Res> implements $CourseUnitCopyWith<$Res> {
       String unitName,
       String hasTrial,
       String minToWatch,
+      bool openUnit,
       bool isCompleted});
 }
 
@@ -159,6 +175,7 @@ class __$CourseUnitCopyWithImpl<$Res> extends _$CourseUnitCopyWithImpl<$Res>
     Object? unitName = freezed,
     Object? hasTrial = freezed,
     Object? minToWatch = freezed,
+    Object? openUnit = freezed,
     Object? isCompleted = freezed,
   }) {
     return _then(_CourseUnit(
@@ -186,6 +203,10 @@ class __$CourseUnitCopyWithImpl<$Res> extends _$CourseUnitCopyWithImpl<$Res>
           ? _value.minToWatch
           : minToWatch // ignore: cast_nullable_to_non_nullable
               as String,
+      openUnit == freezed
+          ? _value.openUnit
+          : openUnit // ignore: cast_nullable_to_non_nullable
+              as bool,
       isCompleted == freezed
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
@@ -198,7 +219,7 @@ class __$CourseUnitCopyWithImpl<$Res> extends _$CourseUnitCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CourseUnit implements _CourseUnit {
   _$_CourseUnit(this.unitId, this.courseId, this.unitNumber, this.unitName,
-      this.hasTrial, this.minToWatch, this.isCompleted);
+      this.hasTrial, this.minToWatch, this.openUnit, this.isCompleted);
 
   factory _$_CourseUnit.fromJson(Map<String, dynamic> json) =>
       _$$_CourseUnitFromJson(json);
@@ -216,11 +237,13 @@ class _$_CourseUnit implements _CourseUnit {
   @override
   final String minToWatch;
   @override
+  final bool openUnit;
+  @override
   final bool isCompleted;
 
   @override
   String toString() {
-    return 'CourseUnit(unitId: $unitId, courseId: $courseId, unitNumber: $unitNumber, unitName: $unitName, hasTrial: $hasTrial, minToWatch: $minToWatch, isCompleted: $isCompleted)';
+    return 'CourseUnit(unitId: $unitId, courseId: $courseId, unitNumber: $unitNumber, unitName: $unitName, hasTrial: $hasTrial, minToWatch: $minToWatch, openUnit: $openUnit, isCompleted: $isCompleted)';
   }
 
   @override
@@ -236,6 +259,7 @@ class _$_CourseUnit implements _CourseUnit {
             const DeepCollectionEquality().equals(other.hasTrial, hasTrial) &&
             const DeepCollectionEquality()
                 .equals(other.minToWatch, minToWatch) &&
+            const DeepCollectionEquality().equals(other.openUnit, openUnit) &&
             const DeepCollectionEquality()
                 .equals(other.isCompleted, isCompleted));
   }
@@ -249,6 +273,7 @@ class _$_CourseUnit implements _CourseUnit {
       const DeepCollectionEquality().hash(unitName),
       const DeepCollectionEquality().hash(hasTrial),
       const DeepCollectionEquality().hash(minToWatch),
+      const DeepCollectionEquality().hash(openUnit),
       const DeepCollectionEquality().hash(isCompleted));
 
   @JsonKey(ignore: true)
@@ -270,6 +295,7 @@ abstract class _CourseUnit implements CourseUnit {
       String unitName,
       String hasTrial,
       String minToWatch,
+      bool openUnit,
       bool isCompleted) = _$_CourseUnit;
 
   factory _CourseUnit.fromJson(Map<String, dynamic> json) =
@@ -287,6 +313,8 @@ abstract class _CourseUnit implements CourseUnit {
   String get hasTrial;
   @override
   String get minToWatch;
+  @override
+  bool get openUnit;
   @override
   bool get isCompleted;
   @override

@@ -22,13 +22,14 @@ QuizAnswer _$QuizAnswerFromJson(Map<String, dynamic> json) {
 class _$QuizAnswerTearOff {
   const _$QuizAnswerTearOff();
 
-  _QuizAnswer call(
-      String answerId, String answer, String isTrue, String ordering) {
+  _QuizAnswer call(String? answerId, String? answer, String? isTrue,
+      String? ordering, bool? isCorrect) {
     return _QuizAnswer(
       answerId,
       answer,
       isTrue,
       ordering,
+      isCorrect,
     );
   }
 
@@ -42,10 +43,11 @@ const $QuizAnswer = _$QuizAnswerTearOff();
 
 /// @nodoc
 mixin _$QuizAnswer {
-  String get answerId => throw _privateConstructorUsedError;
-  String get answer => throw _privateConstructorUsedError;
-  String get isTrue => throw _privateConstructorUsedError;
-  String get ordering => throw _privateConstructorUsedError;
+  String? get answerId => throw _privateConstructorUsedError;
+  String? get answer => throw _privateConstructorUsedError;
+  String? get isTrue => throw _privateConstructorUsedError;
+  String? get ordering => throw _privateConstructorUsedError;
+  bool? get isCorrect => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -58,7 +60,12 @@ abstract class $QuizAnswerCopyWith<$Res> {
   factory $QuizAnswerCopyWith(
           QuizAnswer value, $Res Function(QuizAnswer) then) =
       _$QuizAnswerCopyWithImpl<$Res>;
-  $Res call({String answerId, String answer, String isTrue, String ordering});
+  $Res call(
+      {String? answerId,
+      String? answer,
+      String? isTrue,
+      String? ordering,
+      bool? isCorrect});
 }
 
 /// @nodoc
@@ -75,24 +82,29 @@ class _$QuizAnswerCopyWithImpl<$Res> implements $QuizAnswerCopyWith<$Res> {
     Object? answer = freezed,
     Object? isTrue = freezed,
     Object? ordering = freezed,
+    Object? isCorrect = freezed,
   }) {
     return _then(_value.copyWith(
       answerId: answerId == freezed
           ? _value.answerId
           : answerId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       answer: answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isTrue: isTrue == freezed
           ? _value.isTrue
           : isTrue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      isCorrect: isCorrect == freezed
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -103,7 +115,12 @@ abstract class _$QuizAnswerCopyWith<$Res> implements $QuizAnswerCopyWith<$Res> {
           _QuizAnswer value, $Res Function(_QuizAnswer) then) =
       __$QuizAnswerCopyWithImpl<$Res>;
   @override
-  $Res call({String answerId, String answer, String isTrue, String ordering});
+  $Res call(
+      {String? answerId,
+      String? answer,
+      String? isTrue,
+      String? ordering,
+      bool? isCorrect});
 }
 
 /// @nodoc
@@ -122,24 +139,29 @@ class __$QuizAnswerCopyWithImpl<$Res> extends _$QuizAnswerCopyWithImpl<$Res>
     Object? answer = freezed,
     Object? isTrue = freezed,
     Object? ordering = freezed,
+    Object? isCorrect = freezed,
   }) {
     return _then(_QuizAnswer(
       answerId == freezed
           ? _value.answerId
           : answerId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isTrue == freezed
           ? _value.isTrue
           : isTrue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      isCorrect == freezed
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -147,23 +169,26 @@ class __$QuizAnswerCopyWithImpl<$Res> extends _$QuizAnswerCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_QuizAnswer implements _QuizAnswer {
-  _$_QuizAnswer(this.answerId, this.answer, this.isTrue, this.ordering);
+  _$_QuizAnswer(
+      this.answerId, this.answer, this.isTrue, this.ordering, this.isCorrect);
 
   factory _$_QuizAnswer.fromJson(Map<String, dynamic> json) =>
       _$$_QuizAnswerFromJson(json);
 
   @override
-  final String answerId;
+  final String? answerId;
   @override
-  final String answer;
+  final String? answer;
   @override
-  final String isTrue;
+  final String? isTrue;
   @override
-  final String ordering;
+  final String? ordering;
+  @override
+  final bool? isCorrect;
 
   @override
   String toString() {
-    return 'QuizAnswer(answerId: $answerId, answer: $answer, isTrue: $isTrue, ordering: $ordering)';
+    return 'QuizAnswer(answerId: $answerId, answer: $answer, isTrue: $isTrue, ordering: $ordering, isCorrect: $isCorrect)';
   }
 
   @override
@@ -174,7 +199,8 @@ class _$_QuizAnswer implements _QuizAnswer {
             const DeepCollectionEquality().equals(other.answerId, answerId) &&
             const DeepCollectionEquality().equals(other.answer, answer) &&
             const DeepCollectionEquality().equals(other.isTrue, isTrue) &&
-            const DeepCollectionEquality().equals(other.ordering, ordering));
+            const DeepCollectionEquality().equals(other.ordering, ordering) &&
+            const DeepCollectionEquality().equals(other.isCorrect, isCorrect));
   }
 
   @override
@@ -183,7 +209,8 @@ class _$_QuizAnswer implements _QuizAnswer {
       const DeepCollectionEquality().hash(answerId),
       const DeepCollectionEquality().hash(answer),
       const DeepCollectionEquality().hash(isTrue),
-      const DeepCollectionEquality().hash(ordering));
+      const DeepCollectionEquality().hash(ordering),
+      const DeepCollectionEquality().hash(isCorrect));
 
   @JsonKey(ignore: true)
   @override
@@ -197,21 +224,22 @@ class _$_QuizAnswer implements _QuizAnswer {
 }
 
 abstract class _QuizAnswer implements QuizAnswer {
-  factory _QuizAnswer(
-          String answerId, String answer, String isTrue, String ordering) =
-      _$_QuizAnswer;
+  factory _QuizAnswer(String? answerId, String? answer, String? isTrue,
+      String? ordering, bool? isCorrect) = _$_QuizAnswer;
 
   factory _QuizAnswer.fromJson(Map<String, dynamic> json) =
       _$_QuizAnswer.fromJson;
 
   @override
-  String get answerId;
+  String? get answerId;
   @override
-  String get answer;
+  String? get answer;
   @override
-  String get isTrue;
+  String? get isTrue;
   @override
-  String get ordering;
+  String? get ordering;
+  @override
+  bool? get isCorrect;
   @override
   @JsonKey(ignore: true)
   _$QuizAnswerCopyWith<_QuizAnswer> get copyWith =>

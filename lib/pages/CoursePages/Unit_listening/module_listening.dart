@@ -4,18 +4,27 @@ import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
+import 'package:medlegten/pages/CoursePages/Unit_listening/bottom_sheet_dialog.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/card_colors.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/common.dart';
 import 'package:medlegten/pages/CoursePages/Unit_listening/control_button.dart';
+import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:rxdart/rxdart.dart';
-import 'bottom_sheet_dialog.dart';
 
 class ModuleListenPage extends StatefulWidget {
-  const ModuleListenPage({Key? key, this.unitInfo, this.listeningQuiz})
+  const ModuleListenPage(this.unitTitle,
+      {Key? key,
+      this.unitInfo,
+      this.listeningQuiz,
+      this.moduleId,
+      this.isCompleted})
       : super(key: key);
 
   final CourseUnit? unitInfo;
   final ListeningQuiz? listeningQuiz;
+  final String? moduleId;
+  final bool? isCompleted;
+  final String? unitTitle;
 
   @override
   _ModuleListenPageState createState() => _ModuleListenPageState();
@@ -26,21 +35,28 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   final PageController controller =
       PageController(viewportFraction: 0.65, initialPage: 0);
   late AudioPlayer _player;
+  bool isBottomSheet = false;
 
   ConcatenatingAudioSource? _playlist;
 
   List<List<Color>> randomColors = [];
+  List<int> randomNumbers = [];
   int currentIndex = 0;
-
+  ValueNotifier<List<ListenCheck>> listenChecks = ValueNotifier([]);
+  ScrollPhysics scrollPhysics = const NeverScrollableScrollPhysics();
   @override
   void initState() {
     super.initState();
-
     _player = AudioPlayer();
     for (var item in widget.listeningQuiz!.listening.cue) {
-      uriAudioSource!.add(AudioSource.uri(
-        Uri.parse(item.hostUrl),
-      ));
+      getRandom();
+      listenChecks.value
+          .add(ListenCheck(index: int.parse(item.cueId), isChecking: false));
+      uriAudioSource!.add(
+        AudioSource.uri(
+          Uri.parse(item.hostUrl),
+        ),
+      );
     }
     _playlist = ConcatenatingAudioSource(children: uriAudioSource!);
     _init();
@@ -50,12 +66,17 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   Future<void> _init() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-
-    /// Player ээ сонсож байна
-    _player.playbackEventStream.listen((event) {
-      if (event.processingState == ProcessingState.completed) {
-        showModalBottomSheet<void>(
+    _player.positionStream.listen((event) async {
+      if (event == uriAudioSource![currentIndex].duration &&
+          event.inSeconds != 0) {
+        isBottomSheet = true;
+        await _player.stop();
+        await _player.seekToNext();
+        setState(() {});
+        await showModalBottomSheet<dynamic>(
+          enableDrag: false,
           isScrollControlled: true,
+          isDismissible: false,
           elevation: 5,
           backgroundColor: Colors.white.withOpacity(0.8),
           shape: const RoundedRectangleBorder(
@@ -68,25 +89,46 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
               listeningQuiz: widget.listeningQuiz,
               randomColors: randomColors[currentIndex],
               currentIndex: currentIndex,
+              heardIndex: (index) {
+                listenChecks.value
+                    .where((element) => element.index == index)
+                    .first
+                    .isChecking = true;
+                setState(() {});
+              },
             );
           },
-        );
+        ).then((value) async {
+          isBottomSheet = false;
+          if (value != null && value) {
+            await controller.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn);
+          } else {
+            if (currentIndex != 0) {
+              currentIndex--;
+            }
+          }
+          setState(() {});
+          await _player.play();
+        });
       }
-    }, onError: (Object e, StackTrace stackTrace) {
-      print('A stream error occurred: $e');
     });
+    // _player.currentIndexStream.listen((event) async {
+    //   if (event != null &&
+    //       event != 0 &&
+    //       !listenChecks.value[currentIndex].isChecking! &&
+    //       !isBottomSheet) {}
+    // });
     try {
-      await _player.setAudioSource(_playlist!, preload: true, initialIndex: 0);
-    } catch (e) {
-      // Catch load errors: 404, invalid url...
-      print("Error loading audio source: $e");
-    }
+      await _player.setAudioSource(_playlist!, preload: false, initialIndex: 0);
+    } catch (e) {}
   }
 
   @override
   void dispose() {
-    super.dispose();
     _player.dispose();
+    super.dispose();
   }
 
   int getRandom() {
@@ -95,13 +137,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
     int max = 9;
     rnd = Random();
     int r = min + rnd.nextInt(max - min);
+    randomNumbers.add(r);
     randomColors.add(cardColors[r]);
     return r;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override
@@ -126,7 +164,18 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("UNIT ${widget.unitInfo!.unitNumber} - Listening"),
+        title: Text(widget.unitTitle!),
+        actions: [
+          UnitModuleCompletedBtn(
+            moduleId: widget.moduleId,
+            completeBtn: () {},
+            unCompleteBtn: () {},
+            isCompleted: widget.isCompleted,
+            edgeInsets:
+                const EdgeInsets.only(left: 20, right: 15, bottom: 5, top: 5),
+            margin: const EdgeInsets.all(10),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -140,7 +189,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
               child: Container(
                 margin: const EdgeInsets.only(top: 50),
                 child: const Text(
-                  "Listen. Then Answer The Question.",
+                  "Анхааралтай сонсоод\nасуултанд хариулаарай.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 17,
@@ -160,6 +209,9 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.width * 0.6,
                     child: PageView.builder(
+                      physics: listenChecks.value[currentIndex].isChecking!
+                          ? const AlwaysScrollableScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
                       itemCount: _playlist!.length,
                       onPageChanged: (index) {
                         currentIndex = index;
@@ -176,7 +228,7 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: cardColors[getRandom()],
+                              colors: cardColors[randomNumbers[position]],
                             ),
                           ),
                           child: Container(
@@ -187,13 +239,13 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Audio 2:\n BTS Show",
+                                  widget.listeningQuiz!.listening.cue[position]
+                                      .title,
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontStyle: FontStyle.normal,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white.withOpacity(0.9)),
-                                  // textAlign: TextAlign.justify
                                 )
                               ],
                             ),
@@ -219,6 +271,8 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
                               bufferedPosition:
                                   positionData?.bufferedPosition ??
                                       Duration.zero,
+                              onChanged: (Duration duration) async {
+                              },
                               onChangeEnd: _player.seek,
                             );
                           },
@@ -253,4 +307,10 @@ class _ModuleListenPageState extends State<ModuleListenPage> {
       ),
     );
   }
+}
+
+class ListenCheck {
+  int? index;
+  bool? isChecking;
+  ListenCheck({this.index, this.isChecking});
 }

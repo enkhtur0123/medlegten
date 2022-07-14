@@ -14,6 +14,7 @@ _$_CourseUnit _$$_CourseUnitFromJson(Map<String, dynamic> json) =>
       json['unitName'] as String,
       json['hasTrial'] as String,
       json['minToWatch'] as String,
+      json['openUnit'] as bool,
       json['isCompleted'] as bool,
     );
 
@@ -25,5 +26,6 @@ Map<String, dynamic> _$$_CourseUnitToJson(_$_CourseUnit instance) =>
       'unitName': instance.unitName,
       'hasTrial': instance.hasTrial,
       'minToWatch': instance.minToWatch,
+      'openUnit': instance.openUnit,
       'isCompleted': instance.isCompleted,
     };

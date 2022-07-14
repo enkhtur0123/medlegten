@@ -12,6 +12,7 @@ class CourseUnit with _$CourseUnit {
       String unitName,
       String hasTrial,  
       String minToWatch,
+      bool openUnit,
       bool isCompleted,
      ) = _CourseUnit;
 

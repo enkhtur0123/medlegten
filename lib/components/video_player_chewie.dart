@@ -3,14 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/chewie_custom_controls.dart';
 import 'package:medlegten/components/loading.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerChewie extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final double aspectRatio;
+  final bool? autoPlay;
+  final bool onlyPause;
+  final VideoMemorizeWord? videoMemorizeWord;
+
   const VideoPlayerChewie(
     this.videoPlayerController, {
     this.aspectRatio = 16 / 9,
+    this.autoPlay = true,
+    this.onlyPause = false,
+    this.videoMemorizeWord,
     Key? key,
   }) : super(key: key);
 
@@ -20,19 +28,24 @@ class VideoPlayerChewie extends StatefulWidget {
 
 class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
   late ChewieController _chewieController;
+  VideoMemorizeWord? videoMemorizeWord;
 
   @override
   void initState() {
     super.initState();
-
+    if (widget.videoMemorizeWord != null) videoMemorizeWord = widget.videoMemorizeWord!;
     _chewieController = ChewieController(
       videoPlayerController: widget.videoPlayerController,
       aspectRatio: widget.videoPlayerController.value.aspectRatio,
       allowFullScreen: false,
       allowMuting: false,
-      showControls: true,
+      // showControls: false,
       showControlsOnInitialize: false,
-      customControls: const ChewieCustomControls(),
+      customControls: ChewieCustomControls(
+        onlyPause: widget.onlyPause,
+        videoMemorizeWord: videoMemorizeWord,
+      ),
+      autoInitialize: false,
       // showOptions: false,
       allowPlaybackSpeedChanging: true,
       overlay: null,
@@ -52,6 +65,9 @@ class _VideoPlayerChewieState extends State<VideoPlayerChewie> {
         );
       },
     );
+    if (!widget.autoPlay!) {
+      _chewieController.pause();
+    }
   }
 
   @override

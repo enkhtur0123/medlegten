@@ -14,7 +14,11 @@ class InitializationPage extends HookWidget {
   const InitializationPage({Key? key}) : super(key: key);
 
   Future<Version?> fetchData() async {
-    return await LoginRepository().getAppVersion();
+    Version? version = await LoginRepository().getAppVersion();
+    // if(!GetStorage().hasData("version")){
+    //   await GetStorage().write("version", version!.appVersion); 
+    // }
+    return version;
   }
 
   @override
@@ -24,8 +28,8 @@ class InitializationPage extends HookWidget {
     GlobalValues.screenScaleFactor = MediaQuery.of(context).textScaleFactor;
     //final loginState = ref.watch(loginNotifierProvider);
 
-    var str = 'Medlegten app v1.0';
-    //loginState.whenOrNull(
+    var str = 'Lingos app v 1.0.0';
+    // loginState.whenOrNull(
     //   data: (data) {
     //     if (data is Version) {
     //       str = 'Medlegten app ${data.appVersion}';
@@ -56,7 +60,7 @@ class InitializationPage extends HookWidget {
             ),
             Text(
               snapshot.hasData
-                  ? 'Medlegten app ${snapshot.data!.appVersion}'
+                  ? 'Lingos app v ${snapshot.data!.appVersion}'
                   : str,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -86,8 +90,8 @@ class Init {
     // This is where you can initialize the resources needed by your app while
     // the splash screen is displayed.  Remove the following example because
     // delaying the user experience is a bad design practice!
-    ref.read(loginNotifierProvider.notifier).getAppVersion();
-
+    // print(ref.read(appProvider.notifier).versionState.version);
     ref.read(authProvider.notifier).login();
+    //Future.delayed(const Duration(milliseconds: 10));
   }
 }

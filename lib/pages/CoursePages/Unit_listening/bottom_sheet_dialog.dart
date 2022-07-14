@@ -7,12 +7,18 @@ import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
 
 // ignore: must_be_immutable
 class ListenQuizWidget extends StatefulWidget {
-  ListenQuizWidget({Key? key, this.listeningQuiz, this.randomColors,this.currentIndex})
+  ListenQuizWidget(
+      {Key? key,
+      this.listeningQuiz,
+      this.randomColors,
+      this.currentIndex,
+      this.heardIndex})
       : super(key: key);
 
   ListeningQuiz? listeningQuiz;
   List<Color>? randomColors;
   int? currentIndex;
+  Function(int index)? heardIndex;
 
   @override
   State<StatefulWidget> createState() {
@@ -42,9 +48,9 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 10, bottom: 20, top: 20),
-              child: const Text(
-                "Audio 2:\nBTS Show",
-                style: TextStyle(
+              child: Text(
+                "Сонсгол ${widget.currentIndex! + 1}:\n${widget.listeningQuiz!.listening.cue[widget.currentIndex!].title}",
+                style: const TextStyle(
                     fontSize: 15,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.bold),
@@ -61,11 +67,12 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
           height: 20,
         ),
         Container(
-             margin: const EdgeInsets.only(left: 20, right: 20),
-          child:
-        Column(
-          children: widget.listeningQuiz!.listening.cue[widget.currentIndex!].questions.map((e){
-            return Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+                children: widget.listeningQuiz!.listening
+                    .cue[widget.currentIndex!].questions
+                    .map((e) {
+              return Container(
                   margin: const EdgeInsets.only(top: 15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -88,7 +95,7 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
                             height: 8,
                           ),
                           Text(
-                            e.question,
+                            e.question!,
                             style: const TextStyle(
                               color: Color(0xff000000),
                               fontSize: 15,
@@ -105,18 +112,22 @@ class ListenQuizWidgetState extends State<ListenQuizWidget> {
                       AnsWerItem(quizAnswer: e.answers, mode: mode)
                     ],
                   ));
-
-          }).toList()
-        )),
+            }).toList())),
         Container(
             margin: const EdgeInsets.all(20),
             child: CustomOutlinedButton(
-              text: "Шалгах",
+              text: mode.value == 0 ? "Шалгах" : "Дуусгах",
               color: secondaryColor,
               fontSize: 16,
               height: 50,
               onTap: () {
-                mode.value = 1;
+                if (mode.value == 0) {
+                  mode.value = 1;
+                  widget.heardIndex!(int.parse(widget.listeningQuiz!.listening
+                      .cue[widget.currentIndex!].cueId));
+                } else {
+                  Navigator.pop(context, true);
+                }
                 setState(() {});
               },
             ))

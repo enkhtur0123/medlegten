@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:medlegten/themes/style.dart';
 
 class LevelInfoWidget extends StatelessWidget {
-  const LevelInfoWidget({Key? key}) : super(key: key);
+  const LevelInfoWidget({Key? key,this.level}) : super(key: key);
+  final String? level;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class LevelInfoWidget extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: const Color(0xff0D18F9).withOpacity(0.15),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(0, 3), // changes position of shadow
@@ -37,16 +38,22 @@ class LevelInfoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Levels of study".toUpperCase(),
-                style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, fontStyle: FontStyle.normal),
+                "Таны англи хэлний түвшин".toUpperCase(),
+                style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
+                    fontStyle: FontStyle.normal),
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
-                "A1 - level",
-                style: TextStyle(
-                    fontSize: 14, color: secondaryColor, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
+                level!,
+                style: const TextStyle(
+                    fontSize: 14,
+                    color: secondaryColor,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold),
               )
             ],
           )

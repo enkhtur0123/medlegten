@@ -35,7 +35,7 @@ class _VideoPlayerControllerHookState
     controller
       ..setLooping(false)
       ..initialize().then((value) {
-        WidgetsBinding.instance?.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           setState(() {
             controller.play();
           });

@@ -5,8 +5,8 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/models/Landing/course_unit.dart';
 import 'package:medlegten/models/Landing/unit_complete_percent.dart';
 import 'package:medlegten/repositories/unit_repository.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-
+import 'package:medlegten/utils/to_percent.dart';
+import 'package:medlegten/widgets/percent_indicator.dart';
 class UnitModuleHeader extends HookWidget {
   const UnitModuleHeader({Key? key, this.unitInfo}) : super(key: key);
 
@@ -29,39 +29,47 @@ class UnitModuleHeader extends HookWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'UNIT ${unitInfo!.unitNumber}: ${unitInfo!.unitName.toUpperCase()}',
-              style: const TextStyle(
-                  color: colorPrimary,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16),
+            Expanded(
+              child: Center(
+                child: Text(
+                  unitInfo!.unitName.toUpperCase(),
+                  style: const TextStyle(
+                      color: colorPrimary,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16),
+                ),
+              ),
             ),
-            addHorizontalSpace(20),
-            CircularPercentIndicator(
-                radius: 40.0,
+            CustomCircularPercentIndicator(
+                radius: 45.0,
                 lineWidth: 3.0,
                 percent: percentSnapshot.hasData
                     ? calculatePercent(
                             totalCount: (percentSnapshot.data!.completedCount +
                                 percentSnapshot.data!.unCompletedCount),
+                            completedCount:
+                                percentSnapshot.data!.completedCount,
                             unCompletedCount:
-                                percentSnapshot.data!.unCompletedCount,fixed: 3)
+                                percentSnapshot.data!.unCompletedCount,
+                            fixed: 3)
                         .toDouble()
                     : 0,
-                center: percentSnapshot.hasData
-                    ? Text(
-                        (calculatePercent(
-                                totalCount:
-                                    (percentSnapshot.data!.completedCount +
-                                        percentSnapshot.data!.unCompletedCount),
-                                unCompletedCount:
-                                    percentSnapshot.data!.unCompletedCount,fixed: 1)*100).toStringAsFixed(0)+"%",
-                        style: const TextStyle(color: colorPrimary),
-                        textAlign: TextAlign.center,
+                isCenter: true,
+                text: percentSnapshot.hasData
+                    ? Percent.toPercent(
+                        percent: calculatePercent(
+                            totalCount: (percentSnapshot.data!.completedCount +
+                                percentSnapshot.data!.unCompletedCount),
+                            completedCount:
+                                percentSnapshot.data!.completedCount,
+                            unCompletedCount:
+                                percentSnapshot.data!.unCompletedCount,
+                            fixed: 1),
                       )
-                    : const Text("0%"),
-                progressColor: colorPrimary)
+                    : "0%",
+                progressColor: colorPrimary),
+            addHorizontalSpace(20)
           ],
         ),
         addVerticalSpace(10),
@@ -78,9 +86,25 @@ class UnitModuleHeader extends HookWidget {
       ],
     );
   }
+}
+
 ////Хувь тооцох
-  double calculatePercent({int? totalCount, int? unCompletedCount,int? fixed=3}) {
-    double percent = ((100 * unCompletedCount!) / totalCount!) / 100;
-    return double.parse(percent.toStringAsFixed(fixed!));
- }
+double calculatePercent(
+    {int? totalCount,
+    int? completedCount,
+    int? unCompletedCount,
+    int? fixed = 3}) {
+  // ignore: prefer_typing_uninitialized_variables
+  var percent;
+  if (totalCount! > 0) {
+    percent = (100 * completedCount!) ~/ totalCount;
+  } else {
+    percent = 0;
+  }
+  if (percent > 0) {
+    percent = percent / 100;
+  } else {
+    return 0;
+  }
+  return double.parse(percent.toString());
 }

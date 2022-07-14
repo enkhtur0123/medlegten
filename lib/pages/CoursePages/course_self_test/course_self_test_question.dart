@@ -5,18 +5,23 @@ import 'package:medlegten/pages/CoursePages/course_self_test/course_self_test.da
 
 import 'course_self_test_answer_item.dart';
 
+// ignore: must_be_immutable
 class CourseSelfTestQuestion extends HookWidget {
   final QuizQuestionEx quizQuestionEx;
   final int mode;
   final ValueNotifier<bool>? check;
   ValueNotifier<int> correctCnt;
-  int selfTestCnt;
+  ValueNotifier? selectedAnswerId = ValueNotifier("");
+  ValueNotifier<int>? clickCnt;
+
+  ValueNotifier<Set<String>>? correctAnswerds;
   CourseSelfTestQuestion(this.quizQuestionEx,
       {Key? key,
       this.mode = 0,
       this.check,
       required this.correctCnt,
-      required this.selfTestCnt})
+      required this.clickCnt,
+      this.correctAnswerds})
       : super(key: key);
 
   final style = const TextStyle(
@@ -27,10 +32,9 @@ class CourseSelfTestQuestion extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sortedAnswers = quizQuestionEx.quizQuestion.answers
-      ..sort((a, b) => int.parse(a.ordering).compareTo(int.parse(b.ordering)));
-    //var state = useState(-1);
-    //var isSelected = useState(false);
+    var sortedAnswers = quizQuestionEx.quizQuestion.answers!
+      ..sort(
+          (a, b) => int.parse(a.ordering!).compareTo(int.parse(b.ordering!)));
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
@@ -38,7 +42,9 @@ class CourseSelfTestQuestion extends HookWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Асуулт ' + quizQuestionEx.quizQuestion.ordering + ':',
+              quizQuestionEx.quizQuestion.type == '0'
+                  ? 'Асуулт ${quizQuestionEx.quizQuestion.ordering}:'
+                  : '${quizQuestionEx.quizQuestion.typeText}:',
               style: const TextStyle(
                   color: Color.fromRGBO(48, 53, 159, 1),
                   fontWeight: FontWeight.w600,
@@ -51,7 +57,7 @@ class CourseSelfTestQuestion extends HookWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                quizQuestionEx.quizQuestion.question,
+                quizQuestionEx.quizQuestion.question!,
                 style: const TextStyle(
                     color: Color.fromRGBO(51, 51, 51, 1),
                     fontWeight: FontWeight.w600,
@@ -62,26 +68,12 @@ class CourseSelfTestQuestion extends HookWidget {
             ),
           ),
           addVerticalSpace(5),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: sortedAnswers
-                      .map(
-                        (answer) => CourseSelfAnswerItem(
-                          answer: answer,
-                          quizQuestionEx: quizQuestionEx,
-                          mode: mode,
-                          correctCnt: correctCnt,
-                        ),
-                      )
-                      .toList()
-                  ),
-            ),
-          )
+          CourseSelfAnswerItem(
+              answers: sortedAnswers,
+              mode: mode,
+              clickCnts: clickCnt,
+              correctCnt: correctCnt,
+              correctAnswerds: correctAnswerds)
         ],
       ),
     );

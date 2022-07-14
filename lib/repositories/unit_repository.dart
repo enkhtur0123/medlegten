@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:medlegten/models/Landing/article_info.dart';
 import 'package:medlegten/models/Landing/unit_complete_percent.dart';
+import 'package:medlegten/models/Test/exam_name.dart';
 import 'package:medlegten/models/Unit/cue_word.dart';
 import 'package:medlegten/models/Unit/reading.dart';
 import 'package:medlegten/models/Unit/unit_conversation_video.dart';
@@ -7,6 +9,7 @@ import 'package:medlegten/models/Unit/unit_grammar.dart';
 import 'package:medlegten/models/Unit/unit_introduction_video.dart';
 import 'package:medlegten/models/Unit/unit_listening_quiz_question.dart';
 import 'package:medlegten/models/Unit/unit_mixed_video.dart';
+import 'package:medlegten/models/Unit/unit_test_model.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary.dart';
 import 'package:medlegten/models/Unit/unit_vocabulary_word.dart';
 import 'package:medlegten/models/Unit/unit_writing.dart';
@@ -20,17 +23,17 @@ class UnitRepository {
   Future<UnitCompleteInfo> getUnitCompletePercent(
       {String? id, String? mode}) async {
     try {
-      print(id);
+      // print(id);
       final res = await HttpHelper().getUrl(url: 'Course/Precent/$id/$mode');
       if (res['isSuccess']) {
         return UnitCompleteInfo.fromJson(res);
       } else {
-        print(res['resultMessage']);
+        // print(res['resultMessage']);
         dioRepository.snackBar(res['resultMessage']);
         throw CustomException(errorMsg: res['resultMessage']);
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       dioRepository.snackBar(e.toString().toUpperCase());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
@@ -49,6 +52,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
+      // print(e.toString());
       throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
@@ -71,7 +75,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -87,9 +91,8 @@ class UnitRepository {
         return null;
       }
     } catch (e) {
-      print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -110,7 +113,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -131,7 +134,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -152,7 +155,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -185,7 +188,7 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -205,9 +208,9 @@ class UnitRepository {
         return null;
       }
     } catch (e) {
-      print(e.toString().toUpperCase());
+      // print(e.toString().toUpperCase());
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
     }
   }
 
@@ -228,7 +231,127 @@ class UnitRepository {
       }
     } catch (e) {
       dioRepository.snackBar(e.toString().toUpperCase());
-      return null;
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future<UnitTestModel?> getProgressExam(String moduleId) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/8');
+      if (res['isSuccess']) {
+        return UnitTestModel.fromJson(res['progressExam']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future<UnitTestModel?> getFinalExam(String moduleId) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'Course/UnitModule/$moduleId/9');
+      if (res['isSuccess']) {
+        return UnitTestModel.fromJson(res['finalExam']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  Future<String> setExam(Map<String, dynamic>? body) async {
+    try {
+      var res = await HttpHelper()
+          .postUrl(url: 'Course/ProgressExam/SetResult', body: body);
+      if (res['isSuccess']) {
+        return 'success';
+      } else {
+        return res['resultMessage'];
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
+    }
+  }
+
+  Future<ArticleInfo?> getArticleInfo(String articleId) async {
+    try {
+      final res =
+          await HttpHelper().getUrl(url: 'Article/ArticleDetial/$articleId');
+      if (res['isSuccess']) {
+        return ArticleInfo.fromJson(res['articleInfo']);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  //0 is set vocabulary, 1 is un vocabulary
+  Future<String> setWordKnow(String wordId, int set) async {
+    try {
+      var res = await HttpHelper().getUrl(url: 'Word/vocabulary/$wordId/$set');
+      if (res['isSuccess']) {
+        return 'success';
+      } else {
+        return res['resultMessage'];
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
+    }
+  }
+
+  //0 is Like, 1 is unlike
+  Future<String> setArticleLike(String articleId, int set) async {
+    try {
+      var res = await HttpHelper().getUrl(url: 'Article/Like/$articleId/$set');
+      if (res['isSuccess']) {
+        return 'success';
+      } else {
+        return res['resultMessage'];
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
+    }
+  }
+
+  Future<ExamName?> getExamResult(String examId) async {
+    try {
+      final res = await HttpHelper()
+          .getUrl(url: 'Course/ProgressExam/Result?examId=$examId');
+      if (res['isSuccess']) {
+        return ExamName.fromJson(res);
+      } else {
+        dioRepository.snackBar(res['resultMessage']);
+        return null;
+      }
+    } catch (e) {
+      dioRepository.snackBar(e.toString().toUpperCase());
+      throw CustomException(errorMsg: e.toString().toUpperCase());
+    }
+  }
+
+  //0 for Vocabulary, 1 for Bookmarked
+  Future<int> getWordCount(int type) async {
+    try {
+      var res = await HttpHelper().getUrl(url: 'Word/WordCount/$type');
+      if (res['isSuccess']) {
+        return int.parse(res['wordCount'].toString());
+      } else {
+        return 0;
+      }
+    } catch (ex) {
+      throw CustomException(errorMsg: ex.toString());
     }
   }
 }

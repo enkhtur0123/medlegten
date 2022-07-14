@@ -20,6 +20,7 @@ class VocabularyListPage extends StatefulWidget {
 
 class _VocabularyListPageState extends State<VocabularyListPage> {
   static const _pageSize = 20;
+  late bool isLoading;
   late final isBookmarked = ValueNotifier<bool>(true)..addListener(_listener);
 
   void _listener() {
@@ -41,6 +42,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
 
   Future<void> fetchPage(int pageKey) async {
     try {
+      isLoading = true;
       final vocabulary = await UnitRepository().getUnitVocabulary(
           widget.unit.unitId, pageKey, _pageSize, isBookmarked.value ? 1 : 0);
       if (vocabulary != null) {
@@ -56,11 +58,15 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
       }
     } catch (error) {
       _pagingController.error = error;
+    } finally {
+      isLoading = false;
+      setState(() {});
     }
   }
 
   @override
   void initState() {
+    isLoading = true;
     isBookmarked.value = false;
     _pagingController.addPageRequestListener((pageKey) {
       fetchPage(pageKey);
@@ -89,7 +95,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
         Positioned(
           width: MediaQuery.of(context).size.width,
           height: unitHeaderHeight + 8,
-          child: UnitAppBar(widget.unitTitle),
+          child: UnitAppBar(widget.unitTitle, isCompleted: false),
         ),
       ]),
     );
@@ -101,8 +107,14 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
       children: [
         addVerticalSpace(20),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          getButton('All words', isBookmarked.value == false, isBookmarked),
-          getButton('Selected words', isBookmarked.value == true, isBookmarked)
+          AbsorbPointer(
+              absorbing: isLoading,
+              child: getButton('Бүх үгнүүд', isBookmarked.value == false,
+                  isBookmarked, isLoading)),
+          AbsorbPointer(
+              absorbing: isLoading,
+              child: getButton('Тэмдэглэсэн үгнүүд', isBookmarked.value == true,
+                  isBookmarked, isLoading))
         ]),
         addVerticalSpace(10),
         const Divider(
@@ -116,7 +128,18 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
             child: PagedListView<int, UnitVocabularyWord>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<UnitVocabularyWord>(
-                  itemBuilder: (context, item, index) => VocabularyCart(item)),
+                itemBuilder: (context, item, index) => VocabularyCart(item),
+                noItemsFoundIndicatorBuilder: (_) => const Center(
+                  child: Text(
+                    'Хоосон байна',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        color: Color.fromARGB(153, 100, 20, 20),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -124,12 +147,12 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
     );
   }
 
-  Widget getButton(
-      String caption, bool isSelected, ValueNotifier<bool> onSelected) {
+  Widget getButton(String caption, bool isSelected,
+      ValueNotifier<bool> isBookmarked, bool isLoading) {
     return isSelected
         ? SizedBox(
             width: GlobalValues.getWidthRelativeToScreen(
-                20), // GlobalValues.screenWidth / 2.4,
+                23), // GlobalValues.screenWidth / 2.4,
             child: ElevatedButton(
               onPressed: () {},
               child: Text(caption,
@@ -139,7 +162,9 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
                       fontSize: 14,
                       fontWeight: FontWeight.w500)),
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(48, 53, 159, 1),
+                primary: isLoading
+                    ? Colors.blueGrey[300]
+                    : const Color.fromRGBO(48, 53, 159, 1),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
                   Radius.circular(8.0),
@@ -150,7 +175,7 @@ class _VocabularyListPageState extends State<VocabularyListPage> {
           )
         : InkWell(
             onTap: () {
-              onSelected.value = !onSelected.value;
+              isBookmarked.value = !isBookmarked.value;
             },
             child: SizedBox(
               width: GlobalValues.getWidthRelativeToScreen(20),

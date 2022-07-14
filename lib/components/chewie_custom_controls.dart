@@ -1,16 +1,22 @@
 import 'dart:async';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:medlegten/common/colors.dart';
 import 'package:medlegten/components/chewie_animated_play_button.dart';
 import 'package:medlegten/components/chewie_center_play_button.dart';
 import 'package:medlegten/components/chewie_colors.dart';
 import 'package:medlegten/components/chewie_progressbar.dart';
+import 'package:medlegten/models/video/memorize_word.dart';
 import 'package:video_player/video_player.dart';
 
-class ChewieCustomControls extends StatefulWidget {
-  const ChewieCustomControls({Key? key}) : super(key: key);
+import '../pages/CoursePages/base/base_video_subtitle.dart';
 
+class ChewieCustomControls extends StatefulWidget {
+  const ChewieCustomControls({Key? key, this.onlyPause, this.videoMemorizeWord})
+      : super(key: key);
+  final bool? onlyPause;
+  final VideoMemorizeWord? videoMemorizeWord;
   @override
   State<StatefulWidget> createState() {
     return _ChewieCustomControlsState();
@@ -191,24 +197,32 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
       child: Container(
         height: barHeight,
         color: colorPrimary, //Theme.of(context).dialogBackgroundColor,
-        child: Row(
-          children: <Widget>[
-            _buildPlayPause(controller),
-            if (chewieController.isLive)
-              const Expanded(child: Text('LIVE'))
-            else
-              _buildPosition(iconColor),
-            if (chewieController.isLive)
-              const SizedBox()
-            else
-              _buildProgressBar(),
-            _buildSubtitleToggle(),
-            if (chewieController.allowPlaybackSpeedChanging)
-              _buildSpeedButton(controller),
-            if (chewieController.allowMuting) _buildMuteButton(controller),
-            if (chewieController.allowFullScreen) _buildExpandButton(),
-          ],
-        ),
+        child: widget.onlyPause == null || !widget.onlyPause!
+            ? Row(
+                children: <Widget>[
+                  _buildPlayPause(controller),
+                  if (chewieController.isLive)
+                    const Expanded(child: Text('LIVE'))
+                  else
+                    _buildPosition(iconColor),
+                  if (chewieController.isLive)
+                    const SizedBox()
+                  else
+                    _buildProgressBar(),
+                  _buildSubtitleToggle(),
+                  if (chewieController.allowPlaybackSpeedChanging)
+                    _buildSpeedButton(controller),
+                  if (chewieController.allowMuting)
+                    _buildMuteButton(controller),
+                  if (chewieController.allowFullScreen) _buildExpandButton(),
+                ],
+              )
+            : Row(
+                children: [
+                  _buildPlayPause(controller),
+                  // _buildPosition(iconColor),
+                ],
+              ),
       ),
     );
   }
@@ -452,29 +466,37 @@ class _ChewieCustomControlsState extends State<ChewieCustomControls>
     });
   }
 
-  void _playPause() {
+  void _playPause() async {
     final isFinished = _latestValue.position >= _latestValue.duration;
+    if (controller.value.isPlaying) {
+      _hideStuff = false;
+      _hideTimer?.cancel();
+      controller.pause();
+    } else {
+      _cancelAndRestartTimer();
 
-    setState(() {
-      if (controller.value.isPlaying) {
-        _hideStuff = false;
-        _hideTimer?.cancel();
-        controller.pause();
-      } else {
-        _cancelAndRestartTimer();
-
-        if (!controller.value.isInitialized) {
-          controller.initialize().then((_) {
-            controller.play();
-          });
-        } else {
-          if (isFinished) {
-            controller.seekTo(const Duration());
-          }
+      if (!controller.value.isInitialized) {
+        controller.initialize().then((_) {
           controller.play();
+        });
+      } else {
+        if (isFinished) {
+          controller.seekTo(const Duration());
         }
+      
+        if (widget.onlyPause != null && widget.onlyPause!) {
+          await controller.seekTo(
+            getDuration(
+              GetStorage().read("start_time"),
+            ),
+          );
+        } else {
+          controller.seekTo(controller.value.position);
+        }
+        controller.play();
       }
-    });
+    }
+    setState(() {});
   }
 
   void _startHideTimer() {

@@ -1,12 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:medlegten/models/Starting/version.dart';
+import 'package:medlegten/pages/BlogPage/index.dart';
 import 'package:medlegten/pages/CoursePages/courses/landing_course.dart';
 import 'package:medlegten/pages/ProfilePages/landing_profile.dart';
 import 'package:medlegten/pages/VideoPage/index.dart';
 import 'package:medlegten/pages/app_bar.dart';
+import 'package:medlegten/providers/app_provider.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/providers/auth_provider.dart';
+import 'package:medlegten/repositories/login_repository.dart';
+import 'package:medlegten/utils/global.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../widgets/dialog/custom_popup.dart';
 import 'landing_home.dart';
 
 class LandingPage extends ConsumerStatefulWidget {
@@ -28,56 +38,109 @@ class LandingPageState extends ConsumerState<LandingPage>
         const LandingHome(),
         const LandingCourse(),
         const VideoPage(),
-        const Center(
-          child: Text("Index 3", style: TextStyle(color: Colors.black)),
-        ),
+        BlogPage(),
         LandingProfile(),
       ];
-
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this, initialIndex: 0);
-    ref.read(appbarProvider.notifier).changeStatus(AppBarState(
-          height: 130,
-          isRichText: true,
-          text1:
-              "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
-          text2: "Today’s Goal:",
-          text3: ' A1 UNIT - Reading',
-        ));
+    LoginRepository().getAppVersion().then((value) {
+      ref
+          .read(appProvider.notifier)
+          .changeState(value: VersionState(version: value));
+      checkVersion(version: value);
+    });
+    changeAppBarData(
+        ref: ref,
+        height: 122,
+        appbarProvider: appbarProvider,
+        authProvider: authProvider,
+        text: !GetStorage().hasData("isGuest")
+            ? "${ref.read(authProvider.notifier).appBarData?.homePageText ?? ""} 👋\n"
+            : "👋");
     tabController!.addListener(() {
       if (tabController!.indexIsChanging) {
         if (tabController!.index == 0) {
-          ref.read(appbarProvider.notifier).changeStatus(AppBarState(
-                height: 130,
-                isRichText: true,
-                text1:
-                    "Сайн уу, ${ref.read(authProvider.notifier).userInfo!.firstName} 👋\n",
-                text2: "Today’s Goal:",
-                text3: ' A1 UNIT - Reading',
-              ));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text:
+                  "${ref.read(appbarProvider.notifier).appBarState.appBarData?.homePageText ?? ""} 👋\n");
         }
         if (tabController!.index == 1) {
-          ref.read(appbarProvider.notifier).changeStatus(AppBarState(
-              height: 110,
-              isRichText: false,
-              text1: "Өнөөдрийн хичээлдээ бэлэн үү? ✍️"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text:
+                  "${ref.read(appbarProvider.notifier).appBarState.appBarData?.coursePageText ?? ""} ✍️");
         }
         if (tabController!.index == 2) {
-          ref.read(appbarProvider.notifier).changeStatus(
-              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text: ref
+                      .read(appbarProvider.notifier)
+                      .appBarState
+                      .appBarData
+                      ?.ppvPageText ??
+                  "");
         }
         if (tabController!.index == 3) {
-          ref.read(appbarProvider.notifier).changeStatus(
-              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text: ref
+                      .read(appbarProvider.notifier)
+                      .appBarState
+                      .appBarData
+                      ?.articlePageText ??
+                  "");
         }
         if (tabController!.index == 4) {
-          ref.read(appbarProvider.notifier).changeStatus(
-              AppBarState(height: 110, isRichText: false, text1: "Have fun!"));
+          changeAppBarData(
+              ref: ref,
+              height: 120,
+              appbarProvider: appbarProvider,
+              authProvider: authProvider,
+              text: "Have fun!");
         }
       }
     });
+  }
+
+  Future checkVersion({Version? version}) async {
+    if (int.parse(AppProperties.version.replaceAll(".", "")) <
+        int.parse(version!.appVersion.toString().replaceAll(".", ""))) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return CustomPopUpDialog(
+              iconData: Icons.new_releases_outlined,
+              isAlert: true,
+              isBtn: true,
+              body: "Та аппликейшнаа шинэчилнэ үү",
+              onTap: () async {
+                if (await canLaunch(Platform.isIOS
+                    ? version.iosUrl ?? ""
+                    : version.androidUrl ?? "")) {
+                  launch(Platform.isIOS
+                      ? version.iosUrl ?? ""
+                      : version.androidUrl ?? "");
+                }
+              },
+            );
+          });
+    }
   }
 
   @override
@@ -117,7 +180,7 @@ class LandingPageState extends ConsumerState<LandingPage>
               index: 1,
               imgUrl:
                   "assets/img/Landing/${1 == _index!.value ? "selected" : "unselected"}/course.svg",
-              text: "Курс"),
+              text: "Хөтөлбөр"),
           getTab(
               index: 2,
               imgUrl:
@@ -165,4 +228,19 @@ class LandingPageState extends ConsumerState<LandingPage>
       text: text,
     );
   }
+}
+
+changeAppBarData(
+    {StateNotifierProvider<AppBarViewModel, AppBarState>? appbarProvider,
+    StateNotifierProvider<AuthViewModel, AuthState>? authProvider,
+    WidgetRef? ref,
+    double? height,
+    String? text}) {
+  ref!.read(appbarProvider!.notifier).changeStatus(
+        AppBarState(
+          height: height,
+          appBarData: ref.read(authProvider!.notifier).appBarData,
+          text: text,
+        ),
+      );
 }

@@ -12,6 +12,7 @@ _$_ListeningCue _$$_ListeningCueFromJson(Map<String, dynamic> json) =>
       json['hostUrl'] as String,
       json['hostSource'] as String,
       json['ordering'] as String,
+      json['title'] as String,
       (json['questions'] as List<dynamic>)
           .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$_ListeningCueToJson(_$_ListeningCue instance) =>
       'hostUrl': instance.hostUrl,
       'hostSource': instance.hostSource,
       'ordering': instance.ordering,
+      'title': instance.title,
       'questions': instance.questions,
     };

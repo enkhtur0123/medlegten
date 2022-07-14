@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/common/colors.dart';
+import 'package:medlegten/pages/CoursePages/unit/unit_module_completed_btn.dart';
 import 'package:medlegten/repositories/course_repository.dart';
 import 'package:medlegten/themes/style.dart';
 
-const double unitHeaderHeight = 72;
+const double unitHeaderHeight = 74;
 const TextStyle titleStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
@@ -25,7 +27,11 @@ Widget headerCompleteButton(String moduleId, bool isCompleted) {
 class UnitAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   String title;
   Widget? tailWidget;
-  UnitAppBar(this.title, {Key? key, this.tailWidget}) : super(key: key);
+  String? moduleId;
+  bool? isCompleted;
+  UnitAppBar(this.title,
+      {Key? key, this.tailWidget, this.moduleId, required this.isCompleted})
+      : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
     return _UnitAppBarState();
@@ -39,7 +45,8 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
   @override
   Widget build(BuildContext context) {
     List<Widget> list = [];
-    list.add(IconButton(
+    list.add(
+      IconButton(
         onPressed: () {
           AutoRouter.of(context).pop();
         },
@@ -47,14 +54,21 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
           Icons.arrow_back,
           color: colorWhite,
           size: 23,
-        )));
+        ),
+      ),
+    );
 
-    list.add(Text(
-      widget.title,
-      style: titleStyle,
-    ));
+    list.add(
+      Expanded(
+        child: AutoSizeText(
+          widget.title,
+          style: titleStyle,
+          maxLines: 2,
+        ),
+      ),
+    );
 
-    list.add(const Spacer());
+    //list.add(const Spacer());
     if (widget.tailWidget != null) {
       list.add(widget.tailWidget!);
     }
@@ -70,9 +84,29 @@ class _UnitAppBarState extends ConsumerState<UnitAppBar> {
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(left: 5, top: 20, right: 20),
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: list),
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 6,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: list),
+          ),
+          widget.moduleId != null
+              ? Flexible(
+                  fit: FlexFit.tight,
+                  flex: 4,
+                  child: UnitModuleCompletedBtn(
+                    moduleId: widget.moduleId,
+                    completeBtn: () {},
+                    unCompleteBtn: () {},
+                    isCompleted: widget.isCompleted,
+                  ),
+                )
+              : Container()
+        ],
+      ),
     );
   }
 }

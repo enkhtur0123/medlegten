@@ -7,6 +7,10 @@ class Utils {
   }
 }
 
+class AppProperties {
+  static String version = "1.1.5";
+}
+
 class GlobalValues {
   static double screenHeight = 1;
   static double screenWidth = 1;

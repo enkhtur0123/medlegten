@@ -4,6 +4,7 @@ import 'package:medlegten/common/widget_functions.dart';
 import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Landing/customer_review.dart';
 import 'package:medlegten/repositories/landing_repository.dart';
+import 'package:medlegten/utils/global.dart';
 import 'package:medlegten/widgets/TextButton.dart';
 
 import 'customer_review_cart.dart';
@@ -26,9 +27,9 @@ class CustomerReviewList extends HookWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButtonWidget(text: 'Reviews', onTap: () {}),
+            TextButtonWidget(text: 'Санал, сэтгэгдлүүд', onTap: () {}),
             TextButtonWidget(
-                text: 'See All',
+                text: 'Бүгд',
                 onTap: () async {
                   isAll.value = true;
                   _controller.jumpTo(_controller.position.maxScrollExtent);
@@ -38,8 +39,10 @@ class CustomerReviewList extends HookWidget {
         addVerticalSpace(10),
         FutureBuilder<List<CustomerReview>?>(
           // ignore: unrelated_type_equality_checks
-          future: LandingRepository().getCustomerReviewList(isAll.value ? 1 : 0),
-          builder: (BuildContext context, AsyncSnapshot<List<CustomerReview>?> snapshot) {
+          future:
+              LandingRepository().getCustomerReviewList(isAll.value ? 1 : 0),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CustomerReview>?> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 controller: _controller,
@@ -53,9 +56,11 @@ class CustomerReviewList extends HookWidget {
                 },
               );
             } else if (snapshot.hasError) {
-              return const Loading();
+              return Container();
             } else {
-              return const Loading();
+              return SizedBox(
+                  height: GlobalValues.screenHeight / 4,
+                  child: const Loading());
             }
           },
         ),

@@ -1,20 +1,16 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:medlegten/providers/appbar_provider.dart';
 import 'package:medlegten/themes/style.dart';
-
+import '../widgets/dialog/custom_popup.dart';
 // ignore: must_be_immutable
 class CustomAppBar extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
-  String? text1;
-  String? text2;
-  String? text3;
+  String? text;
   WidgetRef? ref;
-  CustomAppBar(
-      {Key? key, this.text1 = "", this.text2 = "", this.text3, this.ref})
-      : super(key: key);
+  CustomAppBar({Key? key, this.text, this.ref}) : super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
     return CustomAppBarState();
@@ -38,90 +34,84 @@ class CustomAppBarState extends ConsumerState<CustomAppBar> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          color: secondaryColor,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+        color: secondaryColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(8),
+          bottomRight: Radius.circular(8),
+        ),
+      ),
       height: ref.read(appbarProvider.notifier).appBarState.height,
       alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.only(left: 25, top: 40),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
+      padding: const EdgeInsets.only(left: 25, top: 50),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  SvgPicture.asset("assets/svg/logo.svg"),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  const Text(
-                    "МЭДЛЭГТЭН",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 20),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Icon(Icons.search),
-                    const SizedBox(
-                      width: 15,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/logo/horizontal_logo.svg",
+                          color: Colors.white,
+                          height: 25,
+                          fit: BoxFit.contain,
+                        ),
+                        Text(
+                          ref.read(appbarProvider.notifier).appBarState.text ??
+                              "",
+                          style: const TextStyle(
+                              color: Color(0xffC7C9D9),
+                              fontSize: 14,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ],
                     ),
-                    const Icon(Icons.notifications_active)
+                    Stack(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              await showDialog(
+                                  barrierDismissible: true,
+                                  // barrierColor: Colors.transparent,
+                                  context: context,
+                                  builder: (context) {
+                                    return const CustomPopUpDialog(
+                                      isNotification: true,
+                                      title: "Мэдэгдэл",
+                                      body: 'Хоосон байна',
+                                    );
+                                  });
+                            },
+                            icon: const Icon(Icons.notifications)),
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              )
+              ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          ref.read(appbarProvider.notifier).appBarState.isRichText!
-              ? RichText(
-                  maxLines: 2,
-                  text: TextSpan(
-                    text: ref.read(appbarProvider.notifier).appBarState.text1,
-                    style: const TextStyle(
-                        color: Color(0xffC7C9D9),
-                        fontSize: 14,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text:
-                            ref.read(appbarProvider.notifier).appBarState.text2,
-                      ),
-                      TextSpan(
-                          text: ref
-                              .read(appbarProvider.notifier)
-                              .appBarState
-                              .text3,
-                          style: const TextStyle(
-                              color: Color(0xff1AE5EF),
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                )
-              : Text(
-                  ref.read(appbarProvider.notifier).appBarState.text1!,
-                  style: const TextStyle(
-                      color: Color(0xffC7C9D9),
-                      fontSize: 14,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.normal),
-                ),
         ],
       ),
     );

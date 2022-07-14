@@ -5,28 +5,21 @@ import 'package:medlegten/pages/LandingPages/landing_page.dart';
 import 'package:medlegten/pages/StartPages/age.dart';
 import 'package:medlegten/pages/StartPages/initialization.dart';
 import 'package:medlegten/providers/auth_provider.dart';
-
 import 'StartPages/start.dart';
-
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  // ignore: dead_code
-  Widget build(BuildContext context, WidgetRef ref) {
-    final _authState = ref.watch(authProvider);
-
-    return Material(color: Colors.white,child: getChild(context, _authState));
-  }
   Widget getChild(BuildContext context, AuthState _authState) {
     Widget home;
     switch (_authState) {
       case AuthState.Authorized:
+        // home = AgePage();
+        // AutoRouter.of(context).pop();
         home = const LandingPage();
         AutoRouter.of(context).pop();
         break;
-      case AuthState.AuthorizedAge:
-        home = const AgePage();
+      case AuthState.AuthorizedAge:  
+        home = AgePage();
         AutoRouter.of(context).pop();
         break;
       case AuthState.Authorizing:
@@ -40,5 +33,13 @@ class HomePage extends ConsumerWidget {
         home = const Scaffold(body: Text('Empty page'));
     }
     return home;
+  }
+
+  @override
+  // ignore: dead_code
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _authState = ref.watch(authProvider);
+
+    return Material(color: Colors.white, child: getChild(context, _authState));
   }
 }

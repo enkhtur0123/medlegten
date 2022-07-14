@@ -11,15 +11,21 @@ class SubtitleParagraph extends StatefulWidget {
   final Alignment? alignment;
   final Widget? tailWidget;
   final bool? selectParagraph;
+  final Color defaultColor;
+  final bool? isMemorize;
   Map<CWord, Tuple2<GlobalKey, Widget>> wordWidgets = {};
 
-  SubtitleParagraph(this.paragraph, this.currentIndex,
-      {Key? key,
-      this.currentWord,
-      this.alignment,
-      this.tailWidget,
-      this.selectParagraph})
-      : super(key: key);
+  SubtitleParagraph(
+    this.paragraph,
+    this.currentIndex, {
+    Key? key,
+    this.currentWord,
+    this.alignment,
+    this.tailWidget,
+    this.selectParagraph,
+    this.isMemorize = false,
+    required this.defaultColor,
+  }) : super(key: key);
 
   @override
   _CueTexteState createState() => _CueTexteState();
@@ -30,21 +36,26 @@ class _CueTexteState extends State<SubtitleParagraph> {
   Widget build(BuildContext context) {
     //bool beforeSpace = false;
     Map<CWord, Widget> widgetList = {};
+    if (widget.isMemorize != null && widget.isMemorize!) {
+      // print(widget.currentWord);
+    }
+
     for (int i1 = 0; i1 < widget.paragraph.words!.length; i1++) {
       CWord w = widget.paragraph.words![i1];
-
       if (widget.currentWord != null && //widget.currentWord!.word == w.word
           widget.currentWord!.id == w.id) {
         var splitted = widget.currentWord!.wordValue.split(' ');
         for (int i2 = 0; i2 < splitted.length; i2++) {
-          if (splitted[i2] == widget.currentWord!.word) {
+          if (splitted[i2].toLowerCase() ==
+              widget.currentWord!.word.toLowerCase()) {
             widgetList[widget.currentWord!] =
                 buildTextElevated(widget.currentWord!);
           } else {
             for (int i3 = i2; i3 < 10; i3++) {
               if (widget.paragraph.words!.length > i1 + i3) {
                 var wordForward = widget.paragraph.words![i1 + i3];
-                if (wordForward.word == splitted[i2]) {
+                if (wordForward.word.toLowerCase() ==
+                    splitted[i2].toLowerCase()) {
                   widgetList[wordForward] = buildTextElevated(wordForward);
                   //skip.add(wordForward);
                   break;
@@ -52,7 +63,8 @@ class _CueTexteState extends State<SubtitleParagraph> {
               }
               if (i1 - i3 > -1) {
                 var wordBackward = widget.paragraph.words![i1 - i3];
-                if (wordBackward.word == splitted[i2]) {
+                if (wordBackward.word.toLowerCase() ==
+                    splitted[i2].toLowerCase()) {
                   widgetList[wordBackward] = buildTextElevated(wordBackward);
                   //skip.add(wordBackward);
                   break;
@@ -114,10 +126,11 @@ class _CueTexteState extends State<SubtitleParagraph> {
           word.word,
           key: globalKey,
           style: const TextStyle(
-              fontFamily: 'Roboto',
-              color: colorPrimary,
-              fontSize: 18,
-              fontWeight: FontWeight.w800),
+            fontFamily: 'Roboto',
+            color: colorPrimary,
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ),
     );
@@ -136,12 +149,11 @@ class _CueTexteState extends State<SubtitleParagraph> {
           color: widget.currentIndex == widget.paragraph.ordering
               ? colorBlack
               : (selectWord != null
-                  ? (selectWord ? colorBlack : Colors.black54)
-                  : Colors.black54),
+                  ? (selectWord ? colorBlack : widget.defaultColor)
+                  : widget.defaultColor),
           fontSize: 18,
           fontWeight: FontWeight.w400),
     );
-
     widget.wordWidgets[w] = Tuple2<GlobalKey, Widget>(globalKey, childWidget);
     return childWidget;
   }

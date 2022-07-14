@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:medlegten/components/loading.dart';
 import 'package:medlegten/models/Starting/onboarding.dart';
 import 'package:medlegten/utils/global.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
 class OnboardingPage extends HookWidget {
   final List<Onboarding> onboardingList;
 
@@ -22,7 +24,7 @@ class OnboardingPage extends HookWidget {
       itemCount: onboardingList.length,
       itemBuilder: (ctx, index, realIdx) {
         var inner = onboardingList[currentCarouselIndex.value];
-        return createChildren(inner, currentCarouselIndex);
+        return createChildren(context, inner, currentCarouselIndex);
       },
       options: CarouselOptions(
           autoPlay: false,
@@ -35,38 +37,38 @@ class OnboardingPage extends HookWidget {
     );
   }
 
-  Widget createChildren(
-      Onboarding inner, ValueNotifier<int> currentCarouselIndex) {
+  Widget createChildren(BuildContext context, Onboarding inner,
+      ValueNotifier<int> currentCarouselIndex) {
     return Container(
       color: Colors.white,
       child: Stack(
         fit: StackFit.expand,
         alignment: AlignmentDirectional.center,
         children: [
-          FadeInImage.assetNetwork(
-            fit: BoxFit.fill,
+          CachedNetworkImage(
+            fit: BoxFit.contain,
             fadeInDuration: const Duration(milliseconds: 10),
-            placeholder: 'assets/img/imageplaceholder.png',
-            image: inner.mainImageUrl,
+            placeholder: (context, url) => const Loading(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+            imageUrl: inner.mainImageUrl,
+            filterQuality: FilterQuality.high,
           ),
           Positioned(
             top: 65,
-            right: 20,
+            right: 25,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Utils().hexToColor(inner.btnSkipBgColor),
-                fixedSize: const Size(40, 24),
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                 ),
               ),
               onPressed: () {
-                currentCarouselIndex.value =
-                    nextBoarding(currentCarouselIndex.value);
+                AutoRouter.of(context).pop();
               },
               child: Text(
-                'Skip',
+                'Алгасах',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Utils().hexToColor(inner.btnSkipTxtColor),

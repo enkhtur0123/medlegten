@@ -6,19 +6,19 @@ import 'package:medlegten/pages/CoursePages/Unit_mixedVideo/mixed_video_subtitle
 import 'package:medlegten/pages/CoursePages/base/base_video_page.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_word_widget.dart';
 import 'package:medlegten/pages/CoursePages/base/cue_wrapper.dart';
-import 'package:medlegten/pages/CoursePages/base/unit_appbar.dart';
 import 'package:medlegten/utils/global.dart';
 
 class MixedVideoPage extends BaseVideoPage {
-  const MixedVideoPage(
-      this.unitTitle, this.unitMixedVideo, this.url, this.moduleId,
-      {Key? key})
-      : super(url, title: unitTitle, key: key);
+  const MixedVideoPage(this.unitMixedVideo, this.url,
+      {Key? key, this.moduleId, this.unitTitle, this.isCompleted})
+      : super(url, key: key, title: unitTitle, isCompleted: isCompleted);
 
   final UnitMixedVideo unitMixedVideo;
   final String url;
-  final String unitTitle;
-  final String moduleId;
+  final String? moduleId;
+  final String? unitTitle;
+  final bool? isCompleted;
+
   @override
   _MixedVideoPageState createState() => _MixedVideoPageState();
 }
@@ -32,7 +32,6 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
 
   late final ValueNotifier<bool> refreshNotifier = ValueNotifier(false)
     ..addListener(_listener);
-
   void _listener() {
     setState(() {});
   }
@@ -40,8 +39,8 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   @override
   void initState() {
     super.initState();
-    videoPlayerController.addListener(() {
-      if (videoPlayerController.value.isPlaying && bottomIsVisible) {
+    videoPlayerController!.addListener(() {
+      if (videoPlayerController!.value.isPlaying && bottomIsVisible) {
         bottomIsVisible = false;
         word = null;
         refreshNotifier.value = !refreshNotifier.value;
@@ -55,16 +54,16 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
     super.dispose();
   }
 
-  @override
-  Widget appBarTailWidget() {
-    return headerCompleteButton(
-        widget.moduleId, widget.unitMixedVideo.isCompleted!);
-  }
+  // @override
+  // Widget appBarTailWidget() {
+  //   return headerCompleteButton(
+  //       widget.moduleId, widget.unitMixedVideo.isCompleted!);
+  // }
 
   @override
   Widget subtitleWidget() {
     return MixedVideoSubtitle(
-        videoPlayerController, MixedVideohelper.convert(widget.unitMixedVideo),
+        videoPlayerController!, MixedVideohelper.convert(widget.unitMixedVideo),
         (val) {
       paragraph = val;
       word = null;
@@ -127,14 +126,16 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
   Widget innerBottonSheetWidget(CParagraph paragraph) {
     List<Widget> list = [];
 
-    list.add(const Text(
-      'Grammar',
-      style: TextStyle(
-          fontFamily: 'Roboto',
-          color: Color.fromRGBO(48, 53, 159, 1),
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-    ));
+    list.add(
+      const Text(
+        'Дүрмийн тайлбар',
+        style: TextStyle(
+            fontFamily: 'Roboto',
+            color: Color.fromRGBO(48, 53, 159, 1),
+            fontSize: 14,
+            fontWeight: FontWeight.w500),
+      ),
+    );
 
     list.add(
       Padding(
@@ -149,10 +150,10 @@ class _MixedVideoPageState extends BaseVideoPageState<MixedVideoPage>
         ),
       ),
     );
-
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
       child: ListView.builder(
+        padding: const EdgeInsets.all(0),
         itemCount: list.length,
         itemBuilder: (context, index) => list[index],
       ),

@@ -10,13 +10,13 @@ class SeekBar extends StatefulWidget {
   final ValueChanged<Duration>? onChanged;
   final ValueChanged<Duration>? onChangeEnd;
 
-  SeekBar({
+  SeekBar({Key? key, 
     required this.duration,
     required this.position,
     required this.bufferedPosition,
     this.onChanged,
     this.onChangeEnd,
-  });
+  }) : super(key: key);
 
   @override
   _SeekBarState createState() => _SeekBarState();

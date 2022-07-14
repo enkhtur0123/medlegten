@@ -1,15 +1,20 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
 import 'package:medlegten/themes/style.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/amount_widget.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class BuyCourseIntroWidget extends StatelessWidget {
-  BuyCourseIntroWidget({Key? key,this.courseInfo}) : super(key: key);
+  BuyCourseIntroWidget({Key? key, this.courseInfo}) : super(key: key);
   CourseInfo? courseInfo;
-   List<Color> colors = [];
+  List<Color> colors = [];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +45,9 @@ class BuyCourseIntroWidget extends StatelessWidget {
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.normal),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               AmountWidget(
                 amount: double.parse(
                   courseInfo!.price.replaceAll(",", ""),
@@ -73,39 +80,51 @@ class BuyCourseIntroWidget extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(top: 30, right: 60),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    label(text: "• 500 new words"),
-                    label(text: "• Grammar Explanation"),
-                    label(text: "• Writing features"),
-                    label(text: "• Listening features"),
-                    label(text: "• Progress tests features"),
-                    label(text: "• Interactive grammar table"),
-                  ],
-                ),
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: courseInfo!.purchaseDesc.map((e) {
+                      return label(text: "• ${e.toString()}");
+                    }).toList()),
               )
             ],
           ),
           Container(
-              margin: const EdgeInsets.all(25),
-              child: CustomOutlinedButton(
-                color: secondaryColor,
-                text: "Худалдаж авах",
-                height: 50,
-                onTap: () {
-                  AutoRouter.of(context)
-                      .push(CoursePaymentRoute(courseInfo: courseInfo));
-                },
-              ))
+            margin: const EdgeInsets.all(25),
+            child: CustomOutlinedButton(
+              color: secondaryColor,
+              text: "Төлбөр төлөх",
+              height: 50,
+              onTap: () async {
+                if (Platform.isIOS) {
+                  CountryCodes.init().then((value) {
+                    final Locale? deviceLocale = CountryCodes.getDeviceLocale();
+                    if (deviceLocale!.countryCode == "MN") {
+                      AutoRouter.of(context).push(PaymentRoute(
+                          courseInfo: courseInfo,
+                          paymentType: "1001",
+                          isCourse: true));
+                    } else {
+                      launch("https://www.lingos.mn/payment");
+                    }
+                  });
+                } else {
+                  AutoRouter.of(context).push(
+                    PaymentRoute(
+                        courseInfo: courseInfo,
+                        paymentType: "1001",
+                        isCourse: true),
+                  );
+                }
+              },
+            ),
+          )
         ],
       ),
     );
   }
 
   Widget label({String? text}) {
-    return Container(
-      // alignment: Alignment.c,
+    return SizedBox(
       child: Text(
         text!,
         style: const TextStyle(

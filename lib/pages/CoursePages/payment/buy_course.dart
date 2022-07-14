@@ -2,33 +2,48 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlegten/models/Landing/course_info.dart';
+import 'package:medlegten/models/video/payment_info.dart';
 import 'package:medlegten/repositories/payment_repository.dart';
-import 'package:medlegten/repositories/repository.dart';
 import 'package:medlegten/utils/app_router.dart';
 import 'package:medlegten/widgets/buttons/custom_outlined_button.dart';
+import 'package:medlegten/widgets/loader.dart';
 import 'package:medlegten/widgets/my_textfield.dart';
 import 'package:medlegten/widgets/snackbar/custom_snackbar.dart';
 
-class CoursePaymentPage extends StatefulWidget {
+class PaymentPage extends StatefulWidget {
   final CourseInfo? courseInfo;
+  final String? paymentType;
+  final String? contendId;
+  final PaymentInfo? paymentInfo;
+  final bool? isCourse;
+  final double? videoPrice;
+  final int? subscribtionCnt;
 
   // ignore: prefer_const_constructors_in_immutables
-  CoursePaymentPage({Key? key, this.courseInfo}) : super(key: key);
+  PaymentPage(
+      {Key? key,
+      this.courseInfo,
+      this.paymentType,
+      this.contendId,
+      this.paymentInfo,
+      required this.isCourse,
+      this.videoPrice,
+      this.subscribtionCnt})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return CoursePaymentState();
+    return PaymentState();
   }
 }
 
-class CoursePaymentState extends State<CoursePaymentPage> {
-  TextEditingController controller =
-      TextEditingController(text: "924161ED12DA");
+class PaymentState extends State<PaymentPage> {
+  TextEditingController controller = TextEditingController();
   FocusNode couponNode = FocusNode();
-  String infoText =
-      "Гүйлгээний мэдээллийг нэг бүрчлэн оруулах шаардлагагүйгээр дээрх банкны апп-р төлбөр төлөх боломжтой.";
-  String? couponCode = "";
-  String? price = "";
+  String infoText = "Стардаст вишн Партнерс ХХК";
+  String? couponCode;
+  String? price;
+  bool isSuccess = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +54,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
         ),
         centerTitle: false,
       ),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.red,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
@@ -50,30 +65,43 @@ class CoursePaymentState extends State<CoursePaymentPage> {
               Container(
                 alignment: Alignment.topCenter,
                 margin: const EdgeInsets.all(30),
-                child: const Text("Төлбөрийн төрлөө сонгоно уу!",
-                    style: TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                    textAlign: TextAlign.center),
+                child: const Text(
+                  "Төлбөрийн төрлөө сонгоно уу!",
+                  style: TextStyle(
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Flexible(
+                    fit: FlexFit.tight,
                     flex: 5,
                     child: Container(
-                        margin: const EdgeInsets.all(20),
-                        child: MyTextField(
-                          controller: controller,
-                          isBordered: true,
-                          labelText: "Coupon code",
-                          focusNode: couponNode,
-                          keyboardType: TextInputType.text,
-                          enabled: false,
-                          onChanged: (value) {},
-                        )),
+                      width: double.infinity,
+                      margin: const EdgeInsets.all(20),
+                      child: MyTextField(
+                        borderColor: isSuccess ? Colors.green : Colors.red,
+                        labelColor: Colors.black,
+                        key: GlobalKey<FormFieldState>(),
+                        suffix: Container(
+                          width: 0,
+                          height: 0,
+                        ),
+                        controller: controller,
+                        isBordered: true,
+                        labelText: "Купон код",
+                        focusNode: couponNode,
+                        keyboardType: TextInputType.text,
+                        enabled: true,
+                        onChanged: (value) {},
+                        onSubmitted: (value) {},
+                      ),
+                    ),
                   ),
                   Flexible(
                     flex: 2,
@@ -84,26 +112,11 @@ class CoursePaymentState extends State<CoursePaymentPage> {
                         height: 50,
                         text: "шалгах",
                         onTap: () async {
-                          ///Coupom check code  924161ED12DA   A2-344161ED12DB
-                          CoursePaymentRepository()
-                              .checkCouponCode(
-                                  courseInfo: widget.courseInfo,
-                                  couponCode: controller.text.toString())
-                              .then((value) {
-                            // print(value);
-                            couponCode = value["coupon"]["couponCode"];
-                            price = value["coupon"]["price"];
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(MySnackBar(
-                              text: "Амжилттай",
-                            ));
-                          }).catchError((onError) {
-                            print(onError);
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(MySnackBar(
-                              text: "Купон кодоо шалгана уу",
-                            ));
-                          });
+                          if (widget.isCourse!) {
+                            checkCouponCode();
+                          } else {
+                            checkContentCouponCode();
+                          }
                         },
                       ),
                     ),
@@ -112,30 +125,32 @@ class CoursePaymentState extends State<CoursePaymentPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  if (couponCode != "" && price != "") {
-                    AutoRouter.of(context).push(QpayRoute(
+                  AutoRouter.of(context).push(
+                    QpayRoute(
+                        isCourse: widget.isCourse,
                         courseInfo: widget.courseInfo,
                         couponCode: couponCode,
-                        price: price));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(MySnackBar(
-                      text: "Coupon code check!",
-                    ));
-                  }
+                        price: price ??
+                            (widget.isCourse!
+                                ? widget.courseInfo!.price
+                                : widget.paymentInfo!.prices
+                                    .singleWhere((element) =>
+                                        int.parse(element.month) ==
+                                        widget.subscribtionCnt)
+                                    .price),
+                        paymentType: widget.paymentType,
+                        paymentInfo: widget.paymentInfo,
+                        month: !widget.isCourse!
+                            ? widget.subscribtionCnt.toString()
+                            : ""),
+                  );
                 },
                 child: getPaymentFunction(
-                    title: "Qpay",
-                    body: "QPay-р төлбөр төлөх",
-                    icon: "assets/img/payment/qpay.svg"),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: getPaymentFunction(
-                  title: "Social pay",
-                  body: "Social pay-р төлбөр төлөх",
-                  icon: "assets/img/payment/socialpay.svg",
+                  title: "Qpay",
+                  body: "QPay-р төлбөр төлөх",
+                  icon: "assets/img/payment/qpay.svg",
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -145,17 +160,77 @@ class CoursePaymentState extends State<CoursePaymentPage> {
         backgroundColor: Colors.white,
         onClosing: () {},
         builder: (context) {
-          return Container(
-              padding: const EdgeInsets.only(bottom: 100),
-              child: Text(infoText,
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(bottom: 100),
+                child: Text(
+                  infoText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 14,
                       fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.normal)));
+                      fontWeight: FontWeight.normal),
+                ),
+              )
+            ],
+          );
         },
       ),
     );
+  }
+
+  void checkCouponCode() {
+    LoadingIndicator(context: context).showLoadingIndicator();
+    CoursePaymentRepository()
+        .checkCouponCode(
+      courseInfo: widget.courseInfo,
+      couponCode: controller.text.toString(),
+      paymentInfo: widget.paymentInfo,
+      isCourse: widget.isCourse,
+    )
+        .then((value) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      if (value != null) {
+        couponCode = value["coupon"]["couponCode"];
+        price = value["coupon"]["price"];
+        isSuccess = true;
+        keyboardHide();
+        couponNode.unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+        ScaffoldMessenger.of(context).showSnackBar(
+          MySnackBar(
+            text: "Уг купон кодыг ашиглах боломжтой байна.",
+          ),
+        );
+        setState(() {});
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          MySnackBar(
+            text: "Купон кодоо шалгана уу",
+          ),
+        );
+        isSuccess = false;
+        keyboardHide();
+        setState(() {});
+      }
+    }).catchError((onError) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      ScaffoldMessenger.of(context).showSnackBar(
+        MySnackBar(
+          text: "Купон кодоо шалгана уу",
+        ),
+      );
+      keyboardHide();
+      isSuccess = false;
+      setState(() {});
+    });
+  }
+
+  void keyboardHide() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   Widget getPaymentFunction({String? icon, String? title, String? body}) {
@@ -163,7 +238,7 @@ class CoursePaymentState extends State<CoursePaymentPage> {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
@@ -207,5 +282,61 @@ class CoursePaymentState extends State<CoursePaymentPage> {
         ],
       ),
     );
+  }
+
+  void checkContentCouponCode() {
+    LoadingIndicator(context: context).showLoadingIndicator();
+    CoursePaymentRepository()
+        .checkContentCouponCode(
+      couponCode: controller.text.toString(),
+      paymentInfo: widget.paymentInfo,
+      isCourse: widget.isCourse,
+    )
+        .then((value) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      if (value != null) {
+        couponCode = value.couponCode;
+        price = value.price;
+        isSuccess = true;
+        keyboardHide();
+        couponNode.unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+
+        if (widget.subscribtionCnt == int.parse(value.month)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: "Уг купон кодыг ашиглах боломжтой байна.",
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            MySnackBar(
+              text: "Купон код буруу байна",
+            ),
+          );
+        }
+
+        setState(() {});
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          MySnackBar(
+            text: "Купон кодоо шалгана уу",
+          ),
+        );
+        isSuccess = false;
+        keyboardHide();
+        setState(() {});
+      }
+    }).catchError((onError) {
+      LoadingIndicator(context: context).hideLoadingIndicator();
+      ScaffoldMessenger.of(context).showSnackBar(
+        MySnackBar(
+          text: "Купон кодоо шалгана уу",
+        ),
+      );
+      keyboardHide();
+      isSuccess = false;
+      setState(() {});
+    });
   }
 }
